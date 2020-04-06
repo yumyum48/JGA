@@ -3,6 +3,7 @@
 #include "Picture.h"
 #include "GamePlay.h"
 #include "Map.h"
+#include "Player.h"
 
 image g_pic;
 mouse g_mouseInfo;
