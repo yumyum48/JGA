@@ -46,13 +46,4 @@ void MapDisp() {
 	DrawGraph(map2X + moveX, 0, g_pic.map[1], TRUE);
 }
 
-void PlayerDisp() {
-	DrawGraph(63, 505, g_pic.Kirby, TRUE);
-}
-
-void PlayerMove() {
-
-	moveX -= 8.0F;
-}
-
 
