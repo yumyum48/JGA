@@ -78,7 +78,7 @@ int Main(void) {
 
 		// マウス、キーボードの座標取得や、入力情報の取得
 		ControlInfo(&g_mouseInfo, &g_keyInfo);
-		GameScene(sceneType);
+		GameScene(g_gameScene);
 		
 		// デバッグモード(変数の中の文字を描画)
 #ifdef DEBUG_TEXT_ON
@@ -93,9 +93,9 @@ int Main(void) {
 	return 0;
 }
 
-void GameScene(int sceneType) {
+void GameScene(int gameScene) {
 	
-	switch (sceneType){
+	switch (gameScene){
 	case GAME_TYTLE:	GamePlay();  break;	 // ゲームの描画
 	case GAME_SELECT:				 break;
 	case GAME_PLAY:	    GamePlay();	 break;
