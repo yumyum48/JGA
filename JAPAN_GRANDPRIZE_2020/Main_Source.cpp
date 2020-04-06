@@ -13,12 +13,14 @@
 extern mouse g_mouseInfo;	// マウスの状態管理
 extern image g_pic;			// 画像の管理
 extern key g_keyInfo;		// キーボードの状態管理
-int sceneType = 0;		// 画面のシーンの制御	// 0:ゲームタイトル 1:キャラクターセレクト 2:ゲームプレイ
+extern int g_gameScene = 0;		// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
 
 enum {
 	GAME_TYTLE,
 	GAME_SELECT,
 	GAME_PLAY,
+	GAME_OVER,
+	GAME_CLEAR,
 };
 /*********************************************
 
