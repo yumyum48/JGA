@@ -5,7 +5,7 @@
 #include "Map.h"
 #include "Player.h"
 
-image g_pic;
+extern image g_pic;
 mouse g_mouseInfo;
 key g_keyInfo;
 
@@ -13,6 +13,7 @@ key g_keyInfo;
 void GamePlay() {
 	GamePlayMove();
 	GamePlayDisp();
+	
 }
 // ゲームプレイの描画
 void GamePlayDisp() {
@@ -26,7 +27,6 @@ void GamePlayDisp() {
 void GamePlayMove() {
 	MapMove();		// マップの動き
 	//PlayerMove();
-
 }
 
 
