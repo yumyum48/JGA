@@ -28,3 +28,9 @@ struct playerInfo {
     int jumpFlg;
 
 };
+
+// ƒ}ƒbƒv‚Ìî•ñ
+struct mapInfo {
+    int x, y;
+    int obj[];
+};
