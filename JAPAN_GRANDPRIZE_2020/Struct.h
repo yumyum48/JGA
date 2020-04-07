@@ -13,6 +13,14 @@ struct key {
     int oldKey, nowKey, keyFlg;
 };
 
+// コントローラーの構造体
+struct controler {
+    bool circleButton, crossButton, squareButton, triangleButton;
+    int moveStick;
+    int nowCon, oldCon, conFlg;	// ボタンの押しているかのフラグ
+
+};
+
 // 画像の種類
 struct image {
     int Block;
@@ -25,7 +33,7 @@ struct image {
 // プレイヤーの情報
 struct playerInfo {
     int x, y;
-    int jumpFlg;
+    bool jumpFlg;
 
 };
 

@@ -19,14 +19,14 @@ void GamePlay() {
 void GamePlayDisp() {
 	
 	MapDisp();		// マップの描画
-	//PlayerDisp();	// プレイヤーの描画
+	PlayerDisp();	// プレイヤーの描画
 	
 }
 
 // ゲームプレイの動き
 void GamePlayMove() {
 	MapMove();		// マップの動き
-	//PlayerMove();
+	PlayerMove();
 }
 
 
