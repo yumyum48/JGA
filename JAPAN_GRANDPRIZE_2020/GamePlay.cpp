@@ -5,9 +5,6 @@
 #include "Map.h"
 #include "Player.h"
 
-extern image g_pic;
-mouse g_mouseInfo;
-key g_keyInfo;
 
 // ゲームプレイのメイン関数
 void GamePlay() {

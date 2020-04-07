@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "Struct.h"
-extern image g_pic;
+#include "Picture.h"
 
 int LoadPicture() {
 	if ((g_pic.Block = LoadGraph("image/block.bmp")) == -1) return -1;

@@ -12,13 +12,13 @@
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-extern mouse g_mouseInfo;	// マウスの状態管理
-extern image g_pic;			// 画像の管理
-extern key g_keyInfo;		// キーボードの状態管理
-extern int g_gameScene = 0;		// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
+mouse g_mouseInfo;	// マウスの状態管理
+image g_pic;			// 画像の管理
+key g_keyInfo;		// キーボードの状態管理
+int g_gameScene = 0;		// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
 
-extern DINPUT_JOYSTATE g_controler;
-extern controler g_button;
+DINPUT_JOYSTATE g_controler;
+controler g_button;
 
 enum {
 	GAME_TYTLE,

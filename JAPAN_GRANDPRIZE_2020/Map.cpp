@@ -2,7 +2,6 @@
 #include "Struct.h"
 #include "Picture.h"
 
-extern image g_pic;
 mapInfo g_map[3];
 // マップの表示
 void MapDisp() {

@@ -4,9 +4,6 @@
 #include "Controler.h"
 #include "Struct.h"
 
-DINPUT_JOYSTATE g_controler;
-
-extern controler g_button;
 
 int ControlerCheck(void) {
 
