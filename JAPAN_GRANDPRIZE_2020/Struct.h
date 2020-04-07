@@ -39,7 +39,7 @@ struct playerInfo {
 
 // ƒ}ƒbƒv‚Ìî•ñ
 struct mapInfo {
-    int x, y;
+    float x, y;
 
     void MapInit1() {
         x = 0;
