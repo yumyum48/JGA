@@ -42,7 +42,7 @@ void MapInit() {
 	g_map[2].MapInit3();
 }
 
-void Scroll(float *mapX) {
+void Scroll(int *mapX) {
 	int moveX = 8;
 	
 	*mapX -= moveX;
