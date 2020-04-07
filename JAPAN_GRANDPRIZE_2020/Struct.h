@@ -26,7 +26,7 @@ struct image {
     int Block;
     int QBlock;
     int Kirby;
-    int map[2];
+    int map[3];
 
 };
 
@@ -40,5 +40,4 @@ struct playerInfo {
 // ƒ}ƒbƒv‚Ìî•ñ
 struct mapInfo {
     int x, y;
-    int obj[];
 };
