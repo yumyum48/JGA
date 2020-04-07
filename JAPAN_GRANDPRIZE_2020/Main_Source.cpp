@@ -16,7 +16,7 @@ extern key g_keyInfo;		// キーボードの状態管理
 extern int g_gameScene = 0;		// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
 
 extern DINPUT_JOYSTATE g_controler;
-extern controler g_button; 
+extern controler g_button;
 
 enum {
 	GAME_TYTLE,
@@ -81,6 +81,8 @@ int Main(void) {
 
 		// マウス、キーボードの座標取得や、入力情報の取得
 		ControlInfo(&g_mouseInfo, &g_keyInfo);
+
+		// ゲームのシーン切り替え
 		GameScene(g_gameScene);
 		
 		// デバッグモード(変数の中の文字を描画)
