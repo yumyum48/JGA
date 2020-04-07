@@ -1,6 +1,7 @@
 #pragma once
 #include "DxLib.h"
 #include "Struct.h"
+#include "control.h"
 extern mouse g_mouseInfo;	// マウスの状態管理
 extern key g_keyInfo;		// キーボードの状態管理
 mouse MousePoint(mouse mouseInfo);					// マウスの入力状態管理
