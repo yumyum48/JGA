@@ -40,4 +40,17 @@ struct playerInfo {
 // ƒ}ƒbƒv‚Ìî•ñ
 struct mapInfo {
     int x, y;
+
+    void MapInit1() {
+        x = 0;
+        y = 0;
+    }
+    void MapInit2() {
+        x = 1024;
+        y = 0;
+    }
+    void MapInit3() {
+        x = 2048;
+        y = 0;
+    }
 };

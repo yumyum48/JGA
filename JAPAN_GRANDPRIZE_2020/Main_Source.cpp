@@ -3,6 +3,8 @@
 #include "GamePlay.h"
 #include "Picture.h"
 #include "control.h"
+#include "Init.h"
+#include "Map.h"
 
 #define DEBUG_TEXT_ON
 /*********************************************
@@ -68,11 +70,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_
 **************************************************************************/
 int Main(void) {
 
-
-	
-
 	// 描画先を裏画面にセット
 	SetDrawScreen(DX_SCREEN_BACK);
+
+	// ゲームの初期化
+	GameInit();
 
 	// メインループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
