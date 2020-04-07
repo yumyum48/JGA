@@ -10,9 +10,7 @@
 #define G                (0.3F)		// 重力
 #define JUMP_POWER       (6.0F)		// ジャンプ力
 
-image g_pic;
 playerInfo g_player;
-controler g_button;
 
 int g_speed = 0;	//落ちる速度
 
@@ -23,16 +21,15 @@ void PlayerDisp() {
 void PlayerMove() {
 
 	//float moveY = 0.0F;
+	//g_player.jumpFlg = FALSE;
 
 	//ジャンプ処理(×ボタン)
-	if (g_player.jumpFlg == FALSE && g_button.crossButton == true) {
+	if (g_player.jumpFlg == FALSE/* && g_button.crossButton == true*/) {
 		g_speed = -JUMP_POWER;
 		g_player.jumpFlg = TRUE;
 	}
 
-	if (g_player.jumpFlg == TRUE) {	//ジャンプ中
-		g_player.y += g_speed;
-		g_speed += G;
-	}
+	g_player.y += g_speed;
+	g_speed += G;
 	
 }
