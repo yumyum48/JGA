@@ -18,7 +18,7 @@ void MapDisp() {
 		
 		// マップが画面外に入ったら次のところにセットされる
 		if (g_map[i].x + SCREEN_WIDTH < 0) {
-			g_map[i].x = SCREEN_WIDTH + SCREEN_WIDTH;
+			g_map[i].x = SCREEN_WIDTH + SCREEN_WIDTH - 8;
 		}
 	}
 
@@ -42,8 +42,8 @@ void MapInit() {
 	g_map[2].MapInit3();
 }
 
-void Scroll(int *mapX) {
-	int moveX = 8;
+void Scroll(float *mapX) {
+	float moveX = 8.0F;
 	
 	*mapX -= moveX;
 }
