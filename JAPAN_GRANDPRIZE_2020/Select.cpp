@@ -7,10 +7,10 @@
 
 #define STAGE_NUMBER 7
 
-int StageX = 455;		//ステージセレクトX座標
-int StageY = 285;		//ステージセレクトY座標
-int StageW = 305;		//ステージセレクト幅
-int StageH = 298;		//ステージセレクト高さ
+int stageX = 455;		//ステージセレクトX座標
+int stageY = 285;		//ステージセレクトY座標
+int stageW = 305;		//ステージセレクト幅
+int stageH = 298;		//ステージセレクト高さ
 
 float x;
 float y;
@@ -29,7 +29,8 @@ void StageSelect() {
 	}
 
 	//ｚで選択（デバック）
-	if (g_keyInfo.keyFlg & PAD_INPUT_A) GamePlay();
+	if (g_keyInfo.keyFlg & PAD_INPUT_A) 
+		GamePlay();
 
 	SelectDisp();
 }
@@ -38,8 +39,8 @@ void SelectDisp(void) {
 	for (int i = 0; i < STAGE_NUMBER; i++) {
 		float bb = i % STAGE_NUMBER;
 		float angle = (DX_TWO_PI / STAGE_NUMBER * bb) + 6.0675;
-		x = StageX + cos(angle) * StageW;
-		y = StageY + sin(angle) * StageH;
+		x = stageX + cos(angle) * stageW;
+		y = stageY + sin(angle) * stageH;
 
 		//ステージ表示
 		DrawBox( x , y ,x + 180,y + 180, 0x008000, TRUE);
