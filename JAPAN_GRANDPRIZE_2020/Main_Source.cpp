@@ -6,6 +6,7 @@
 #include "Init.h"
 #include "Map.h"
 #include "GameScene.h"
+#include "Controler.h"
 
 #define DEBUG_TEXT_ON
 /*********************************************
@@ -79,6 +80,9 @@ int Main(void) {
 
 		// ゲームのシーン切り替え
 		GameScene(g_gameScene);
+
+		//コントローラーチェック
+		ControlerCheck();
 		
 		// デバッグモード(変数の中の文字を描画)
 #ifdef DEBUG_TEXT_ON
