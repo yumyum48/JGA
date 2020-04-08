@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "GameScene.h"
 #include "Controler.h"
+#include "Select.h"
 
 #define DEBUG_TEXT_ON
 /*********************************************
@@ -22,7 +23,7 @@ int g_gameScene;			// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 
 DINPUT_JOYSTATE g_controler;
 controler g_button;
 
-int g_game_stage = 0;		//ステージをセレクト
+int g_game_stage;		//ステージをセレクト
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -102,7 +103,7 @@ int Main(void) {
 void GameScene(int gameScene) {
 	
 	switch (gameScene){
-	case GAME_TYTLE:	GamePlay();  break;	 // ゲームの描画
+	case GAME_TYTLE:	StageSelect();  break;	 // ゲームの描画
 	case GAME_SELECT:				 break;
 	case GAME_PLAY:	    GamePlay();	 break;
 	}
