@@ -21,7 +21,8 @@ int g_gameScene;			// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 
 
 DINPUT_JOYSTATE g_controler;
 controler g_button;
-int g_stageInput;				// ステージ選択したものを記憶する変数
+
+int g_game_stage = 0;		//ステージをセレクト
 /*********************************************
 
 * 関数のプロトタイプ宣言
