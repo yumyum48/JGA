@@ -26,7 +26,7 @@ struct controler {
 struct image {
     int Block;
     int QBlock;
-    int Kirby;
+    int player;
     int map[MAP_MAX * SCROLL_MAX];
 
 };
@@ -35,6 +35,8 @@ struct image {
 struct playerInfo {
     int x, y;
     bool jumpFlg;
+
+    void Init() { x = 100; y = 450; }
 
 };
 
