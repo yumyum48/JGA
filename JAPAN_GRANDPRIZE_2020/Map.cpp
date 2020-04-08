@@ -5,6 +5,7 @@
 #include "Map.h"
 
 #define SCREEN_WIDTH (1024)	// 画面の横幅
+#define SCROLL_SPEED (8.0F)	// マップのスクロールするスピード
 mapInfo g_map[SCROLL_MAX];
 
 // マップの表示
@@ -34,14 +35,16 @@ void MapMove() {
 
 }
 
+// スクロール加算処理
+void Scroll(float *mapX) {
+	float moveX = SCROLL_SPEED;
+	
+	*mapX -= moveX;
+}
+
+// マップデータの初期化
 void MapInit() {
 	g_map[0].MapInit1();
 	g_map[1].MapInit2();
 	g_map[2].MapInit3();
-}
-
-void Scroll(float *mapX) {
-	float moveX = 8.0F;
-	
-	*mapX -= moveX;
 }
