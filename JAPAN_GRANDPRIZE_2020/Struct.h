@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DxLib.h"
+#include "Map.h"
 
 // マウスの入力状態
 struct mouse {
@@ -26,7 +27,7 @@ struct image {
     int Block;
     int QBlock;
     int Kirby;
-    int map[3];
+    int map[MAP_MAX * SCROLL_MAX];
 
 };
 
@@ -40,7 +41,6 @@ struct playerInfo {
 // マップの情報
 struct mapInfo {
     float x, y;
-
     void MapInit1() {
         x = 0;
         y = 0;

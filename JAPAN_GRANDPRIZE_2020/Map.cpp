@@ -4,17 +4,17 @@
 #include "control.h"
 #include "Map.h"
 
-#define MAP_MAX		 (3)	// マップの最大数
 #define SCREEN_WIDTH (1024)	// 画面の横幅
+mapInfo g_map[SCROLL_MAX];
 
-mapInfo g_map[3];
 // マップの表示
 void MapDisp() {
 
 
 	// マップの描画
-	for (int i = 0; i < MAP_MAX; i++) {
-		DrawGraph(g_map[i].x, g_map[i].y, g_pic.map[i], TRUE);
+	for (int i = 0; i < SCROLL_MAX; i++) {
+
+		DrawGraph(g_map[i].x, g_map[i].y, g_pic.map[((1-1)*3)+i], TRUE);
 		
 		// マップが画面外に入ったら次のところにセットされる
 		if (g_map[i].x + SCREEN_WIDTH < 0) {
@@ -28,10 +28,8 @@ void MapDisp() {
 void MapMove() {
 
 	// スクロール処理
-	if (g_keyInfo.nowKey & PAD_INPUT_RIGHT) {
-		for(int i=0; i<MAP_MAX; i++)
-			Scroll(&g_map[i].x);
-	}
+	for(int i = 0; i < SCROLL_MAX; i++)
+		Scroll(&g_map[i].x);
 
 
 }
