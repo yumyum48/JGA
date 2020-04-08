@@ -5,6 +5,8 @@
 #include "control.h"
 #include "Init.h"
 #include "Map.h"
+#include "GameScene.h"
+#include "Controler.h"
 
 #define DEBUG_TEXT_ON
 /*********************************************
@@ -15,18 +17,10 @@
 mouse g_mouseInfo;	// マウスの状態管理
 image g_pic;			// 画像の管理
 key g_keyInfo;		// キーボードの状態管理
-int g_gameScene = 0;		// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
+int g_gameScene;		// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
 
 DINPUT_JOYSTATE g_controler;
 controler g_button;
-
-enum {
-	GAME_TYTLE,
-	GAME_SELECT,
-	GAME_PLAY,
-	GAME_OVER,
-	GAME_CLEAR,
-};
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -86,6 +80,9 @@ int Main(void) {
 
 		// ゲームのシーン切り替え
 		GameScene(g_gameScene);
+
+		//コントローラーチェック
+		ControlerCheck();
 		
 		// デバッグモード(変数の中の文字を描画)
 #ifdef DEBUG_TEXT_ON

@@ -5,7 +5,7 @@
 int LoadPicture() {
 	if ((g_pic.Block = LoadGraph("image/block.bmp")) == -1) return -1;
 	if ((g_pic.QBlock = LoadGraph("image/Qblock.jpg")) == -1) return -1;
-	if ((g_pic.Kirby = LoadGraph("image/KirbyN.png")) == -1) return -1;
+	if ((g_pic.player = LoadGraph("image/char.png")) == -1) return -1;
 	if (LoadDivGraph("image/mori_4.png", 3, 3, 1, 1024, 768, g_pic.map, 0) == -1)
 		return -1;
 	
