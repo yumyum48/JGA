@@ -3,6 +3,7 @@
 #include "Picture.h"
 #include "control.h"
 #include "Map.h"
+#include "Select.h"
 
 #define SCREEN_WIDTH (1024)	// 画面の横幅
 #define SCROLL_SPEED (8.0F)	// マップのスクロールするスピード
@@ -15,8 +16,8 @@ void MapDisp() {
 	// マップの描画
 	for (int i = 0; i < SCROLL_MAX; i++) {
 
-		DrawGraph(g_map[i].x, g_map[i].y, g_pic.map[((1-1)*3)+i], TRUE);
-		
+		DrawGraph(g_map[i].x, g_map[i].y, g_pic.map[((g_game_stage -1)*3)+i], TRUE);
+		//DrawFormatString(100, 100, 0xFF0000, "%d", g_game_stage);
 		// マップが画面外に入ったら次のところにセットされる
 		if (g_map[i].x + SCREEN_WIDTH < 0) {
 			g_map[i].x = SCREEN_WIDTH + SCREEN_WIDTH - 8;
