@@ -4,6 +4,7 @@
 #include "GamePlay.h"
 #include "Select.h"
 #include "control.h"
+#include "GameScene.h"
 
 #define STAGE_NUMBER 7
 
@@ -19,7 +20,7 @@ void StageSelect() {
 	}
 
 	//ｚで選択（デバック）
-	if (g_keyInfo.keyFlg & PAD_INPUT_A) GamePlay();
+	if (g_keyInfo.keyFlg & PAD_INPUT_A) g_gameScene = GAME_PLAY;
 
 	SelectDisp();
 }
