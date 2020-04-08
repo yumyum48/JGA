@@ -14,14 +14,14 @@
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-mouse g_mouseInfo;	// マウスの状態管理
-image g_pic;			// 画像の管理
-key g_keyInfo;		// キーボードの状態管理
-int g_gameScene;		// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
+mouse g_mouseInfo;			// マウスの状態管理
+image g_pic;				// 画像の管理
+key g_keyInfo;				// キーボードの状態管理
+int g_gameScene;			// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
 
 DINPUT_JOYSTATE g_controler;
 controler g_button;
-int stageInput;		// ステージ選択したものを記憶する変数
+int stageInput;				// ステージ選択したものを記憶する変数
 /*********************************************
 
 * 関数のプロトタイプ宣言
