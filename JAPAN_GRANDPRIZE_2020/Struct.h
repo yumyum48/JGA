@@ -26,7 +26,8 @@ struct controler {
 struct image {
     int Block;
     int QBlock;
-    int player;
+    int player[3];
+    int enemy;
     int map[MAP_MAX * SCROLL_MAX];
 
 };
@@ -34,12 +35,21 @@ struct image {
 // プレイヤーの情報
 struct playerInfo {
     int x, y;
+    int hp;
     bool jumpFlg;
+    bool attackFlg;
 
-    void Init() { x = 100; y = 450; }
+    void Init() { x = 100; y = 450; hp = 100; }
 
 };
 
+// 敵の情報
+struct enemyInfo {
+    int x, y;
+
+    void Init() { x = 0; y = 600; }
+
+};
 // マップの情報
 struct mapInfo {
     float x, y;
