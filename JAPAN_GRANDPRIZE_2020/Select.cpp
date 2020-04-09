@@ -20,7 +20,8 @@ void StageSelect() {
 	}
 
 	//ｚで選択（デバック）
-	if (g_keyInfo.keyFlg & PAD_INPUT_A) g_gameScene = GAME_PLAY;
+	if (g_keyInfo.keyFlg & PAD_INPUT_A)
+		g_gameScene = GAME_PLAY;
 
 	SelectDisp();
 }
