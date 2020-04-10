@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Select.h"
 
+
 #define SCREEN_WIDTH (1024)	// 画面の横幅
 #define SCROLL_SPEED (8.0F)	// マップのスクロールするスピード
 mapInfo g_map[SCROLL_MAX];

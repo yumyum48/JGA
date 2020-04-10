@@ -6,17 +6,18 @@
 #include "enemy.h"
 
 void EnemyDisp() {
-	DrawRotaGraph(g_enemy.x, g_enemy.y, 0.2, 0.0, g_pic.enemy, TRUE);
+	int enemy_MAX;	// ìGÇÃêî
+	DrawRotaGraph(g_enemy[0].x, g_enemy[0].y, 0.2, 0.0, g_pic.enemy, TRUE);
 
 }
 
 void EnemyMove() {
-	g_enemy.x -= 10.0F;
-	if (g_enemy.x < 0) g_enemy.x = 1200;
+	g_enemy[0].x -= 10.0F;
+	if (g_enemy[0].x < 0) g_enemy[0].x = 1200;
 
-	if (g_button.circleButton == true) g_enemy.x = 1200;
+	if (g_button.circleButton == true) g_enemy[0].x = 1200;
 }
 
 void EnemyInit() {
-	g_enemy.Init();
+	g_enemy[0].Init();
 }
