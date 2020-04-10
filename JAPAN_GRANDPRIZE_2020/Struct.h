@@ -46,9 +46,10 @@ struct playerInfo {
 
 // “G‚Ìî•ñ
 struct enemyInfo {
-    int x, y;
+    int x = 1280;
+    int y = 600;
 
-    void Init() { x = 0; y = 600; }
+    void Init() { x = 0; y = 450; }
 
 };
 // ƒ}ƒbƒv‚Ìî•ñ
