@@ -5,8 +5,6 @@
 #include "Controler.h"
 #include "enemy.h"
 
-enemyInfo g_enemy;
-
 void EnemyDisp() {
 	DrawRotaGraph(g_enemy.x, g_enemy.y, 0.2, 0.0, g_pic.enemy, TRUE);
 

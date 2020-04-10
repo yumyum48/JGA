@@ -8,6 +8,7 @@
 #include "GameScene.h"
 #include "Controler.h"
 #include "Select.h"
+#include "enemy.h"
 
 #define DEBUG_TEXT_ON
 /*********************************************
@@ -24,6 +25,7 @@ DINPUT_JOYSTATE g_controler;
 controler g_button;
 
 int g_game_stage;		//ステージをセレクト
+enemyInfo g_enemy;	// 敵の情報
 /*********************************************
 
 * 関数のプロトタイプ宣言
