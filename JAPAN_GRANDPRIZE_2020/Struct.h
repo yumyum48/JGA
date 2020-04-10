@@ -26,7 +26,7 @@ struct controler {
 struct image {
     int Block;
     int QBlock;
-    int player[3];
+    int player[10];
     int enemy;
     int map[MAP_MAX * SCROLL_MAX];
     int rain[2];
