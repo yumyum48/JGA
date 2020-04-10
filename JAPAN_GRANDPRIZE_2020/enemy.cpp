@@ -5,19 +5,39 @@
 #include "Controler.h"
 #include "enemy.h"
 
+int enemy_MAX = 0;		// “G‚ÌÅ‘å”
 void EnemyDisp() {
-	int enemy_MAX;	// “G‚Ì”
-	DrawRotaGraph(g_enemy[0].x, g_enemy[0].y, 0.2, 0.0, g_pic.enemy, TRUE);
+	
+	static int cnt = 0;
+	if(cnt++ %  10 == 0)
+		enemy_MAX += 1;
 
+	// “G‚Ì”‚ğ”z—ñ‚É‹L‰¯
+	g_enemy = new enemyInfo[enemy_MAX];
+
+	for (int i = 0; i < enemy_MAX; i++) {
+		DrawRotaGraph(g_enemy[i].x, g_enemy[i].y, 0.2, 0.0, g_pic.enemy, TRUE);
+	}
 }
 
 void EnemyMove() {
-	g_enemy[0].x -= 10.0F;
-	if (g_enemy[0].x < 0) g_enemy[0].x = 1200;
 
-	if (g_button.circleButton == true) g_enemy[0].x = 1200;
+	
+	for (int i = 0; i < enemy_MAX; i++) {
+		g_enemy ->x = 100;
+		if (i == 1) {
+			g_enemy->x = 150;
+		}
+		g_enemy->y = 450;
+		//g_enemy[i].x -= 10.0F;
+		//if (g_enemy[i].x < 0) g_enemy[i].x = 1200;
+
+		//if (g_button.circleButton == true) g_enemy[i].x = 1200;
+	}
 }
 
 void EnemyInit() {
-	g_enemy[0].Init();
+	for (int i = 0; i < enemy_MAX; i++)
+		g_enemy[i].Init();
+	enemy_MAX = 0;
 }

@@ -25,8 +25,8 @@ int g_gameScene;			// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 
 DINPUT_JOYSTATE g_controler;
 controler g_button;
 
-int g_game_stage;								//ステージをセレクト
-enemyInfo *g_enemy = new enemyInfo[5];			// 敵の情報
+int g_game_stage;			//ステージをセレクト
+enemyInfo* g_enemy;			// 敵の情報
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -96,7 +96,7 @@ int Main(void) {
 		DrawFormatString(0, 20, 0xFFFF00, "mouseX = %d \n mouseY = %d", g_mouseInfo.mouseX, g_mouseInfo.mouseY);
 #endif // DEBUG_TEXT_ON
 
-		//DynaDelete();		// 動的配列をメモリ解放
+		DynaDelete();		// 動的配列をメモリ解放
 
 		// 画面の更新
 		ScreenFlip();
