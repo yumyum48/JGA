@@ -24,7 +24,7 @@ void PlayerDisp() {
 
 void PlayerMove() {
 
-	if (++g_time % 10 == 0) g_anime++;
+	if (++g_time % 8 == 0) g_anime++;
 	if (g_anime > 2) g_anime = 0;
 
 	//ジャンプ処理(×ボタン)

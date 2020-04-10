@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "enemy.h"
+#include "Rain.h"
 
 
 // ゲームプレイのメイン関数
@@ -19,6 +20,7 @@ void GamePlayDisp() {
 	MapDisp();		// マップの描画
 	EnemyDisp();
 	PlayerDisp();	// プレイヤーの描画
+	RainDisp();
 	
 }
 
@@ -27,6 +29,7 @@ void GamePlayMove() {
 	MapMove();		// マップの動き
 	EnemyMove();
 	PlayerMove();
+	RainMove();
 }
 
 

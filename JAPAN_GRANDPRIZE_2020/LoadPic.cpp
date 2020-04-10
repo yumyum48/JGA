@@ -16,5 +16,7 @@ int LoadPicture() {
 	/*
 	if (LoadDivGraph("images/Cnt2.png", 10, 10, 1, 57, 80, g_NumImage, 0) == -1)
 		return -1;*/
+	if ((g_pic.rain[0] = LoadGraph("image/RainLarge.png")) == -1) return -1;
+	if ((g_pic.rain[1] = LoadGraph("image/RainLarge.png")) == -1) return -1;
 	return 0;
 }

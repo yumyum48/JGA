@@ -29,6 +29,7 @@ struct image {
     int player[3];
     int enemy;
     int map[MAP_MAX * SCROLL_MAX];
+    int rain[2];
 
 };
 
@@ -64,5 +65,18 @@ struct mapInfo {
     void MapInit3() {
         x = 2048;
         y = 0;
+    }
+};
+
+// ‰J‚Ìî•ñ
+struct rainInfo {
+    int x, y;
+    void RainInit1() {
+        x = 0;
+        y = -768;
+    }
+    void RainInit2() {
+        x = 0;
+        y = -768;
     }
 };
