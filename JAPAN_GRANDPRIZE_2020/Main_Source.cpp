@@ -27,6 +27,8 @@ controler g_button;
 
 int g_game_stage;			//ステージをセレクト
 enemyInfo* g_enemy;			// 敵の情報
+
+int g_speedLevel;
 /*********************************************
 
 * 関数のプロトタイプ宣言

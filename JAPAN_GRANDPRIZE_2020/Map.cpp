@@ -5,7 +5,6 @@
 #include "Map.h"
 #include "Select.h"
 
-
 #define SCREEN_WIDTH (1024)	// 画面の横幅
 #define SCROLL_SPEED (8.0F)	// マップのスクロールするスピード
 mapInfo g_map[SCROLL_MAX];
@@ -39,7 +38,8 @@ void MapMove() {
 
 // スクロール加算処理
 void Scroll(float *mapX) {
-	float moveX = SCROLL_SPEED;
+	//float moveX = SCROLL_SPEED;
+	float moveX = g_speedLevel;
 	
 	*mapX -= moveX;
 }
