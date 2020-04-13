@@ -3,7 +3,7 @@
 #include "DxLib.h"
 #include "Map.h"
 
-#define ENEMY_MAX 10
+#define ENEMY_MAX 5
 #define GROUND 450
 
 // マウスの入力状態
@@ -55,6 +55,13 @@ struct enemyInfo {
     void Init() { x = 1280; y = GROUND; }
 
 };
+
+struct enemyType {
+    enemyInfo fly;
+    enemyInfo walk;
+
+};
+
 // マップの情報
 struct mapInfo {
     float x, y;
