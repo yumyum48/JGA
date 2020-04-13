@@ -3,6 +3,8 @@
 #include "DxLib.h"
 #include "Map.h"
 
+#define ENEMY_MAX 10
+
 // マウスの入力状態
 struct mouse {
     int mouseX, mouseY;
@@ -49,7 +51,7 @@ struct enemyInfo {
     int x = 1280;
     int y = 600;
 
-    void Init() { x = 0; y = 450; }
+    void Init() { x = 1280; y = 450; }
 
 };
 // マップの情報
