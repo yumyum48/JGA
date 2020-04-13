@@ -23,37 +23,11 @@ void RainMove() {
 	g_rain[0].y += SCROLL_SPEED;
 	g_rain[1].y += SCROLL_SPEED;
 
-	if (g_rain[0].y > 0)g_rain[0].RainInit2();
-	if (g_rain[1].y > 0)g_rain[1].RainInit2();
+	if (g_rain[0].y > 0)g_rain[0].RainInit1();
+	if (g_rain[1].y > 0)g_rain[1].RainInit1();
 }
 
 void RainInit() {
 	g_rain[0].RainInit1();
-	g_rain[1].RainInit2();
+	g_rain[1].RainInit1();
 }
-
-
-/////////
-/// GamePlay.cpp ‚ÌƒQ[ƒ€ƒvƒŒƒC‚Ì•`‰æ“®‚«‚É RainDisp();ARainMove(); ‚ğ‚»‚ê‚¼‚ê’Ç‰Á
-
-/// Init.cpp ‚Ì GameInit() ‚É RainInit(); ‚ğ’Ç‰Á
-
-/*  loadPic.cpp ‚Ì LoadPicture() ‚É
-	   if ((g_pic.rain[0] = LoadGraph("image/RainLarge.png")) == -1) return -1;
-	   if ((g_pic.rain[1] = LoadGraph("image/RainLarge.png")) == -1) return -1;
-	‚ğ’Ç‰Á */
-
-/*  Struct.h ‚É
-// ‰J‚Ìî•ñ
-struct rainInfo {
-	int x, y;
-	void RainInit1() {
-		x = 0;
-		y = -768;
-	}
-	void RainInit2() {
-		x = 0;
-		y = -768;
-	}
-};
-   ‚ğ’Ç‰Á */

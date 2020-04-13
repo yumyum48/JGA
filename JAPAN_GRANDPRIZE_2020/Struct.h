@@ -76,8 +76,4 @@ struct rainInfo {
         x = 0;
         y = -768;
     }
-    void RainInit2() {
-        x = 0;
-        y = -768;
-    }
 };
