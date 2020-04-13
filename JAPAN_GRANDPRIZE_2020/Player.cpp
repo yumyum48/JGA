@@ -24,8 +24,8 @@ void PlayerDisp() {
 
 void PlayerMove() {
 
-	if (++g_time % 8 == 0) g_anime++;
-	if (g_anime > 9) g_anime = 0;
+	if (++g_time % 4 == 0) g_anime++;
+	if (g_anime > 7) g_anime = 0;
 
 	//ジャンプ処理(×ボタン)
 	if (g_player.jumpFlg == FALSE && g_button.crossButton == true) {
