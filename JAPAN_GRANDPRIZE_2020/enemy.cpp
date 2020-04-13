@@ -10,10 +10,9 @@ int flyEnemy_pop = 0;
 
 void EnemyDisp() {
 	
-	//static int cnt = 0;
-	//if (cnt++ % 10 == 0) {
-	if (walkEnemy_pop < ENEMY_MAX) {
-		if (GetRand(10) == 5) walkEnemy_pop += 1;
+	// 歩くエネミーが(出現最大数-飛ぶエネミー)より小さければ歩くエネミーを出す
+	if (walkEnemy_pop < ENEMY_MAX - flyEnemy_pop) {
+		if (GetRand(20) == 5) walkEnemy_pop += 1;
 	}
 	//}
 	// 敵の数を配列に記憶
@@ -31,10 +30,11 @@ void EnemyMove() {
 		g_enemy[i].walk.y = GROUND;
 
 		if (g_enemy[i].walk.x < 0) {
-			for (int j = 0; j < ENEMY_MAX - 1; j++) {
-				g_enemy[i + j].walk.x = g_enemy[i + j + 1].walk.x;
+			for (int j = 0; j < walkEnemy_pop - 1; j++) {
+				g_enemy[i + j].walk = g_enemy[i + j + 1].walk;
 			}
 			walkEnemy_pop -= 1;
+			g_enemy[i].walk.Init();
 		}
 
 		if (g_button.circleButton == true) g_enemy[i].walk.x = 1280;
