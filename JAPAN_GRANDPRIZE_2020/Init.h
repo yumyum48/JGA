@@ -1,3 +1,3 @@
 #pragma once
 
-void GameInit();
+void GameInit();	// ƒQ[ƒ€‘S”Ê‚Ì‰Šú‰»ˆ—

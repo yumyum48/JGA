@@ -1,8 +1,8 @@
 #pragma once
 
-void StageSelect();
-void SelectDisp();
-void SpeedSelect();
+void StageSelect();				// ステージのセレクト処理
+void SelectDisp();				// ステージのセレクトの表示処理
+void SpeedSelect();				// ステージのセレクトの動きの処理
 
 extern int g_game_stage;		//ステージをセレクト
 extern int g_speedLevel;		//スクロール速度の選択

@@ -27,53 +27,61 @@ struct controler {
 
 // 画像の種類
 struct image {
-    int Block;
-    int QBlock;
-    int player[10];
-    int enemy;
-    int map[MAP_MAX * SCROLL_MAX];
-    int rain[2];
+    int Block;                      // 仮
+    int QBlock;                     // 仮
+    int player[10];                 // プレイヤーの画像
+    int enemy;                      // エネミーの画像
+    int map[MAP_MAX * SCROLL_MAX];  // マップの画像
+    int rain[2];                    // 雨の画像
 
 };
 
 // プレイヤーの情報
 struct playerInfo {
-    int x, y;
-    int hp;
-    bool jumpFlg;
-    bool attackFlg;
+    int x, y;       // プレイヤーのX,Y座標
+    int hp;         // プレイヤーのHP
+    bool jumpFlg;   // ジャンプフラグ
+    bool attackFlg; // 攻撃しているかどうかのフラグ
 
-    void Init() { x = 100; y = GROUND; hp = 100; }
+    void Init() {   // プレイヤーの初期化
+        x = 100; 
+        y = GROUND; 
+        hp = 100;
+    }
 
 };
 
 // 敵の情報
 struct enemyInfo {
-    int x = 1280;
-    int y = 600;
-
-    void Init() { x = 1280; y = GROUND; }
+    int x;
+    int y;
+    bool flg;
+    void Init() {   // 敵の初期化
+        x = 1280;     // 敵のX座標の初期位置
+        y = GROUND;   // 敵のY座標の初期位置
+        flg = FALSE;  // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+    }
 
 };
 
-struct enemyType {
-    enemyInfo fly;
-    enemyInfo walk;
+struct enemyType {  // 敵の種類
+    enemyInfo fly;  // 飛ぶ敵
+    enemyInfo walk; // 歩く敵
 
 };
 
 // マップの情報
 struct mapInfo {
-    float x, y;
-    void MapInit1() {
+    float x, y; // マップのX,Y座標
+    void MapInit1() {   // スクロール１の座標
         x = 0;
         y = 0;
     }
-    void MapInit2() {
+    void MapInit2() {   // スクロール２の座標
         x = 1024;
         y = 0;
     }
-    void MapInit3() {
+    void MapInit3() {   // スクロール３の座標
         x = 2048;
         y = 0;
     }
@@ -81,8 +89,8 @@ struct mapInfo {
 
 // 雨の情報
 struct rainInfo {
-    int x, y;
-    void RainInit1() {
+    int x, y;           // X,Y座標
+    void RainInit1() {  // 初期化
         x = 0;
         y = -768;
     }

@@ -60,6 +60,7 @@ void PlayerMove() {
 
 }
 
+// ƒvƒŒƒCƒ„[‚Ì‰Šú‰»ˆ—
 void PlayerInit() {
 	g_player.Init();
 }

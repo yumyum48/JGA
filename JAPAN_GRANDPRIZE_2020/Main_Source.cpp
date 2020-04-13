@@ -17,18 +17,18 @@
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-mouse g_mouseInfo;			// マウスの状態管理
-image g_pic;				// 画像の管理
-key g_keyInfo;				// キーボードの状態管理
-int g_gameScene;			// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
+mouse g_mouseInfo;				// マウスの状態管理
+image g_pic;					// 画像の管理
+key g_keyInfo;					// キーボードの状態管理
+int g_gameScene;				// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
 
 DINPUT_JOYSTATE g_controler;
 controler g_button;
 
-int g_game_stage;			//ステージをセレクト
-enemyType g_enemy[ENEMY_MAX];			// 敵の情報
+int g_game_stage;				//ステージをセレクト
+enemyType g_enemy[ENEMY_MAX];	// 敵の情報
 
-int g_speedLevel;
+int g_speedLevel;				// スクロールレベルの設定を保存
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -47,6 +47,7 @@ void GameScene(int gameScene);	// 画面のシーン管理
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_
 	HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd) {
 
+	// フルスクリーンにしないかどうか TRUE:しない FALSE:する
 	ChangeWindowMode(TRUE);
 
 	// ウィンドウ画面の大きさ
@@ -107,12 +108,13 @@ int Main(void) {
 	return 0;
 }
 
+// ゲームシーンの管理
 void GameScene(int gameScene) {
 	
 	switch (gameScene){
-	case GAME_TYTLE:	StageSelect();  break;	 // ゲームの描画
-	case GAME_SELECT:				 break;
-	case GAME_PLAY:	    GamePlay();	 break;
+	case GAME_TYTLE:	StageSelect();  break;	 // ゲームタイトル
+	case GAME_SELECT:				 break;		 // ゲームセレクト
+	case GAME_PLAY:	    GamePlay();	 break;		 // ゲームプレイ
 	}
 }
 

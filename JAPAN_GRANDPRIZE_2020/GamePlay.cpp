@@ -18,18 +18,18 @@ void GamePlay() {
 void GamePlayDisp() {
 	
 	MapDisp();		// マップの描画
-	EnemyDisp();
+	EnemyDisp();	// エネミーの描画
 	PlayerDisp();	// プレイヤーの描画
-	RainDisp();
+	RainDisp();		// 雨の描画
 	
 }
 
 // ゲームプレイの動き
 void GamePlayMove() {
 	MapMove();		// マップの動き
-	EnemyMove();
-	PlayerMove();
-	RainMove();
+	EnemyMove();	// エネミーの動き
+	PlayerMove();	// プレイヤーの動き
+	RainMove();		// 雨の動き
 }
 
 
