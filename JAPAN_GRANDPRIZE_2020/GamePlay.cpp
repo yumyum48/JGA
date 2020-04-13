@@ -18,7 +18,7 @@ void GamePlay() {
 void GamePlayDisp() {
 	
 	MapDisp();		// マップの描画
-	//EnemyDisp();
+	EnemyDisp();
 	PlayerDisp();	// プレイヤーの描画
 	RainDisp();
 	
@@ -27,7 +27,7 @@ void GamePlayDisp() {
 // ゲームプレイの動き
 void GamePlayMove() {
 	MapMove();		// マップの動き
-	//EnemyMove();
+	EnemyMove();
 	PlayerMove();
 	RainMove();
 }

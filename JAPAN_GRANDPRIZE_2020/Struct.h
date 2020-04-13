@@ -4,6 +4,7 @@
 #include "Map.h"
 
 #define ENEMY_MAX 10
+#define GROUND 450
 
 // マウスの入力状態
 struct mouse {
@@ -42,7 +43,7 @@ struct playerInfo {
     bool jumpFlg;
     bool attackFlg;
 
-    void Init() { x = 100; y = 450; hp = 100; }
+    void Init() { x = 100; y = GROUND; hp = 100; }
 
 };
 
@@ -51,7 +52,7 @@ struct enemyInfo {
     int x = 1280;
     int y = 600;
 
-    void Init() { x = 1280; y = 450; }
+    void Init() { x = 1280; y = GROUND; }
 
 };
 // マップの情報
