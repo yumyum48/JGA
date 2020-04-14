@@ -21,6 +21,8 @@ void PlayerDisp() {
 	if (anime > 7) anime = 0;
 	DrawGraph(g_player.x, g_player.y, g_pic.player[anime], TRUE);
 	DrawFormatString(400, 0, 0xffffff, "%d", g_player.hp);
+
+	
 }
 
 void PlayerMove() {
@@ -66,19 +68,43 @@ void PlayerControl() {
 	if (g_button.squareButton == true) {
 
 	}
+
+	static int skill = 0;
+	if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
+		skill = 1;
+	}
+	
+	if (skill == 1) {
+		EnemyLockOn();
+		if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
+			skill = 0;
+		}
+	}
+	
 }
 
 // 敵を間合いに入ったらロックオンをする処理
 void EnemyLockOn(){
+	DrawBox(g_player.x + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, g_player.x + PLAYER_WIDTH + PLAYER_WIDTH, 10, 0xFF0000, 0);
+	for (int i = 0; i < ENEMY_MAX; i++) {
+		
+		if( (g_enemy[i].walk.flg == TRUE)
+		&&  (PicHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y) == 1) ){
+			DrawBox(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT, 0xFF0000, 1);
+			if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
+				g_player.x = g_enemy[i].walk.x-PLAYER_WIDTH;
+				g_enemy[i].walk.flg = FALSE;
+			}
+		}
+	}
 	
-	if (PicHitCheck);
 }
 
 // プレイヤーの画像と敵の画像の当たり判定
-int PicHitCheck(int ex, int ey, int enemyNum) {
+int PicHitCheck(int ex, int ey) {
 
-	if (( g_player.x <= ex + ENEMY_WIDTH)		// 敵のX座標が、プレイヤーのX座標内だったら真
-		&& (g_player.x + PLAYER_WIDTH>= ex)
+	if (( g_player.x + PLAYER_WIDTH <= ex + ENEMY_WIDTH)		// 敵のX座標が、プレイヤーのX座標内だったら真
+		&& (g_player.x + PLAYER_WIDTH + PLAYER_WIDTH >= ex)
 		&& (g_player.y <= ey + ENEMY_HEIGHT)		// 敵のY座標が、プレイヤーのY座標内だったら真
 		&& (g_player.y + PLAYER_HEIGHT >= ey)) {
 		return 1;

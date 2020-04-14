@@ -10,8 +10,9 @@
 
 // ゲームプレイのメイン関数
 void GamePlay() {
-	GamePlayMove();
+	// デバッグ用で一旦入れ替えGamePlayMove();
 	GamePlayDisp();
+	GamePlayMove();
 	
 }
 // ゲームプレイの描画
