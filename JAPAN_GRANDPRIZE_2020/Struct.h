@@ -5,6 +5,10 @@
 
 #define ENEMY_MAX 5
 #define GROUND 450
+#define PLAYER_WIDTH	 (280)		// プレイヤーの横幅
+#define PLAYER_HEIGHT	 (200)		// プレイヤーの縦幅
+#define ENEMY_WIDTH		 (574 * 0.5)// エネミーの横幅
+#define ENEMY_HEIGHT	 (545 * 0.5)// エネミーの縦幅
 
 // マウスの入力状態
 struct mouse {
