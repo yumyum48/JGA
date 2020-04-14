@@ -97,13 +97,12 @@ void EnemyLockOn(){
 			}
 		}
 	}
-	
 }
 
 // プレイヤーの画像と敵の画像の当たり判定
 int PicHitCheck(int ex, int ey) {
 
-	if (( g_player.x + PLAYER_WIDTH <= ex + ENEMY_WIDTH)		// 敵のX座標が、プレイヤーのX座標内だったら真
+	if (( (long)g_player.x + PLAYER_WIDTH <= ex + ENEMY_WIDTH)		// 敵のX座標が、プレイヤーのX座標内だったら真
 		&& (g_player.x + PLAYER_WIDTH + PLAYER_WIDTH >= ex)
 		&& (g_player.y <= ey + ENEMY_HEIGHT)		// 敵のY座標が、プレイヤーのY座標内だったら真
 		&& (g_player.y + PLAYER_HEIGHT >= ey)) {
