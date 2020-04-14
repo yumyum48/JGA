@@ -12,10 +12,11 @@ void EnemyDisp() {
 	
 	// 歩くエネミーが(出現最大数-飛ぶエネミー)より小さければ歩くエネミーを出す
 	//if (walkEnemy_pop < ENEMY_MAX - flyEnemy_pop) {
-	if (GetRand(100) == 5) {
+	if (GetRand(80) == 1) {
 		for (int i = 0; i < ENEMY_MAX; i++) {
 			if (g_enemy[i].walk.flg == FALSE) {
 				g_enemy[i].walk.flg = TRUE;
+				break;
 				//walkEnemy_pop += 1;
 			}
 		}
@@ -33,7 +34,7 @@ void EnemyDisp() {
 
 void EnemyMove() {
 
-	for (int i = 0; i < walkEnemy_pop; i++) {
+	for (int i = 0; i < ENEMY_MAX; i++) {
 		if (g_enemy[i].walk.flg == TRUE) {
 			g_enemy[i].walk.x -= 10;
 			g_enemy[i].walk.y = GROUND;
@@ -50,7 +51,7 @@ void EnemyMove() {
 			g_enemy[i].walk.Init();
 		}
 
-		if (g_button.circleButton == true) g_enemy[i].walk.x = 1280;
+		if (g_button.circleButton == true) g_enemy[i].walk.Init();
 	}
 }
 
