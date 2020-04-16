@@ -91,21 +91,32 @@ void PlayerControl() {
 // 敵を間合いに入ったらロックオンをする処理
 void EnemyLockOn(){
 	DrawBox(g_player.x + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, g_player.x + PLAYER_WIDTH + PLAYER_WIDTH, 10, 0xFF0000, 0);
+	EnemyCut();		// エネミーを倒す処理
+}
+
+// プレイヤーの間合いに入っている敵を倒す処理
+void EnemyCut() {
 	for (int i = 0; i < ENEMY_MAX; i++) {
-		
+		// 歩く敵
 		if( (g_enemy[i].walk.flg == TRUE)
 		&&  (PicHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y) == 1) ){
 			DrawBox(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT, 0xFF0000, 1);
-			//if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
 			if(g_button.circleButton == true){
 				g_player.x = g_enemy[i].walk.x-PLAYER_WIDTH;
-				//g_enemy[i].walk.flg = FALSE;
 				g_enemy[i].walk.Init();
+			}
+		}
+		// 飛んでいる敵
+		if ((g_enemy[i].fly.flg == TRUE)
+			&& (PicHitCheck(g_enemy[i].fly.x, g_enemy[i].fly.y) == 1)) {
+			DrawBox(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT, 0xFF0000, 1);
+			if (g_button.circleButton == true) {
+				g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
+				g_enemy[i].fly.Init();
 			}
 		}
 	}
 }
-
 // プレイヤーの画像と敵の画像の当たり判定
 int PicHitCheck(int ex, int ey) {
 
