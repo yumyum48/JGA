@@ -13,13 +13,14 @@
 playerInfo g_player;
 
 float g_speed = 0.0F;	//落ちる速度
+int g_motion = 0;
 
 void PlayerDisp() {
 	static int anime = 0;			// プレイヤーの画像を変える
 	static int time = 0;			// 画像を切り替えるタイミング調整
 	if (++time % 4 == 0) anime++;	
 	if (anime > 7) anime = 0;
-	DrawGraph(g_player.x, g_player.y, g_pic.player[anime], TRUE);
+	DrawGraph(g_player.x, g_player.y, g_pic.player[anime + g_motion], TRUE);
 	DrawFormatString(400, 0, 0xffffff, "%d", g_player.hp);
 
 	
@@ -54,7 +55,7 @@ void PlayerJump() {
 void PlayerControl() {
 	//攻撃(〇ボタン)
 	if (g_player.attackFlg == FALSE && g_button.circleButton == true) {
-		g_player.x += 500.0F;
+		//g_player.x += 500.0F;
 		g_player.attackFlg = TRUE;
 	}
 	if (g_player.attackFlg == TRUE && g_player.x > 100) {
@@ -70,14 +71,18 @@ void PlayerControl() {
 	}
 
 	static int skill = 0;
-	if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
+	//if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
+	if(g_button.triangleButton == true){
 		skill = 1;
+		g_motion = 8;
 	}
 	
 	if (skill == 1) {
 		EnemyLockOn();
 		if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
+		//if (g_button.triangleButton == true) {
 			skill = 0;
+			g_motion = 0;
 		}
 	}
 	
@@ -91,9 +96,11 @@ void EnemyLockOn(){
 		if( (g_enemy[i].walk.flg == TRUE)
 		&&  (PicHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y) == 1) ){
 			DrawBox(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT, 0xFF0000, 1);
-			if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
+			//if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
+			if(g_button.circleButton == true){
 				g_player.x = g_enemy[i].walk.x-PLAYER_WIDTH;
-				g_enemy[i].walk.flg = FALSE;
+				//g_enemy[i].walk.flg = FALSE;
+				g_enemy[i].walk.Init();
 			}
 		}
 	}

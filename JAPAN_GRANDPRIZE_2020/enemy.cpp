@@ -8,16 +8,21 @@
 int walkEnemy_pop = 0;		// 敵の最大数
 int flyEnemy_pop = 0;
 
+int g_coolTime = 0;
+
 void EnemyDisp() {
 	
 	// 歩くエネミーが(出現最大数-飛ぶエネミー)より小さければ歩くエネミーを出す
 	//if (walkEnemy_pop < ENEMY_MAX - flyEnemy_pop) {
-	if (GetRand(80) == 1) {
-		for (int i = 0; i < ENEMY_MAX; i++) {
-			if (g_enemy[i].walk.flg == FALSE) {
-				g_enemy[i].walk.flg = TRUE;
-				break;
-				//walkEnemy_pop += 1;
+	if (++g_coolTime > 10) {
+		if (GetRand(10) == 1) {
+			for (int i = 0; i < ENEMY_MAX; i++) {
+				if (g_enemy[i].walk.flg == FALSE) {
+					g_enemy[i].walk.flg = TRUE;
+					g_coolTime = 0;
+					break;
+					//walkEnemy_pop += 1;
+				}
 			}
 		}
 	}
@@ -26,9 +31,14 @@ void EnemyDisp() {
 	// 敵の数を配列に記憶
 	//g_enemy = new enemyInfo[enemy_MAX];
 
+	DrawFormatString(100, 0, 0xff0000, "%d", g_coolTime);
+
 	for (int i = 0; i < ENEMY_MAX; i++) {
-		if(g_enemy[i].walk.flg == TRUE)
+		if(g_enemy[i].walk.flg == TRUE)		//地上の敵描画
 			DrawRotaGraph(g_enemy[i].walk.x, g_enemy[i].walk.y, 0.2, 0.0, g_pic.enemy, TRUE);
+		if (g_enemy[i].fly.flg == TRUE)		//空中の敵描画
+			//DrawRotaGraph(g_enemy[i].fly.x, g_enemy[i].fly.y, 0.2, 0.0, g_pic.enemy, TRUE);
+			DrawBox(g_enemy[i].fly.x, g_enemy[i].fly.y, g_enemy[i].fly.x + 50, g_enemy[i].fly.y + 50,0x00ff00,FALSE);
 	}
 }
 
@@ -46,12 +56,12 @@ void EnemyMove() {
 			}
 			walkEnemy_pop -= 1;*/
 
-			g_enemy[i].walk.flg = FALSE;
+			//g_enemy[i].walk.flg = FALSE;
 
 			g_enemy[i].walk.Init();
 		}
 
-		if (g_button.circleButton == true) g_enemy[i].walk.Init();
+		//if (g_button.circleButton == true) g_enemy[i].walk.Init();
 	}
 }
 
