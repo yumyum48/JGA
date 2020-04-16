@@ -74,6 +74,17 @@ struct enemyType {  // 敵の種類
 
 };
 
+struct bossInfo {     // ボスの情報
+    int hp;           // 体力
+    int x, y;         // 座標
+    int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
+    bool attackFlg;   // 攻撃中かどうかのフラグ
+};
+
+struct bossType {
+    bossInfo stage1;  // ステージ１のボス
+    bossInfo stage2;  // ステージ２のボス
+};
 // マップの情報
 struct mapInfo {
     float x, y; // マップのX,Y座標
