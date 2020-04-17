@@ -13,14 +13,16 @@
 playerInfo g_player;
 
 float g_speed = 0.0F;	//落ちる速度
-int g_motion = 0;
+int g_resetMotion = 0;	//アニメーション始点
+int g_maxMotion = 7;	//終点
 
 void PlayerDisp() {
 	static int anime = 0;			// プレイヤーの画像を変える
 	static int time = 0;			// 画像を切り替えるタイミング調整
 	if (++time % 4 == 0) anime++;	
-	if (anime > 7) anime = 0;
-	DrawGraph(g_player.x, g_player.y, g_pic.player[anime + g_motion], TRUE);
+	if (anime < g_resetMotion || anime > g_maxMotion) anime = g_resetMotion;
+
+	DrawGraph(g_player.x, g_player.y, g_pic.player[anime], TRUE);
 	DrawFormatString(400, 0, 0xffffff, "%d", g_player.hp);
 
 	
@@ -60,8 +62,7 @@ void PlayerControl() {
 	}
 	if (g_player.attackFlg == TRUE && g_player.x > 100) {
 		g_player.x -= 10.0F;
-	}
-	else if (g_player.attackFlg == TRUE) {
+	}else if (g_player.attackFlg == TRUE) {
 		g_player.attackFlg = FALSE;
 	}
 
@@ -74,7 +75,6 @@ void PlayerControl() {
 	//if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
 	if(g_button.triangleButton == true){
 		skill = 1;
-		g_motion = 8;
 	}
 	
 	if (skill == 1) {
@@ -82,10 +82,40 @@ void PlayerControl() {
 		if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
 		//if (g_button.triangleButton == true) {
 			skill = 0;
-			g_motion = 0;
+		}
+		if (g_player.jumpFlg == TRUE) {
+			if (g_speed < 0) {
+				g_resetMotion = 24;
+				g_maxMotion = 24;
+			} else {
+				g_resetMotion = 25;
+				g_maxMotion = 26;
+			}
+		}else {
+			g_resetMotion = 8;
+			g_maxMotion = 15;
+		}
+	} else if (skill == 0) {
+
+		if (g_player.jumpFlg == TRUE) {
+			if (g_speed < 0) {
+				g_resetMotion = 16;
+				g_maxMotion = 16;
+			}
+			else {
+				g_resetMotion = 17;
+				g_maxMotion = 18;
+			}
+		}
+		else {
+			g_resetMotion = 0;
+			g_maxMotion = 7;
 		}
 	}
-	
+	if (g_player.attackFlg == TRUE) {
+		g_resetMotion = 32;
+		g_maxMotion = 32;
+	}
 }
 
 // 敵を間合いに入ったらロックオンをする処理

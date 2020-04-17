@@ -33,7 +33,7 @@ struct controler {
 struct image {
     int Block;                      // 仮
     int QBlock;                     // 仮
-    int player[16];                 // プレイヤーの画像
+    int player[56];                 // プレイヤーの画像
     int enemy;                      // エネミーの画像
     int map[MAP_MAX * SCROLL_MAX];  // マップの画像
     int rain[2];                    // 雨の画像

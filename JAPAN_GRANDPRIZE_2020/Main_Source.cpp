@@ -29,6 +29,8 @@ int g_game_stage;				//ステージをセレクト
 enemyType g_enemy[ENEMY_MAX];	// 敵の情報
 
 int g_speedLevel;				// スクロールレベルの設定を保存
+
+bossType g_boss[MAP_MAX];		//ボスの情報
 /*********************************************
 
 * 関数のプロトタイプ宣言

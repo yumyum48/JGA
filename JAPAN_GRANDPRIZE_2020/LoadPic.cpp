@@ -15,7 +15,7 @@ int LoadPicture() {
 	if ((g_pic.player[7] = LoadGraph("image/3a.png")) == -1) return -1;
 	//if ((g_pic.player[8] = LoadGraph("image/3.png")) == -1) return -1;
 	//if ((g_pic.player[9] = LoadGraph("image/5.png")) == -1) return -1;*/
-	if (LoadDivGraph("image/player.png", 16, 8, 2, 280, 200, g_pic.player, 0) == -1) return -1;
+	if (LoadDivGraph("image/player2.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
 	if ((g_pic.enemy = LoadGraph("image/enemy.png")) == -1) return -1;
 	if (LoadDivGraph("image/mori8sute.png", 24, 3, 8, 1024, 768, g_pic.map, 0) == -1)
 		return -1;

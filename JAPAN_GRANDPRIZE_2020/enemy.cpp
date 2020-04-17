@@ -10,6 +10,7 @@ int flyEnemy_pop = 0;
 
 int g_coolTime = 0;
 
+// 敵の描画
 void EnemyDisp() {
 	
 	// 歩くエネミーが(出現最大数-飛ぶエネミー)より小さければ歩くエネミーを出す
@@ -48,6 +49,7 @@ void EnemyDisp() {
 	}
 }
 
+// 敵の動き
 void EnemyMove() {
 
 	for (int i = 0; i < ENEMY_MAX; i++) {		//地上の敵
@@ -83,9 +85,22 @@ void EnemyMove() {
 	}
 }
 
+// 敵の初期化
 void EnemyInit() {
 	for (int i = 0; i < 3; i++) {
 		g_enemy[i].walk.Init();
 	}
 	walkEnemy_pop = 0;
+}
+
+// ボスの描画
+void BossDisp() {
+	// 仮置き
+	//DrawBox()
+	
+}
+
+// ボスの動き
+void BossMove () {
+
 }
