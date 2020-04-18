@@ -1,6 +1,7 @@
 #pragma once
 #include "DxLib.h"
 
+extern int g_enemybeat;	// エネミーを倒した数をカウントするグローバル変数
 
 void GamePlay();		// ゲームプレイのメイン関数
 void GamePlayDisp();	// ゲームプレイ中の描画処理

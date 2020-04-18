@@ -21,7 +21,7 @@ void StageSelect() {
 	}
 
 	//ｚで選択（デバック）
-	if (g_keyInfo.keyFlg & PAD_INPUT_A)
+	if (g_keyInfo.keyFlg & PAD_INPUT_3)
 		g_gameScene = GAME_PLAY;
 
 	SpeedSelect();
@@ -29,19 +29,19 @@ void StageSelect() {
 }
 
 void SelectDisp(void) {
-	int g_stageX = 455;		//ステージセレクトX座標
-	int g_stageY = 285;		//ステージセレクトY座標
-	int g_stageW = 305;		//ステージセレクト幅
-	int g_stageH = 298;		//ステージセレクト高さ
+	int stageX = 455;		//ステージセレクトX座標
+	int stageY = 285;		//ステージセレクトY座標
+	int stageW = 305;		//ステージセレクト幅
+	int stageH = 298;		//ステージセレクト高さ
 
-	float g_x;
-	float g_y;
+	float g_x;	// 
+	float g_y;	// 
 
 	for (int i = 0; i < STAGE_NUMBER; i++) {
 		float bb = i % STAGE_NUMBER;
 		float angle = (DX_TWO_PI / STAGE_NUMBER * bb) + 6.0675;
-		g_x = g_stageX + cos(angle) * g_stageW;
-		g_y = g_stageY + sin(angle) * g_stageH;
+		g_x = stageX + cos(angle) * stageW;
+		g_y = stageY + sin(angle) * stageH;
 
 		//ステージ表示
 		DrawBox( g_x , g_y ,g_x + 180,g_y + 180, 0x00ff00, TRUE);

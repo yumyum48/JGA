@@ -38,8 +38,8 @@ void MapMove() {
 
 // ƒXƒNƒ[ƒ‹‰ÁZˆ—
 void Scroll(float *mapX) {
-	//float moveX = SCROLL_SPEED;
-	float moveX = g_speedLevel;
+	float moveX = SCROLL_SPEED;
+	//float moveX = g_speedLevel;
 	
 	*mapX -= moveX;
 }

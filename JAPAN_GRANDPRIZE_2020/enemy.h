@@ -2,7 +2,8 @@
 #include "DxLib.h"
 #include "Struct.h"
 #include "Map.h"
-
+#define ENEMY_WIDTH		 (574 * 0.2)// エネミーの横幅
+#define ENEMY_HEIGHT	 (545 * 0.2)// エネミーの縦幅
 extern enemyType g_enemy[ENEMY_MAX];	// 敵の情報
 
 extern bossType g_boss[MAP_MAX];

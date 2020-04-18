@@ -12,6 +12,26 @@
 #include "Dynadelete.h"
 
 #define DEBUG_TEXT_ON
+
+
+/*********************************************
+
+* メモ
+	
+	PAD_INPUT_A	// □ボタン
+	PAD_INPUT_B // ×ボタン
+	PAD_INUPT_C	// 〇ボタン
+	PAD_INPUT_D	// Rスティック押し込み！？
+	PAD_INPUT_F	// Lスティック押し込み
+	PAD_INPUT_H	// パッド押し込み
+	
+	PAD_INPUT_1 // □ボタン
+	PAD_INPUT_2 // ×ボタン
+	PAD_INPUT_3 // 〇ボタン
+	PAD_INPUT_4 // △ボタン
+
+*/////////////////////////////////////////////
+
 /*********************************************
 
 * グローバル変数の宣言
@@ -31,6 +51,8 @@ enemyType g_enemy[ENEMY_MAX];	// 敵の情報
 int g_speedLevel;				// スクロールレベルの設定を保存
 
 bossType g_boss[MAP_MAX];		//ボスの情報
+
+int g_enemybeat;				// エネミーを倒した数をカウントする
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -39,7 +61,6 @@ bossType g_boss[MAP_MAX];		//ボスの情報
 // ゲームのメインプログラム
 int Main(void);					// ゲームのメイン処理
 void GameScene(int gameScene);	// 画面のシーン管理
-
 
 /**************************************************************************
 
@@ -89,11 +110,11 @@ int Main(void) {
 		// マウス、キーボードの座標取得や、入力情報の取得
 		ControlInfo(&g_mouseInfo, &g_keyInfo);
 
-		// ゲームのシーン切り替え
-		GameScene(g_gameScene);
-
 		//コントローラーチェック
 		ControlerCheck();
+
+		// ゲームシーンの中を見て適当なゲーム画面を描画
+		GameScene(g_gameScene);
 		
 		// デバッグモード(変数の中の文字を描画)
 #ifdef DEBUG_TEXT_ON
@@ -115,8 +136,11 @@ void GameScene(int gameScene) {
 	
 	switch (gameScene){
 	case GAME_TYTLE:	StageSelect();  break;	 // ゲームタイトル
-	case GAME_SELECT:				 break;		 // ゲームセレクト
-	case GAME_PLAY:	    GamePlay();	 break;		 // ゲームプレイ
+	case GAME_SELECT:					break;	 // ゲームセレクト
+	case GAME_PLAY:	    GamePlay();		break;	 // ゲームプレイ	
+	case GAME_OVER:						break;	 // ゲームオーバー
+	case GAME_CLEAR:					break;	 // ゲームクリア
+	case GAME_STAGE_CLEAR:				break;	 // ゲームステージクリア
 	}
 }
 

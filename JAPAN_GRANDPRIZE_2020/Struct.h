@@ -5,10 +5,8 @@
 
 #define ENEMY_MAX 5
 #define GROUND 450
-#define PLAYER_WIDTH	 (280)		// プレイヤーの横幅
-#define PLAYER_HEIGHT	 (200)		// プレイヤーの縦幅
-#define ENEMY_WIDTH		 (574 * 0.5)// エネミーの横幅
-#define ENEMY_HEIGHT	 (545 * 0.5)// エネミーの縦幅
+
+
 
 // マウスの入力状態
 struct mouse {
@@ -60,9 +58,14 @@ struct enemyInfo {
     int x;
     int y;
     bool flg;
-    void Init() {   // 敵の初期化
+    void WalkInit() {   // 敵の初期化
         x = 1280;     // 敵のX座標の初期位置
-        y = GROUND;   // 敵のY座標の初期位置
+        y = GROUND + 30;   // 敵のY座標の初期位置
+        flg = FALSE;  // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+    }
+    void FlyInit() {
+        x = 1280;     // 敵のX座標の初期位置
+        y = GROUND - 30;   // 敵のY座標の初期位置
         flg = FALSE;  // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
     }
 
