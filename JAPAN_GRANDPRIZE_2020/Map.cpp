@@ -20,7 +20,7 @@ void MapDisp() {
 		//DrawFormatString(100, 100, 0xFF0000, "%d", g_game_stage);
 		// マップが画面外に入ったら次のところにセットされる
 		if (g_map[i].x + SCREEN_WIDTH < 0) {
-			g_map[i].x = SCREEN_WIDTH + SCREEN_WIDTH - SCROLL_SPEED;	// 移動分の量を引く
+			g_map[i].x = SCREEN_WIDTH + SCREEN_WIDTH - g_speedLevel;	// 移動分の量を引く
 		}
 	}
 
