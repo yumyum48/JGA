@@ -78,24 +78,33 @@ void SpeedSelect() {
 	if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
 		if (--speedSelect < 0) speedSelect = 2;
 	}
-
 	// スクロール速度の決定
-	if (/*(g_button.circleButton == TRUE && g_button.conFlg == 0) */
-		(g_keyInfo.keyFlg & PAD_INPUT_A)
-		&& (speedSelect == 0)) {
-		g_button.conFlg = 1;
+	if (speedSelect == 0) {
 		g_speedLevel = SPEED_EASY;
 	}
-	else if (/*(g_button.circleButton == TRUE && g_button.conFlg == 0) */
-		(g_keyInfo.keyFlg & PAD_INPUT_A)
-		&& (speedSelect == 1)) {
-		g_button.conFlg = 1;
+	if (speedSelect == 1) {
 		g_speedLevel = SPEED_NORMAL;
 	}
-	else if (/*(g_button.circleButton == TRUE && g_button.conFlg == 0)*/
-		(g_keyInfo.keyFlg & PAD_INPUT_A)
-		&& (speedSelect == 2)) {
-		g_button.conFlg = 1;
+	if (speedSelect == 2) {
 		g_speedLevel = SPEED_HARD;
 	}
+	//// スクロール速度の決定
+	//if (/*(g_button.circleButton == TRUE && g_button.conFlg == 0) */
+	//	(g_keyInfo.keyFlg & PAD_INPUT_A)
+	//	&& (speedSelect == 0)) {
+	//	//g_button.conFlg = 1;
+	//	g_speedLevel = SPEED_EASY;
+	//}
+	//else if (/*(g_button.circleButton == TRUE && g_button.conFlg == 0) */
+	//	(g_keyInfo.keyFlg & PAD_INPUT_A)
+	//	&& (speedSelect == 1)) {
+	//	//g_button.conFlg = 1;
+	//	g_speedLevel = SPEED_NORMAL;
+	//}
+	//else if (/*(g_button.circleButton == TRUE && g_button.conFlg == 0)*/
+	//	(g_keyInfo.keyFlg & PAD_INPUT_A)
+	//	&& (speedSelect == 2)) {
+	//	//g_button.conFlg = 1;
+	//	g_speedLevel = SPEED_HARD;
+	//}
 }
