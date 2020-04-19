@@ -4,7 +4,7 @@
 #include "Picture.h"
 #include "Controler.h"
 #include "enemy.h"
-
+#include "Boss.h"
 int walkEnemy_pop = 0;		// “G‚ÌÅ‘å”
 int flyEnemy_pop = 0;
 
@@ -12,7 +12,7 @@ int g_coolTime = 0;
 
 // “G‚Ì•`‰æ
 void EnemyDisp() {
-	
+
 	// ƒ{ƒX‚ª‚¢‚È‚¯‚ê‚Î“G‚ğo‚·
 	if (g_enemybeat < 10) {
 		if (++g_coolTime > 10) {
@@ -37,6 +37,9 @@ void EnemyDisp() {
 			}
 		}
 	}
+	else {
+		BossDisp[0]();		// ƒ{ƒX‚Ì•\¦
+	}
 
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		if(g_enemy[i].walk.flg == TRUE)		//’nã‚Ì“G•`‰æ
@@ -49,8 +52,11 @@ void EnemyDisp() {
 
 // “G‚Ì“®‚«
 void EnemyMove() {
-
-	for (int i = 0; i < ENEMY_MAX; i++) {		//’nã‚Ì“G
+	// “G‚ª‚¢‚È‚¢‚Æ‚«ƒ{ƒX‚Ì“®‚«‚ğ‹N“®
+	if (g_enemybeat >= 10) {
+		BossMove[0]();		// ƒ{ƒX‚Ì“®‚«
+	}
+	for (int i = 0; i < ENEMY_MAX; i++) {		//’nã‚Ì“G‚Ì“®‚«
 		if (g_enemy[i].walk.flg == TRUE) {
 			g_enemy[i].walk.x -= 10;
 			//g_enemy[i].walk.y = GROUND;
@@ -69,7 +75,7 @@ void EnemyMove() {
 
 		//if (g_button.circleButton == true) g_enemy[i].walk.Init();
 	}
-	for (int i = 0; i < ENEMY_MAX; i++) {		//‹ó’†‚Ì“G
+	for (int i = 0; i < ENEMY_MAX; i++) {		//‹ó’†‚Ì“G‚Ì“®‚«
 		if (g_enemy[i].fly.flg == TRUE) {
 			g_enemy[i].fly.x -= 12;
 			g_enemy[i].fly.y = GROUND - 200;

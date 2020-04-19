@@ -20,7 +20,7 @@ void GamePlayDisp() {
 	
 	MapDisp();						// マップの描画
 	EnemyDisp();					// エネミーの描画
-	BossDisp[0]();		// ボスの表示
+	
 	PlayerDisp();					// プレイヤーの描画
 	RainDisp();						// 雨の描画
 	
@@ -31,7 +31,7 @@ void GamePlayMove() {
 	MapMove();						// マップの動き
 	EnemyMove();					// エネミーの動き
 	PlayerMove();					// プレイヤーの動き
-	BossMove[0]();		// ボスの動き
+	
 	RainMove();						// 雨の動き
 }
 

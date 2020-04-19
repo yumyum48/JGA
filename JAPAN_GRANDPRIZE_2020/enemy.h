@@ -6,9 +6,9 @@
 #define ENEMY_HEIGHT	 (545 * 0.2)// ƒGƒlƒ~[‚Ìc•
 extern enemyType g_enemy[ENEMY_MAX];	// “G‚Ìî•ñ
 
-extern bossType g_boss[MAP_MAX];
 
-extern int g_killCount;
+
+//extern int g_killCount;
 
 void EnemyDisp();		// “G‚Ì•`‰æ
 void EnemyMove();		// “G‚Ì“®‚«

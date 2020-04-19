@@ -42,21 +42,28 @@ struct image {
 struct playerInfo {
     int x, y;       // プレイヤーのX,Y座標
     int hp;         // プレイヤーのHP
+    int skillGage;  // スキルのゲージ
     bool jumpFlg;   // ジャンプフラグ
     bool attackFlg; // 攻撃しているかどうかのフラグ
-
     void Init() {   // プレイヤーの初期化
         x = 100; 
         y = GROUND; 
         hp = 100;
+        attackFlg = FALSE;
+        jumpFlg = FALSE;
+        skillGage = 100;
     }
 
 };
 
 // 敵の情報
 struct enemyInfo {
-    int x;
-    int y;
+    enemyInfo() {
+        x = 1000;
+        y = GROUND + 30;
+    }
+    int x = 1000;
+    int y = GROUND + 30;
     bool flg;
     void WalkInit() {   // 敵の初期化
         x = 1280;     // 敵のX座標の初期位置
@@ -82,9 +89,17 @@ struct bossInfo {     // ボスの情報
     int x, y;         // 座標
     int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
     bool attackFlg;   // 攻撃中かどうかのフラグ
+
+    void Init_Stage1() {
+        hp = 3;
+        x = 700;
+        y = 400;
+        popflg = 0;
+        attackFlg = 0;
+    }
 };
 
-struct bossType {
+struct bossType {     // ボスの種類
     bossInfo stage1;  // ステージ１のボス
     bossInfo stage2;  // ステージ２のボス
 };

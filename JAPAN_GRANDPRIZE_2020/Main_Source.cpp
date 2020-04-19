@@ -50,9 +50,11 @@ enemyType g_enemy[ENEMY_MAX];	// 敵の情報
 
 int g_speedLevel;				// スクロールレベルの設定を保存
 
-bossType g_boss[MAP_MAX];		//ボスの情報
+bossInfo g_boss[MAP_MAX];		//ボスの情報
 
 int g_enemybeat;				// エネミーを倒した数をカウントする
+
+playerInfo g_player;			// プレイヤーの情報
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -140,7 +142,7 @@ void GameScene(int gameScene) {
 	case GAME_PLAY:	    GamePlay();		break;	 // ゲームプレイ	
 	case GAME_OVER:						break;	 // ゲームオーバー
 	case GAME_CLEAR:					break;	 // ゲームクリア
-	case GAME_STAGE_CLEAR:				break;	 // ゲームステージクリア
+	case GAME_STAGE_CLEAR:	g_gameScene = GAME_SELECT;			break;	 // ゲームステージクリア
 	}
 }
 
