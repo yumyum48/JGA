@@ -9,6 +9,7 @@
 #include "Controler.h"
 #include "Select.h"
 #include "GameScene.h"
+#include "Init.h"
 /*********************************************
 
 * ステージ１のボス
@@ -37,7 +38,7 @@ void BossHit() {
 	}
 
 	if (g_boss[0].hp <= 0) {
-		g_gameScene = GAME_STAGE_CLEAR;
+		GameInit();
 	}
 }
 // ボスの攻撃
