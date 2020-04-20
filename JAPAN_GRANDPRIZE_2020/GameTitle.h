@@ -4,3 +4,4 @@
 void GameTitle();
 void TitleDisp();
 void TitleMove();
+void TitleSound();
