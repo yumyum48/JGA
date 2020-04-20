@@ -160,7 +160,7 @@ void EnemyCut() {
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		// 歩く敵
 		if( (g_enemy[i].walk.flg == TRUE)
-		&&  (PicHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1) ){
+		&&  (PlayerInterval(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1) ){
 			DrawBox(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT, 0xFF0000, 1);
 			if(g_keyInfo.keyFlg & PAD_INPUT_3){
 				g_player.x = g_enemy[i].walk.x-PLAYER_WIDTH;
@@ -170,7 +170,7 @@ void EnemyCut() {
 		}
 		// 飛んでいる敵
 		if ((g_enemy[i].fly.flg == TRUE)
-			&& (PicHitCheck(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1)) {
+			&& (PlayerInterval(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1)) {
 			DrawBox(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT, 0xFF0000, 1);
 			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
 				g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
@@ -182,7 +182,7 @@ void EnemyCut() {
 	}
 }
 // プレイヤーの画像と敵の画像の当たり判定
-int PicHitCheck(int ex, int ey, int ew, int eh) {
+int PlayerInterval(int ex, int ey, int ew, int eh) {
 	
 	if (( (long int)g_player.x + (long int)PLAYER_WIDTH<= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
 		&& ((long int)g_player.x + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH >= ex)
