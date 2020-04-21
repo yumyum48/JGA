@@ -128,3 +128,22 @@ struct rainInfo {
         y = -768;
     }
 };
+
+// スクロール速度の低下に関する情報
+struct slowInfo {
+    float mag; // スクロール速度
+    float rainMag; // 雨のスクロール速度
+    int playerAnime; // アニメーション速度
+    void StandardMagInit() { // 初期化
+        mag = 1.0;
+        rainMag = 1.0;
+        playerAnime = 4;
+    }
+    void SlowMagDown() { // スクロール速度の低下
+        mag = 0.4;
+        playerAnime = 20;
+    }
+    void RainSpeedDowm() { // 雨のスクロール速度の低下
+        rainMag = 0.6;
+    }
+};

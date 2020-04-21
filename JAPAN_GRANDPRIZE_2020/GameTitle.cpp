@@ -12,8 +12,8 @@ const int g_spaceY = 120;
 
 // ゲームタイトルのメイン関数
 void GameTitle() {
-	TitleDisp();	
 	TitleMove();
+	TitleDisp();	
 }
 
 // タイトルの描画
@@ -23,6 +23,10 @@ void TitleDisp() {
 	DrawBox(412, g_StartY, 412 + bottunW, g_StartY + bottunH, 0x00ff00, FALSE);
 	DrawBox(412, g_StartY + g_spaceY, 412 + bottunW, g_StartY + g_spaceY + bottunH, 0x00ff00, FALSE);
 	DrawString(460, g_StartY + 10, "game select", 0xff0000, false);
+}
+
+void TitleSound() {
+
 }
 
 // タイトルでの動き
