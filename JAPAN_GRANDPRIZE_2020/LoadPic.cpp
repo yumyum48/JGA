@@ -17,8 +17,14 @@ int LoadPicture() {
 	//if ((g_pic.player[9] = LoadGraph("image/5.png")) == -1) return -1;*/
 	if (LoadDivGraph("image/player2.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
 	if ((g_pic.enemy = LoadGraph("image/enemy.png")) == -1) return -1;
-	if (LoadDivGraph("image/mori8sute.png", 24, 3, 8, 1024, 768, g_pic.map, 0) == -1)
+	/*if (LoadDivGraph("image/mori8sute.png", 24, 3, 8, 1024, 768, g_pic.map, 0) == -1)
+		return -1;*/
+
+	// マップ読み込み
+	if (LoadDivGraph("image/Stage1_main.png", 4, 4, 1, 250, 400, g_pic.map, 0) == -1)
 		return -1;
+	// マップ背景読み込み
+	if ((g_pic.backMap = LoadGraph("image/Stage1_Back.png")) == -1) return -1;
 	
 	if ((g_pic.Block = LoadGraph("image/block.bmp")) == -1) return -1;
 	/*
