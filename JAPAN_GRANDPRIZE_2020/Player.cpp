@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Controler.h"
 #include "enemy.h"
+#include "Boss.h"
 
 #define G                (0.5F)		// 重力
 #define JUMP_POWER       (15.0F)	// ジャンプ力
@@ -15,12 +16,13 @@
 float g_speed = 0.0F;	//落ちる速度
 int g_resetMotion = 0;	//アニメーション始点
 int g_maxMotion = 7;	//終点
+int g_attackTime = 0;	//攻撃のクールタイム
 bool g_skillFlg;		// スキル中かどうかのフラグ
 
 void PlayerDisp() {
 	static int anime = 0;							// プレイヤーの画像を変える
 	static int time = 0;							// 画像を切り替えるタイミング調整
-	
+
 	if (++time % 4 == 0) anime++;
 	if (anime < g_resetMotion || anime > g_maxMotion) anime = g_resetMotion;
 
@@ -29,19 +31,21 @@ void PlayerDisp() {
 	//プレイヤー
 	DrawGraph(g_player.x, g_player.y, g_pic.player[anime], TRUE);
 	DrawFormatString(400, 0, 0xffffff, "%d", g_player.hp);
+	DrawFormatString(500, 0, 0xffffff, "%d", g_attackTime);
+	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[0].hp);
 
-	
+
 }
 
 void PlayerMove() {
 
 	PlayerJump();		// プレイヤーのジャンプ処理	
 	PlayerControl();	// プレイヤーを操作する関数
-	
+
 
 }
 
-void PlayerAfterimage(int anime){
+void PlayerAfterimage(int anime) {
 	static int resetMotion_Buf[3] = { 0, 0, 0 };		// マイフレームのプレイヤーのアニメーションを格納
 	static int maxMotion_Buf[3] = { 0, 0, 0 };		// マイフレームのプレイヤーのアニメーションを格納
 	if (g_skillFlg == TRUE) {
@@ -83,16 +87,24 @@ void PlayerJump() {
 // ボタンを押した時の処理
 void PlayerControl() {
 	//攻撃(〇ボタン)
-	if (g_player.attackFlg == FALSE && g_keyInfo.keyFlg & PAD_INPUT_3) {
+	//if (g_player.attackFlg == FALSE && g_keyInfo.keyFlg & PAD_INPUT_3) {
+	//if ((g_player.attackFlg == FALSE && g_skillFlg == TRUE) && g_keyInfo.keyFlg & PAD_INPUT_3) {
+	//if(g_skillFlg == TRUE){
 		//g_player.x += 500.0F;
-		g_player.attackFlg = TRUE;
+		//g_player.attackFlg = TRUE;
+	//}
+	if (g_player.attackFlg == TRUE) {
+		g_attackTime++;
 	}
-	if (g_player.attackFlg == TRUE && g_player.x > 100) {
-		g_player.x -= 10.0F;
-	}else if (g_player.attackFlg == TRUE) {
+	if (g_attackTime > 20) {
+		g_attackTime = 0;
 		g_player.attackFlg = FALSE;
 	}
+	if (g_player.x > 100 && g_player.attackFlg == FALSE) {
+		g_player.x -= 10.0F;
+	}
 
+	if (g_player.x < 100) g_player.x = 100;
 	//(□ボタン??)
 	if (g_button.squareButton == true) {
 
@@ -103,24 +115,33 @@ void PlayerControl() {
 	// スキル中
 	if (g_skillFlg == TRUE) {
 		EnemyLockOn();
-		
+
+		//アニメーション
 		if (g_player.jumpFlg == TRUE) {
 			if (g_speed < 0) {
 				g_resetMotion = 24;
 				g_maxMotion = 24;
-			} else {
+			}
+			else {
 				g_resetMotion = 25;
 				g_maxMotion = 26;
 			}
-		}else {
+		}
+		else {
 			g_resetMotion = 8;
 			g_maxMotion = 15;
 		}
+		if (g_player.attackFlg == TRUE && g_attackTime != 0) {
+			g_resetMotion = 32;
+			g_maxMotion = 32;
+		}
+
 		// スキル状態解除処理
 		if (g_keyInfo.keyFlg & PAD_INPUT_4) {
 			g_skillFlg = FALSE;
 		}
-	} else if (g_skillFlg == FALSE) {
+	}
+	else if (g_skillFlg == FALSE) {
 
 		if (g_player.jumpFlg == TRUE) {
 			if (g_speed < 0) {
@@ -137,10 +158,6 @@ void PlayerControl() {
 			g_maxMotion = 7;
 		}
 	}
-	if (g_player.attackFlg == TRUE) {
-		g_resetMotion = 32;
-		g_maxMotion = 32;
-	}
 
 	// スキル状態オン
 	if (g_keyInfo.keyFlg & PAD_INPUT_4) {
@@ -149,23 +166,24 @@ void PlayerControl() {
 }
 
 // 敵を間合いに入ったらロックオンをする処理
-void EnemyLockOn(){
-	DrawBox(g_player.x + PLAYER_WIDTH, g_player.y, g_player.x + PLAYER_WIDTH + PLAYER_WIDTH, g_player.y+ PLAYER_HEIGHT, 0xFF0000, 0);
+void EnemyLockOn() {
+	DrawBox(g_player.x + PLAYER_WIDTH, g_player.y, g_player.x + PLAYER_WIDTH + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, 0xFF0000, 0);
 	EnemyCut();		// エネミーを倒す処理
 }
 
 // プレイヤーの間合いに入っている敵を倒す処理
 void EnemyCut() {
-	
+
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		// 歩く敵
-		if( (g_enemy[i].walk.flg == TRUE)
-		&&  (PlayerInterval(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1) ){
+		if ((g_enemy[i].walk.flg == TRUE)
+			&& (PlayerInterval(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1)) {
 			DrawBox(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT, 0xFF0000, 1);
-			if(g_keyInfo.keyFlg & PAD_INPUT_3){
-				g_player.x = g_enemy[i].walk.x-PLAYER_WIDTH;
+			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+				g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].walk.WalkInit();
+				g_player.attackFlg = TRUE;
 			}
 		}
 		// 飛んでいる敵
@@ -177,14 +195,28 @@ void EnemyCut() {
 				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].fly.WalkInit();
+				g_player.attackFlg = TRUE;
 			}
 		}
 	}
+	//boss
+	if (g_enemybeat >= 10) {
+		for (int i = 0; i < MAP_MAX; i++) {
+			if (g_boss[i].hp > 0) {
+				if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+					g_player.x = g_boss[i].x - PLAYER_WIDTH;
+						g_boss[i].hp--;
+						g_player.attackFlg = TRUE;
+				}
+			}
+		}
+	}
+
 }
 // プレイヤーの画像と敵の画像の当たり判定
 int PlayerInterval(int ex, int ey, int ew, int eh) {
-	
-	if (( (long int)g_player.x + (long int)PLAYER_WIDTH<= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
+
+	if (((long int)g_player.x + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
 		&& ((long int)g_player.x + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH >= ex)
 		&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
 		&& ((long int)g_player.y + PLAYER_HEIGHT >= ey)) {

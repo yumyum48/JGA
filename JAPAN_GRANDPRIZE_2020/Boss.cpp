@@ -31,11 +31,11 @@ void BossMove_Stage1() {
 void BossHit() {
 	
 	//if (g_player.attackFlg == TRUE) {	// ƒvƒŒƒCƒ„[‚ªUŒ‚‚ð‚µ‚Ä‚¢‚½‚ç
-	if(g_player.attackFlg == TRUE) {
+	/*if(g_player.attackFlg == TRUE) {
 		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == 1 && g_boss[0].hp > 0) {
 			g_boss[0].hp--;
 		}
-	}
+	}*/
 
 	if (g_boss[0].hp <= 0) {
 		GameInit();
