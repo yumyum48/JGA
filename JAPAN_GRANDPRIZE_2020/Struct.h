@@ -34,6 +34,7 @@ struct image {
     int player[56];                 // プレイヤーの画像
     int enemy;                      // エネミーの画像
     int map[MAP_MAX * SCROLL_MAX];  // マップの画像
+    int backMap;                    // マップの背景
     int rain[2];                    // 雨の画像
 
 };
@@ -58,10 +59,7 @@ struct playerInfo {
 
 // 敵の情報
 struct enemyInfo {
-    enemyInfo() {
-        x = 1000;
-        y = GROUND + 30;
-    }
+
     int x = 1000;
     int y = GROUND + 30;
     bool flg;
@@ -103,19 +101,24 @@ struct bossType {     // ボスの種類
     bossInfo stage1;  // ステージ１のボス
     bossInfo stage2;  // ステージ２のボス
 };
+
 // マップの情報
 struct mapInfo {
     float x, y; // マップのX,Y座標
     void MapInit1() {   // スクロール１の座標
-        x = 0;
+        x = 250*2;
         y = 0;
     }
     void MapInit2() {   // スクロール２の座標
-        x = 1024;
+        x = 500*2;
         y = 0;
     }
     void MapInit3() {   // スクロール３の座標
-        x = 2048;
+        x = 750*2;
+        y = 0;
+    }
+    void MapInit4() {   // スクロール４の座標
+        x = 1000*2;
         y = 0;
     }
 };
