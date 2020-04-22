@@ -10,7 +10,7 @@
 #include "Select.h"
 #include "enemy.h"
 #include "Dynadelete.h"
-
+#include "HP.h"
 #define DEBUG_TEXT_ON
 
 
@@ -55,6 +55,8 @@ bossInfo g_boss[MAP_MAX];		//ボスの情報
 int g_enemybeat;				// エネミーを倒した数をカウントする
 
 playerInfo g_player;			// プレイヤーの情報
+
+int g_MutekiTime;				// プレイヤーの無敵時間
 /*********************************************
 
 * 関数のプロトタイプ宣言
