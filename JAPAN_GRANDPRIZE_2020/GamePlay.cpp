@@ -13,12 +13,14 @@ void GamePlay() {
 	// デバッグ用で一旦入れ替えGamePlayMove();
 	GamePlayDisp();
 	GamePlayMove();
+	MapMove();						// マップの動き
+	MapDisp();						// マップの描画
 	
 }
 // ゲームプレイの描画
 void GamePlayDisp() {
 	
-	MapDisp();						// マップの描画
+	
 	EnemyDisp();					// エネミーの描画
 	
 	PlayerDisp();					// プレイヤーの描画
@@ -28,7 +30,7 @@ void GamePlayDisp() {
 
 // ゲームプレイの動き
 void GamePlayMove() {
-	MapMove();						// マップの動き
+	
 	EnemyMove();					// エネミーの動き
 	PlayerMove();					// プレイヤーの動き
 	

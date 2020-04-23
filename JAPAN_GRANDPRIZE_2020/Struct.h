@@ -106,19 +106,19 @@ struct bossType {     // ボスの種類
 struct mapInfo {
     float x, y; // マップのX,Y座標
     void MapInit1() {   // スクロール１の座標
-        x = 250*2;
+        x = 0*2;
         y = 0;
     }
     void MapInit2() {   // スクロール２の座標
-        x = 500*2;
+        x = 250*2;
         y = 0;
     }
     void MapInit3() {   // スクロール３の座標
-        x = 750*2;
+        x = 500*2;
         y = 0;
     }
     void MapInit4() {   // スクロール４の座標
-        x = 1000*2;
+        x = 750*2;
         y = 0;
     }
 };

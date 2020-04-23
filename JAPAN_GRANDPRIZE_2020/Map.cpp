@@ -11,7 +11,7 @@ mapInfo g_map[SCROLL_MAX];
 
 // マップの表示
 void MapDisp() {
-
+	
 	DrawRotaGraph2(0, 0, 0, 0, 2.0, 0.0, g_pic.backMap, TRUE);
 	// マップの描画
 	for (int i = 0; i < SCROLL_MAX; i++) {
@@ -20,8 +20,8 @@ void MapDisp() {
 		//DrawFormatString(100, 100, 0xFF0000, "%d", g_game_stage);
 		// マップが画面外に入ったら次のところにセットされる
 		if (g_map[i].x + SCREEN_WIDTH < 0) {
-			//g_map[i].x = SCREEN_WIDTH + SCREEN_WIDTH + SCREEN_WIDTH - g_speedLevel * 2;	// 移動分の量を引く
 			g_map[i].MapInit4();
+			
 		}
 	}
 
@@ -40,9 +40,9 @@ void MapMove() {
 // スクロール加算処理
 void Scroll(float *mapX) {
 	//float moveX = SCROLL_SPEED;
-	float moveX = g_speedLevel;
 	
-	*mapX -= moveX;
+	
+	*mapX -= g_speedLevel;
 }
 
 // マップデータの初期化
