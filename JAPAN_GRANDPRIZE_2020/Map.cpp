@@ -18,11 +18,8 @@ void MapDisp() {
 
 		DrawRotaGraph2(g_map[i].x, g_map[i].y, 0, 0, 2.0, 0.0, g_pic.map[((g_game_stage)*4)+i], TRUE);
 		//DrawFormatString(100, 100, 0xFF0000, "%d", g_game_stage);
-		// マップが画面外に入ったら次のところにセットされる
-		if (g_map[i].x + SCREEN_WIDTH < 0) {
-			g_map[i].MapInit4();
-			
-		}
+		
+		
 	}
 
 	
@@ -31,8 +28,15 @@ void MapDisp() {
 void MapMove() {
 
 	// スクロール処理
-	for(int i = 0; i < SCROLL_MAX; i++)
+	for (int i = 0; i < SCROLL_MAX; i++) {
 		Scroll(&g_map[i].x);
+		// マップが画面外に入ったら次のところにセットされる
+		if (g_map[i].x + SCREEN_WIDTH < 0) {
+			g_map[i].x = SCREEN_WIDTH * 3 - g_speedLevel *2.0F;
+
+		}
+	}
+
 
 
 }
