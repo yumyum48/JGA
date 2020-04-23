@@ -166,12 +166,13 @@ void PlayerControl() {
 			g_resetMotion = 40;
 			g_maxMotion = 40;
 		}
+		// スキル状態オン
+		if (g_keyInfo.keyFlg & PAD_INPUT_4) {
+			g_skillFlg = TRUE;
+		}
 	}
 
-	// スキル状態オン
-	if (g_keyInfo.keyFlg & PAD_INPUT_4) {
-		g_skillFlg = TRUE;
-	}
+	
 }
 
 // 敵を間合いに入ったらロックオンをする処理
