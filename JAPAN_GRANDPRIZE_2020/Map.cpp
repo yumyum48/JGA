@@ -24,6 +24,7 @@ void MapDisp() {
 
 	
 }
+
 // マップの動き
 void MapMove() {
 
@@ -31,8 +32,8 @@ void MapMove() {
 	for (int i = 0; i < SCROLL_MAX; i++) {
 		Scroll(&g_map[i].x);
 		// マップが画面外に入ったら次のところにセットされる
-		if (g_map[i].x + SCREEN_WIDTH < 0) {
-			g_map[i].x = SCREEN_WIDTH * 3 - g_speedLevel *2.0F;
+		if (g_map[i].x + SCREEN_WIDTH <= 0) {
+			g_map[i].MapInit4();
 
 		}
 	}
