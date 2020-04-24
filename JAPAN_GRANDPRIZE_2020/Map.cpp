@@ -31,15 +31,30 @@ void MapMove() {
 	// スクロール処理
 	for (int i = 0; i < SCROLL_MAX; i++) {
 		Scroll(&g_map[i].x);
-		// マップが画面外に入ったら次のところにセットされる
-		if (g_map[i].x + SCREEN_WIDTH <= 0) {
-			g_map[i].MapInit4();
 
-		}
+		
+		MapReset(i);	// マップが画面外に入ったら次のところにセットされる
 	}
 
 
 
+}
+
+void MapReset(int i) {
+	// マップが画面外に入ったら次のところにセットされる
+	if (g_map[i].x + SCREEN_WIDTH <= 0) {
+		int max = g_map[0].x;	// 一番最後の画像のX座標を格納
+		for (int j = 1; j < SCROLL_MAX; j++) {// 一番最後の画像を探索処理
+
+			if (g_map[j].x > max) {
+				max = g_map[j].x;	// 一番最後の画像を見つけるとmaxに格納
+			}
+		}
+		g_map[i].x = max + SCREEN_WIDTH;	// 一番最後の画像の後に座標を移動
+		if (i == 0) {
+			g_map[i].x = max + SCREEN_WIDTH - g_speedLevel;	// 一番最初の画像は移動分だけマイナス
+		}
+	}
 }
 
 // スクロール加算処理
