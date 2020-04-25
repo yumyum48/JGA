@@ -2,11 +2,13 @@
 
 #include "DxLib.h"
 #include "Map.h"
+//#include "Player.h"
 
 #define ENEMY_MAX 5
 #define GROUND 450
-
-
+#define PLAYER_REDUCTION (0.8)		  // プレイヤーの縮小率
+#define WINDOW_WIDTH    (1280)        // 画面の横幅
+#define WINDOW_HEIGHT   (768)         // 画面の縦幅
 
 // マウスの入力状態
 struct mouse {
@@ -29,13 +31,12 @@ struct controler {
 
 // 画像の種類
 struct image {
-    int Block;                      // 仮
-    int QBlock;                     // 仮
     int player[56];                 // プレイヤーの画像
     int enemy;                      // エネミーの画像
     int map[MAP_MAX * SCROLL_MAX];  // マップの画像
     int backMap;                    // マップの背景
     int rain[2];                    // 雨の画像
+    int reticle;                    // 敵をロックオンした時の画像(レティクル画像)
 
 };
 
@@ -47,8 +48,8 @@ struct playerInfo {
     bool jumpFlg;   // ジャンプフラグ
     bool attackFlg; // 攻撃しているかどうかのフラグ
     void Init() {   // プレイヤーの初期化
-        x = 100; 
-        y = GROUND; 
+        x = 100 * PLAYER_REDUCTION;
+        y = GROUND * PLAYER_REDUCTION;
         hp = 100;
         attackFlg = FALSE;
         jumpFlg = FALSE;
@@ -86,12 +87,12 @@ struct bossInfo {     // ボスの情報
     int hp;           // 体力
     int x, y;         // 座標
     int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
-    bool attackFlg;   // 攻撃中かどうかのフラグ
+    int attackFlg;   // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
 
     void Init_Stage1() {
         hp = 3;
-        x = 700;
-        y = 400;
+        x = 872;
+        y = 160;
         popflg = 0;
         attackFlg = 0;
     }

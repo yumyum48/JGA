@@ -8,19 +8,25 @@
 #include "Rain.h"
 #include "Boss.h"
 #include "Select.h"
+#include "Init.h"
+
 // ゲームプレイのメイン関数
 void GamePlay() {
 	// デバッグ用で一旦入れ替えGamePlayMove();
 	GamePlayDisp();
 	GamePlayMove();
+
+	// ボスが倒された時初期化しながらセレクト画面に戻る
+	if (g_boss[0].hp <= 0) {
+		GameInit();
+	}
 	
 }
 // ゲームプレイの描画
 void GamePlayDisp() {
 	
 	MapDisp();						// マップの描画
-	EnemyDisp();					// エネミーの描画
-	
+	MonsterDisp();					// 弱い敵、ボスの表示
 	PlayerDisp();					// プレイヤーの描画
 	RainDisp();						// 雨の描画
 	
@@ -29,9 +35,8 @@ void GamePlayDisp() {
 // ゲームプレイの動き
 void GamePlayMove() {
 	MapMove();						// マップの動き
-	EnemyMove();					// エネミーの動き
+	MonsterMove();					// 弱い敵、ボスの動き
 	PlayerMove();					// プレイヤーの動き
-	
 	RainMove();						// 雨の動き
 }
 

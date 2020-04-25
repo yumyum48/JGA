@@ -10,6 +10,17 @@
 #include "Select.h"
 #include "GameScene.h"
 #include "Init.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
+	int x, y;
+
+};
+
+enum {	// ボスの攻撃判断
+	ENEMY_DROP = 1
+};
 /*********************************************
 
 * ステージ１のボス
@@ -17,54 +28,103 @@
 */////////////////////////////////////////////
 // 描画
 void BossDisp_Stage1() {
-	if (g_enemybeat >= 10) {
-		DrawBox(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT, 0x0FF000, TRUE);
+	
+	DrawBox(g_boss[0].x, g_boss[0].y, g_boss[0].x + BOSS_WIDTH, g_boss[0].y + BOSS_HEIGHT, 0x0FF000, TRUE);
+
+	if (g_boss[0].attackFlg != 0) {
+		BossAttackDisp();	// ボスの攻撃
 	}
 
 }
+
 // 動き
 void BossMove_Stage1() {
-	//BossAttack();	// ボスの攻撃
-	BossHit();
+	if (g_boss[0].attackFlg != 0) {
+		BossAttackMove();	// ボスの攻撃
+	}
+	// 攻撃をしていないなら動く
+	else {
+		if (g_boss[0].x > 0) {
+			float angle;
+			angle = DX_TWO_PI / 120 * g_boss[0].x;	// 横の振れ幅
+			g_boss[0].y -= sin(angle) * 10;	// 縦の振れ幅
+			g_boss[0].x -= 5;	// ボスの移動量
+		}
+		else {
+			g_boss[0].x = 700;
+			g_boss[0].y = 160;
+		}
+	}
+
+	BossHit();	// プレイヤーとボスの当たり判定当たるとプレイヤーのhp現象
 }
+/*********************************************
+
+* ボスの当たり判定	// 当たるとプレイヤーhp減少
+
+*/////////////////////////////////////////////
 // ボスの当たり判定
 void BossHit() {
 	
-	//if (g_player.attackFlg == TRUE) {	// プレイヤーが攻撃をしていたら
-	/*if(g_player.attackFlg == TRUE) {
-		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == 1 && g_boss[0].hp > 0) {
-			g_boss[0].hp--;
-		}
-	}*/
-
-	if (g_boss[0].hp <= 0) {
-		GameInit();
+	if (PlayerHitCheck(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE) {
+		g_player.hp--;
 	}
+	
 }
-// ボスの攻撃
-void BossAttack() {
-	static int enemypop_Cnt = 0;	// ボスが攻撃(雑魚的を出してくる)までのカウント
-	static int enemypop_MAX = 1;	// エネミーの最大数
-	if (enemypop_Cnt++ > 50) {
-		enemypop_MAX++;
-		enemypop_Cnt = 0;
+/*********************************************
 
+* ボスの攻撃関係
+
+*/////////////////////////////////////////////
+// ボスの攻撃の全体管理(表示)
+void BossAttackDisp() {
+	switch (g_boss[0].attackFlg)
+	{
+	case ENEMY_DROP:
+		BossEnemyDropDisp();	// 弱い敵を出す
+		break;
+
+	default:
+		break;
 	}
-
-	static enemyInfo enemy;	// 敵の情報(雑魚)
-	for (int i = 0; i < enemypop_MAX; i++) {
-		//DrawRotaGraph(enemy[i].x, enemy[i].y, 0.2, 0.0, g_pic.enemy, TRUE);
-		DrawBox(enemy.x + (ENEMY_WIDTH * i), 700, ENEMY_WIDTH, ENEMY_HEIGHT, 0xFF0000, TRUE);
-		enemy.x -= 5;
-
-		if (enemy.x + ENEMY_WIDTH <= 0) {	// 敵が画面外に入った場合の消す処理
-			enemy.WalkInit();
-			enemypop_MAX--;
-		}
-	}
+	
 
 	
 }
+// ボスの攻撃の全体管理(動き)
+void BossAttackMove() {
+	switch (g_boss[0].attackFlg)
+	{
+	case ENEMY_DROP:
+		BossEnemyDropMove();	// 弱い敵を出す
+		break;
+
+	default:
+		break;
+	}
+	
+}
+/*********************************************
+
+* ボスが弱い敵を出す攻撃をする関数
+
+*/////////////////////////////////////////////
+// 弱い敵を出す(表示)
+void BossEnemyDropDisp() {
+
+	static int enemypop_MAX = 0;
+		
+	for (int i = 0; i < enemypop_MAX; i++) {
+		DrawRotaGraph(g_enemy[i].walk.x, g_enemy[i].walk.y, 0.2, 0.0, g_pic.enemy, TRUE);
+		
+		
+	}
+}
+// 弱い敵を出す(動き(当たり判定など))
+void BossEnemyDropMove() {
+
+}
+
 /*********************************************
 
 * ステージ２のボス

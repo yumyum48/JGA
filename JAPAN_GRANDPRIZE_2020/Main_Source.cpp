@@ -122,8 +122,8 @@ int Main(void) {
 		
 		// デバッグモード(変数の中の文字を描画)
 #ifdef DEBUG_TEXT_ON
-		DrawFormatString(0, 0, 0xffff00, "keyFlg = %d", g_keyInfo.keyFlg);
-		DrawFormatString(0, 20, 0xFFFF00, "mouseX = %d \n mouseY = %d", g_mouseInfo.mouseX, g_mouseInfo.mouseY);
+		DrawFormatString(0, 0, 0x0000FF, "keyFlg = %d", g_keyInfo.keyFlg);
+		DrawFormatString(0, 20, 0x0000DF, "mouseX = %d \n mouseY = %d", g_mouseInfo.mouseX, g_mouseInfo.mouseY);
 #endif // DEBUG_TEXT_ON
 
 		//DynaDelete();		// 動的配列をメモリ解放

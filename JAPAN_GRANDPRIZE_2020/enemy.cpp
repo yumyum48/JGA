@@ -5,42 +5,56 @@
 #include "Controler.h"
 #include "enemy.h"
 #include "Boss.h"
-int walkEnemy_pop = 0;		// “G‚ÌÅ‘å”
-int flyEnemy_pop = 0;
-
+#include "Select.h"
 int g_coolTime = 0;
 
-// “G‚Ì•`‰æ
+// ã‚¢“GAƒ{ƒX‚Ì•\¦
+void MonsterDisp() {
+	if (g_enemybeat <= 10) {
+		EnemyDisp();					// ã‚¢“G‚Ì•`‰æ
+	}
+	else {
+		BossDisp[0]();					// ƒ{ƒX‚Ì•\¦
+	}
+}
+// ã‚¢“GAƒ{ƒX‚Ì“®‚«
+void MonsterMove() {
+	if (g_enemybeat <= 10) {
+		EnemyMove();					// ã‚¢“G‚Ì“®‚«
+	}
+	else {
+		BossMove[0]();					// ƒ{ƒX‚Ì“®‚«
+	}
+}
+
+// ã‚¢“G‚Ì•`‰æ
 void EnemyDisp() {
 
-	// ƒ{ƒX‚ª‚¢‚È‚¯‚ê‚Î“G‚ğo‚·
-	if (g_enemybeat < 10) {
-		if (++g_coolTime > 10) {
-			if (GetRand(80) == 1) {		//’nã‚Ì“G
-				for (int i = 0; i < ENEMY_MAX; i++) {
-					if (g_enemy[i].walk.flg == FALSE) {
+	
+	// “G‚ğoŒ»‚³‚¹‚é€”õ
+	if (++g_coolTime > 10) {
+		if (GetRand(80) == 1) {		//’nã‚Ì“G
+			for (int i = 0; i < ENEMY_MAX; i++) {
+				if (g_enemy[i].walk.flg == FALSE) {
 						g_enemy[i].walk.flg = TRUE;
 						g_coolTime = 0;
 						break;
 						//walkEnemy_pop += 1;
-					}
 				}
 			}
-			if (GetRand(150) == 1) {		//‹ó’†‚Ì“G
-				for (int i = 0; i < ENEMY_MAX; i++) {
-					if (g_enemy[i].fly.flg == FALSE) {
-						g_enemy[i].fly.flg = TRUE;
-						g_coolTime = 0;
-						break;
-					}
+		}
+		if (GetRand(150) == 1) {		//‹ó’†‚Ì“G
+			for (int i = 0; i < ENEMY_MAX; i++) {
+				if (g_enemy[i].fly.flg == FALSE) {
+					g_enemy[i].fly.flg = TRUE;
+					g_coolTime = 0;
+					break;
 				}
 			}
 		}
 	}
-	else {
-		BossDisp[0]();		// ƒ{ƒX‚Ì•\¦
-	}
 
+	// ã‚¢“G‚Ì•\¦
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		if(g_enemy[i].walk.flg == TRUE)		//’nã‚Ì“G•`‰æ
 			DrawRotaGraph2(g_enemy[i].walk.x, g_enemy[i].walk.y, 0, 0, 0.2, 0.0, g_pic.enemy, TRUE);
@@ -50,15 +64,13 @@ void EnemyDisp() {
 	}
 }
 
-// “G‚Ì“®‚«
+// ã‚¢“G‚Ì“®‚«
 void EnemyMove() {
 	// “G‚ª‚¢‚È‚¢‚Æ‚«ƒ{ƒX‚Ì“®‚«‚ğ‹N“®
-	if (g_enemybeat >= 10) {
-		BossMove[0]();		// ƒ{ƒX‚Ì“®‚«
-	}
+
 	for (int i = 0; i < ENEMY_MAX; i++) {		//’nã‚Ì“G‚Ì“®‚«
 		if (g_enemy[i].walk.flg == TRUE) {
-			g_enemy[i].walk.x -= 10;
+			g_enemy[i].walk.x -= g_speedLevel+3;
 			//g_enemy[i].walk.y = GROUND;
 		}
 
@@ -77,7 +89,7 @@ void EnemyMove() {
 	}
 	for (int i = 0; i < ENEMY_MAX; i++) {		//‹ó’†‚Ì“G‚Ì“®‚«
 		if (g_enemy[i].fly.flg == TRUE) {
-			g_enemy[i].fly.x -= 12;
+			g_enemy[i].fly.x -= g_speedLevel+3;
 			g_enemy[i].fly.y = GROUND - 200;
 		}
 
@@ -89,12 +101,13 @@ void EnemyMove() {
 	}
 }
 
-// “G‚Ì‰Šú‰»
+// ã‚¢“G‚Ì‰Šú‰»
 void EnemyInit() {
 	for (int i = 0; i < 3; i++) {
 		g_enemy[i].walk.WalkInit();
 		g_enemy[i].fly.FlyInit();
 	}
-	walkEnemy_pop = 0;
+	
+	g_coolTime = 0;
 }
 

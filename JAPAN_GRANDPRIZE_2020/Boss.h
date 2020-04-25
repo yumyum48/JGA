@@ -16,10 +16,16 @@ void BossDisp_Stage1();					// ステージ１のボスの表示
 void BossMove_Stage1();					// ステージ１のボスの動き
 
 void BossHit();							// ボスの当たり判定
-void BossAttack();						// ボスの攻撃
 
-void BossInit();
+void BossInit();						// ボスの初期化
 
+void BossAttackDisp();						// ボスの攻撃
+void BossAttackMove();						// ボスの攻撃
+
+// ボスのスキルの表示
+void BossEnemyDropDisp();	// 弱い敵を出すボス専用の技の関数
+// ボスのスキルの動き
+void BossEnemyDropMove();	// 弱い敵を出すボス専用の技の関数
 void (* const BossDisp[1])() = {		// ボスの表示
 	BossDisp_Stage1,
 };

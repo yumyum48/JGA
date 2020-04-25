@@ -7,6 +7,7 @@
 #include "GameScene.h"
 #include "Struct.h"
 #include "enemy.h"
+#include "Player.h"
 
 int g_HP = 3;
 boolean g_HPflg = false;

@@ -15,8 +15,8 @@ void GameInit() {
 	EnemyInit();		// エネミーの初期化処理
 	RainInit();			// 雨のアニメーションの初期化処理
 	BossInit();			// ボスの情報を初期化
-	g_enemybeat = 0;	// エネミーを倒した数をカウントする
+	g_enemybeat = 0;	// エネミーを倒した数をカウントする変数の初期化
 
-	g_gameScene = GAME_TITLE;
+	g_gameScene = GAME_TITLE;	// タイトルへ戻る
 
 }
