@@ -26,7 +26,7 @@ int LoadPicture() {
 	// ‰J‚Ì‰æ‘œ‚Ì“Ç‚İ‚İ
 	if ((g_pic.rain[0] = LoadGraph("image/RainLarge.png")) == -1) return -1;
 	// ‰J‚Ì‰æ‘œ‚Ì“Ç‚İ‚İ
-	if ((g_pic.rain[1] = LoadGraph("image/RainLarge.png")) == -1) return -1;
+	/*if ((g_pic.rain[1] = LoadGraph("image/RainLarge.png")) == -1) return -1;*/
 
 	// ƒŒƒeƒBƒNƒ‹‰æ‘œ‚Ì“Ç‚İ‚İ
 	if ((g_pic.reticle = LoadGraph("image/Reticle.png")) == -1) return -1;

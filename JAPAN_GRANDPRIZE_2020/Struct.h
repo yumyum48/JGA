@@ -50,7 +50,7 @@ struct playerInfo {
     void Init() {   // ÉvÉåÉCÉÑÅ[ÇÃèâä˙âª
         x = 100 * PLAYER_REDUCTION;
         y = GROUND * PLAYER_REDUCTION;
-        hp = 100;
+        hp = 3;
         attackFlg = FALSE;
         jumpFlg = FALSE;
         skillGage = 100;

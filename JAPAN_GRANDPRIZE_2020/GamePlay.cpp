@@ -9,6 +9,7 @@
 #include "Boss.h"
 #include "Select.h"
 #include "Init.h"
+#include "HP.h"
 
 // ゲームプレイのメイン関数
 void GamePlay() {
@@ -29,6 +30,7 @@ void GamePlayDisp() {
 	MonsterDisp();					// 弱い敵、ボスの表示
 	PlayerDisp();					// プレイヤーの描画
 	RainDisp();						// 雨の描画
+	HpDisp();						// HP表示処理
 	
 }
 
@@ -38,6 +40,7 @@ void GamePlayMove() {
 	MonsterMove();					// 弱い敵、ボスの動き
 	PlayerMove();					// プレイヤーの動き
 	RainMove();						// 雨の動き
+	HpMove();						// HPの計算処理
 }
 
 

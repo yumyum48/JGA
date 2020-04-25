@@ -7,6 +7,6 @@
 
 extern int g_MutekiTime;
 
-void ManagementHP();					//HP管理
-void DecreaseHP();			//HP表示処理
-void DispHP();				//HP計算処理
+void ManagementHP();		//HP管理
+void HpMove();			//HP計算処理
+void HpDisp();				//HP表示処理
