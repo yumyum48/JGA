@@ -35,7 +35,7 @@ struct image {
     int enemy;                      // エネミーの画像
     int map[MAP_MAX * SCROLL_MAX];  // マップの画像
     int backMap;                    // マップの背景
-    int rain[2];                    // 雨の画像
+    int rain;                        // 雨の画像
     int reticle;                    // 敵をロックオンした時の画像(レティクル画像)
 
 };

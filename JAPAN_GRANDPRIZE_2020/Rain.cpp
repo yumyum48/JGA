@@ -12,8 +12,8 @@
 rainInfo g_rain[2];
 
 void RainDisp(){
-	DrawGraph(g_rain[1].x, g_rain[1].y, g_pic.rain[0], TRUE);
-	DrawGraph(g_rain[0].x, g_rain[0].y, g_pic.rain[0], TRUE);
+	DrawGraph(g_rain[1].x, g_rain[1].y, g_pic.rain, TRUE);
+	DrawGraph(g_rain[0].x, g_rain[0].y, g_pic.rain, TRUE);
 }
 
 void RainMove() {

@@ -8,8 +8,9 @@
 #include "Struct.h"
 #include "enemy.h"
 #include "Player.h"
+#include "Init.h"
 
-bool g_hpFlg = false;
+//bool g_hpFlg = false;
 
 
 void ManagementHP() {
@@ -19,10 +20,6 @@ void ManagementHP() {
 
 // HP‚Ì•\¦ˆ—
 void HpDisp(void) {
-	static int noDamageCnt = 0;
-
-	//if (++g_MutekiTime > 60 && g_hpFlg == true) g_hpFlg = false;
-	if (noDamageCnt++ > 60)g_hpFlg = false;
 
 	// HP‚Ì•\¦
 	if (g_player.hp > 0) {
@@ -31,28 +28,32 @@ void HpDisp(void) {
 		}
 	}
 	else {
-		g_gameScene = GAME_OVER;
+		GameInit();
 	}
 }
 
 // HP‚ÌŒ¸­
 void HpMove(void) {
+	static int noDamageCnt = 61;
+
+	if(noDamageCnt++ < 60)DrawBox(g_player.x, g_player.y, g_player.x + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, 0xffffff, FALSE);
+
 	//if (g_keyInfo.keyFlg & PAD_INPUT_A) --g_player.hp;
 
 
 	for (int i = 0; i < ENEMY_MAX; i++) {
-		if (g_enemy[i].walk.flg == TRUE && g_hpFlg == false) {		//’nã‚Ì“G•`‰æ
+		if (g_enemy[i].walk.flg == TRUE
+			&& noDamageCnt > 60) {		//’nã‚Ì“G‚Ì“–‚½‚è”»’è
 			if (PlayerHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1) {
 				--g_player.hp;
-				g_hpFlg = true;
-				g_MutekiTime = 0;
+				noDamageCnt = 0;
 			}
 		}
-		if (g_enemy[i].fly.flg == TRUE && g_hpFlg == false) {		//‹ó’†‚Ì“G•`‰æ
+		if (g_enemy[i].fly.flg == TRUE
+			&& noDamageCnt > 60) {		//‹ó’†‚Ì“G‚Ì“–‚½‚è”»’è
 			if (PlayerHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1) {
 				--g_player.hp;
-				g_hpFlg = true;
-				g_MutekiTime = 0;
+				noDamageCnt = 0;
 			}
 		}
 	}
