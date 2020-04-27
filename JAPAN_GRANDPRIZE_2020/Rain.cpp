@@ -5,7 +5,7 @@
 #include "Map.h"
 #include "Select.h"
 #include "Rain.h"
-#include "ScroolDown.h"
+//#include "ScroolDown.h"
 #define SCROLL_SPEED (8.0F)	// マップのスクロールするスピード
 
 
