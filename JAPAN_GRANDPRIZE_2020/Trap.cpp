@@ -2,9 +2,11 @@
 #include "Struct.h"
 #include "control.h"
 struct trapInfo {
+	
 	int x, y;
 	void Init() {
-		x = 100;
+		x = 1300;
+		y = 610;
 	}
 };
 trapInfo g_trap;
@@ -15,4 +17,8 @@ void TrapDisp() {
 
 void TrapMove() {
 
+}
+
+void TrapInit() {
+	g_trap.Init();
 }
