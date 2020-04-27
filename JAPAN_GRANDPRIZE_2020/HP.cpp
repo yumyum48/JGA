@@ -9,6 +9,7 @@
 #include "enemy.h"
 #include "Player.h"
 #include "Init.h"
+#include "Picture.h"
 
 //bool g_hpFlg = false;
 
@@ -21,13 +22,17 @@ void ManagementHP() {
 // HPの表示処理
 void HpDisp(void) {
 
-	// HPの表示
-	if (g_player.hp > 0) {
-		for (int i = 0; i < g_player.hp; i++) {
-			DrawBox(65 + (i * 30), 65, 85 + (i * 30), 85, 0xFF0000, TRUE);
-		}
+	//UI表示
+	DrawGraph(20, -40, g_pic.PlayerUI, TRUE);
+	for (int i = 0; i < 3; i++) {		//HP
+		DrawRotaGraph2(110 + (80 * i), 10, 0, 0, 0.5, 0.0, g_pic.Life[0], TRUE);
 	}
-	else {
+	for (int i = 0; i < g_player.hp; i++) {		//HP
+		DrawRotaGraph2(110 + (80 * i), 10, 0, 0, 0.5, 0.0, g_pic.Life[1], TRUE);
+	}
+
+	// HPが０になったらゲームオーバー
+	if(g_player.hp <= 0) {
 		GameInit();
 	}
 }

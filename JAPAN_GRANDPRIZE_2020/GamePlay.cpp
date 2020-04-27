@@ -32,7 +32,7 @@ void GamePlayDisp() {
 	TrapDisp();						// トラップの表示
 	PlayerDisp();					// プレイヤーの描画
 	RainDisp();						// 雨の描画
-	//HpDisp();						// HP表示処理
+	HpDisp();						// HP表示処理
 	
 }
 
@@ -43,7 +43,7 @@ void GamePlayMove() {
 	TrapMove();						// トラップの動き
 	PlayerMove();					// プレイヤーの動き
 	RainMove();						// 雨の動き
-	//HpMove();						// HPの計算処理
+	HpMove();						// HPの計算処理
 }
 
 

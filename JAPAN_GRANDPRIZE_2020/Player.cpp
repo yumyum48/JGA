@@ -34,14 +34,7 @@ void PlayerDisp() {
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[0].hp);
 
-	//UI•\Ž¦
-	DrawGraph(20, -40, g_pic.PlayerUI, TRUE);
-	for (int i = 0; i < 3; i++) {		//HP
-		DrawRotaGraph2(110 + (80 * i), 10, 0, 0, 0.5, 0.0, g_pic.Life[0], TRUE);
-	}
-	for (int i = 0; i < g_player.hp; i++) {		//HP
-		DrawRotaGraph2(110 + (80 * i), 10, 0, 0, 0.5, 0.0, g_pic.Life[1], TRUE);
-	}
+	
 }
 
 void PlayerMove() {
