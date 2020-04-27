@@ -7,6 +7,7 @@
 #include "Controler.h"
 #include "enemy.h"
 #include "Boss.h"
+#include "HP.h"
 
 #define G                (0.5F)		// 重力
 #define JUMP_POWER       (15.0F)	// ジャンプ力
@@ -33,7 +34,14 @@ void PlayerDisp() {
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[0].hp);
 
-
+	//UI表示
+	DrawGraph(20, -40, g_pic.PlayerUI, TRUE);
+	for (int i = 0; i < 3; i++) {		//HP
+		DrawRotaGraph2(110 + (80 * i), 10, 0, 0, 0.5, 0.0, g_pic.Life[0], TRUE);
+	}
+	for (int i = 0; i < g_player.hp; i++) {		//HP
+		DrawRotaGraph2(110 + (80 * i), 10, 0, 0, 0.5, 0.0, g_pic.Life[1], TRUE);
+	}
 }
 
 void PlayerMove() {

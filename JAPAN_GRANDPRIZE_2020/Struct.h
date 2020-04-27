@@ -37,6 +37,8 @@ struct image {
     int backMap;                    // マップの背景
     int rain;                        // 雨の画像
     int reticle;                    // 敵をロックオンした時の画像(レティクル画像)
+    int PlayerUI;                   //playerのUI画像
+    int Life[2];                    //playerのHP画像
 
 };
 

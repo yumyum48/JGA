@@ -6,6 +6,11 @@ int LoadPicture() {
 
 	// プレイヤー画像の読み込み
 	if (LoadDivGraph("image/player2.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
+	//UI画像
+	if ((g_pic.PlayerUI = LoadGraph("image/Aicon2.png")) == -1) return -1;
+	//Life画像
+	if (LoadDivGraph("image/Life.png", 2, 2, 1, 100, 100, g_pic.Life, 0) == -1) return -1;
+
 	// エネミー画像の読み込み
 	if ((g_pic.enemy = LoadGraph("image/enemy.png")) == -1) return -1;
 
