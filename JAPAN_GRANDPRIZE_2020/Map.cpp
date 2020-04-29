@@ -16,7 +16,7 @@ void MapDisp() {
 	// ƒ}ƒbƒv‚Ì•`‰æ
 	for (int i = 0; i < SCROLL_MAX; i++) {
 
-		DrawRotaGraph2(g_map[i].x, g_map[i].y, 0, 0, 2.0, 0.0, g_pic.map[((g_game_stage)*4)+i], TRUE);
+		DrawRotaGraph2(g_map[i].x, g_map[i].y, 0, 0, 2.0, 0.0, g_pic.map[((g_select_Stage)*4)+i], TRUE);
 		//DrawFormatString(100, 100, 0xFF0000, "%d", g_game_stage);
 		
 		

@@ -15,7 +15,7 @@
 void TrapDisp() {
 	
 	
-	if (GetRand(5) == 1) g_trap.dispFlg = TRUE;											// ランダムでトラップを出現させるフラグをオンにする
+	if (GetRand(10) == 1) g_trap.dispFlg = TRUE;										// ランダムでトラップを出現させるフラグをオンにする
 	
 	if (g_trap.dispFlg == TRUE) {
 		DrawFormatString(500, 0, 0xFF00FF, "トラップ出てますよ！");

@@ -10,7 +10,8 @@
 #include "Player.h"
 #include "Init.h"
 #include "Picture.h"
-
+#include "Boss.h"
+#include "Trap.h"
 //bool g_hpFlg = false;
 
 
@@ -31,10 +32,7 @@ void HpDisp(void) {
 		DrawRotaGraph2(110 + (80 * i), 10, 0, 0, 0.5, 0.0, g_pic.Life[1], TRUE);
 	}
 
-	// HPが０になったらゲームオーバー
-	if(g_player.hp <= 0) {
-		GameInit();
-	}
+	
 }
 
 // HPの減少
@@ -45,22 +43,37 @@ void HpMove(void) {
 
 	//if (g_keyInfo.keyFlg & PAD_INPUT_A) --g_player.hp;
 
+	// トラップとの接触判定
+	if(g_trap.x)
 
+	// 弱い敵との接触判定
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		if (g_enemy[i].walk.flg == TRUE
 			&& noDamageCnt > 60) {		//地上の敵の当たり判定
-			if (PlayerHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1) {
+			if (PlayerHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE) {
 				--g_player.hp;
-				noDamageCnt = 0;
+				noDamageCnt = 0;		// 無敵時間発動
 			}
 		}
 		if (g_enemy[i].fly.flg == TRUE
 			&& noDamageCnt > 60) {		//空中の敵の当たり判定
-			if (PlayerHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1) {
+			if (PlayerHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE) {
 				--g_player.hp;
-				noDamageCnt = 0;
+				noDamageCnt = 0;		// 無敵時間発動
 			}
 		}
+	}
+
+	// ボスの当たり判定
+	if( (PlayerHitCheck(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE) 
+	&&  (noDamageCnt > 60) ){
+		g_player.hp--;
+		noDamageCnt = 0;				// 無敵時間発動
+	}
+
+	// HPが０になったらゲームオーバー
+	if (g_player.hp <= 0) {
+		GameInit();
 	}
 }
 

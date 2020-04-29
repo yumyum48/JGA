@@ -29,9 +29,10 @@ void GamePlayDisp() {
 	
 	MapDisp();						// マップの描画
 	MonsterDisp();					// 弱い敵、ボスの表示
-	TrapDisp();						// トラップの表示
+	
 	PlayerDisp();					// プレイヤーの描画
 	RainDisp();						// 雨の描画
+	TrapDisp();						// トラップの表示
 	HpDisp();						// HP表示処理
 	
 }
@@ -40,10 +41,11 @@ void GamePlayDisp() {
 void GamePlayMove() {
 	MapMove();						// マップの動き
 	MonsterMove();					// 弱い敵、ボスの動き
-	TrapMove();						// トラップの動き
+	
 	PlayerMove();					// プレイヤーの動き
 	RainMove();						// 雨の動き
-	HpMove();						// HPの計算処理
+	TrapMove();						// トラップの動き
+	//HpMove();						// HPの計算処理
 }
 
 

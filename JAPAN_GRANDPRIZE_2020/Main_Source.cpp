@@ -45,7 +45,7 @@ int g_gameScene;				// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト
 DINPUT_JOYSTATE g_controler;
 controler g_button;
 
-int g_game_stage;				//ステージをセレクト
+int g_select_Stage;				//ステージをセレクト
 enemyType g_enemy[ENEMY_MAX];	// 敵の情報
 
 int g_speedLevel;				// スクロールレベルの設定を保存
@@ -57,6 +57,8 @@ int g_enemybeat;				// エネミーを倒した数をカウントする
 playerInfo g_player;			// プレイヤーの情報
 
 int g_MutekiTime;				// プレイヤーの無敵時間
+
+trapInfo g_trap;				// トラップの情報
 /*********************************************
 
 * 関数のプロトタイプ宣言
