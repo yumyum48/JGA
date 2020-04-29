@@ -65,7 +65,8 @@ void HpMove(void) {
 	}
 
 	// ƒ{ƒX‚Ì“–‚½‚è”»’è
-	if (PlayerHitCheck(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE) {
+	if( (PlayerHitCheck(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE) 
+	&&  (noDamageCnt > 60) ){
 		g_player.hp--;
 		noDamageCnt = 0;				// –³“GŽžŠÔ”­“®
 	}

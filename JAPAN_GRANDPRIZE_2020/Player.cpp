@@ -62,7 +62,8 @@ void PlayerAfterimage(int anime) {
 			if (anime_Buf < resetMotion_Buf[i] || anime_Buf > maxMotion_Buf[i]) anime_Buf = resetMotion_Buf[i];
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
 			// 残像プレイヤー表示
-			DrawGraph(g_player.x - ((i + 1) * 30), g_player.y, g_pic.player[anime_Buf], TRUE);
+			g_player.y = g_mouseInfo.mouseY;
+			DrawRotaGraph2(g_player.x - ((i + 1) * 30), g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[anime_Buf], TRUE);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
 	}

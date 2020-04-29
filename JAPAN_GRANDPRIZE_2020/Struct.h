@@ -48,7 +48,7 @@ struct playerInfo {
     bool attackFlg; // 攻撃しているかどうかのフラグ
     void Init() {   // プレイヤーの初期化
         x = 100 * PLAYER_REDUCTION;
-        y = GROUND * PLAYER_REDUCTION;
+        y = 490;
         hp = 3;
         attackFlg = FALSE;
         jumpFlg = FALSE;
