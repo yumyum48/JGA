@@ -44,6 +44,8 @@ struct playerInfo {
     int x, y;       // プレイヤーのX,Y座標
     int hp;         // プレイヤーのHP
     int skillGage;  // スキルのゲージ
+    int skillFlg;   // スキルのフラグ(0:何もしない 1:スキル１　2:スキル２...)
+    int skill_MAX; // 使用可能スキル(0:何もしない 1:スキル１　2:スキル２...)
     bool jumpFlg;   // ジャンプフラグ
     bool attackFlg; // 攻撃しているかどうかのフラグ
     void Init() {   // プレイヤーの初期化
@@ -52,7 +54,9 @@ struct playerInfo {
         hp = 3;
         attackFlg = FALSE;
         jumpFlg = FALSE;
+        skillFlg = 0;
         skillGage = 100;
+        skill_MAX = 1;
     }
 
 };

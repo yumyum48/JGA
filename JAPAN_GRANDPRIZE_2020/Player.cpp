@@ -1,3 +1,4 @@
+
 #include "DxLib.h"
 #include "Struct.h"
 #include "GamePlay.h"
@@ -33,18 +34,20 @@ void PlayerDisp() {
 	DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[anime], TRUE);
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[0].hp);
+	DrawFormatString(0, 400, 0xFF0000, "%d", g_player.skillFlg);
+
 
 	
 }
 
 void PlayerMove() {
-
-	PlayerJump();		// プレイヤーのジャンプ処理	
+	PlayerJump();		// プレイヤーのジャンプ処理
 	PlayerControl();	// プレイヤーを操作する関数
 
 
 }
 
+// プレイヤーの残像
 void PlayerAfterimage(int anime) {
 	static int resetMotion_Buf[3] = { 0, 0, 0 };		// マイフレームのプレイヤーのアニメーションを格納
 	static int maxMotion_Buf[3] = { 0, 0, 0 };		// マイフレームのプレイヤーのアニメーションを格納
@@ -109,7 +112,7 @@ void PlayerControl() {
 
 
 	//通常攻撃
-	if (g_skillFlg == FALSE && (g_keyInfo.keyFlg & PAD_INPUT_3)) {
+	if (g_player.skillFlg == 0 && (g_keyInfo.keyFlg & PAD_INPUT_3)) {
 		//g_player.attackFlg = TRUE;
 		EnemyCut();		// エネミーを倒す処理
 	}
@@ -119,37 +122,24 @@ void PlayerControl() {
 	if (g_button.squareButton == true) {
 
 	}
-
-
-
-	// スキル中
-	if (g_skillFlg == TRUE) {
-		EnemyLockOn();
-
-		//アニメーション
-		if (g_player.jumpFlg == TRUE) {
-			if (g_speed < 0) {
-				g_resetMotion = 24;
-				g_maxMotion = 24;
-			} else {
-				g_resetMotion = 25;
-				g_maxMotion = 26;
-			}
-		} else {
-			g_resetMotion = 8;
-			g_maxMotion = 15;
-		}
-		if (g_player.attackFlg == TRUE) {//スキル攻撃
-			g_resetMotion = 32;
-			g_maxMotion = 32;
-		}
-
-		// スキル状態解除処理
+	
+	static int cnt = 0;
+	// スキルオンオフ
+	SkillChange();
+	
+	if (g_player.skillFlg != 0) {
+		if (g_keyInfo.keyFlg & PAD_INPUT_4)
+			g_player.skillFlg = 0;
+	}
+	else {
+		
 		if (g_keyInfo.keyFlg & PAD_INPUT_4) {
-			g_skillFlg = FALSE;
+			g_player.skillFlg = SkillChange();
+			
 		}
-	}else if (g_skillFlg == FALSE) {
 
+		
+		// ジャンプ落下モーション
 		if (g_player.jumpFlg == TRUE) {
 			if (g_speed < 0) {
 				g_resetMotion = 16;
@@ -159,7 +149,8 @@ void PlayerControl() {
 				g_resetMotion = 17;
 				g_maxMotion = 18;
 			}
-		}else {
+		}
+		else {
 			g_resetMotion = 0;
 			g_maxMotion = 7;
 		}
@@ -167,13 +158,55 @@ void PlayerControl() {
 			g_resetMotion = 40;
 			g_maxMotion = 40;
 		}
-		// スキル状態オン
-		if (g_keyInfo.keyFlg & PAD_INPUT_4) {
-			g_skillFlg = TRUE;
+	}
+}
+
+int SkillChange() {
+	static int skillNum = 1;
+
+	// スキル選択
+	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
+		if (++skillNum > g_player.skill_MAX) skillNum = 1;
+	}
+	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
+		if (++skillNum < 1) skillNum = g_player.skill_MAX;
+	}
+	
+	// skillNumの中身
+	DrawFormatString(0, 500, 0xFEFFFF, "%d", skillNum);
+
+	return skillNum;
+}
+
+void SkillDisp_1() {
+	// スキル中
+		EnemyLockOn();
+
+	//アニメーション
+	if (g_player.jumpFlg == TRUE) {
+		if (g_speed < 0) {
+			g_resetMotion = 24;
+			g_maxMotion = 24;
+		}
+		else {
+			g_resetMotion = 25;
+			g_maxMotion = 26;
 		}
 	}
+	else {
+		g_resetMotion = 8;
+		g_maxMotion = 15;
+	}
+	if (g_player.attackFlg == TRUE) {//スキル攻撃
+		g_resetMotion = 32;
+		g_maxMotion = 32;
+	}
 
+		
 	
+}
+void SkillMove_1(){
+
 }
 
 // 敵を間合いに入ったらロックオンをする処理

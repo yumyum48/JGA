@@ -4,6 +4,7 @@
 
 #define PLAYER_WIDTH	 (280 * PLAYER_REDUCTION)			// ƒvƒŒƒCƒ„[‚Ì‰¡•
 #define PLAYER_HEIGHT	 (200 * PLAYER_REDUCTION)			// ƒvƒŒƒCƒ„[‚Ìc•
+#define PLAYER_SKILLS    1									// ƒvƒŒƒCƒ„[‚Ìg—p‚Å‚«‚éƒXƒLƒ‹‚Ì”
 
 extern playerInfo g_player;									// ƒvƒŒƒCƒ„[‚Ìî•ñ
 
@@ -17,5 +18,14 @@ bool PlayerInterval(int ex, int ey, int ew, int eh);		// ƒvƒŒƒCƒ„[‚Ì‰æ‘œ‚Æ“G‚Ì‰
 bool PlayerHitCheck(int ex, int ey, int ew, int eh);		// ƒvƒŒƒCƒ„[‚ÌŒ•‚Ì•”•ª‚Ì”»’è‚ğ”²‚«‚ÉAƒvƒŒƒCƒ„[©g‚Ì“–‚½‚è”»’è(å‚ÉƒGƒlƒ~[‚Æ‚ÌÕ“Ë‚Ég‚¤)(“–‚½‚Á‚½:TRUE  “–‚½‚Á‚Ä‚¢‚È‚©‚Á‚½:FALSE)
 void EnemyCut();											// ŠÔ‡‚¢‚É“ü‚Á‚Ä‚¢‚é“G‚ğ“|‚·ˆ—
 void PlayerAfterimage(int anime);							// ƒvƒŒƒCƒ„[‚Ìc‘œ
+int  SkillChange();											// 
+void SkillDisp_1();											//
+void SkillMove_1();											//
 
+void(* const SkillDisp[PLAYER_SKILLS])() = {
+	SkillDisp_1,
+};
+void(* const SkillMove[PLAYER_SKILLS])() = {
+	SkillMove_1,
+};
 

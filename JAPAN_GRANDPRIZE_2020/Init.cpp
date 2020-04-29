@@ -24,3 +24,8 @@ void GameInit() {
 	g_gameScene = GAME_TITLE;	// ƒ^ƒCƒgƒ‹‚Ö–ß‚é
 
 }
+
+
+void Reset(){
+	g_player.skill_MAX = 1;
+}
