@@ -2,13 +2,10 @@
 
 #include "DxLib.h"
 #include "Map.h"
+#include "Macro.h"
 //#include "Player.h"
 
-#define ENEMY_MAX 5
-#define GROUND 450
-#define PLAYER_REDUCTION (0.8)		  // プレイヤーの縮小率
-#define WINDOW_WIDTH    (1280)        // 画面の横幅
-#define WINDOW_HEIGHT   (768)         // 画面の縦幅
+
 
 // マウスの入力状態
 struct mouse {
@@ -125,7 +122,17 @@ struct mapInfo {
         y = 0;
     }
 };
+// トラップの情報
+struct trapInfo {
 
+    int x, y;
+    bool dispFlg;	// トラップを出現させるかどうかのフラグ	TRUE: 出現させる FALSE: 出現させない
+    void Init() {
+        x = 1300;
+        y = 610;
+        dispFlg = FALSE;
+    }
+};
 // 雨の情報
 struct rainInfo {
     int x, y;           // X,Y座標

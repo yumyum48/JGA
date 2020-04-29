@@ -187,7 +187,7 @@ void EnemyCut() {
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		// 歩く敵
 		if ((g_enemy[i].walk.flg == TRUE)
-			&& (PlayerInterval(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1)) {
+			&& (PlayerInterval(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)) {
 			// レティクル表示
 			DrawRotaGraph2(g_enemy[i].walk.x + (ENEMY_WIDTH / 3), g_enemy[i].walk.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
@@ -200,7 +200,7 @@ void EnemyCut() {
 		}
 		// 飛んでいる敵
 		if ((g_enemy[i].fly.flg == TRUE)
-			&& (PlayerInterval(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == 1)) {
+			&& (PlayerInterval(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)) {
 			// レティクル表示
 			DrawRotaGraph2(g_enemy[i].fly.x + (ENEMY_WIDTH / 3), g_enemy[i].fly.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
@@ -215,7 +215,7 @@ void EnemyCut() {
 	}
 	//boss
 	if (g_enemybeat > 10) {
-		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == 1) {
+		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE) {
 			if (g_boss[0].hp > 0) {
 				if (g_keyInfo.keyFlg & PAD_INPUT_3) {
 					if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
@@ -228,20 +228,20 @@ void EnemyCut() {
 	}
 
 }
-// プレイヤーの画像と敵の画像の当たり判定
-int PlayerInterval(int ex, int ey, int ew, int eh) {
+// プレイヤーの画像と敵の画像の当たり判定 (TRUE: 当たった | FALSE: 当たらなかった)
+bool PlayerInterval(int ex, int ey, int ew, int eh) {
 
 	if (((long int)g_player.x + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
 		&& ((long int)g_player.x + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH >= ex)
 		&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
 		&& ((long int)g_player.y + PLAYER_HEIGHT >= ey)) {
-		return 1;
+		return TRUE;
 	}
 
-	return 0;
+	return FALSE;
 }
 
-// プレイヤーの剣の部分の判定を抜きに、プレイヤー自身の当たり判定(主にエネミーとの衝突に使う)当たった:TRUE  当たっていなかった:FALSE
+// プレイヤーの剣の部分の判定を抜きに、プレイヤー自身の当たり判定(主にエネミーとの衝突に使う)(当たった:TRUE  当たっていなかった:FALSE)
 bool PlayerHitCheck(int ex, int ey, int ew, int eh) {
 	if( (g_player.x  <= ex + ew)
 	&&	(g_player.x + (PLAYER_WIDTH / 2) >= ex)
