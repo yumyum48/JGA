@@ -10,7 +10,7 @@
 #include "Select.h"
 #include "enemy.h"
 #include "Dynadelete.h"
-
+#include "HP.h"
 #define DEBUG_TEXT_ON
 
 
@@ -45,7 +45,7 @@ int g_gameScene;				// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト
 DINPUT_JOYSTATE g_controler;
 controler g_button;
 
-int g_game_stage;				//ステージをセレクト
+int g_select_Stage;				//ステージをセレクト
 enemyType g_enemy[ENEMY_MAX];	// 敵の情報
 
 int g_speedLevel;				// スクロールレベルの設定を保存
@@ -55,6 +55,10 @@ bossInfo g_boss[MAP_MAX];		//ボスの情報
 int g_enemybeat;				// エネミーを倒した数をカウントする
 
 playerInfo g_player;			// プレイヤーの情報
+
+int g_MutekiTime;				// プレイヤーの無敵時間
+
+trapInfo g_trap;				// トラップの情報
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -120,8 +124,8 @@ int Main(void) {
 		
 		// デバッグモード(変数の中の文字を描画)
 #ifdef DEBUG_TEXT_ON
-		DrawFormatString(0, 0, 0xffff00, "keyFlg = %d", g_keyInfo.keyFlg);
-		DrawFormatString(0, 20, 0xFFFF00, "mouseX = %d \n mouseY = %d", g_mouseInfo.mouseX, g_mouseInfo.mouseY);
+		DrawFormatString(0, 0, 0x0000FF, "keyFlg = %d", g_keyInfo.keyFlg);
+		DrawFormatString(0, 20, 0x0000DF, "mouseX = %d \n mouseY = %d", g_mouseInfo.mouseX, g_mouseInfo.mouseY);
 #endif // DEBUG_TEXT_ON
 
 		//DynaDelete();		// 動的配列をメモリ解放

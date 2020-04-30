@@ -5,14 +5,15 @@
 #include "Map.h"
 #include "Select.h"
 #include "Rain.h"
+//#include "ScroolDown.h"
 #define SCROLL_SPEED (8.0F)	// マップのスクロールするスピード
 
 
 rainInfo g_rain[2];
 
 void RainDisp(){
-	DrawGraph(g_rain[1].x, g_rain[1].y, g_pic.rain[1], TRUE);
-	DrawGraph(g_rain[0].x, g_rain[0].y, g_pic.rain[0], TRUE);
+	DrawGraph(g_rain[1].x, g_rain[1].y, g_pic.rain, TRUE);
+	DrawGraph(g_rain[0].x, g_rain[0].y, g_pic.rain, TRUE);
 }
 
 void RainMove() {

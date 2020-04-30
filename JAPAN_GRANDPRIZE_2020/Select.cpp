@@ -13,11 +13,11 @@ void StageSelect() {
 
 	//メニューカーソル移動処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
-		if (++g_game_stage > 7) g_game_stage = 0;
+		if (++g_select_Stage > 7) g_select_Stage = 0;
 	}
 
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
-		if (--g_game_stage < 0) g_game_stage = 7;
+		if (--g_select_Stage < 0) g_select_Stage = 7;
 	}
 
 	//ｚで選択（デバック）
@@ -50,7 +50,7 @@ void SelectDisp(void) {
 
 	DrawBox(420, 235, 655, 470,0x008000, TRUE);
 
-	switch (g_game_stage)
+	switch (g_select_Stage)
 	{
 	case 0:	DrawBox(g_x-265, g_y-3, g_x - 85, g_y + 178, 0xFF0000, FALSE);break;
 	case 1: DrawBox(g_x, g_y, g_x + 180, g_y + 180, 0xFF0000, FALSE); break;

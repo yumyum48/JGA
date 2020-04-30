@@ -9,7 +9,8 @@ extern enemyType g_enemy[ENEMY_MAX];	// “G‚Ìî•ñ
 
 
 //extern int g_killCount;
-
+void MonsterDisp();		// ã‚¢“GAƒ{ƒX‚Ì•\¦
+void MonsterMove();		// ã‚¢“GAƒ{ƒX‚Ì“®‚«
 void EnemyDisp();		// “G‚Ì•`‰æ
 void EnemyMove();		// “G‚Ì“®‚«
 void EnemyInit();		// “G‚Ì‰Šú‰»

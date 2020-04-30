@@ -3,28 +3,35 @@
 #include "Picture.h"
 
 int LoadPicture() {
-	if ((g_pic.Block = LoadGraph("image/block.bmp")) == -1) return -1;
-	if ((g_pic.QBlock = LoadGraph("image/Qblock.jpg")) == -1) return -1;
-	/*if ((g_pic.player[0] = LoadGraph("image/1.png")) == -1) return -1;
-	if ((g_pic.player[1] = LoadGraph("image/5.png")) == -1) return -1;
-	if ((g_pic.player[2] = LoadGraph("image/2.png")) == -1) return -1;
-	if ((g_pic.player[3] = LoadGraph("image/3.png")) == -1) return -1;
-	if ((g_pic.player[4] = LoadGraph("image/4.png")) == -1) return -1;
-	if ((g_pic.player[5] = LoadGraph("image/5a.png")) == -1) return -1;
-	if ((g_pic.player[6] = LoadGraph("image/2a.png")) == -1) return -1;
-	if ((g_pic.player[7] = LoadGraph("image/3a.png")) == -1) return -1;
-	//if ((g_pic.player[8] = LoadGraph("image/3.png")) == -1) return -1;
-	//if ((g_pic.player[9] = LoadGraph("image/5.png")) == -1) return -1;*/
+
+	// プレイヤー画像の読み込み
 	if (LoadDivGraph("image/player2.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
+	//UI画像
+	if ((g_pic.PlayerUI = LoadGraph("image/Aicon2.png")) == -1) return -1;
+	//Life画像
+	if (LoadDivGraph("image/Life.png", 2, 2, 1, 100, 100, g_pic.Life, 0) == -1) return -1;
+
+	// エネミー画像の読み込み
 	if ((g_pic.enemy = LoadGraph("image/enemy.png")) == -1) return -1;
+
+	/*//マップの読み込み
 	if (LoadDivGraph("image/mori8sute.png", 24, 3, 8, 1024, 768, g_pic.map, 0) == -1)
+		return -1;*/
+
+	// マップ読み込み
+	if (LoadDivGraph("image/Stage1_main.png", 4, 4, 1, 250, 400, g_pic.map, 0) == -1)
 		return -1;
+	// マップ背景読み込み
+	if ((g_pic.backMap = LoadGraph("image/Stage1_Back.png")) == -1) return -1;
 	
-	if ((g_pic.Block = LoadGraph("image/block.bmp")) == -1) return -1;
 	/*
 	if (LoadDivGraph("images/Cnt2.png", 10, 10, 1, 57, 80, g_NumImage, 0) == -1)
 		return -1;*/
-	if ((g_pic.rain[0] = LoadGraph("image/RainLarge.png")) == -1) return -1;
-	if ((g_pic.rain[1] = LoadGraph("image/RainLarge.png")) == -1) return -1;
+
+	// 雨の画像の読み込み
+	if ((g_pic.rain = LoadGraph("image/RainLarge.png")) == -1) return -1;
+
+	// レティクル画像の読み込み
+	if ((g_pic.reticle = LoadGraph("image/Reticle.png")) == -1) return -1;
 	return 0;
 }
