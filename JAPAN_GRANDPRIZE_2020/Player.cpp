@@ -9,6 +9,7 @@
 #include "enemy.h"
 #include "Boss.h"
 #include "HP.h"
+#include "Skill.h"
 
 #define G                (0.5F)		// 重力
 #define JUMP_POWER       (15.0F)	// ジャンプ力
@@ -36,15 +37,18 @@ void PlayerDisp() {
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[0].hp);
 	DrawFormatString(0, 400, 0xFF0000, "%d", g_player.skillFlg);
 
-
+	if (g_player.skillFlg != 0) {
+		SkillDisp[g_player.skillFlg - 1](g_maxMotion, g_resetMotion);
+	}
 	
 }
 
 void PlayerMove() {
 	PlayerJump();		// プレイヤーのジャンプ処理
 	PlayerControl();	// プレイヤーを操作する関数
-
-
+	if (g_player.skillFlg != 0) {
+		SkillMove[g_player.skillFlg - 1]();
+	}
 }
 
 // プレイヤーの残像
@@ -159,6 +163,8 @@ void PlayerControl() {
 			g_maxMotion = 40;
 		}
 	}
+
+
 }
 
 int SkillChange() {
@@ -169,7 +175,7 @@ int SkillChange() {
 		if (++skillNum > g_player.skill_MAX) skillNum = 1;
 	}
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
-		if (++skillNum < 1) skillNum = g_player.skill_MAX;
+		if (--skillNum < 1) skillNum = g_player.skill_MAX;
 	}
 	
 	// skillNumの中身
@@ -178,36 +184,6 @@ int SkillChange() {
 	return skillNum;
 }
 
-void SkillDisp_1() {
-	// スキル中
-		EnemyLockOn();
-
-	//アニメーション
-	if (g_player.jumpFlg == TRUE) {
-		if (g_speed < 0) {
-			g_resetMotion = 24;
-			g_maxMotion = 24;
-		}
-		else {
-			g_resetMotion = 25;
-			g_maxMotion = 26;
-		}
-	}
-	else {
-		g_resetMotion = 8;
-		g_maxMotion = 15;
-	}
-	if (g_player.attackFlg == TRUE) {//スキル攻撃
-		g_resetMotion = 32;
-		g_maxMotion = 32;
-	}
-
-		
-	
-}
-void SkillMove_1(){
-
-}
 
 // 敵を間合いに入ったらロックオンをする処理
 void EnemyLockOn() {

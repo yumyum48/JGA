@@ -44,7 +44,14 @@ void HpMove(void) {
 	//if (g_keyInfo.keyFlg & PAD_INPUT_A) --g_player.hp;
 
 	// トラップとの接触判定
-	if(g_trap.x)
+	if (noDamageCnt > 60 && g_player.attackFlg == FALSE) {
+		if (PlayerHitCheck(g_trap.x, g_trap.y, g_trap.x + 100, g_trap.y + 100) == TRUE) {
+			--g_player.hp;
+			noDamageCnt = 0;		// 無敵時間発動
+			g_trap.Init();																// トラップが画面外に入った場合初期化
+			g_trap.dispFlg = FALSE;
+		}
+	}
 
 	// 弱い敵との接触判定
 	for (int i = 0; i < ENEMY_MAX; i++) {

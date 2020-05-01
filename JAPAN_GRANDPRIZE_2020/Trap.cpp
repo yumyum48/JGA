@@ -19,7 +19,7 @@ void TrapDisp() {
 	
 	if (g_trap.dispFlg == TRUE) {
 		DrawFormatString(500, 0, 0xFF00FF, "トラップ出てますよ！");
-		DrawBox(g_trap.x, g_trap.y, g_trap.x + 100, g_trap.y + 100, 0xFFFFFF, TRUE);	// トラップを表示
+		DrawBox(g_trap.x, g_trap.y, g_trap.x + 100, g_trap.y + 100, 0xFF0000, TRUE);	// トラップを表示
 	}
 }
 

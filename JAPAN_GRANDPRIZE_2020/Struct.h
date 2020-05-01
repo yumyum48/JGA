@@ -133,7 +133,7 @@ struct trapInfo {
     bool dispFlg;	// トラップを出現させるかどうかのフラグ	TRUE: 出現させる FALSE: 出現させない
     void Init() {
         x = 1300;
-        y = 610;
+        y = 510;
         dispFlg = FALSE;
     }
 };
