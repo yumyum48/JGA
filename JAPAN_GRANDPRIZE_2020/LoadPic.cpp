@@ -33,5 +33,10 @@ int LoadPicture() {
 
 	// レティクル画像の読み込み
 	if ((g_pic.reticle = LoadGraph("image/Reticle.png")) == -1) return -1;
+
+	// ボス_１の画像読み込み
+	if (LoadDivGraph("image/Boss_1.png", 8, 4, 2, 280, 200, g_pic.boss_1_1, 0) == -1)
+		return -1;
+
 	return 0;
 }
