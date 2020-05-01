@@ -43,6 +43,7 @@ void BossDisp_Stage1() {
 			anime[i] = bossAnime_Start[i];
 		}
 	}
+
 	DrawGraph(g_boss[0].x, g_boss[0].y, g_pic.boss_1_1[anime[1]], TRUE);
 	DrawGraph(g_boss[0].x, g_boss[0].y, g_pic.boss_1_1[anime[0]], TRUE);
 
@@ -56,28 +57,44 @@ void BossDisp_Stage1() {
 void BossMove_Stage1() {
 
 	static int coolTime = 0;	// 硬直時間
+	static bool moveFlg = FALSE;	// 敵が移動するだけのフラグ　TRUE:移動する FALSE:移動しない
 
-	if (coolTime++ > 60) {
 
-		if (g_boss[0].attackFlg != 0) {
-			BossAttackMove();	// ボスの攻撃
+	if( (coolTime++ > 120 )			// 硬直時間
+	&&  (g_boss[0].attackFlg == 0)	// ボスが攻撃していなければ
+	&&  ( moveFlg == FALSE) ){		// ボスが移動していなければ
+
+		if (GetRand(5) == 1) {								//乱数で攻撃するか移動をするかを決定
+			g_boss[0].attackFlg = ENEMY_DROP;				// 攻撃する場合、フラグに対応した数字を入れる
+			coolTime = 0;
 		}
-		// 攻撃をしていないなら動く
-		else {
-			if (g_boss[0].x > 0) {
-				float angle;
-				angle = DX_TWO_PI / 120 * g_boss[0].x;	// 横の振れ幅
-				g_boss[0].y -= sin(angle) * 10;			// 縦の振れ幅
-				g_boss[0].x -= 5;						// ボスの移動量
-			}
-			else {
-				g_boss[0].x = 700;
-				g_boss[0].y = 160;
-				coolTime = 0;
-			}
+		else {	// 攻撃をしないとき
+			moveFlg = TRUE;
+			
 		}
 	}
 
+	if (moveFlg == TRUE) {						// 行動モーション
+		if (g_boss[0].x > 0) {
+			float angle;
+			angle = DX_TWO_PI / 120 * g_boss[0].x;	// 横の振れ幅
+			g_boss[0].y -= sin(angle) * 10;			// 縦の振れ幅
+			g_boss[0].x -= 5;						// ボスの移動量
+		}
+		else {
+			g_boss[0].x = 700;
+			g_boss[0].y = 160;
+			coolTime = 0;
+			moveFlg = FALSE;
+		}
+	}
+	if (g_boss[0].attackFlg != 0) {
+		g_boss[0].x = 700;
+		g_boss[0].y = 160;
+		BossAttackMove();	// ボスの攻撃
+	}
+
+	
 	//BossHit();	// プレイヤーとボスの当たり判定当たるとプレイヤーのhp現象
 }
 /*********************************************
@@ -99,6 +116,8 @@ void BossHit() {
 */////////////////////////////////////////////
 // ボスの攻撃の全体管理(表示)
 void BossAttackDisp() {
+	DrawFormatString(100, 600, 0xFF00FF, "ボスが攻撃してますよ！");
+	
 	switch (g_boss[0].attackFlg)
 	{
 	case ENEMY_DROP:
@@ -114,6 +133,8 @@ void BossAttackDisp() {
 }
 // ボスの攻撃の全体管理(動き)
 void BossAttackMove() {
+	DrawFormatString(100, 700, 0xFF00FF, "ボスが攻撃してますよ！");
+	if (g_keyInfo.keyFlg & PAD_INPUT_4) g_boss[0].attackFlg = 0;
 	switch (g_boss[0].attackFlg)
 	{
 	case ENEMY_DROP:
