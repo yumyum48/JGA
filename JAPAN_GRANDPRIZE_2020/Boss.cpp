@@ -21,6 +21,11 @@ struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
 enum {	// ボスの攻撃判断
 	ENEMY_DROP = 1
 };
+
+enum { // ボスの動きパターン
+	BOSSMOVE_NOMOTION,		// ノーモーション
+	BOSSMOVE_SPEEDDOWN,		// ボスが追い付かれる動き
+};
 /*********************************************
 
 * ステージ１のボス
@@ -57,25 +62,28 @@ void BossDisp_Stage1() {
 void BossMove_Stage1() {
 
 	static int coolTime = 0;	// 硬直時間
-	static bool moveFlg = FALSE;	// 敵が移動するだけのフラグ　TRUE:移動する FALSE:移動しない
+	static int moveFlg = BOSSMOVE_NOMOTION;	// 敵が移動するだけのフラグ　0:移動しない 1:上下に移動しながらプレイヤーに寄ってくる
 
 
 	if( (coolTime++ > 120 )			// 硬直時間
 	&&  (g_boss[0].attackFlg == 0)	// ボスが攻撃していなければ
-	&&  ( moveFlg == FALSE) ){		// ボスが移動していなければ
+	&&  ( moveFlg == BOSSMOVE_NOMOTION) ){		// ボスが移動していなければ
 
-		if (GetRand(3) == 1) {								//乱数で攻撃するか移動をするかを決定
+		if (GetRand(2) == 1) {								//乱数で攻撃するか移動をするかを決定
 			g_boss[0].attackFlg = ENEMY_DROP;				// 攻撃する場合、フラグに対応した数字を入れる
 			coolTime = 0;
 		}
 		else {	// 攻撃をしないとき
-			moveFlg = TRUE;
+			moveFlg = BOSSMOVE_SPEEDDOWN;
 			
 		}
 	}
 
-	if (moveFlg == TRUE) {						// 行動モーション
-		if (g_boss[0].x > 0) {
+	if (moveFlg == BOSSMOVE_SPEEDDOWN) {						// 行動モーション
+
+		BossMoveMotion()
+
+		/*if (g_boss[0].x > 0) {
 			float angle;
 			angle = DX_TWO_PI / 120 * g_boss[0].x;	// 横の振れ幅
 			g_boss[0].y -= sin(angle) * 10;			// 縦の振れ幅
@@ -85,8 +93,8 @@ void BossMove_Stage1() {
 			g_boss[0].x = 700;
 			g_boss[0].y = 160;
 			coolTime = 0;
-			moveFlg = FALSE;
-		}
+			moveFlg = BOSSMOVE_NOMOTION;
+		}*/
 	}
 	if (g_boss[0].attackFlg != 0) {
 		g_boss[0].x = 700;
@@ -97,6 +105,27 @@ void BossMove_Stage1() {
 	
 	//BossHit();	// プレイヤーとボスの当たり判定当たるとプレイヤーのhp現象
 }
+/*********************************************
+
+* ボスの動き達
+
+*/////////////////////////////////////////////
+// ボスの動きパターン
+void BossMoveMotion(){
+	if (g_boss[0].x > 0) {
+			float angle;
+			angle = DX_TWO_PI / 120 * g_boss[0].x;	// 横の振れ幅
+			g_boss[0].y -= sin(angle) * 10;			// 縦の振れ幅
+			g_boss[0].x -= 5;						// ボスの移動量
+		}
+		else {
+			g_boss[0].x = 700;
+			g_boss[0].y = 160;
+			coolTime = 0;
+			moveFlg = BOSSMOVE_NOMOTION;
+		}
+}
+
 /*********************************************
 
 * ボスの当たり判定	// 当たるとプレイヤーhp減少

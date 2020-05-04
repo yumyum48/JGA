@@ -10,16 +10,17 @@ int g_coolTime = 0;
 
 // 弱い敵、ボスの表示
 void MonsterDisp() {
-	if (g_enemybeat <= 10) {
+	if (g_enemybeat <= 1) {
 		EnemyDisp();					// 弱い敵の描画
 	}
 	else {
 		BossDisp[0]();					// ボスの表示
 	}
 }
+
 // 弱い敵、ボスの動き
 void MonsterMove() {
-	if (g_enemybeat <= 10) {
+	if (g_enemybeat <= 1) {
 		EnemyMove();					// 弱い敵の動き
 	}
 	else {
