@@ -64,7 +64,7 @@ void BossMove_Stage1() {
 	&&  (g_boss[0].attackFlg == 0)	// ボスが攻撃していなければ
 	&&  ( moveFlg == FALSE) ){		// ボスが移動していなければ
 
-		if (GetRand(5) == 1) {								//乱数で攻撃するか移動をするかを決定
+		if (GetRand(3) == 1) {								//乱数で攻撃するか移動をするかを決定
 			g_boss[0].attackFlg = ENEMY_DROP;				// 攻撃する場合、フラグに対応した数字を入れる
 			coolTime = 0;
 		}
