@@ -9,7 +9,7 @@
 
 extern bossInfo g_boss[MAP_MAX];		// ボスの情報
 
-#define BOSS_WIDTH	(200)				// ボスの横幅
+#define BOSS_WIDTH	(280)				// ボスの横幅
 #define BOSS_HEIGHT	(200)				// ボスの縦幅
 
 void BossDisp_Stage1();					// ステージ１のボスの表示

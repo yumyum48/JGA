@@ -36,6 +36,9 @@ struct image {
     int reticle;                    // 敵をロックオンした時の画像(レティクル画像)
     int PlayerUI;                   //playerのUI画像
     int Life[2];                    //playerのHP画像
+    int boss_1_1[8];                // ボス_１の画像
+
+
 
 };
 
