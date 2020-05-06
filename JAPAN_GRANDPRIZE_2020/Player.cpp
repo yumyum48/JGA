@@ -36,7 +36,7 @@ void PlayerDisp() {
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[0].hp);
 	DrawFormatString(0, 400, 0xFF0000, "%d", g_player.skillFlg);
-
+	
 	if (g_player.skillFlg != 0) {
 		SkillDisp[g_player.skillFlg - 1](g_maxMotion, g_resetMotion);
 	}
@@ -46,16 +46,16 @@ void PlayerDisp() {
 void PlayerMove() {
 	PlayerJump();		// プレイヤーのジャンプ処理
 	PlayerControl();	// プレイヤーを操作する関数
-	if (g_player.skillFlg != 0) {
-		SkillMove[g_player.skillFlg - 1]();
-	}
+	//if (g_player.skillFlg != 0) {
+	//	SkillMove[g_player.skillFlg - 1]();
+	//}
 }
 
 // プレイヤーの残像
 void PlayerAfterimage(int anime) {
 	static int resetMotion_Buf[3] = { 0, 0, 0 };		// マイフレームのプレイヤーのアニメーションを格納
 	static int maxMotion_Buf[3] = { 0, 0, 0 };		// マイフレームのプレイヤーのアニメーションを格納
-	if (g_skillFlg == TRUE) {
+	if (g_player.skillFlg == 1) {
 		int anime_Buf = anime - 1;					// 過去のプレイヤーアニメーションを格納する
 		resetMotion_Buf[2] = resetMotion_Buf[1];
 		resetMotion_Buf[1] = resetMotion_Buf[0];
@@ -69,7 +69,7 @@ void PlayerAfterimage(int anime) {
 			if (anime_Buf < resetMotion_Buf[i] || anime_Buf > maxMotion_Buf[i]) anime_Buf = resetMotion_Buf[i];
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
 			// 残像プレイヤー表示
-			g_player.y = g_mouseInfo.mouseY;
+			//g_player.y = g_mouseInfo.mouseY;
 			DrawRotaGraph2(g_player.x - ((i + 1) * 30), g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[anime_Buf], TRUE);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
@@ -142,7 +142,6 @@ void PlayerControl() {
 			
 		}
 
-		
 		// ジャンプ落下モーション
 		if (g_player.jumpFlg == TRUE) {
 			if (g_speed < 0) {
@@ -168,7 +167,7 @@ void PlayerControl() {
 }
 
 int SkillChange() {
-	static int skillNum = 1;
+	static int skillNum = 2;
 
 	// スキル選択
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
@@ -197,12 +196,13 @@ void EnemyCut() {
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		// 歩く敵
 		if ((g_enemy[i].walk.flg == TRUE)
-			&& (PlayerInterval(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)) {
+			&& ((PlayerInterval(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
+			|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
 			// レティクル表示
 			DrawRotaGraph2(g_enemy[i].walk.x + (ENEMY_WIDTH / 3), g_enemy[i].walk.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
 			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
-				if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
+				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].walk.WalkInit();
 				g_player.attackFlg = TRUE;
@@ -210,13 +210,14 @@ void EnemyCut() {
 		}
 		// 飛んでいる敵
 		if ((g_enemy[i].fly.flg == TRUE)
-			&& (PlayerInterval(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)) {
+			&& ((PlayerInterval(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
+			|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
 			// レティクル表示
 			DrawRotaGraph2(g_enemy[i].fly.x + (ENEMY_WIDTH / 3), g_enemy[i].fly.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
 			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
-				if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
-				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;
+				/*if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
+				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;*/
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].fly.WalkInit();
 				g_player.attackFlg = TRUE;
@@ -225,10 +226,11 @@ void EnemyCut() {
 	}
 	//boss
 	if (g_enemybeat > 10) {
-		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE) {
+		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE 
+			|| (SkillMove[g_player.skillFlg - 1](g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
 			if (g_boss[0].hp > 0) {
 				if (g_keyInfo.keyFlg & PAD_INPUT_3) {
-					if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
+					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
 					g_boss[0].hp--;
 					
 					g_player.attackFlg = TRUE;
@@ -240,13 +242,46 @@ void EnemyCut() {
 }
 // プレイヤーの画像と敵の画像の当たり判定 (TRUE: 当たった | FALSE: 当たらなかった)
 bool PlayerInterval(int ex, int ey, int ew, int eh) {
-
-	if (((long int)g_player.x + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
-		&& ((long int)g_player.x + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH >= ex)
-		&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
-		&& ((long int)g_player.y + PLAYER_HEIGHT >= ey)) {
-		return TRUE;
+	//通常攻撃判定
+	if (g_player.skillFlg == 0) {
+		if (((long int)g_player.x + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
+			&& ((long int)g_player.x + (long int)PLAYER_WIDTH /*+ (long int)PLAYER_WIDTH*/ >= ex)
+			&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
+			&& ((long int)g_player.y + PLAYER_HEIGHT >= ey)) {
+			return TRUE;
+		}
 	}
+
+	////間合いが伸びるスキル判定
+	//if (g_player.skillFlg == 1) {
+	//	if (((long int)g_player.x + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
+	//		&& ((long int)g_player.x + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH >= ex)
+	//		&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
+	//		&& ((long int)g_player.y + PLAYER_HEIGHT >= ey)) {
+	//		return TRUE;
+	//	}
+	//}
+
+	////飛ぶ斬撃攻撃判定（未完）
+	////DrawBox(skill_X + g_skillAnime, skill_Y, skill_X + PLAYER_WIDTH + PLAYER_WIDTH + g_skillAnime, skill_Y + PLAYER_HEIGHT, 0x0000ff, true);
+	//if (g_player.skillFlg == 2) {
+	//	if (((long int)g_player.x + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
+	//		&& ((long int)g_player.x + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH >= ex)
+	//		&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
+	//		&& ((long int)g_player.y + PLAYER_HEIGHT >= ey)) {
+	//		return TRUE;
+	//	}
+	//}
+
+	////上方向に伸びる攻撃判定（未完）
+	//if (g_player.skillFlg == 3) {
+	//	if (((long int)g_player.x + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
+	//		&& ((long int)g_player.x + (long int)PLAYER_WIDTH >= ex)
+	//		&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
+	//		&& ((long int)g_player.y + PLAYER_HEIGHT >= ey)) {
+	//		return TRUE;
+	//	}
+	//}
 
 	return FALSE;
 }
