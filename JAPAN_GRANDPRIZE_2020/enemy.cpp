@@ -14,7 +14,7 @@ void MonsterDisp() {
 		EnemyDisp();					// 弱い敵の描画
 	}
 	else {
-		BossDisp[0]();					// ボスの表示
+		BossDisp[g_select_Stage]();					// ボスの表示
 	}
 }
 
@@ -24,7 +24,7 @@ void MonsterMove() {
 		EnemyMove();					// 弱い敵の動き
 	}
 	else {
-		BossMove[0]();					// ボスの動き
+		BossMove[g_select_Stage]();					// ボスの動き
 	}
 }
 

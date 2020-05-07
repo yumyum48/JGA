@@ -6,6 +6,28 @@
 #include "Picture.h"
 #include "enemy.h"
 #include "GamePlay.h"
+#include "Map.h"
+
+enum {	// ボスの配列
+	BOSS_STAGE1,
+	BOSS_STAGE2,
+	BOSS_STAGE3,
+	BOSS_STAGE4,
+	BOSS_STAGE5,
+	BOSS_STAGE6,
+	BOSS_STAGE7,
+	BOSS_STAGE8,
+	BOSS_MAX,
+};
+
+enum {	// ボスの攻撃判断
+	ENEMY_DROP = 1
+};
+
+enum { // ボスの動きパターン
+	BOSSMOVE_NOMOTION,		// ノーモーション
+	BOSSMOVE_SPEEDDOWN,		// ボスが追い付かれる動き
+};
 
 extern bossInfo g_boss[MAP_MAX];		// ボスの情報
 
@@ -28,7 +50,7 @@ void BossEnemyDropDisp();				// 弱い敵を出すボス専用の技の関数
 void BossEnemyDropMove();				// 弱い敵を出すボス専用の技の関数
 void BossMoveMotion(int *coolTime, int *moveFlg);		//
 void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg);
-void (* const BossDisp[1])() = {		// ボスの表示
+void (* const BossDisp[2])() = {		// ボスの表示
 	BossDisp_Stage1,
 };
 

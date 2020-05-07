@@ -103,6 +103,62 @@ struct bossInfo {     // ボスの情報
         popflg = 0;
         attackFlg = 0;
     }
+
+    void Init_Stage2() {
+        hp = 3;
+        x = 872;
+        y = 160;
+        popflg = 0;
+        attackFlg = 0;
+    }
+
+    void Init_Stage3() {
+        hp = 3;
+        x = 872;
+        y = 160;
+        popflg = 0;
+        attackFlg = 0;
+    }
+
+    void Init_Stage4() {
+        hp = 3;
+        x = 872;
+        y = 160;
+        popflg = 0;
+        attackFlg = 0;
+    }
+
+    void Init_Stage5() {
+        hp = 3;
+        x = 872;
+        y = 160;
+        popflg = 0;
+        attackFlg = 0;
+    }
+
+    void Init_Stage6() {
+        hp = 3;
+        x = 872;
+        y = 160;
+        popflg = 0;
+        attackFlg = 0;
+    }
+
+    void Init_Stage7() {
+        hp = 3;
+        x = 872;
+        y = 160;
+        popflg = 0;
+        attackFlg = 0;
+    }
+
+    void Init_Stage8() {
+        hp = 3;
+        x = 872;
+        y = 160;
+        popflg = 0;
+        attackFlg = 0;
+    }
 };
 
 struct bossType {     // ボスの種類

@@ -17,15 +17,6 @@ struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
 	int x, y;
 
 };
-
-enum {	// ボスの攻撃判断
-	ENEMY_DROP = 1
-};
-
-enum { // ボスの動きパターン
-	BOSSMOVE_NOMOTION,		// ノーモーション
-	BOSSMOVE_SPEEDDOWN,		// ボスが追い付かれる動き
-};
 /*********************************************
 
 * ステージ１のボス
@@ -200,21 +191,7 @@ void BossEnemyDropMove() {
 
 }
 
-/*********************************************
 
-* ステージ２のボス
-
-*/////////////////////////////////////////////
-// 描画
-void BossDisp_Stage2() {
-	if (g_enemybeat >= 10) {
-		DrawBox(g_boss[0].x, g_boss[0].y, 1280, 768, 0x0FF000, TRUE);
-	}
-}
-// 動き
-void BossMove_Stage2() {
-
-}
 
 /*********************************************
 
@@ -232,8 +209,14 @@ void BossMove_Stage3() {
 
 }
 
+// ボスの初期化
 void BossInit() {
-	for (int i = 0; i < MAP_MAX; i++) {
-		g_boss[i].Init_Stage1();
-	}
+	g_boss[BOSS_STAGE1].Init_Stage1();
+	g_boss[BOSS_STAGE2].Init_Stage2();
+	g_boss[BOSS_STAGE3].Init_Stage3();
+	g_boss[BOSS_STAGE4].Init_Stage4();
+	g_boss[BOSS_STAGE5].Init_Stage5();
+	g_boss[BOSS_STAGE6].Init_Stage6();
+	g_boss[BOSS_STAGE7].Init_Stage7();
+	g_boss[BOSS_STAGE8].Init_Stage8();
 }
