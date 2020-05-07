@@ -35,8 +35,12 @@ int LoadPicture() {
 	if ((g_pic.reticle = LoadGraph("image/Reticle.png")) == -1) return -1;
 
 	// ƒ{ƒX_‚P‚Ì‰æ‘œ“Ç‚İ‚İ
-	if (LoadDivGraph("image/Boss_1.png", 8, 4, 2, 280, 200, g_pic.boss_1_1, 0) == -1)
+	if (LoadDivGraph("image/Boss_1.png", 8, 4, 4, 280, 200, g_pic.boss_1_1, 0) == -1)
 		return -1;
+
+	//// ƒ{ƒX_‚P‚Ì–A‰æ‘œ“Ç‚İ‚İ
+	//if (LoadDivGraph("image/Boss1_Water.png", 8, 8, 0, 280, 200, g_pic.boss_1_2, 0) == -1)
+	//	return -1;
 
 	return 0;
 }
