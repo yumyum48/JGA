@@ -37,6 +37,7 @@ struct image {
     int PlayerUI;                   //player‚ÌUI‰æ‘œ
     int Life[2];                    //player‚ÌHP‰æ‘œ
     int boss_1_1[8];                // ƒ{ƒX_‚P‚Ì‰æ‘œ
+    
 
 
 
