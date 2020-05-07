@@ -39,7 +39,7 @@ void BossDisp_Stage1() {
 			anime[i] = bossAnime_Start[i];
 		}
 	}
-
+		
 	DrawRotaGraph2(g_boss[0].x, g_boss[0].y, 0, 0, 2.0, 0.0, g_pic.boss_1_1[anime[1]], TRUE);
 	DrawRotaGraph2(g_boss[0].x, g_boss[0].y, 0, 0, 2.0, 0.0, g_pic.boss_1_1[anime[0]], TRUE);
 
@@ -81,6 +81,10 @@ void BossMove_Stage1() {
 		g_boss[0].y = 160;
 		BossAttackMove();	// ボスの攻撃
 	}
+
+}
+
+void Boss_Neutral_Motion() {
 
 }
 /*********************************************
@@ -137,16 +141,15 @@ void BossHit() {
 void BossAttackDisp() {
 	
 	
-	switch (g_boss[0].attackFlg)
-	{
-	case ENEMY_DROP:
+	switch (g_boss[0].attackFlg) {
+		case ENEMY_DROP:
 		
-		BossEnemyDropDisp();	// 弱い敵を出す
-		DrawFormatString(100, 600, 0xFF00FF, "ボスが攻撃してますよ！");
-		break;
+			BossEnemyDropDisp();	// 弱い敵を出す
+			DrawFormatString(100, 600, 0xFF00FF, "ボスが攻撃してますよ！");
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 	
 
@@ -159,14 +162,13 @@ void BossAttackMove() {
 
 	if (g_keyInfo.keyFlg & PAD_INPUT_4) g_boss[0].attackFlg = 0;
 
-	switch (g_boss[0].attackFlg)
-	{
-	case ENEMY_DROP:
-		BossEnemyDropMove();	// 弱い敵を出す
-		break;
+	switch (g_boss[0].attackFlg) {
+		case ENEMY_DROP:
+			BossEnemyDropMove();	// 弱い敵を出す
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 	
 }

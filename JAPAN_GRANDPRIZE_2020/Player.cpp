@@ -10,6 +10,7 @@
 #include "Boss.h"
 #include "HP.h"
 #include "Skill.h"
+#include "Select.h"
 
 #define G                (0.5F)		// 重力
 #define JUMP_POWER       (15.0F)	// ジャンプ力
@@ -167,7 +168,7 @@ void PlayerControl() {
 }
 
 int SkillChange() {
-	static int skillNum = 2;
+	static int skillNum = 1;
 
 	// スキル選択
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
@@ -201,6 +202,11 @@ void EnemyCut() {
 			// レティクル表示
 			DrawRotaGraph2(g_enemy[i].walk.x + (ENEMY_WIDTH / 3), g_enemy[i].walk.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
+			if (g_player.skillFlg == 2) {
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemy[i].walk.WalkInit();
+				g_player.attackFlg = TRUE;
+			}
 			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
 				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
 				g_enemybeat++;			// エネミーを倒した数をカウント
@@ -215,6 +221,11 @@ void EnemyCut() {
 			// レティクル表示
 			DrawRotaGraph2(g_enemy[i].fly.x + (ENEMY_WIDTH / 3), g_enemy[i].fly.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
+			if (g_player.skillFlg == 2) {
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemy[i].fly.WalkInit();
+				g_player.attackFlg = TRUE;
+			}
 			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
 				/*if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
 				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;*/
@@ -225,7 +236,7 @@ void EnemyCut() {
 		}
 	}
 	//boss
-	if (g_enemybeat > 10) {
+	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
 		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE 
 			|| (SkillMove[g_player.skillFlg - 1](g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
 			if (g_boss[0].hp > 0) {
