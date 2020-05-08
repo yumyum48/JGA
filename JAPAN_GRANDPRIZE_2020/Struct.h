@@ -37,6 +37,7 @@ struct image {
     int PlayerUI;                   //playerのUI画像
     int Life[2];                    //playerのHP画像
     int boss_1_1[8];                // ボス_１の画像
+    int skill[5];                   //スキル3のモーション画像(仮)
     
 
 

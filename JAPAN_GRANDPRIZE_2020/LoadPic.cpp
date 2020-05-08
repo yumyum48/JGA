@@ -11,6 +11,9 @@ int LoadPicture() {
 	//Life画像
 	if (LoadDivGraph("image/Life.png", 2, 2, 1, 100, 100, g_pic.Life, 0) == -1) return -1;
 
+	//スキル3モーション(仮)
+	if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill, 0) == -1) return -1;
+
 	// エネミー画像の読み込み
 	if ((g_pic.enemy = LoadGraph("image/enemy.png")) == -1) return -1;
 
@@ -19,10 +22,10 @@ int LoadPicture() {
 		return -1;*/
 
 	// マップ読み込み
-	if (LoadDivGraph("image/Stage1_main.png", 4, 4, 1, 250, 400, g_pic.map, 0) == -1)
+	if (LoadDivGraph("image/Stage1_main2.png", 4, 4, 1, 250, 400, g_pic.map, 0) == -1)
 		return -1;
 	// マップ背景読み込み
-	if ((g_pic.backMap = LoadGraph("image/Stage1_Back.png")) == -1) return -1;
+	if ((g_pic.backMap = LoadGraph("image/Stage1_Back2.png")) == -1) return -1;
 	
 	/*
 	if (LoadDivGraph("images/Cnt2.png", 10, 10, 1, 57, 80, g_NumImage, 0) == -1)
