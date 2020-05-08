@@ -37,7 +37,7 @@ extern bossInfo g_boss[MAP_MAX];		// ボスの情報
 void BossDisp_Stage1();					// ステージ１のボスの表示
 void BossMove_Stage1();					// ステージ１のボスの動き
 
-void Boss_Knock_Down();							// ボスの当たり判定
+void Boss_Knock_Down();					// ボスの当たり判定
 
 void BossInit();						// ボスの初期化
 
