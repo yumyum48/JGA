@@ -53,6 +53,7 @@ struct playerInfo {
     int skill_MAX; // 使用可能スキル(0:何もしない 1:スキル１　2:スキル２...)
     bool jumpFlg;   // ジャンプフラグ
     bool attackFlg; // 攻撃しているかどうかのフラグ
+    int skillcustom[3]; // 装備中のスキル取得
     void Init() {   // プレイヤーの初期化
         x = 100 * PLAYER_REDUCTION;
         y = GROUND;
