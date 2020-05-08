@@ -231,9 +231,9 @@ struct picInfo {
     int x;          //Xç¿ïW
     int y;          //Yç¿ïW
 
-    void SelectStage(int num) {
-        switch (num) {
-        case 0:
-        }
-    }
+    //void SelectStageInit(int num) {
+    //    switch (num) {
+    //    case 0:
+    //    }
+    //}
 };
