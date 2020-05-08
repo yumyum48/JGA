@@ -231,9 +231,45 @@ struct picInfo {
     int x;          //Xç¿ïW
     int y;          //Yç¿ïW
 
-    //void SelectStageInit(int num) {
-    //    switch (num) {
-    //    case 0:
-    //    }
-    //}
+    void SelectStageInit(int num) {
+        switch (num) {
+        case 0: 
+            x = 217;
+            y = 599;
+            break;
+        case 1:
+            x = 547;
+            y = 563;
+            break;
+        case 2:
+            x = 926;
+            y = 506;
+            break;
+        case 3:
+            x = 689;
+            y = 381;
+            break;
+        case 4:
+            x = 451;
+            y = 310;
+            break;
+        case 5:
+            x = 224;
+            y = 178;
+            break;
+        case 6:
+            x = 508;
+            y = 69;
+            break;
+        case 7:
+            x = 826;
+            y = 69;
+            break;
+        default:
+            x = 0;
+            y = 0;
+            break;
+            
+        }
+    };
 };
