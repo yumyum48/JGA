@@ -225,3 +225,8 @@ struct slowInfo {
         rainMag = 0.6;
     }
 };
+
+struct picInfo {
+    int x;          //XÀ•W
+    int y;          //YÀ•W
+};
