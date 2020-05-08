@@ -55,13 +55,13 @@ struct playerInfo {
     bool attackFlg; // 攻撃しているかどうかのフラグ
     void Init() {   // プレイヤーの初期化
         x = 100 * PLAYER_REDUCTION;
-        y = 490;
+        y = GROUND;
         hp = 3;
         attackFlg = FALSE;
         jumpFlg = FALSE;
         skillFlg = 0;
         skillGage = 100;
-        skill_MAX = 1;
+        skill_MAX = 3;
     }
 
 };
@@ -98,7 +98,7 @@ struct bossInfo {     // ボスの情報
     int attackFlg;   // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
 
     void Init_Stage1() {
-        hp = 3;
+        hp = 10;
         x = 872;
         y = 160;
         popflg = 0;
