@@ -8,6 +8,7 @@
 #include "Macro.h"
 #include "Map.h"
 #include "Struct.h"
+#include "Picture.h"
 
 picInfo clearText;
 void StageClear() {
@@ -20,8 +21,12 @@ void StageClearDisp() {
 	MapDisp();				// マップの表示
 	PlayerDisp();			// プレイヤーの表示
 	RainDisp();				// 雨の表示
-	//DrawModiGraph
-	//DrawBox(clearText.x, clearText.y)
+	DrawModiGraph(-clearText.x + WINDOW_WIDTH, -clearText.y + WINDOW_HEIGHT,
+				clearText.x, -clearText.y + WINDOW_HEIGHT,
+				clearText.x, clearText.y,
+				-clearText.x + WINDOW_WIDTH, clearText.y,
+				g_pic.Life[1],TRUE);
+	//DrawBox(clearText.x, clearText.y, -clearText.x  + WINDOW_WIDTH, -clearText.y + WINDOW_HEIGHT, 0x00FF00,TRUE);
 }
 
 void StageClearMove() {
@@ -30,6 +35,9 @@ void StageClearMove() {
 		g_gameScene = GAME_SELECT;
 	}
 	if (Player_StageClearMove() == 1) {
+		clearText.x += 1;
+		clearText.y += 1;
+
 
 	}
 }
@@ -43,11 +51,11 @@ int Player_StageClearMove() {
 		g_player.y = GROUND;
 	}
 
-	if (g_player.x < 1200) {	// 主人公のX座標を移動させて固定
+	if (g_player.x < 1100) {	// 主人公のX座標を移動させて固定
 		g_player.x += 5;
 	}
 	else {
-		g_player.x = 1200;
+		g_player.x = 1100;
 		return 1;
 	}
 	

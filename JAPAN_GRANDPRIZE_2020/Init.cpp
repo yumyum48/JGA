@@ -9,6 +9,8 @@
 #include "Boss.h"
 #include "GameScene.h"
 #include "Trap.h"
+#include "Skill.h"
+#include "StageClear.h"
 
 
 // それぞれの初期化処理
@@ -19,9 +21,11 @@ void GameInit() {
 	RainInit();			// 雨のアニメーションの初期化処理
 	BossInit();			// ボスの情報を初期化
 	TrapInit();			// トラップの情報初期化
+	SkillInit();		// スキル情報の初期化
+	StageClearInit();	// ステージクリアの初期化
 	g_enemybeat = 0;	// エネミーを倒した数をカウントする変数の初期化
 
-	g_gameScene = GAME_TITLE;	// タイトルへ戻る
+	//g_gameScene = GAME_TITLE;	// タイトルへ戻る
 
 }
 
