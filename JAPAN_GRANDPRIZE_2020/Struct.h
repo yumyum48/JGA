@@ -38,7 +38,7 @@ struct image {
     int Life[2];                    //playerのHP画像
     int boss_1_1[8];                // ボス_１の画像
     int skill[5];                   //スキル3のモーション画像(仮)
-    
+    int selectBack;                     // セレクト画面の背景画像
 
 
 
@@ -230,4 +230,10 @@ struct slowInfo {
 struct picInfo {
     int x;          //X座標
     int y;          //Y座標
+
+    void SelectStage(int num) {
+        switch (num) {
+        case 0:
+        }
+    }
 };

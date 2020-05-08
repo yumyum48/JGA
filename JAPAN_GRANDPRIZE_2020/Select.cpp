@@ -10,21 +10,11 @@
 #define STAGE_NUMBER 7
 
 void StageSelect() {
-
-	//メニューカーソル移動処理
-	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
-		if (++g_select_Stage > 7) g_select_Stage = 0;
-	}
-
-	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
-		if (--g_select_Stage < 0) g_select_Stage = 7;
-	}
-
-	//ｚで選択（デバック）
-	if (g_keyInfo.keyFlg & PAD_INPUT_3)
-		g_gameScene = GAME_PLAY;
+	
+	
 
 	SpeedSelect();
+	SelectMove();
 	SelectDisp();
 }
 
@@ -63,7 +53,20 @@ void SelectDisp(void) {
 	default: break;
 	}
 }
+void SelectMove() {
+	//メニューカーソル移動処理
+	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
+		if (++g_select_Stage > 7) g_select_Stage = 0;
+	}
 
+	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
+		if (--g_select_Stage < 0) g_select_Stage = 7;
+	}
+
+	//ｚで選択（デバック）
+	if (g_keyInfo.keyFlg & PAD_INPUT_3)
+		g_gameScene = GAME_PLAY;
+}
 // スクロール速度の選択
 void SpeedSelect() {
 	static int speedSelect = 0;

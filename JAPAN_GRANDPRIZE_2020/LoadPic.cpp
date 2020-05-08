@@ -44,6 +44,7 @@ int LoadPicture() {
 	//// ƒ{ƒX_‚P‚Ì–A‰æ‘œ“Ç‚İ‚İ
 	//if (LoadDivGraph("image/Boss1_Water.png", 8, 8, 0, 280, 200, g_pic.boss_1_2, 0) == -1)
 	//	return -1;
-
+	// ƒZƒŒƒNƒg‰æ–Ê‚Ì”wŒi“Ç‚İ‚İ
+	if ((g_pic.selectBack = LoadGraph("image/Select.png")) == -1) return -1;
 	return 0;
 }

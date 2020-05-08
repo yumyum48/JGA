@@ -4,6 +4,8 @@
 #include "control.h"
 #include "GameScene.h"
 #include "GameScene.h"
+#include "Player.h"
+#include "Rain.h"
 void GameClear() {
 	GameClearDisp();
 	GameClearMove();
@@ -11,9 +13,14 @@ void GameClear() {
 
 void GameClearDisp() {
 	DrawFormatString(500, 500, 0xFF00FF, "ZÉLÅ[ÇâüÇµÇƒÇÀÅI");
+	MapDisp();
+	PlayerDisp();
+	
+
 }
 
 void GameClearMove() {
+	
 	if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 		g_gameScene = GAME_TITLE;
 	}
