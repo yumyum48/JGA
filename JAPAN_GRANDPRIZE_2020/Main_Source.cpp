@@ -11,6 +11,9 @@
 #include "enemy.h"
 #include "Dynadelete.h"
 #include "HP.h"
+#include "StageClear.h"
+#include "GameClear.h"
+#include "GameTitle.h"
 #define DEBUG_TEXT_ON
 
 
@@ -148,12 +151,12 @@ int Main(void) {
 void GameScene(int gameScene) {
 	
 	switch (gameScene){
-	case GAME_TITLE:	StageSelect();  break;	 // ゲームタイトル
-	case GAME_SELECT:					break;	 // ゲームセレクト
+	case GAME_TITLE:	GameTitle();  break;	 // ゲームタイトル
+	case GAME_SELECT:	StageSelect();			break;	 // ゲームセレクト
 	case GAME_PLAY:	    GamePlay();		break;	 // ゲームプレイ	
-	case GAME_OVER:						break;	 // ゲームオーバー
-	case GAME_CLEAR:					break;	 // ゲームクリア
-	case GAME_STAGE_CLEAR:	g_gameScene = GAME_TITLE;			break;	 // ゲームステージクリア
+	case GAME_OVER:					break;	 // ゲームオーバー
+	case GAME_CLEAR:	GameClear();				break;	 // ゲームクリア
+	case GAME_STAGE_CLEAR:	StageClear();			break;	 // ゲームステージクリア
 	}
 }
 

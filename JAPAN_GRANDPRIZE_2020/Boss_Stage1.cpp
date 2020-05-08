@@ -48,6 +48,6 @@ void BossMove_Stage1() {
 
 }
 
-void Boss_Neutral_Motion() {
+void Boss_Neutral_Motion1() {
 
 }
