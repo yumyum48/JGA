@@ -36,11 +36,11 @@ void PlayerDisp() {
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[0].hp);
 	DrawFormatString(0, 400, 0xFF0000, "%d", g_player.skillFlg);
-	
+
 	if (g_player.skillFlg != 0) {
 		SkillDisp[g_player.skillFlg - 1](g_maxMotion, g_resetMotion);
 	}
-	
+
 }
 
 void PlayerMove() {
@@ -126,20 +126,20 @@ void PlayerControl() {
 	if (g_button.squareButton == true) {
 
 	}
-	
+
 	static int cnt = 0;
 	// スキルオンオフ
 	SkillChange();
-	
+
 	if (g_player.skillFlg != 0) {
 		if (g_keyInfo.keyFlg & PAD_INPUT_4)
 			g_player.skillFlg = 0;
 	}
 	else {
-		
+
 		if (g_keyInfo.keyFlg & PAD_INPUT_4) {
 			g_player.skillFlg = SkillChange();
-			
+
 		}
 
 		// ジャンプ落下モーション
@@ -176,7 +176,7 @@ int SkillChange() {
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
 		if (--skillNum < 1) skillNum = g_player.skill_MAX;
 	}
-	
+
 	// skillNumの中身
 	DrawFormatString(0, 500, 0xFEFFFF, "%d", skillNum);
 
@@ -197,43 +197,66 @@ void EnemyCut() {
 		// 歩く敵
 		if ((g_enemy[i].walk.flg == TRUE)
 			&& ((PlayerInterval(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
-			|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
+				|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
 			// レティクル表示
 			DrawRotaGraph2(g_enemy[i].walk.x + (ENEMY_WIDTH / 3), g_enemy[i].walk.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
-			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
-				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
+			if (g_player.skillFlg != 2) {
+				if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+					//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
+					g_enemybeat++;			// エネミーを倒した数をカウント
+					g_enemy[i].walk.WalkInit();
+					g_player.attackFlg = TRUE;
+				}
+			}
+			else {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].walk.WalkInit();
 				g_player.attackFlg = TRUE;
+				g_skillswitch = FALSE;
 			}
 		}
 		// 飛んでいる敵
 		if ((g_enemy[i].fly.flg == TRUE)
 			&& ((PlayerInterval(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
-			|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
+				|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
 			// レティクル表示
 			DrawRotaGraph2(g_enemy[i].fly.x + (ENEMY_WIDTH / 3), g_enemy[i].fly.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
-			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
-				/*if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
-				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;*/
+			if (g_player.skillFlg != 2) {
+				if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+					/*if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
+					g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;*/
+					g_enemybeat++;			// エネミーを倒した数をカウント
+					g_enemy[i].fly.WalkInit();
+					g_player.attackFlg = TRUE;
+				}
+			}
+			else {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].fly.WalkInit();
 				g_player.attackFlg = TRUE;
+				g_skillswitch = FALSE;
 			}
 		}
 	}
 	//boss
 	if (g_enemybeat > 10) {
-		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE 
+		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE
 			|| (SkillMove[g_player.skillFlg - 1](g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
 			if (g_boss[0].hp > 0) {
-				if (g_keyInfo.keyFlg & PAD_INPUT_3) {
-					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
+				if (g_player.skillFlg != 2) {
+					if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+						//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
+						g_boss[0].hp--;
+						g_player.attackFlg = TRUE;
+					}
+				}
+				else {
+					g_enemybeat++;			// エネミーを倒した数をカウント
 					g_boss[0].hp--;
-					
 					g_player.attackFlg = TRUE;
+					g_skillswitch = FALSE;
 				}
 			}
 		}
@@ -288,11 +311,11 @@ bool PlayerInterval(int ex, int ey, int ew, int eh) {
 
 // プレイヤーの剣の部分の判定を抜きに、プレイヤー自身の当たり判定(主にエネミーとの衝突に使う)(当たった:TRUE  当たっていなかった:FALSE)
 bool PlayerHitCheck(int ex, int ey, int ew, int eh) {
-	if( (g_player.x  <= ex + ew)
-	&&	(g_player.x + (PLAYER_WIDTH / 2) >= ex)
-	&&	(g_player.y  <= ey + eh)
-	&&	(g_player.y + (PLAYER_HEIGHT / 2) >= ey) ){
-		
+	if ((g_player.x <= ex + ew)
+		&& (g_player.x + (PLAYER_WIDTH / 2) >= ex)
+		&& (g_player.y <= ey + eh)
+		&& (g_player.y + (PLAYER_HEIGHT / 2) >= ey)) {
+
 		return TRUE;
 	}
 

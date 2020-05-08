@@ -71,37 +71,30 @@ void SkillDisp_2(int aniMAX, int aniMIN){ //飛ばすやつ
 	// スキル中
 	EnemyLockOn();
 
-	if (g_keyInfo.keyFlg & PAD_INPUT_3 && g_skillswitch == TRUE) {
+	if (g_keyInfo.keyFlg & PAD_INPUT_3 && g_skillAniFlg == FALSE) {
 		g_skillAniFlg = TRUE;
 		g_skill_Y = g_player.y;
-		g_skillswitch = FALSE;
 	}
 
 	if(g_skillAniFlg == TRUE){
 		g_skillAnime += 10;
 		if (g_skillAnime < 1300) DrawBox(g_skill_X + g_skillAnime + PLAYER_WIDTH, g_skill_Y, g_skill_X + PLAYER_WIDTH + PLAYER_WIDTH + g_skillAnime, g_skill_Y + PLAYER_HEIGHT, 0x0000ff, true);
-		else g_skillAniFlg = FALSE, g_skillAnime = 0, g_skillswitch = TRUE;
+		else g_skillAniFlg = FALSE, g_skillAnime = 0;
 	}
 }
 
 bool SkillMove_2(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 
-	////飛ぶ斬撃（未完）
-	//if (g_skillAniFlg == TRUE) {
-	//	g_skillAnime += 10;
-	//	if (g_skillAnime + 10  < 1300) {
-			if (((long int)g_skill_X + (long int)g_skillAnime + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
-				&& ((long int)g_skill_X + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH + (long int)g_skillAnime >= ex)
-				&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
-				&& ((long int)g_player.y + (long int)PLAYER_HEIGHT >= ey)) {
-				return TRUE;
-			}
-		//}
-		//else {
-		//	g_skillAniFlg = FALSE;
-		//	g_skillAnime = 0;
-		//}
-	
+
+	if (((long int)g_skill_X + (long int)g_skillAnime + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
+		&& ((long int)g_skill_X + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH + (long int)g_skillAnime >= ex)
+		&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
+		&& ((long int)g_player.y + (long int)PLAYER_HEIGHT >= ey)) {
+		if (g_keyInfo.keyFlg & PAD_INPUT_3 && g_skillAniFlg == FALSE) {
+			g_skillswitch = TRUE;
+		}
+		return TRUE;
+	}
 
 	return FALSE;
 
