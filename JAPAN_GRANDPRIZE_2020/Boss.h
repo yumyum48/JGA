@@ -21,7 +21,8 @@ enum {	// ボスの配列
 };
 
 enum {	// ボスの攻撃判断
-	ENEMY_DROP = 1
+	ENEMY_DROP = 1,			// 雑魚敵の生成
+	Water_Bullet,			// 水弾での攻撃
 };
 
 enum { // ボスの動きパターン
@@ -36,8 +37,10 @@ extern bossInfo g_boss[MAP_MAX];		// ボスの情報
 
 void BossDisp_Stage1();					// ステージ１のボスの表示
 void BossMove_Stage1();					// ステージ１のボスの動き
+void BossDisp_Stage2();					// ステージ２のボスの表示
+void BossMove_Stage2();					// ステージ２のボスの動き
 
-void Boss_Knock_Down();							// ボスの当たり判定
+void Boss_Knock_Down();					// ボスの当たり判定
 
 void BossInit();						// ボスの初期化
 
@@ -46,15 +49,19 @@ void BossAttackMove();					// ボスの攻撃
 
 // ボスのスキルの表示
 void BossEnemyDropDisp();				// 弱い敵を出すボス専用の技の関数
+void BossWaterBulletDisp();				// 水弾で攻撃するボス専用の技の関数
 // ボスのスキルの動き
 void BossEnemyDropMove();				// 弱い敵を出すボス専用の技の関数
 void BossMoveMotion(int *coolTime, int *moveFlg);		//
 void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg);
+void BossWaterBulletMove();				// 水弾で攻撃するボス専用の技の関数
 void (* const BossDisp[2])() = {		// ボスの表示
 	BossDisp_Stage1,
+	BossDisp_Stage2,
 };
 
-void (* const BossMove[1])() = {		// ボスの動き
+void (* const BossMove[2])() = {		// ボスの動き
 	BossMove_Stage1,
+	BossMove_Stage2,
 };
 

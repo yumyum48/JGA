@@ -70,6 +70,7 @@ void BossMoveMotion(int *coolTime, int *moveFlg){
 }
 
 void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg) {
+
 	if (g_boss[g_select_Stage].x > 0) {
 		float angle;
 		angle = DX_TWO_PI / 120 * g_boss[0].x;	// ‰¡‚ÌU‚ê•
