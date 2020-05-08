@@ -46,6 +46,7 @@ void BossMove_Stage1() {
 		BossAttackMove();	// É{ÉXÇÃçUåÇ
 	}
 
+	Boss_Knock_Down();
 }
 
 void Boss_Neutral_Motion1() {

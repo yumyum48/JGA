@@ -88,10 +88,10 @@ void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg) {
 * ボスの当たり判定	// 当たるとプレイヤーhp減少
 
 */////////////////////////////////////////////
-void BossHit() {
+void Boss_Knock_Down() {
 	
-	if (PlayerHitCheck(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE) {
-		g_player.hp--;
+	if (g_boss[g_select_Stage].hp <= 0) {
+		g_gameScene = GAME_STAGE_CLEAR;
 	}
 	
 }
