@@ -9,4 +9,6 @@ enum {	// ゲームシーン情報
 	GAME_OVER,		 // ゲームオーバー
 	GAME_CLEAR,		 // ゲームクリア
 	GAME_STAGE_CLEAR,// ゲームステージクリア
+	GAME_SAVE,		 // ゲームデータの保存
+	GAME_LOAD,		 // セーブデータのロード
 };

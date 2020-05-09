@@ -119,7 +119,7 @@ int Main(void) {
 
 	// ゲームの初期化
 	GameInit();
-
+	g_gameScene = GAME_TITLE;
 	// メインループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
 		// 画面のクリア	※描画類はこの関数の下へ！
@@ -153,12 +153,14 @@ int Main(void) {
 void GameScene(int gameScene) {
 	
 	switch (gameScene){
-	case GAME_TITLE:	GameTitle();  break;	 // ゲームタイトル
-	case GAME_SELECT:	StageSelect();			break;	 // ゲームセレクト
-	case GAME_PLAY:	    GamePlay();		break;	 // ゲームプレイ	
-	case GAME_OVER:					break;	 // ゲームオーバー
+	case GAME_TITLE:	GameTitle();				break;	 // ゲームタイトル
+	case GAME_SELECT:	StageSelect();				break;	 // ゲームセレクト
+	case GAME_PLAY:	    GamePlay();					break;	 // ゲームプレイ	
+	case GAME_OVER:									break;	 // ゲームオーバー
 	case GAME_CLEAR:	GameClear();				break;	 // ゲームクリア
 	case GAME_STAGE_CLEAR:	StageClear();			break;	 // ゲームステージクリア
+	case GAME_SAVE:									break;	 // ゲームのセーブ
+	case GAME_LOAD:									break;	 // ゲームデータのロード
 	}
 }
 
