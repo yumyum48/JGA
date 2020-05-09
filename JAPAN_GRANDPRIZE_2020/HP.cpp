@@ -80,7 +80,7 @@ void HpMove(void) {
 
 	// HPが０になったらゲームオーバー
 	if (g_player.hp <= 0) {
-		GameInit();
+		g_gameScene = GAME_OVER;
 	}
 }
 
