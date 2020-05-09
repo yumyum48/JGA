@@ -8,4 +8,5 @@ void MapDisp();				// マップの表示
 void MapMove();				// マップの動き
 void MapInit();				// マップの初期化
 void MapReset(int i);		// スクロールするマップをループさせる
-void Scroll(float* mapX);	// スクロール処理
+void MapReset2(int i);		// スクロールするマップの背景をループさせる
+void Scroll(float* mapX, int speed);	// スクロール処理
