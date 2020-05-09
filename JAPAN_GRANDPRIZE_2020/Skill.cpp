@@ -94,6 +94,9 @@ bool SkillMove_2(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 				&& ((long int)g_skill_X + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH + (long int)g_skillAnime >= ex)
 				&& ((long int)g_skill_Y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
 				&& ((long int)g_skill_Y + (long int)PLAYER_HEIGHT >= ey)) {
+				if (g_keyInfo.keyFlg & PAD_INPUT_3 && g_skillAniFlg == FALSE) {
+					g_skillswitch = TRUE;
+				}
 				return TRUE;
 			}
 		//}

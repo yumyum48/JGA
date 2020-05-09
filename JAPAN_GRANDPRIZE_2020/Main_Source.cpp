@@ -57,6 +57,8 @@ enemyType g_enemy[ENEMY_MAX];	// 敵の情報
 
 int g_speedLevel;				// スクロールレベルの設定を保存
 
+bool g_skillswitch;
+
 bossInfo g_boss[MAP_MAX];		//ボスの情報
 
 int g_enemybeat;				// エネミーを倒した数をカウントする

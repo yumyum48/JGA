@@ -168,7 +168,7 @@ void PlayerControl() {
 }
 
 int SkillChange() {
-	static int skillNum = 1;
+	static int skillNum = 2;
 
 	// ƒXƒLƒ‹‘I‘ð
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
