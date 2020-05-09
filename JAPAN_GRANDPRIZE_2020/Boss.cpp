@@ -167,15 +167,26 @@ void BossWaterBulletDisp() {
 	const int animationMax = 4;
 	static int anime = 0;
 	static int time = 0;
+	static int startX = 0, startY = 200;
+	static float moveX = 0, moveY = 0;
 
 	if (anime >= animationMax)anime = 0;
 
 	if (anime < animationMax) {
-		if (time++ % 300 == 299)anime++;
+		if (time++ % 200 == 199)anime++;
+	}
+
+	moveX -= 3.0;
+	moveY += 1.5;
+	if (g_boss[0].x + startX + moveX < 0
+		|| g_boss[0].y + startY + moveY < 0) {
+		moveX = 0;
+		moveY = 0;
 	}
 
 	//DrawGraph(500, 250, g_pic.waterBullet[anime], TRUE);
-	DrawRotaGraph(g_boss[0].x, g_boss[0].y, 3.0f, DX_PI_F / 180 * 340, g_pic.waterBullet[anime], TRUE, FALSE);
+	DrawRotaGraph(g_boss[0].x + startX + moveX, g_boss[0].y + startY + moveY,
+					3.0f, DX_PI_F / 180 * 335, g_pic.waterBullet[anime], TRUE, FALSE);
 
 }
 // …’e‚Ì“à•”“I‚È“®‚«
