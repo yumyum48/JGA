@@ -9,7 +9,7 @@
 #include "Map.h"
 #include "Struct.h"
 
-picInfo clearText;
+picInfo clearText;			// クリアした時の「討伐完了！！」の画像
 void StageClear() {
 	StageClearMove();		// ステージクリアの動き
 	StageClearDisp();		// ステージクリアの表示
