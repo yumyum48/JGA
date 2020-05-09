@@ -28,18 +28,17 @@ struct controler {
 
 // 画像の種類
 struct image {
-    int player[56];                 // プレイヤーの画像
-    int enemy;                      // エネミーの画像
-    int map[MAP_MAX * SCROLL_MAX];  // マップの画像
-    int backMap;                    // マップの背景
-    int rain;                        // 雨の画像
-    int reticle;                    // 敵をロックオンした時の画像(レティクル画像)
-    int PlayerUI;                   //playerのUI画像
-    int Life[2];                    //playerのHP画像
-    int boss_1_1[8];                // ボス_１の画像
-    int skill[5];                   //スキル3のモーション画像(仮)
+    int player[56];                     // プレイヤーの画像
+    int enemy;                          // エネミーの画像
+    int map[MAP_MAX * SCROLL_MAX];      // マップの画像
+    int backMap[MAP_MAX * SCROLL_MAX];  // マップの背景
+    int rain;                           // 雨の画像
+    int reticle;                        // 敵をロックオンした時の画像(レティクル画像)
+    int PlayerUI;                       //playerのUI画像
+    int Life[2];                        //playerのHP画像
+    int boss_1_1[8];                    // ボス_１の画像
+    int skill[5];                       //スキル3のモーション画像(仮)
     int selectBack;                     // セレクト画面の背景画像
-    int waterBullet[4];             // ボス＿１の水弾の画像
 
 
 
