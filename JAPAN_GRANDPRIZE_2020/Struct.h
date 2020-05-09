@@ -39,6 +39,7 @@ struct image {
     int boss_1_1[8];                // ボス_１の画像
     int skill[5];                   //スキル3のモーション画像(仮)
     int selectBack;                     // セレクト画面の背景画像
+    int waterBullet[4];             // ボス＿１の水弾の画像
 
 
 
@@ -98,69 +99,74 @@ struct bossInfo {     // ボスの情報
     int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
     int attackFlg;   // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
 
-    void Init_Stage1() {
-        hp = 10;
-        x = 872;
-        y = 160;
-        popflg = 0;
-        attackFlg = 0;
-    }
+    void Init_Stage(int num) {
+        switch (num) {
+        case 0:
+            hp = 10;
+            x = 872;
+            y = 160;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        case 1:
+            hp = 10;
+            x = 872;
+            y = 160;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        case 2:
+            hp = 10;
+            x = 872;
+            y = 160;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        case 3:
+            hp = 10;
+            x = 872;
+            y = 160;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        case 4:
+            hp = 10;
+            x = 872;
+            y = 160;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        case 5:
+            hp = 10;
+            x = 872;
+            y = 160;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        case 6:
+            hp = 10;
+            x = 872;
+            y = 160;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        case 7:
+            hp = 10;
+            x = 872;
+            y = 160;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        case 8:
+            hp = 10;
+            x = 872;
+            y = 160;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        }
 
-    void Init_Stage2() {
-        hp = 3;
-        x = 872;
-        y = 160;
-        popflg = 0;
-        attackFlg = 0;
-    }
-
-    void Init_Stage3() {
-        hp = 3;
-        x = 872;
-        y = 160;
-        popflg = 0;
-        attackFlg = 0;
-    }
-
-    void Init_Stage4() {
-        hp = 3;
-        x = 872;
-        y = 160;
-        popflg = 0;
-        attackFlg = 0;
-    }
-
-    void Init_Stage5() {
-        hp = 3;
-        x = 872;
-        y = 160;
-        popflg = 0;
-        attackFlg = 0;
-    }
-
-    void Init_Stage6() {
-        hp = 3;
-        x = 872;
-        y = 160;
-        popflg = 0;
-        attackFlg = 0;
-    }
-
-    void Init_Stage7() {
-        hp = 3;
-        x = 872;
-        y = 160;
-        popflg = 0;
-        attackFlg = 0;
-    }
-
-    void Init_Stage8() {
-        hp = 3;
-        x = 872;
-        y = 160;
-        popflg = 0;
-        attackFlg = 0;
-    }
+    };
 };
 
 struct bossType {     // ボスの種類

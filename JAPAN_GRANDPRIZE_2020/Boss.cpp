@@ -157,6 +157,32 @@ void BossEnemyDropMove() {
 
 }
 
+/*********************************************
+
+* ƒ{ƒX‚ª…’e‚ÅUŒ‚‚ð‚·‚éŠÖ”
+
+*/////////////////////////////////////////////
+// …’e‚Ì•`‰æ
+void BossWaterBulletDisp() {
+	const int animationMax = 4;
+	static int anime = 0;
+	static int time = 0;
+
+	if (anime >= animationMax)anime = 0;
+
+	if (anime < animationMax) {
+		if (time++ % 300 == 299)anime++;
+	}
+
+	//DrawGraph(500, 250, g_pic.waterBullet[anime], TRUE);
+	DrawRotaGraph(g_boss[0].x, g_boss[0].y, 3.0f, DX_PI_F / 180 * 340, g_pic.waterBullet[anime], TRUE, FALSE);
+
+}
+// …’e‚Ì“à•”“I‚È“®‚«
+void BossWaterBulletMove() {
+
+}
+
 
 
 /*********************************************
@@ -177,12 +203,8 @@ void BossMove_Stage3() {
 
 // ƒ{ƒX‚Ì‰Šú‰»
 void BossInit() {
-	g_boss[BOSS_STAGE1].Init_Stage1();
-	g_boss[BOSS_STAGE2].Init_Stage2();
-	g_boss[BOSS_STAGE3].Init_Stage3();
-	g_boss[BOSS_STAGE4].Init_Stage4();
-	g_boss[BOSS_STAGE5].Init_Stage5();
-	g_boss[BOSS_STAGE6].Init_Stage6();
-	g_boss[BOSS_STAGE7].Init_Stage7();
-	g_boss[BOSS_STAGE8].Init_Stage8();
+	for (int i = BOSS_STAGE1; i < BOSS_MAX; i++) {
+		g_boss[i].Init_Stage(i);
+	}
+	
 }
