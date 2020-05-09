@@ -1,0 +1,130 @@
+﻿  Boss.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Boss.cpp(76,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Boss.cpp(77,46): warning C4244: '-=': 'double' から 'int' への変換です。データが失われる可能性があります。
+  Boss_Stage1.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  Boss_Stage2.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  control.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  Controler.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  Dynadelete.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Dynadelete.cpp(5,18): warning C4154: 配列の delete が定義されていません。配列は、ポインターに変換されます。
+  enemy.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  GameClear.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  GamePlay.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  GameTitle.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  HP.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\HP.cpp(42,94): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\HP.cpp(42,67): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\HP.cpp(60,74): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\HP.cpp(60,61): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\HP.cpp(67,74): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\HP.cpp(67,61): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+  Init.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  LoadPic.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  Main_Source.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  Map.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Map.cpp(19,38): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Map.cpp(19,26): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Map.cpp(46,11): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Map.cpp(50,19): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Memo.cpp
+  Player.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(87,23): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(113,22): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(190,102): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(190,75): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(190,21): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(200,75): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(200,62): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(201,92): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(201,79): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(203,76): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(203,37): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(219,73): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(219,60): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(220,90): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(220,77): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(222,74): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Player.cpp(222,36): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+  Rain.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Rain.cpp(22,29): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Rain.cpp(23,29): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Rain.cpp(24,29): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Rain.cpp(25,29): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Select.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  Skill.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Skill.cpp(82,154): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Skill.cpp(82,128): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Skill.cpp(82,61): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Skill.cpp(120,115): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Skill.cpp(120,89): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Skill.cpp(120,47): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Skill.cpp(120,20): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+  コードを生成中...
+  コンパイル中...
+  StageClear.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  Trap.cpp
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(58,17): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(222,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Struct.h(226,1): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+  コードを生成中...
+  JAPAN_GRANDPRIZE_2020.vcxproj -> C:\Users\yuma\Desktop\ゲーム大賞バックアップ\JAPAN_GRANDPRIZE_2020\Debug\JAPAN_GRANDPRIZE_2020.exe
