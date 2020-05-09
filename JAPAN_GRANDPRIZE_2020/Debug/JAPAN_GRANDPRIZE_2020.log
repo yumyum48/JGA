@@ -1,8 +1,0 @@
-﻿  GRANDPRIZE.cpp
-C:\Users\yoshitaka oshiro\Desktop\日本ゲーム大賞共有用\JAPAN_GRANDPRIZE_2020\GRANDPRIZE.cpp(24,2): warning C4091: 'typedef ': 変数が何も宣言されていないときは、'GAME_MODE' の左辺を無視します。
-C:\Users\yoshitaka oshiro\Desktop\日本ゲーム大賞共有用\JAPAN_GRANDPRIZE_2020\GRANDPRIZE.cpp(88,35): error C2562: 'Main': 関数は 'void' 型として宣言されていますが、値を返しました。
-C:\Users\yoshitaka oshiro\Desktop\日本ゲーム大賞共有用\JAPAN_GRANDPRIZE_2020\GRANDPRIZE.cpp(85): message : 'Main' の宣言を確認してください
-C:\Users\yoshitaka oshiro\Desktop\日本ゲーム大賞共有用\JAPAN_GRANDPRIZE_2020\GRANDPRIZE.cpp(90,35): error C2562: 'Main': 関数は 'void' 型として宣言されていますが、値を返しました。
-C:\Users\yoshitaka oshiro\Desktop\日本ゲーム大賞共有用\JAPAN_GRANDPRIZE_2020\GRANDPRIZE.cpp(85): message : 'Main' の宣言を確認してください
-C:\Users\yoshitaka oshiro\Desktop\日本ゲーム大賞共有用\JAPAN_GRANDPRIZE_2020\GRANDPRIZE.cpp(92,36): error C2562: 'Main': 関数は 'void' 型として宣言されていますが、値を返しました。
-C:\Users\yoshitaka oshiro\Desktop\日本ゲーム大賞共有用\JAPAN_GRANDPRIZE_2020\GRANDPRIZE.cpp(85): message : 'Main' の宣言を確認してください
