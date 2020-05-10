@@ -236,8 +236,11 @@ struct slowInfo {
 struct picInfo {
     int x;          //X座標
     int y;          //Y座標
-
-    void SelectStageInit(int num) {
+    void MenuWindowInit() {     // メニュー画面の初期化
+        x = 1182; 
+        y = 39;
+    }
+    void SelectStageInit(int num) { // セレクト画面の初期化
         switch (num) {
         case 0: 
             x = 217;

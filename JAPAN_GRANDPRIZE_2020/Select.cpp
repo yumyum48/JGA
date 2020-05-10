@@ -9,10 +9,10 @@
 #include "Picture.h"
 #define STAGE_NUMBER 7
 
+picInfo g_menuBox;		// メニューウィンドウの情報
+
 void StageSelect() {
 	
-	
-
 	SpeedSelect();
 	SelectMove();
 	SelectDisp();
@@ -20,9 +20,6 @@ void StageSelect() {
 
 void SelectDisp(void) {
 	picInfo stage[8];
-	
-
-
 	
 
 	DrawGraph(0, 0, g_pic.selectBack, TRUE);
@@ -38,6 +35,8 @@ void SelectDisp(void) {
 	if (g_select_Stage == 7) {
 		DrawBox(stage[g_select_Stage].x, stage[g_select_Stage].y, stage[g_select_Stage].x + 200, stage[g_select_Stage].y + 200, 0xFF0000, FALSE);
 	}
+
+	DrawBox(g_menuBox.x, g_menuBox.y, g_menuBox.x + 625, g_menuBox.y + 700, 0xFFFFFF, TRUE);
 	//DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + 100, g_mouseInfo.mouseY + 100, 0x00FF00, TRUE);
 	//int stageX = 455;		//ステージセレクトX座標
 	//int stageY = 285;		//ステージセレクトY座標
@@ -74,18 +73,51 @@ void SelectDisp(void) {
 	//}
 }
 void SelectMove() {
-	//メニューカーソル移動処理
-	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
-		if (++g_select_Stage > 7) g_select_Stage = 0;
+	static bool menuFlg = FALSE;		// メニューウィンドウを出現させるフラグ TURE:出現させる FALSE:出現させない
+
+	if (menuFlg == FALSE) {	// メニュー画面が出てないときの処理(マップセレクト)
+		// メニュー画面を横にスクロール
+		if (g_menuBox.x < 1182) {
+			g_menuBox.x += 10;
+		}
+		else{
+			g_menuBox.x = 1182;
+		}
+		//メニューカーソル移動処理
+		if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
+			if (++g_select_Stage > 7) g_select_Stage = 0;
+		}
+		// メニューカーソル制御処理
+		if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
+			if (--g_select_Stage < 0) g_select_Stage = 7;
+		}
+
+		//cで選択（デバック）
+		if (g_keyInfo.keyFlg & PAD_INPUT_3)
+			g_gameScene = GAME_PLAY;
+	}
+	else {	// メニュー画面を表示する時
+		
+		// メニュー画面を見えるようにスクロール
+		if (g_menuBox.x > 724) {
+			g_menuBox.x -= 10;
+		}
+		else {
+			g_menuBox.x = 724;
+		}
+		
 	}
 
-	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
-		if (--g_select_Stage < 0) g_select_Stage = 7;
+
+	// △ボタンを押すとメニューが開く
+	if (g_keyInfo.keyFlg & PAD_INPUT_4 && menuFlg == FALSE) {
+		menuFlg = TRUE;
+	}
+	else if (g_keyInfo.keyFlg & PAD_INPUT_4 && menuFlg == TRUE) {
+		menuFlg = FALSE;
 	}
 
-	//ｚで選択（デバック）
-	if (g_keyInfo.keyFlg & PAD_INPUT_3)
-		g_gameScene = GAME_PLAY;
+	
 }
 // スクロール速度の選択
 void SpeedSelect() {
@@ -132,3 +164,6 @@ void SpeedSelect() {
 	//}
 }
 
+void SelectInit() {
+	g_menuBox.MenuWindowInit();
+}
