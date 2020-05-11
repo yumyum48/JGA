@@ -22,6 +22,7 @@ int g_resetMotion = 0;	//アニメーション始点
 int g_maxMotion = 7;	//終点
 int g_attackTime = 0;	//攻撃のクールタイム
 bool g_skillFlg;		// スキル中かどうかのフラグ
+bool g_swordFlg = FALSE; //TRUE = 抜刀, FALSE = 納刀
 
 void PlayerDisp() {
 	static int anime = 0;							// プレイヤーの画像を変える
@@ -41,12 +42,25 @@ void PlayerDisp() {
 	if (g_player.skillFlg != 0) {
 		SkillDisp[g_player.skillFlg - 1](g_maxMotion, g_resetMotion);
 	}
+
+	//仮
+	static float gage = 250;
+	DrawBox(80, 120, 80 + gage, 130, 0xFF0000, TRUE);
+	if (g_swordFlg == TRUE) {
+		if (gage > 0) gage -= 0.1;
+	} else {
+		if (gage < 250) gage += 0.2;
+	}
+
+	if (g_player.attackFlg == TRUE) gage -= 2;
+	if (gage < 0) gage = 0;
 	
 }
 
 void PlayerMove() {
 	PlayerJump();		// プレイヤーのジャンプ処理
 	PlayerControl();	// プレイヤーを操作する関数
+	PlayerAnimation();
 	//if (g_player.skillFlg != 0) {
 	//	SkillMove[g_player.skillFlg - 1]();
 	//}
@@ -76,6 +90,67 @@ void PlayerAfterimage(int anime) {
 		}
 	}
 }
+
+//プレイヤーのアニメーション
+void PlayerAnimation() {
+
+	if (g_swordFlg == FALSE) {
+		if (g_keyInfo.keyFlg & PAD_INPUT_4)
+			g_swordFlg = TRUE;
+	}
+	else {
+
+		if (g_keyInfo.keyFlg & PAD_INPUT_4) {
+			g_swordFlg = FALSE;
+
+		}
+	}
+
+	//納刀状態のアニメーション
+	if (g_swordFlg == FALSE) {
+		if (g_player.jumpFlg == TRUE) {		//ジャンプ
+			if (g_speed < 0) {
+				g_resetMotion = 16;
+				g_maxMotion = 16;
+			}
+			else {
+				g_resetMotion = 17;
+				g_maxMotion = 18;
+			}
+		}
+		else {
+			g_resetMotion = 0;
+			g_maxMotion = 7;
+		}
+		if (g_player.attackFlg == TRUE) {//スキル攻撃(仮)
+			g_resetMotion = 32;
+			g_maxMotion = 32;
+		}
+	}
+
+	//抜刀状態のアニメーション
+	if (g_swordFlg == TRUE) {
+		if (g_player.jumpFlg == TRUE) {		//ジャンプ
+			if (g_speed < 0) {
+				g_resetMotion = 24;
+				g_maxMotion = 24;
+			}
+			else {
+				g_resetMotion = 25;
+				g_maxMotion = 26;
+			}
+		}
+		else {
+			g_resetMotion = 8;
+			g_maxMotion = 15;
+		}
+		if (g_player.attackFlg == TRUE) {//スキル攻撃(仮)
+			g_resetMotion = 32;
+			g_maxMotion = 32;
+		}
+	}
+}
+
 // ジャンプ処理
 void PlayerJump() {
 	//ジャンプ処理(×ボタン)
@@ -131,44 +206,24 @@ void PlayerControl() {
 	static int cnt = 0;
 	// スキルオンオフ
 	SkillChange();
-	
+	/*
 	if (g_player.skillFlg != 0) {
 		if (g_keyInfo.keyFlg & PAD_INPUT_4)
 			g_player.skillFlg = 0;
 	}
 	else {
-		
+
 		if (g_keyInfo.keyFlg & PAD_INPUT_4) {
 			g_player.skillFlg = SkillChange();
-			
-		}
 
-		// ジャンプ落下モーション
-		if (g_player.jumpFlg == TRUE) {
-			if (g_speed < 0) {
-				g_resetMotion = 16;
-				g_maxMotion = 16;
-			}
-			else {
-				g_resetMotion = 17;
-				g_maxMotion = 18;
-			}
 		}
-		else {
-			g_resetMotion = 0;
-			g_maxMotion = 7;
-		}
-		if (g_player.attackFlg == TRUE) {//通常攻撃
-			g_resetMotion = 40;
-			g_maxMotion = 40;
-		}
-	}
-
+	}*/
+	g_player.skillFlg = SkillChange();
 
 }
 
 int SkillChange() {
-	static int skillNum = 2;
+	static int skillNum = 1;
 
 	// スキル選択
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
@@ -312,4 +367,5 @@ bool PlayerHitCheck(int ex, int ey, int ew, int eh) {
 // プレイヤーの初期化処理
 void PlayerInit() {
 	g_player.Init();
+
 }

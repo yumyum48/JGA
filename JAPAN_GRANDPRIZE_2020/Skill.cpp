@@ -8,9 +8,11 @@
 #include "GamePlay.h"
 #include "control.h"
 #include "Macro.h"
+#include "Picture.h"
 
 int g_skillAnime = 0;
 bool g_skillAniFlg = FALSE;
+int g_countTime = 0;
 
 int g_skill_X = 100;
 int g_skill_Y = 490;
@@ -23,31 +25,12 @@ void SkillDisp_1(int aniMAX, int aniMIN) {		//間合い伸びるやつ（player.cppのPlay
 	//static int skill_Y = 490;
 
 	bool g_skillFlg = false;
+	g_skillAnime = 0;
+	g_skillAniFlg = FALSE;
 
 	// スキル中
 	EnemyLockOn();
 
-	/*
-	//アニメーション
-	if (g_player.jumpFlg == TRUE) 
-		if (g_speed < 0) {
-			g_resetMotion = 24;
-			g_maxMotion = 24;
-		}
-		else {
-			g_resetMotion = 25;
-			g_maxMotion = 26;
-		}
-	}
-	else {
-		g_resetMotion = 8;
-		g_maxMotion = 15;
-	}
-	if (g_player.attackFlg == TRUE) {//スキル攻撃
-		g_resetMotion = 32;
-		g_maxMotion = 32;
-	}
-	*/
 
 	//DrawBox(skill_X, skill_Y, skill_X + 100, skill_Y + 100, 0xFF0000, TRUE);
 
@@ -67,6 +50,8 @@ bool SkillMove_1(int ex, int ey, int ew, int eh){		//スキルの当たり判定
 }
 
 void SkillDisp_2(int aniMAX, int aniMIN){ //飛ばすやつ
+
+
 
 	// スキル中
 	//EnemyLockOn();
@@ -94,9 +79,6 @@ bool SkillMove_2(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 				&& ((long int)g_skill_X + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH + (long int)g_skillAnime >= ex)
 				&& ((long int)g_skill_Y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
 				&& ((long int)g_skill_Y + (long int)PLAYER_HEIGHT >= ey)) {
-				if (g_keyInfo.keyFlg & PAD_INPUT_3 && g_skillAniFlg == FALSE) {
-					g_skillswitch = TRUE;
-				}
 				return TRUE;
 			}
 		//}
@@ -111,9 +93,9 @@ bool SkillMove_2(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 }
 
 void SkillDisp_3(int aniMAX, int aniMIN) { //上方向に延びるやつ
-	static int skill_X = 100;
-	static int skill_Y = 490;
-	static int anime = 0;
+	//static int skill_X = 100;
+	//static int skill_Y = 490;
+	//static int ANIME = 0;
 
 	bool g_skillFlg = false;
 
@@ -121,6 +103,18 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //上方向に延びるやつ
 	EnemyLockOn();
 
 	DrawBox(g_skill_X + PLAYER_WIDTH, g_player.y - PLAYER_HEIGHT, g_skill_X + PLAYER_WIDTH + PLAYER_WIDTH, g_player.y+ PLAYER_HEIGHT, 0x0000ff, false);
+
+	if (g_player.attackFlg == TRUE) {
+		g_skillAniFlg = TRUE;
+		g_skill_Y = g_player.y;
+	}
+	if (g_skillAniFlg == TRUE) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, g_countTime*15);
+		DrawGraph(g_skill_X + 50 + g_countTime*3, g_skill_Y - 100, g_pic.skill[g_countTime/10], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		DrawFormatString(500, 500, 0xff0000, "%d", g_countTime);
+		if (++g_countTime > 50) g_skillAniFlg = FALSE, g_countTime = 0;
+	}
 
 }
 
@@ -210,4 +204,13 @@ void SkillDisp_8(int aniMAX, int aniMIN) { //未定
 
 bool SkillMove_8(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 	return FALSE;
+}
+
+void SkillInit() {
+	g_skillAnime = 0;
+	g_skillAniFlg = FALSE;
+	g_countTime = 0;
+
+	g_skill_X = 100;
+	g_skill_Y = 490;
 }
