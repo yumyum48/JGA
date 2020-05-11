@@ -20,7 +20,7 @@ void MonsterDisp() {
 
 // ã‚¢“GAƒ{ƒX‚Ì“®‚«
 void MonsterMove() {
-	if (g_enemybeat <= 1) {
+	if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
 		EnemyMove();					// ã‚¢“G‚Ì“®‚«
 	}
 	else {

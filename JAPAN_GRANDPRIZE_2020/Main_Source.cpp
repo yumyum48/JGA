@@ -14,6 +14,7 @@
 #include "StageClear.h"
 #include "GameClear.h"
 #include "GameTitle.h"
+#include "GameOver.h"
 #define DEBUG_TEXT_ON
 
 
@@ -156,7 +157,7 @@ void GameScene(int gameScene) {
 	case GAME_TITLE:	GameTitle();				break;	 // ゲームタイトル
 	case GAME_SELECT:	StageSelect();				break;	 // ゲームセレクト
 	case GAME_PLAY:	    GamePlay();					break;	 // ゲームプレイ	
-	case GAME_OVER:									break;	 // ゲームオーバー
+	case GAME_OVER:		GameOver();					break;	 // ゲームオーバー
 	case GAME_CLEAR:	GameClear();				break;	 // ゲームクリア
 	case GAME_STAGE_CLEAR:	StageClear();			break;	 // ゲームステージクリア
 	case GAME_SAVE:									break;	 // ゲームのセーブ

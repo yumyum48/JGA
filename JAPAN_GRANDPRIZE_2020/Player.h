@@ -18,4 +18,5 @@ bool PlayerHitCheck(int ex, int ey, int ew, int eh);		// ƒvƒŒƒCƒ„[‚ÌŒ•‚Ì•”•ª‚Ì”
 void EnemyCut();											// ŠÔ‡‚¢‚É“ü‚Á‚Ä‚¢‚é“G‚ğ“|‚·ˆ—
 void PlayerAfterimage(int anime);							// ƒvƒŒƒCƒ„[‚Ìc‘œ
 int  SkillChange();											// 
+void PlayerAnimation();										// ƒvƒŒƒCƒ„[‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
 

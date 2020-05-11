@@ -49,3 +49,5 @@ bool(* const SkillMove[PLAYER_SKILLS])(int ex, int ey, int ew, int eh) = {
 	SkillMove_7,
 	SkillMove_8,
 };
+
+void SkillInit();
