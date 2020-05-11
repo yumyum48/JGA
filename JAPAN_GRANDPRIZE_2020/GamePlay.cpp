@@ -17,11 +17,6 @@ void GamePlay() {
 	// デバッグ用で一旦入れ替えGamePlayMove();
 	GamePlayDisp();
 	GamePlayMove();
-
-	// ボスが倒された時初期化しながらセレクト画面に戻る
-	if (g_boss[0].hp <= 0) {
-		GameInit();
-	}
 	
 }
 // ゲームプレイの描画
@@ -45,7 +40,7 @@ void GamePlayMove() {
 	PlayerMove();					// プレイヤーの動き
 	RainMove();						// 雨の動き
 	TrapMove();						// トラップの動き
-	HpMove();						// HPの計算処理
+	//HpMove();						// HPの計算処理
 }
 
 

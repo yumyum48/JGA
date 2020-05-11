@@ -3,14 +3,14 @@
 #include "control.h"
 #include "Select.h"
 #include "Trap.h"
+#include "Picture.h"
 
-
-													
+								
 
 /*********************************************
 
 * トラップの表示
-
+	
 */////////////////////////////////////////////
 void TrapDisp() {
 	
@@ -19,7 +19,7 @@ void TrapDisp() {
 	
 	if (g_trap.dispFlg == TRUE) {
 		DrawFormatString(500, 0, 0xFF00FF, "トラップ出てますよ！");
-		DrawBox(g_trap.x, g_trap.y, g_trap.x + 100, g_trap.y + 100, 0xFF0000, TRUE);	// トラップを表示
+		DrawRotaGraph2(g_trap.x, g_trap.y, 0, 0, 0.3, 0.0, g_pic.trap, TRUE);	// トラップを表示
 	}
 }
 

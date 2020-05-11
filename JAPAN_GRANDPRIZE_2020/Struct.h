@@ -40,7 +40,7 @@ struct image {
     int skill[5];                       //スキル3のモーション画像(仮)
     int selectBack;                     // セレクト画面の背景画像
     int waterBullet[4];
-
+    int trap;                           // トラップの画像
 
 
 };
@@ -201,7 +201,7 @@ struct trapInfo {
     bool dispFlg;	// トラップを出現させるかどうかのフラグ	TRUE: 出現させる FALSE: 出現させない
     void Init() {
         x = 1300;
-        y = 510;
+        y = 574;
         dispFlg = FALSE;
     }
 };
