@@ -10,7 +10,7 @@
 #include "GameScene.h"
 #include "Trap.h"
 #include "Select.h"
-
+#include "Change_ScReen_Animation.h"
 // それぞれの初期化処理
 void GameInit() {
 	MapInit();			// マップデータの初期化処理
@@ -21,7 +21,7 @@ void GameInit() {
 	TrapInit();			// トラップの情報初期化
 	SelectInit();		// セレクト画面の初期化
 	g_enemybeat = 0;	// エネミーを倒した数をカウントする変数の初期化
-
+	ChangeScreen_Animation_Init();	// シーンチェンジアニメーションの初期化
 	g_gameScene = GAME_TITLE;	// タイトルへ戻る
 
 }

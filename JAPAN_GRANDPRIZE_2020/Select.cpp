@@ -7,10 +7,11 @@
 #include "GameScene.h"
 #include "Controler.h"
 #include "Picture.h"
+#include "Change_ScReen_Animation.h"
 #define STAGE_NUMBER 7
 
 picInfo g_menuBox;		// メニューウィンドウの情報
-
+bool g_menuFlg = FALSE;		// メニューウィンドウを出現させるフラグ TURE:出現させる FALSE:出現させない
 void StageSelect() {
 	
 	SpeedSelect();
@@ -37,6 +38,17 @@ void SelectDisp(void) {
 	}
 
 	DrawBox(g_menuBox.x, g_menuBox.y, g_menuBox.x + 625, g_menuBox.y + 700, 0xFFFFFF, TRUE);
+
+	
+	if (g_menuFlg == FALSE) {
+		//cで選択（デバック）
+		if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+			//g_gameScene = GAME_PLAY;
+			Get_NowDisp(GAME_PLAY, 2);
+			g_gameScene = GAME_CHANGE_SCREEN_ANIMATION;
+
+		}
+	}
 	//DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + 100, g_mouseInfo.mouseY + 100, 0x00FF00, TRUE);
 	//int stageX = 455;		//ステージセレクトX座標
 	//int stageY = 285;		//ステージセレクトY座標
@@ -73,9 +85,9 @@ void SelectDisp(void) {
 	//}
 }
 void SelectMove() {
-	static bool menuFlg = FALSE;		// メニューウィンドウを出現させるフラグ TURE:出現させる FALSE:出現させない
+	
 
-	if (menuFlg == FALSE) {	// メニュー画面が出てないときの処理(マップセレクト)
+	if (g_menuFlg == FALSE) {	// メニュー画面が出てないときの処理(マップセレクト)
 		// メニュー画面を横にスクロール
 		if (g_menuBox.x < 1182) {
 			g_menuBox.x += 10;
@@ -92,9 +104,13 @@ void SelectMove() {
 			if (--g_select_Stage < 0) g_select_Stage = 7;
 		}
 
-		//cで選択（デバック）
-		if (g_keyInfo.keyFlg & PAD_INPUT_3)
-			g_gameScene = GAME_PLAY;
+		////cで選択（デバック）
+		//if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+		//	//g_gameScene = GAME_PLAY;
+		//	Get_NowDisp(GAME_PLAY, 1);
+		//	g_gameScene = GAME_CHANGE_SCREEN_ANIMATION;
+		//	
+		//}
 	}
 	else {	// メニュー画面を表示する時
 		
@@ -110,11 +126,11 @@ void SelectMove() {
 
 
 	// △ボタンを押すとメニューが開く
-	if (g_keyInfo.keyFlg & PAD_INPUT_4 && menuFlg == FALSE) {
-		menuFlg = TRUE;
+	if (g_keyInfo.keyFlg & PAD_INPUT_4 && g_menuFlg == FALSE) {
+		g_menuFlg = TRUE;
 	}
-	else if (g_keyInfo.keyFlg & PAD_INPUT_4 && menuFlg == TRUE) {
-		menuFlg = FALSE;
+	else if (g_keyInfo.keyFlg & PAD_INPUT_4 && g_menuFlg == TRUE) {
+		g_menuFlg = FALSE;
 	}
 
 	
@@ -166,4 +182,5 @@ void SpeedSelect() {
 
 void SelectInit() {
 	g_menuBox.MenuWindowInit();
+	g_menuFlg = FALSE;
 }
