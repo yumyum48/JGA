@@ -162,6 +162,7 @@ void GameScene(int gameScene) {
 	case GAME_STAGE_CLEAR:	StageClear();			break;	 // ゲームステージクリア
 	case GAME_SAVE:									break;	 // ゲームのセーブ
 	case GAME_LOAD:									break;	 // ゲームデータのロード
+	case GAME_CHANGE_SCREEN_ANIMATION:				break;	 // シーン切り替え時のアニメーションシーン
 	}
 }
 
