@@ -26,11 +26,11 @@ void StageClearDisp() {
 
 void StageClearMove() {
 	RainMove();				// ‰J‚Ì“®‚«
-	if (g_keyInfo.keyFlg & PAD_INPUT_A) {
-		g_gameScene = GAME_SELECT;
-	}
+	
 	if (Player_StageClearMove() == 1) {
-
+		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			g_gameScene = GAME_SELECT;
+		}
 	}
 }
 
