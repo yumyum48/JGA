@@ -15,6 +15,7 @@
 #include "GameClear.h"
 #include "GameTitle.h"
 #include "GameOver.h"
+#include "Change_ScReen_Animation.h"
 #define DEBUG_TEXT_ON
 
 
@@ -162,7 +163,7 @@ void GameScene(int gameScene) {
 	case GAME_STAGE_CLEAR:	StageClear();			break;	 // ゲームステージクリア
 	case GAME_SAVE:									break;	 // ゲームのセーブ
 	case GAME_LOAD:									break;	 // ゲームデータのロード
-	case GAME_CHANGE_SCREEN_ANIMATION:				break;	 // シーン切り替え時のアニメーションシーン
+	case GAME_CHANGE_SCREEN_ANIMATION:	ChangeScreen_Animation();				break;	 // シーン切り替え時のアニメーションシーン
 	}
 }
 
