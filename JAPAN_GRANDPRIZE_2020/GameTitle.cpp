@@ -6,7 +6,7 @@
 #include "Struct.h"
 #include "GameScene.h"
 #include "Macro.h"
-
+#include "Rain.h"
 // グローバル変数の宣言
 const int g_StartY = 300;
 const int g_spaceY = 120;
@@ -19,7 +19,10 @@ void GameTitle() {
 
 // タイトルの描画
 void TitleDisp() {
-	DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xF50056, FALSE);
+
+	DrawRotaGraph2(0, 0, 0, 0, 8.0, 0.0, g_pic.title[0], TRUE);
+	DrawGraph(0, 0, g_pic.titleText[0], TRUE);
+	RainDisp();
 	/*const int bottunW = 200;
 	const int bottunH = 40;
 	DrawBox(412, g_StartY, 412 + bottunW, g_StartY + bottunH, 0x00ff00, FALSE);
@@ -28,11 +31,12 @@ void TitleDisp() {
 }
 
 void TitleSound() {
-
+	
 }
 
 // タイトルでの動き
 void TitleMove() {
+	RainMove();
 	if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 		g_gameScene = GAME_SELECT;
 	}

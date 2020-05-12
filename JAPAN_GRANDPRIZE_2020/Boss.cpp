@@ -147,7 +147,7 @@ void BossEnemyDropDisp() {
 	static int enemypop_MAX = 0;
 		
 	for (int i = 0; i < enemypop_MAX; i++) {
-		DrawRotaGraph(g_enemy[i].walk.x, g_enemy[i].walk.y, 0.2, 0.0, g_pic.enemy, TRUE);
+		DrawRotaGraph(g_enemy[i].walk.x, g_enemy[i].walk.y, 0.2, 0.0, g_pic.enemy_walk[0], TRUE);
 		
 		
 	}

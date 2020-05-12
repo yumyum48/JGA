@@ -4,6 +4,12 @@
 
 int LoadPicture() {
 
+	// タイトル画像
+	if ((g_pic.title[0] = LoadGraph("image/titleimage5a.png")) == -1) return -1;
+
+	// タイトルのテキスト画像
+	if ((g_pic.titleText[0] = LoadGraph("image/Title_Text2.png")) == -1) return -1;
+
 	// プレイヤー画像の読み込み
 	if (LoadDivGraph("image/player2.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
 	//UI画像
@@ -14,9 +20,11 @@ int LoadPicture() {
 	//スキル3モーション(仮)
 	if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill, 0) == -1) return -1;
 
-	// エネミー画像の読み込み
-	if ((g_pic.enemy = LoadGraph("image/enemy.png")) == -1) return -1;
+	// 歩く雑魚敵画像の読み込み
+	if ((g_pic.enemy_walk[0] = LoadGraph("image/enemy.png")) == -1) return -1;
 
+	// 飛ぶ雑魚敵画像の読み込み
+	if (LoadDivGraph("image/skill3.png", 2, 2, 1, 1443 / 5, 289, g_pic.enemy_fly, 0) == -1) return -1;
 	/*//マップの読み込み
 	if (LoadDivGraph("image/mori8sute.png", 24, 3, 8, 1024, 768, g_pic.map, 0) == -1)
 		return -1;*/

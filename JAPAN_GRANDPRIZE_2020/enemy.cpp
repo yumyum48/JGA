@@ -58,7 +58,7 @@ void EnemyDisp() {
 	// Žã‚¢“G‚Ì•\Ž¦
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		if(g_enemy[i].walk.flg == TRUE)		//’nã‚Ì“G•`‰æ
-			DrawRotaGraph2(g_enemy[i].walk.x, g_enemy[i].walk.y, 0, 0, 0.2, 0.0, g_pic.enemy, TRUE);
+			DrawRotaGraph2(g_enemy[i].walk.x, g_enemy[i].walk.y, 0, 0, 0.2, 0.0, g_pic.enemy_walk[0], TRUE);
 		if (g_enemy[i].fly.flg == TRUE)		//‹ó’†‚Ì“G•`‰æ
 			//DrawRotaGraph2(g_enemy[i].fly.x, g_enemy[i].fly.y, 0, 0, 0.2, 0.0, g_pic.enemy, TRUE);
 			DrawBox(g_enemy[i].fly.x, g_enemy[i].fly.y, g_enemy[i].fly.x + 50, g_enemy[i].fly.y + 50,0x00ff00,TRUE);
