@@ -7,10 +7,19 @@
 #include "GameScene.h"
 #include "Macro.h"
 #include "Rain.h"
-// グローバル変数の宣言
-const int g_StartY = 300;
-const int g_spaceY = 120;
+#include "Init.h"
 
+enum {	// タイトルのテキストの情報
+	TITLE_NEW_START,	// 新しくゲームを始める
+	TITLE_ROAD,			// セーブデータから選んでゲームを始める
+	TITLE_END,			// ゲームを終了する
+	TITLE_MAX,			// 情報の最大数
+};
+// 定数の宣言
+const int TITLETEXT_X[TITLE_MAX] = { 498, 498, 549};	// [初めから]や[続きから]や[終了]の画像のX座標
+const int TITLETEXT_Y[TITLE_MAX] = { 402, 536, 665};	// [初めから]や[続きから]や[終了]の画像のY座標
+
+int g_selectCheck;	// 今プレイヤーが選択しているものを確認する(0:初めから 1:続きから 2:終了)
 
 // ゲームタイトルのメイン関数
 void GameTitle() {
@@ -20,23 +29,48 @@ void GameTitle() {
 
 // タイトルの描画
 void TitleDisp() {
-	picInfo backImage;
-	picInfo titleRogo;
-
-	DrawRotaGraph2(backImage.x, backImage.y, 0, 0, 8.0, 0.0, g_pic.title[0], TRUE);
-	DrawGraph(107, 118, g_pic.titleText[0], TRUE);
-	DrawRotaGraph2(g_mouseInfo.mouseX, g_mouseInfo.mouseY, 0, 0, 2.0, 0, g_pic.titleText[1], TRUE);
-
-	//DrawGraph(107, 118, g_pic.titleText[2], TRUE);
-
-	//DrawGraph(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_pic.titleText[0], TRUE);
-
+	picInfo backImage;		// タイトルの背景画像の座標
+	picInfo titleRogo;		// タイトルロゴの画像の座標
+	
 	RainDisp();
-	/*const int bottunW = 200;
-	const int bottunH = 40;
-	DrawBox(412, g_StartY, 412 + bottunW, g_StartY + bottunH, 0x00ff00, FALSE);
-	DrawBox(412, g_StartY + g_spaceY, 412 + bottunW, g_StartY + g_spaceY + bottunH, 0x00ff00, FALSE);
-	DrawString(460, g_StartY + 10, "game select", 0xff0000, false);*/
+
+	DrawRotaGraph2(backImage.x, backImage.y, 0, 0, 8.0, 0.0, g_pic.title[0], TRUE);		// タイトルの背景
+	DrawGraph(107, 118, g_pic.titleText[0], TRUE);										// タイトルのロゴ
+	DrawGraph(TITLETEXT_X[TITLE_NEW_START], TITLETEXT_Y[TITLE_NEW_START], g_pic.titleText[1], TRUE);										// [初めから]の文字
+	DrawGraph(TITLETEXT_X[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD], g_pic.titleText[2], TRUE);										// [続きから]の文字
+	DrawGraph(TITLETEXT_X[TITLE_END], TITLETEXT_Y[TITLE_END], g_pic.titleText[3], TRUE);										// [終了]の文字
+
+	int titleTextW[3] = { 280, 280, 188 };	// タイトルの[初めから][続きから][終了]のテキスト画像の横幅
+	int titleTextH[3] = { 84, 84, 87 };	// タイトルの[初めから][続きから][終了]のテキスト画像の縦幅
+	switch (g_selectCheck) {
+	case 0:
+		// 何を選択しているかわかるように四角を視覚化
+		DrawBox(TITLETEXT_X[TITLE_NEW_START], TITLETEXT_Y[TITLE_NEW_START], TITLETEXT_X[TITLE_NEW_START] + titleTextW[TITLE_NEW_START], TITLETEXT_Y[TITLE_NEW_START] + titleTextH[TITLE_NEW_START], 0xFF0000, FALSE);
+		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			g_gameScene = GAME_SELECT;	// ゲームセレクトへ移動
+			Reset();					// ゲーム内容をリセットにする
+		}
+		break;
+	case 1:
+		// 何を選択しているかわかるように四角を視覚化
+		DrawBox(TITLETEXT_X[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD], TITLETEXT_X[TITLE_ROAD] + titleTextW[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD] + titleTextH[TITLE_ROAD], 0xFF0000, FALSE);
+		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			g_gameScene = GAME_SELECT;	// ゲームセレクトへ移動
+			// ↑本当はロードするデータを選択してロードし終えてゲームセレクトへ移動
+		}
+		break;
+	case 2:
+		// 何を選択しているかわかるように四角を視覚化
+		DrawBox(TITLETEXT_X[TITLE_END], TITLETEXT_Y[TITLE_END], TITLETEXT_X[TITLE_END] + titleTextW[TITLE_END], TITLETEXT_Y[TITLE_END] + titleTextH[TITLE_END], 0xFF0000, FALSE);
+		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			g_gameScene = GAME_END;		// ゲーム終了
+		}
+		break;
+	default:
+		break;
+	}
+
+	
 }
 
 void TitleSound() {
@@ -45,44 +79,20 @@ void TitleSound() {
 
 // タイトルでの動き
 void TitleMove() {
+	
+
 	RainMove();
-	if (g_keyInfo.keyFlg & PAD_INPUT_A) {
-		g_gameScene = GAME_SELECT;
+
+
+	if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {	// 一番下で下をもう一度押すと上に戻る
+		if (++g_selectCheck > 2) g_selectCheck = 0;
 	}
-	//static int selectMode = 0;
-	//static bool StickFlg = FALSE;
 
-	//// プレイヤーの操作
-	//if ((g_button.moveStick == 4
-	//	|| g_button.moveStick == 5
-	//	|| g_button.moveStick == 6)
-	//	&& StickFlg == TRUE) {
-	//	if (++selectMode >= 3) selectMode = 0;
-	//}
-	//if ((g_button.moveStick == 1
-	//	|| g_button.moveStick == 2
-	//	|| g_button.moveStick == 8)
-	//	&& StickFlg == TRUE) {
-	//	if (--selectMode < 0) selectMode = 2;
-	//}
+	if (g_keyInfo.keyFlg & PAD_INPUT_UP) {		// 一番上で上をもう一度押すと、下に行く
+		if (--g_selectCheck < 0) g_selectCheck = 2;
+	}
 
-	//// ゲームモードの決定
-	//if ((g_button.circleButton == TRUE && g_button.conFlg == 0)
-	//	&& (selectMode == 0)) {
-	//	g_button.conFlg = 1;
 
-	//	g_gameScene = GAME_SELECT;
-	//}
-	//else if ((g_button.circleButton == TRUE && g_button.conFlg == 0)
-	//	&& (selectMode == 0)) {
-	//	g_button.conFlg = 1;
+	
 
-	//	//g_gameScene = GAME_PLAY;
-	//}
-	//else if ((g_button.circleButton == TRUE && g_button.conFlg == 0)
-	//	&& (selectMode == 0)) {
-	//	g_button.conFlg = 1;
-
-	//	//g_gameScene = GAME_PLAY;
-	//}
 }
