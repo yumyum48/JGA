@@ -42,7 +42,7 @@ struct image {
     int boss_1_1[8];                    // ボス_１の画像
     int skill[5];                       //スキル3のモーション画像(仮)
     int selectBack;                     // セレクト画面の背景画像
-    int waterBullet[4];
+    int waterBullet[5];                 // ボスの水弾の画像
     int trap;                           // トラップの画像
 
 

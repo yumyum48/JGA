@@ -164,30 +164,74 @@ void BossEnemyDropMove() {
 */////////////////////////////////////////////
 // 水弾の描画
 void BossWaterBulletDisp() {
-	const int animationMax = 4;
-	static int anime = 0;
-	static int time = 0;
-	static int startX = 0, startY = 200;
-	static float moveX = 0, moveY = 0;
+	static int animationMax = 3;			// アニメーション
+	static int anime = 0;				// アニメ推移
+	static int time = 0;				// 経過時間
+	static int startX = g_boss[BOSS_STAGE1].x + 100,
+				startY = g_boss[BOSS_STAGE1].y + 200;	// 水弾の初期位置
+	static float moveX = 0, moveY = 0;	// 水弾の移動量
+	static int noDamegeCnt = 60;		// ダメージを受け付けない時間
+	static bool attackFlg = FALSE;		// 攻撃判断フラグ	 treu:攻撃済  false:未攻撃
 
-	if (anime >= animationMax)anime = 0;
+	/*moveX -= 7.5;
+	moveY += 2.5;*/
+	// フレーム単位の被弾数の調整
+	if (noDamegeCnt++ < 60);
 
-	if (anime < animationMax) {
-		if (time++ % 200 == 199)anime++;
+	// プレイヤーに水弾が当たった時の処理
+	if (noDamegeCnt >= 60
+		&& (PlayerHitCheck(startX + moveX + 20, startY + moveY + 0,
+			startX + moveX - 40, startY + moveY - 20) == TRUE)) {
+		g_player.hp--;
+		noDamegeCnt = 0;
+		animationMax++;
+		attackFlg = TRUE;
+		if (noDamegeCnt >= 200) {
+			g_boss[BOSS_STAGE1].attackFlg = 0;
+		}
 	}
 
-	moveX -= 3.0;
-	moveY += 1.5;
-	if (g_boss[0].x + startX + moveX < 0
-		|| g_boss[0].y + startY + moveY < 0) {
+	// 水弾が画面外に出たときの処理
+	if ((startY + moveY) / 2 > GROUND
+		|| (startX + moveX - 60) < 0) {
+		attackFlg = TRUE;
+		g_boss[BOSS_STAGE1].attackFlg = 0;
+	}
+
+	// 水弾のアニメーション
+	if (anime < animationMax) {
+		if (time++ % 15 == 14)anime++;
+	}
+
+	// 水弾の表示
+	if (attackFlg == FALSE) {
+		moveX -= 3.0;
+		moveY += 1.0;
+		DrawRotaGraph(startX + moveX, startY + moveY,
+			3.0f, DX_PI_F / 180 * 335, g_pic.waterBullet[anime], TRUE, FALSE);
+	}
+	else if (attackFlg == TRUE) {
+		DrawRotaGraph(startX + moveX, startY + moveY,
+			3.0f, DX_PI_F / 180 * 335, g_pic.waterBullet[animationMax], TRUE, FALSE);
+	}
+
+	// 座標とフラグの初期化
+	if (attackFlg == TRUE
+		&& noDamegeCnt >= 20) {
 		moveX = 0;
 		moveY = 0;
+		anime = 0;
+		animationMax = 3;
+		attackFlg = FALSE;
+		g_boss[BOSS_STAGE1].attackFlg = 0;
 	}
 
-	//DrawGraph(500, 250, g_pic.waterBullet[anime], TRUE);
-	DrawRotaGraph(g_boss[0].x + startX + moveX, g_boss[0].y + startY + moveY,
-					3.0f, DX_PI_F / 180 * 335, g_pic.waterBullet[anime], TRUE, FALSE);
 
+
+	// デバッグ
+	//DrawFormatString(300, 720, 0x00FF00, "%f", moveX);
+	//DrawFormatString(300, 735, 0x00FF00, "%f", moveY);
+	//DrawFormatString(320, 780, 0x00FFFF, "%d", g_boss[BOSS_STAGE1].attackFlg);
 }
 // 水弾の内部的な動き
 void BossWaterBulletMove() {

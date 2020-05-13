@@ -60,10 +60,7 @@ int LoadPicture() {
 	if ((g_pic.selectBack = LoadGraph("image/Select.png")) == -1) return -1;
 
 	// …’e‚Ì‰æ‘œ‚Ì“Ç‚İ‚İ
-	if ((g_pic.waterBullet[0] = LoadGraph("image/watb00.png")) == -1) return -1;
-	if ((g_pic.waterBullet[1] = LoadGraph("image/watb01.png")) == -1) return -1;
-	if ((g_pic.waterBullet[2] = LoadGraph("image/watb02.png")) == -1) return -1;
-	if ((g_pic.waterBullet[3] = LoadGraph("image/watb04.png")) == -1) return -1;
+	if (LoadDivGraph("image/watb1.png", 5, 5, 1, 32, 32, g_pic.waterBullet, 0) == -1);
 
 
 	return 0;
