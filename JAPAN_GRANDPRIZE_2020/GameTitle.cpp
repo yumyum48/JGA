@@ -11,6 +11,7 @@
 const int g_StartY = 300;
 const int g_spaceY = 120;
 
+
 // ゲームタイトルのメイン関数
 void GameTitle() {
 	TitleMove();
@@ -19,9 +20,17 @@ void GameTitle() {
 
 // タイトルの描画
 void TitleDisp() {
+	picInfo backImage;
+	picInfo titleRogo;
 
-	DrawRotaGraph2(0, 0, 0, 0, 8.0, 0.0, g_pic.title[0], TRUE);
-	DrawGraph(0, 0, g_pic.titleText[0], TRUE);
+	DrawRotaGraph2(backImage.x, backImage.y, 0, 0, 8.0, 0.0, g_pic.title[0], TRUE);
+	DrawGraph(107, 118, g_pic.titleText[0], TRUE);
+	DrawRotaGraph2(g_mouseInfo.mouseX, g_mouseInfo.mouseY, 0, 0, 2.0, 0, g_pic.titleText[1], TRUE);
+
+	//DrawGraph(107, 118, g_pic.titleText[2], TRUE);
+
+	//DrawGraph(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_pic.titleText[0], TRUE);
+
 	RainDisp();
 	/*const int bottunW = 200;
 	const int bottunH = 40;

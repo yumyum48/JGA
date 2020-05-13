@@ -8,7 +8,12 @@ int LoadPicture() {
 	if ((g_pic.title[0] = LoadGraph("image/titleimage5a.png")) == -1) return -1;
 
 	// タイトルのテキスト画像
-	if ((g_pic.titleText[0] = LoadGraph("image/Title_Text2.png")) == -1) return -1;
+	if ((g_pic.titleText[0] = LoadGraph("image/Title_Text2.png")) == -1) return -1;		// タイトルロゴ
+	if ((g_pic.titleText[1] = LoadGraph("image/NewGame.png")) == -1) return -1;			// タイトルロゴ
+	if ((g_pic.titleText[2] = LoadGraph("image/Continue.png")) == -1) return -1;		// タイトルロゴ
+	if ((g_pic.titleText[3] = LoadGraph("image/Title_Text2.png")) == -1) return -1;		// タイトルロゴ
+
+	
 
 	// プレイヤー画像の読み込み
 	if (LoadDivGraph("image/player2.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;

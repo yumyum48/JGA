@@ -29,7 +29,7 @@ struct controler {
 // 画像の種類
 struct image {
     int title[2];                       // タイトル画像
-    int titleText[2];                      // タイトルのテキスト画像
+    int titleText[4];                      // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
     int enemy_walk[2];                  // 歩く雑魚敵のの画像
     int enemy_fly[2];                   // 飛ぶ雑魚敵の画像
@@ -239,6 +239,11 @@ struct slowInfo {
 struct picInfo {
     int x;          //X座標
     int y;          //Y座標
+
+    picInfo() {
+        x = 0;
+        y = 0;
+    }
     void MenuWindowInit() {     // メニュー画面の初期化
         x = 1182; 
         y = 39;

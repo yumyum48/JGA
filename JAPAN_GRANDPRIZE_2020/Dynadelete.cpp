@@ -2,5 +2,5 @@
 #include "enemy.h"
 
 void DynaDelete() {
-	delete[] g_enemy;
+	//delete[] g_enemy;
 }
