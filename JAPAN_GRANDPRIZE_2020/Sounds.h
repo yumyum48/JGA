@@ -1,0 +1,38 @@
+#pragma once
+#include "DxLib.h"
+
+int LoadSounds(void);				//ÉTÉEÉìÉhì«Ç›çûÇ›
+
+enum {
+	BGM_TITLE,
+	BGM_RAIN,
+	BGM_SELECT,
+	BGM_BATTLE,
+	BGM_BOSS,
+	BGM_LAST_BOSS,
+	BGM_OVER,
+	BGM_GAMECLEAR,
+
+
+	SE_ENEMY_DOWN,
+	SE_DECISION,
+	SE_KETTEI,
+	SE_STEP,
+	SE_JUMP,
+	SE_TYAKUTI,
+
+	VOICE_NORMAL,
+	VOICE_SPECIAL,
+	VOICE_DAMAGE,
+
+	BOSS1_ATTACK,
+	BOSS3_ATTACK1,
+	BOSS3_ATTACK2,
+	BOSS4_ATTACK,
+	BOSS5_SHIELD,
+	BOSS5_ATTACK,
+
+	BGM_MAX,
+};
+
+extern int g_sound[BGM_MAX];
