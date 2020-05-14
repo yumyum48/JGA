@@ -10,9 +10,9 @@
 #include "Macro.h"
 #include "Picture.h"
 
-int g_skillAnime = 0;
+int g_skillAnime[8] = { 0 };
 bool g_skillAniFlg = FALSE;
-int g_countTime = 0;
+//int g_countTime = 0;
 
 int g_skill_X = 100;
 int g_skill_Y = 490;
@@ -25,9 +25,14 @@ void SkillDisp_1(int aniMAX, int aniMIN) {		//間合い伸びるやつ（player.cppのPlay
 	//static int skill_Y = 490;
 
 	bool g_skillFlg = false;
-	g_skillAnime = 0;
+	for (int i = 0; i < 8; i++) {
+		g_skillAnime[i] = 0;
+	}
 	g_skillAniFlg = FALSE;
 
+	if ((g_keyInfo.keyFlg & PAD_INPUT_3) && g_player.gauge > 100) {
+		g_player.attackFlg = TRUE;
+	}
 	// スキル中
 	EnemyLockOn();
 
@@ -52,20 +57,21 @@ bool SkillMove_1(int ex, int ey, int ew, int eh){		//スキルの当たり判定
 void SkillDisp_2(int aniMAX, int aniMIN){ //飛ばすやつ
 
 
-
 	// スキル中
 	//EnemyLockOn();
 
-	if (g_keyInfo.keyFlg & PAD_INPUT_3 && g_skillAniFlg == FALSE) {
-		g_skillAniFlg = TRUE;
+	if ((g_keyInfo.keyFlg & PAD_INPUT_3) && g_skillAniFlg == FALSE && g_player.gauge > 100) {
+		g_player.attackFlg = TRUE;
 		g_skill_Y = g_player.y;
+		g_skillAniFlg = TRUE;
 	}
 
 	if(g_skillAniFlg == TRUE){
-		g_skillAnime += 10;
+		g_skillAnime[1] += 10;
 		EnemyCut();
-		if (g_skillAnime < 1300) DrawBox(g_skill_X + g_skillAnime + PLAYER_WIDTH, g_skill_Y, g_skill_X + PLAYER_WIDTH + PLAYER_WIDTH + g_skillAnime, g_skill_Y + PLAYER_HEIGHT, 0x0000ff, true);
-		else g_skillAniFlg = FALSE, g_skillAnime = 0;
+		//if (g_skillAnime < 1300) DrawBox(g_skill_X + g_skillAnime + PLAYER_WIDTH, g_skill_Y, g_skill_X + PLAYER_WIDTH + PLAYER_WIDTH + g_skillAnime, g_skill_Y + PLAYER_HEIGHT, 0x0000ff, true);
+		if (g_skillAnime[1] < 1300) DrawGraph(g_skill_X + g_skillAnime[1], g_skill_Y, g_pic.skill2[g_skillAnime[1]%4], TRUE);
+		else g_skillAniFlg = FALSE, g_skillAnime[1] = 0;
 	}
 }
 
@@ -75,8 +81,8 @@ bool SkillMove_2(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 	//if (g_skillAniFlg == TRUE) {
 	//	g_skillAnime += 10;
 	//	if (g_skillAnime + 10  < 1300) {
-			if (((long int)g_skill_X + (long int)g_skillAnime + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
-				&& ((long int)g_skill_X + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH + (long int)g_skillAnime >= ex)
+			if (((long int)g_skill_X + (long int)g_skillAnime[1] + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
+				&& ((long int)g_skill_X + (long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH + (long int)g_skillAnime[1] >= ex)
 				&& ((long int)g_skill_Y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
 				&& ((long int)g_skill_Y + (long int)PLAYER_HEIGHT >= ey)) {
 				return TRUE;
@@ -99,6 +105,9 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //上方向に延びるやつ
 
 	bool g_skillFlg = false;
 
+	if ((g_keyInfo.keyFlg & PAD_INPUT_3) && g_player.gauge > 100) {
+		g_player.attackFlg = TRUE;
+	}
 	// スキル中
 	EnemyLockOn();
 
@@ -109,11 +118,11 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //上方向に延びるやつ
 		g_skill_Y = g_player.y;
 	}
 	if (g_skillAniFlg == TRUE) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, g_countTime*15);
-		DrawGraph(g_skill_X + 50 + g_countTime*3, g_skill_Y - 100, g_pic.skill[g_countTime/10], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, g_skillAnime[2]*15);
+		DrawGraph(g_skill_X + 50 + g_skillAnime[2]*3, g_skill_Y - 100, g_pic.skill3[g_skillAnime[2]/10], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-		DrawFormatString(500, 500, 0xff0000, "%d", g_countTime);
-		if (++g_countTime > 50) g_skillAniFlg = FALSE, g_countTime = 0;
+		DrawFormatString(500, 500, 0xff0000, "%d", g_skillAnime[2]);
+		if (++g_skillAnime[2] >= 50) g_skillAniFlg = FALSE, g_skillAnime[2] = 0;
 	}
 
 }
@@ -207,9 +216,11 @@ bool SkillMove_8(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 }
 
 void SkillInit() {
-	g_skillAnime = 0;
+	for (int i = 0; i < 8; i++) {
+		g_skillAnime[i] = 0;
+	}
 	g_skillAniFlg = FALSE;
-	g_countTime = 0;
+	//g_countTime = 0;
 
 	g_skill_X = 100;
 	g_skill_Y = 490;

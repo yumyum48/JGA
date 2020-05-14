@@ -23,8 +23,7 @@ void ManagementHP() {
 // HPÇÃï\é¶èàóù
 void HpDisp(void) {
 
-	//UIï\é¶
-	DrawGraph(20, -40, g_pic.PlayerUI, TRUE);
+	//UIï\é¶(HP)
 	for (int i = 0; i < 3; i++) {		//HP
 		DrawRotaGraph2(110 + (80 * i), 10, 0, 0, 0.5, 0.0, g_pic.Life[0], TRUE);
 	}

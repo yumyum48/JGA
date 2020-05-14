@@ -31,6 +31,7 @@ struct image {
     int title[2];                       // タイトル画像
     int titleText[4];                      // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
+    int SkillMotion[9];                 //スキルモーション画像
     int enemy_walk[2];                  // 歩く雑魚敵のの画像
     int enemy_fly[2];                   // 飛ぶ雑魚敵の画像
     int map[MAP_MAX * SCROLL_MAX];      // マップの画像
@@ -40,11 +41,12 @@ struct image {
     int PlayerUI;                       //playerのUI画像
     int Life[2];                        //playerのHP画像
     int boss_1_1[8];                    // ボス_１の画像
-    int skill[5];                       //スキル3のモーション画像(仮)
+    int skill2[4];                       //スキル2のモーション画像(仮)
+    int skill3[5];                       //スキル3のモーション画像(仮)
     int selectBack;                     // セレクト画面の背景画像
     int waterBullet[5];                 // ボスの水弾の画像
     int trap;                           // トラップの画像
-
+    int gauge;                          // ゲージの画像
 
 };
 
@@ -58,6 +60,7 @@ struct playerInfo {
     bool jumpFlg;   // ジャンプフラグ
     bool attackFlg; // 攻撃しているかどうかのフラグ
     int skillcustom[3]; // 装備中のスキル取得
+    float gauge;      //ゲージ
     void Init() {   // プレイヤーの初期化
         x = 100 * PLAYER_REDUCTION;
         y = GROUND;
@@ -67,6 +70,7 @@ struct playerInfo {
         skillFlg = 0;
         skillGage = 100;
         skill_MAX = 3;
+        gauge = 320;
     }
 
 };
