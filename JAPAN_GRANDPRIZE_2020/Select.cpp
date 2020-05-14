@@ -8,10 +8,16 @@
 #include "Controler.h"
 #include "Picture.h"
 #include "Change_ScReen_Animation.h"
+#include "Init.h"
 #define STAGE_NUMBER 7
+
+#define MENU_SELECT_WIDTH 320	// メニュー画面の中の選択するメニュー一覧の横幅
+#define MENU_SELECT_HEIGHT 84	// メニュー画面の中の選択するメニュー一覧の縦幅
 
 picInfo g_menuBox;		// メニューウィンドウの情報
 bool g_menuFlg = FALSE;		// メニューウィンドウを出現させるフラグ TURE:出現させる FALSE:出現させない
+int g_menuSelect;			// 今選択しているメニューを取得する
+
 void StageSelect() {
 	
 	SpeedSelect();
@@ -22,8 +28,10 @@ void StageSelect() {
 void SelectDisp(void) {
 	picInfo stage[8];
 	
-
+	// セレクト画面の背景
 	DrawGraph(0, 0, g_pic.selectBack, TRUE);
+
+	// セレクト画面のマップ
 	for (int i = 0; i < MAP_MAX; i++) {
 		stage[i].SelectStageInit(i);
 		DrawBox(stage[i].x, stage[i].y, stage[i].x + 100, stage[i].y + 100, 0x00FF00, TRUE);
@@ -31,22 +39,46 @@ void SelectDisp(void) {
 			DrawBox(stage[i].x, stage[i].y, stage[i].x + 200, stage[i].y + 200, 0x00FF00, TRUE);
 		}
 	}
-
+	
+	// セレクト画面の選択中のウィンドウを表示
 	DrawBox(stage[g_select_Stage].x, stage[g_select_Stage].y, stage[g_select_Stage].x + 100, stage[g_select_Stage].y + 100, 0xFF0000, FALSE);
 	if (g_select_Stage == 7) {
 		DrawBox(stage[g_select_Stage].x, stage[g_select_Stage].y, stage[g_select_Stage].x + 200, stage[g_select_Stage].y + 200, 0xFF0000, FALSE);
 	}
+	int menuSelect_X = g_menuBox.x + 122;												// セレクトウィンドウのメニュー欄のX座標
+	int menuSelect_Y[3] = { g_menuBox.y +  79, g_menuBox.y + 320, g_menuBox.y + 571};	// セレクトウィンドウのメニュー欄のY座標
 
+
+	// メニュー画面
 	DrawBox(g_menuBox.x, g_menuBox.y, g_menuBox.x + 625, g_menuBox.y + 700, 0xFFFFFF, TRUE);
+	// メニュー画面の項目
+	DrawBox(menuSelect_X, menuSelect_Y[0], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[0] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
+	DrawBox(menuSelect_X, menuSelect_Y[1], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[1] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
+	DrawBox(menuSelect_X, menuSelect_Y[2], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[2] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
 
 	
+	// メニュー画面が出てないとき
 	if (g_menuFlg == FALSE) {
 		//cで選択（デバック）
-		if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 			//g_gameScene = GAME_PLAY;
 			Get_NowDisp(GAME_PLAY, 2);
 			g_gameScene = GAME_CHANGE_SCREEN_ANIMATION;
 
+		}
+	}
+	// メニュー画面が出ているとき
+	else {
+		DrawBox(menuSelect_X, menuSelect_Y[g_menuSelect], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[g_menuSelect] + MENU_SELECT_HEIGHT, 0xFF0000, TRUE);
+		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			switch (g_menuSelect)
+			{
+			case 0: break;// データのセーブ
+			case 1: break;// スキルカスタマイズ
+			case 2: GameInit();  g_gameScene = GAME_TITLE; break;	// タイトルへ移動
+			default:
+				break;
+			}
 		}
 	}
 	//DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + 100, g_mouseInfo.mouseY + 100, 0x00FF00, TRUE);
@@ -120,6 +152,15 @@ void SelectMove() {
 		}
 		else {
 			g_menuBox.x = 724;
+		}
+
+		
+		if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
+			if (++g_menuSelect > 2) g_menuSelect = 0;
+		}
+		// メニューカーソル制御処理
+		if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
+			if (--g_menuSelect < 0) g_menuSelect = 2;
 		}
 		
 	}
