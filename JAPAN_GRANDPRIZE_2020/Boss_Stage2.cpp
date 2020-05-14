@@ -18,7 +18,7 @@
 */////////////////////////////////////////////
 // •`‰æ
 void BossDisp_Stage2() {
-	DrawRotaGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, 0.9f, 0.0, g_pic.enemy, FALSE, TRUE);
+	DrawRotaGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, 0.9f, 0.0, g_pic.enemy_walk[0], FALSE, TRUE);
 }
 
 // “®‚«

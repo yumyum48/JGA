@@ -121,9 +121,11 @@ int Main(void) {
 
 	// ゲームの初期化
 	GameInit();
+
+	// ゲームモードをタイトルへ
 	g_gameScene = GAME_TITLE;
 	// メインループ
-	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
+	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0 && g_gameScene != GAME_END) {
 		// 画面のクリア	※描画類はこの関数の下へ！
 		ClearDrawScreen();
 

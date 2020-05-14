@@ -4,6 +4,17 @@
 
 int LoadPicture() {
 
+	// タイトル画像
+	if ((g_pic.title[0] = LoadGraph("image/titleimage5a.png")) == -1) return -1;
+
+	// タイトルのテキスト画像
+	if ((g_pic.titleText[0] = LoadGraph("image/Title_Text2.png")) == -1) return -1;		// タイトルロゴ
+	if ((g_pic.titleText[1] = LoadGraph("image/NewGame.png")) == -1) return -1;			// タイトルロゴ
+	if ((g_pic.titleText[2] = LoadGraph("image/Continue.png")) == -1) return -1;		// タイトルロゴ
+	if ((g_pic.titleText[3] = LoadGraph("image/fin.png")) == -1) return -1;		// タイトルロゴ
+	
+	
+
 	// プレイヤー画像の読み込み
 	if (LoadDivGraph("image/player2.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
 	//UI画像
@@ -14,9 +25,11 @@ int LoadPicture() {
 	//スキル3モーション(仮)
 	if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill, 0) == -1) return -1;
 
-	// エネミー画像の読み込み
-	if ((g_pic.enemy = LoadGraph("image/enemy.png")) == -1) return -1;
+	// 歩く雑魚敵画像の読み込み
+	if ((g_pic.enemy_walk[0] = LoadGraph("image/enemy.png")) == -1) return -1;
 
+	// 飛ぶ雑魚敵画像の読み込み
+	if (LoadDivGraph("image/skill3.png", 2, 2, 1, 1443 / 5, 289, g_pic.enemy_fly, 0) == -1) return -1;
 	/*//マップの読み込み
 	if (LoadDivGraph("image/mori8sute.png", 24, 3, 8, 1024, 768, g_pic.map, 0) == -1)
 		return -1;*/
@@ -52,10 +65,7 @@ int LoadPicture() {
 	if ((g_pic.selectBack = LoadGraph("image/Select.png")) == -1) return -1;
 
 	// 水弾の画像の読み込み
-	if ((g_pic.waterBullet[0] = LoadGraph("image/watb00.png")) == -1) return -1;
-	if ((g_pic.waterBullet[1] = LoadGraph("image/watb01.png")) == -1) return -1;
-	if ((g_pic.waterBullet[2] = LoadGraph("image/watb02.png")) == -1) return -1;
-	if ((g_pic.waterBullet[3] = LoadGraph("image/watb04.png")) == -1) return -1;
+	if (LoadDivGraph("image/watb1.png", 5, 5, 1, 32, 32, g_pic.waterBullet, 0) == -1);
 
 
 	return 0;

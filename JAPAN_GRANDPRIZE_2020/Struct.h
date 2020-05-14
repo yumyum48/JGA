@@ -28,8 +28,11 @@ struct controler {
 
 // 画像の種類
 struct image {
+    int title[2];                       // タイトル画像
+    int titleText[4];                      // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
-    int enemy;                          // エネミーの画像
+    int enemy_walk[2];                  // 歩く雑魚敵のの画像
+    int enemy_fly[2];                   // 飛ぶ雑魚敵の画像
     int map[MAP_MAX * SCROLL_MAX];      // マップの画像
     int backMap[MAP_MAX * SCROLL_MAX];  // マップの背景
     int rain;                           // 雨の画像
@@ -39,7 +42,7 @@ struct image {
     int boss_1_1[8];                    // ボス_１の画像
     int skill[5];                       //スキル3のモーション画像(仮)
     int selectBack;                     // セレクト画面の背景画像
-    int waterBullet[4];
+    int waterBullet[5];                 // ボスの水弾の画像
     int trap;                           // トラップの画像
 
 
@@ -236,6 +239,11 @@ struct slowInfo {
 struct picInfo {
     int x;          //X座標
     int y;          //Y座標
+
+    picInfo() {
+        x = 0;
+        y = 0;
+    }
     void MenuWindowInit() {     // メニュー画面の初期化
         x = 1182; 
         y = 39;

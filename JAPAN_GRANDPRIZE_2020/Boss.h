@@ -22,7 +22,7 @@ enum {	// ボスの配列
 
 enum {	// ボスの攻撃判断
 	ENEMY_DROP = 1,			// 雑魚敵の生成
-	Water_Bullet,			// 水弾での攻撃
+	WATER_BULLET,			// 水弾での攻撃
 };
 
 enum { // ボスの動きパターン

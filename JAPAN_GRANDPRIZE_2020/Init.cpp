@@ -22,11 +22,12 @@ void GameInit() {
 	SelectInit();		// セレクト画面の初期化
 	g_enemybeat = 0;	// エネミーを倒した数をカウントする変数の初期化
 	ChangeScreen_Animation_Init();	// シーンチェンジアニメーションの初期化
-	g_gameScene = GAME_TITLE;	// タイトルへ戻る
+	//g_gameScene = GAME_TITLE;	// タイトルへ戻る
 
 }
 
-
+// 保存すべきデータを削除
 void Reset(){
 	g_player.skill_MAX = 1;
+	GameInit();
 }
