@@ -17,13 +17,20 @@ int LoadPicture() {
 
 	// プレイヤー画像の読み込み
 	if (LoadDivGraph("image/player2.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
+	//スキルモーション画像
+	if (LoadDivGraph("image/Skill_player.png", 9, 3, 3, 280, 200, g_pic.SkillMotion, 0) == -1) return -1;
 	//UI画像
 	if ((g_pic.PlayerUI = LoadGraph("image/Aicon2.png")) == -1) return -1;
 	//Life画像
 	if (LoadDivGraph("image/Life.png", 2, 2, 1, 100, 100, g_pic.Life, 0) == -1) return -1;
 
+	//ゲージ画像
+	if ((g_pic.gauge = LoadGraph("image/AiconGauge.png")) == -1) return -1;
+
+	//スキル2モーション(仮)
+	if (LoadDivGraph("image/skill2.png", 4, 4, 1, 200, 200, g_pic.skill2, 0) == -1) return -1;
 	//スキル3モーション(仮)
-	if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill, 0) == -1) return -1;
+	if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
 
 	// 歩く雑魚敵画像の読み込み
 	if ((g_pic.enemy_walk[0] = LoadGraph("image/enemy.png")) == -1) return -1;
