@@ -40,13 +40,15 @@ struct image {
     int reticle;                        // 敵をロックオンした時の画像(レティクル画像)
     int PlayerUI;                       //playerのUI画像
     int Life[2];                        //playerのHP画像
-    int boss_1_1[8];                    // ボス_１の画像
+    int boss_1_1[16];                    // ボス_１の画像
     int skill2[4];                       //スキル2のモーション画像(仮)
     int skill3[5];                       //スキル3のモーション画像(仮)
     int selectBack;                     // セレクト画面の背景画像
     int waterBullet[5];                 // ボスの水弾の画像
     int trap;                           // トラップの画像
     int gauge;                          // ゲージの画像
+    int enemyVapour[5];                 // 敵撃破時の蒸気の画像
+    int enemySplashes[5];               // 敵を斬った時の水しぶきの画像
 
 };
 
