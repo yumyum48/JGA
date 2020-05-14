@@ -27,8 +27,8 @@ void BossDisp_Stage1() {
 	//	水玉が遅い
 	// 二次元配列の0番目は敵本体
 	// １番目は水玉
-	int bossAnime_MAX[2] = { 3, 7};		// アニメーションの最終尾
-	int bossAnime_Start[2] = { 0, 5 };	// アニメーションの最初
+	int bossAnime_MAX[2] = { 7, 15};	// アニメーションの最終尾
+	int bossAnime_Start[2] = { 0, 8 };	// アニメーションの最初
 	static int anime[2] = { 0, 0 };		// 画像の切り替え
 	static int time = 0;				// フレーム単位のカウント
 

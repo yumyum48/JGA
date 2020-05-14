@@ -55,7 +55,7 @@ int LoadPicture() {
 	if ((g_pic.reticle = LoadGraph("image/Reticle.png")) == -1) return -1;
 
 	// ƒ{ƒX_‚P‚Ì‰æ‘œ“Ç‚İ‚İ
-	if (LoadDivGraph("image/Boss_1.png", 8, 4, 4, 280, 200, g_pic.boss_1_1, 0) == -1)
+	if (LoadDivGraph("image/Boss_1.png", 16, 8, 2, 280, 200, g_pic.boss_1_1, 0) == -1)
 		return -1;
 
 	//// ƒ{ƒX_‚P‚Ì–A‰æ‘œ“Ç‚İ‚İ
@@ -66,6 +66,11 @@ int LoadPicture() {
 
 	// …’e‚Ì‰æ‘œ‚Ì“Ç‚İ‚İ
 	if (LoadDivGraph("image/watb1.png", 5, 5, 1, 32, 32, g_pic.waterBullet, 0) == -1);
+
+	// “GŒ‚”j‚Ì…‚µ‚Ô‚«
+	if (LoadDivGraph("image/bassha.png", 5, 5, 1, 100, 100, g_pic.enemySplashes, 0) == -1);
+	// “GŒ‚”j‚Ìö‹C
+	if (LoadDivGraph("image/moku1.png", 5, 5, 1, 100, 100, g_pic.enemyVapour, 0) == -1);
 
 
 	return 0;
