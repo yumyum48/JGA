@@ -1,11 +1,10 @@
 #pragma once
 
-void NameDebug(); //デバッグ用
+//void NameDebug(); //デバッグ用
 
 
-int Save();
-int Read();
+//int Save();
+//int Read();
+int SaveData_Open();
 
-extern int g_savefile;
-
-extern char g_name;			//デバッグ用
+//extern char g_name;			//デバッグ用

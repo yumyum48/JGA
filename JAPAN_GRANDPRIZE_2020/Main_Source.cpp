@@ -17,7 +17,7 @@
 #include "GameOver.h"
 #include "Change_ScReen_Animation.h"
 #include "SkillCustom.h"
-
+#include "Save.h"
 #define DEBUG_TEXT_ON
 
 
@@ -73,8 +73,9 @@ int g_MutekiTime;				// プレイヤーの無敵時間
 
 trapInfo g_trap;				// トラップの情報
 
+int playTime;			// プレイ時間
 
-
+int select_MAX;			// 今プレイヤーがいけるステージを制御する
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -126,6 +127,8 @@ int Main(void) {
 
 	// ゲームモードをタイトルへ
 	g_gameScene = GAME_TITLE;
+
+	
 	// メインループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0 && g_gameScene != GAME_END) {
 		// 画面のクリア	※描画類はこの関数の下へ！
