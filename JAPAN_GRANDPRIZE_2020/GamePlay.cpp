@@ -18,7 +18,7 @@ void GamePlay() {
 	GamePlayDisp();
 	GamePlayMove();
 	static int timecnt;	// フレーム単位で加算する
-	if(timecnt++ >= 60)playTime++;	// プレイタイムを加算
+	if(timecnt++ >= 60)g_playTime++;	// プレイタイムを加算
 }
 // ゲームプレイの描画
 void GamePlayDisp() {

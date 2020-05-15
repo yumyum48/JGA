@@ -130,11 +130,11 @@ void SelectMove() {
 		}
 		//メニューカーソル移動処理
 		if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
-			if (++g_select_Stage > select_MAX) g_select_Stage = 0;
+			if (++g_select_Stage > g_select_MAX) g_select_Stage = 0;
 		}
 		// メニューカーソル制御処理
 		if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
-			if (--g_select_Stage < select_MAX) g_select_Stage = select_MAX;
+			if (--g_select_Stage < g_select_MAX) g_select_Stage = g_select_MAX;
 		}
 
 		////cで選択（デバック）

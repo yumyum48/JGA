@@ -1,7 +1,7 @@
 #pragma once
 #include "DxLib.h"
 
-extern int playTime;	// プレイ時間
+extern int g_playTime;	// プレイ時間
 
 void GamePlay();		// ゲームプレイのメイン関数
 void GamePlayDisp();	// ゲームプレイ中の描画処理
