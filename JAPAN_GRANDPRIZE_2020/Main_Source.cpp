@@ -16,6 +16,8 @@
 #include "GameTitle.h"
 #include "GameOver.h"
 #include "Change_ScReen_Animation.h"
+#include "SkillCustom.h"
+
 #define DEBUG_TEXT_ON
 
 
@@ -166,6 +168,7 @@ void GameScene(int gameScene) {
 	case GAME_SAVE:									break;	 // ゲームのセーブ
 	case GAME_LOAD:									break;	 // ゲームデータのロード
 	case GAME_CHANGE_SCREEN_ANIMATION:	ChangeScreen_Animation();				break;	 // シーン切り替え時のアニメーションシーン
+	case GAME_SKILLCUSTOM:	SkillCustom();			break;	 // スキルカスタマイズ
 	}
 }
 

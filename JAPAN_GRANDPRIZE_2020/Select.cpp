@@ -7,6 +7,7 @@
 #include "GameScene.h"
 #include "Controler.h"
 #include "Picture.h"
+#include "SkillCustom.h"
 #include "Change_ScReen_Animation.h"
 #include "Init.h"
 #define STAGE_NUMBER 7
@@ -74,7 +75,7 @@ void SelectDisp(void) {
 			switch (g_menuSelect)
 			{
 			case 0: break;// データのセーブ
-			case 1: break;// スキルカスタマイズ
+			case 1: g_gameScene = GAME_SKILLCUSTOM;        break;	// スキルカスタマイズ
 			case 2: GameInit();  g_gameScene = GAME_TITLE; break;	// タイトルへ移動
 			default:
 				break;
