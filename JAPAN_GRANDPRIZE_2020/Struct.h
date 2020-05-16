@@ -258,6 +258,10 @@ struct picInfo {
         x = 1182; 
         y = 39;
     }
+    void MenuSaveWindowInit() { // セーブ画面の初期化
+        x = 1280;
+        y = 39;
+    }
     void SelectStageInit(int num) { // セレクト画面の初期化
         switch (num) {
         case 0: 

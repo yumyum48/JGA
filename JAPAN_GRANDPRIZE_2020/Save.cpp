@@ -7,7 +7,8 @@
 #include <fstream>
 #include "Player.h"
 #include <stdio.h>
-
+#include "GamePlay.h"
+#include "Select.h"
 // ファイル名とフォルダ
 //fp[SAVE_1] = fopen("SaveData/SaveFile_1.bin", "wb");
 //fp[SAVE_2] = fopen("SaveData/SaveFile_2.bin", "wb");
@@ -19,13 +20,6 @@
 ****************************************************************/
 int g_savefile;	// 今選択しているファイル
 
-
-enum {	// セーブデータファイル
-	SAVE_1,
-	SAVE_2,
-	SAVE_3,
-	SAVE_MAX,
-};
 /***************************************************************
 
 * 関数の定義
@@ -36,12 +30,24 @@ enum {	// セーブデータファイル
 //	SaveModeDisp();
 //}
 void SaveModeDisp() {
-	
+	int  buf[SAVE_MAX][DETA_MAX];	// セーブすべきデータを保存する変数
 	int save_MenuX = g_mouseInfo.mouseX;
 	int save_MenuY[3] = { g_mouseInfo.mouseY, g_mouseInfo.mouseY, g_mouseInfo.mouseY };
 	// セーブ画面の背景の表示
 	DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFFFFFF, TRUE);
+	// ファイルを読み取って、情報をbufに保存
+	for (int i = 0; i < SAVE_MAX; i++) {
+		if (SaveData_Open(buf[i]) == 1) {	// もし保存ファイルが存在していないなら
+			// ファイルが存在していませんをここで表示
+		}
+	}
 
+	// デバッグ用で保存しているデータを表示
+	for (int j = 0; j < SAVE_MAX; j++) {
+		for (int i = 0; i < DETA_MAX; i++) {
+			DrawFormatString(200 * (i + 1), 200 * (j + 1), 0x00FF00, "%d", buf[j][i]);
+		}
+	}
 	//DrawBox(save_MenuX, save_MenuY, save_MenuX +  )
 }
 
@@ -62,8 +68,14 @@ void SaveModeMove() {
 }
 //
 
-int SaveData_Open() {
+int SaveData_Open(int buf[]) {
 	FILE* fp[SAVE_MAX];
+	//int  buf[DETA_MAX];	// セーブすべきデータを保存する変数
+
+	//buf[DETA_MAPSELECT] = g_select_MAX;			// 今の段階でいけるマップを保存
+	//buf[DETA_SKILL_MAX] = g_player.skill_MAX;		// 今の段階で使えるスキルを保存
+	//buf[DETA_PLAYTIME] = g_playTime;				// 今のプレイタイムを保存
+
 #pragma warning(disable:4996)
 	fp[SAVE_1] = fopen("SaveData/SaveFile_1.bin", "rb");
 	fp[SAVE_2] = fopen("SaveData/SaveFile_2.bin", "rb");
@@ -76,10 +88,21 @@ int SaveData_Open() {
 		}
 	}
 
+	//// 書き込み
+	//for (int i = 0; i < DETA_MAX; i++) {
+	//	fwrite(&buf[i], sizeof(int), 1, fp[SAVE_1]);
+	//}
+
+	//読み込み
+	for (int i = 0; i < DETA_MAX; i++) {
+		fread(&buf[i], sizeof(int), 1, fp[SAVE_1]);
+	}
+
 	for (int i = 0; i < SAVE_MAX; i++) {
 		fclose(fp[i]);
 	}
 
+	
 	return 0;
 
 }

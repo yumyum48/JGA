@@ -28,8 +28,8 @@ void GameInit() {
 
 // 保存すべきデータを削除
 void Reset(){
-	select_MAX = 0;			// プレイヤーが行けるステージを１のみにする
+	g_select_MAX = 0;			// プレイヤーが行けるステージを１のみにする
 	g_player.skill_MAX = 1;	// プレイヤーの取得しているスキルをゲーム開始状態に戻す
-	playTime = 0;	// プレイ時間を初期化
+	g_playTime = 0;	// プレイ時間を初期化
 	GameInit();
 }

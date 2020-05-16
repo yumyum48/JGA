@@ -142,7 +142,7 @@ int Main(void) {
 
 		// ゲームシーンの中を見て適当なゲーム画面を描画
 		GameScene(g_gameScene);
-		SaveData_Open();
+		
 		// デバッグモード(変数の中の文字を描画)
 #ifdef DEBUG_TEXT_ON
 		DrawFormatString(0, 0, 0x0000FF, "keyFlg = %d", g_keyInfo.keyFlg);
