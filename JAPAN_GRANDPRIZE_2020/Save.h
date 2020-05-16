@@ -13,12 +13,15 @@ enum {	// セーブデータファイル
 
 enum {	// 保存するデータの添え字
 	DETA_MAPSELECT,
-	DETA_SKILL_MAX,
 	DETA_PLAYTIME,
+	DETA_SKILL_CUSTOM_1,
+	DETA_SKILL_CUSTOM_2,
+	DETA_SKILL_CUSTOM_3,
 	DETA_MAX,
 };
-//int Save();
+int Save(int savefile);
 //int Read();
-void SaveModeDisp();					// セーブデータメニュー画面の表示
-int SaveData_Open(int buf[]);			// セーブデータを読み込んで表示するために、表示する内容を記憶させる関数
-//extern char g_name;					//デバッグ用
+void SaveModeDisp(int saveX, int saveY[]);		// セーブデータメニュー画面の表示
+int SaveData_Open(int buf[], int i);			// セーブデータを読み込んで表示するために、表示する内容を記憶させる関数
+//extern char g_name;							//デバッグ用
+int SaveData_CL();								// デバッグ用

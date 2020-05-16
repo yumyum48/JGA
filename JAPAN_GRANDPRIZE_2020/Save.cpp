@@ -29,26 +29,35 @@ int g_savefile;	// 今選択しているファイル
 //	SaveModeMove();
 //	SaveModeDisp();
 //}
-void SaveModeDisp() {
+void SaveModeDisp(int saveX, int saveY[]) {
 	int  buf[SAVE_MAX][DETA_MAX];	// セーブすべきデータを保存する変数
 	int save_MenuX = g_mouseInfo.mouseX;
 	int save_MenuY[3] = { g_mouseInfo.mouseY, g_mouseInfo.mouseY, g_mouseInfo.mouseY };
-	// セーブ画面の背景の表示
-	DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFFFFFF, TRUE);
+	
+	int no_FileFlg[3] = { 0, 0, 0 };
 	// ファイルを読み取って、情報をbufに保存
 	for (int i = 0; i < SAVE_MAX; i++) {
-		if (SaveData_Open(buf[i]) == 1) {	// もし保存ファイルが存在していないなら
+		if (SaveData_Open(buf[i], i) == 1) {	// もし保存ファイルが存在していないなら
 			// ファイルが存在していませんをここで表示
+			no_FileFlg[i] = 1;
 		}
 	}
-
-	// デバッグ用で保存しているデータを表示
-	for (int j = 0; j < SAVE_MAX; j++) {
-		for (int i = 0; i < DETA_MAX; i++) {
-			DrawFormatString(200 * (i + 1), 200 * (j + 1), 0x00FF00, "%d", buf[j][i]);
+	for (int i = 0; i < SAVE_MAX; i++) {
+		SetFontSize(30);
+		if (no_FileFlg[i] == 0) {
+			DrawFormatString(saveX, saveY[i], 0x000000, "クリアしたステージ数: %d\nプレイタイム: %d秒\n", buf[i][0], buf[i][1]);
+		}
+		else {
+			DrawFormatString(saveX, saveY[i], 0x000000, "フォルダが存在していません");
 		}
 	}
-	//DrawBox(save_MenuX, save_MenuY, save_MenuX +  )
+	//// デバッグ用で保存しているデータを表示
+	//for (int i = 0; i < SAVE_MAX; i++) {
+	//	for (int j = 0; j < DETA_MAX; j++) {
+	//		DrawFormatString(200 * (j + 1), 200 * (i + 1), 0x00FF00, "%d", buf[i][j]);
+	//	}
+	//}
+	
 }
 
 void SaveModeMove() {
@@ -66,10 +75,10 @@ void SaveModeMove() {
 		//Save(g_savefile);
 	}
 }
-//
 
-int SaveData_Open(int buf[]) {
-	FILE* fp[SAVE_MAX];
+
+int SaveData_Open(int buf[], int i) {
+	FILE* fp = 0;	// ファイルポインタを用意
 	//int  buf[DETA_MAX];	// セーブすべきデータを保存する変数
 
 	//buf[DETA_MAPSELECT] = g_select_MAX;			// 今の段階でいけるマップを保存
@@ -77,12 +86,28 @@ int SaveData_Open(int buf[]) {
 	//buf[DETA_PLAYTIME] = g_playTime;				// 今のプレイタイムを保存
 
 #pragma warning(disable:4996)
-	fp[SAVE_1] = fopen("SaveData/SaveFile_1.bin", "rb");
-	fp[SAVE_2] = fopen("SaveData/SaveFile_2.bin", "rb");
-	fp[SAVE_3] = fopen("SaveData/SaveFile_3.bin", "rb");
+	switch (i) {	// i番目を見て、開くべきファイルを判断
+	case 0:
+		fp = fopen("SaveData/SaveFile_1.bin", "rb");
+		break;
+
+	case 1:
+		fp = fopen("SaveData/SaveFile_2.bin", "rb");
+		break;
+
+	case 2:
+		fp = fopen("SaveData/SaveFile_3.bin", "rb");
+		break;
+
+	default:
+		break;
+	}
+	
+	
+	
 
 	for (int i = 0; i < SAVE_MAX; i++) {
-		if (fp[i] == NULL) {
+		if (fp == NULL) {
 			printf("ファイルをオープンできませんでした。\n");
 			return 1;
 		}
@@ -95,43 +120,54 @@ int SaveData_Open(int buf[]) {
 
 	//読み込み
 	for (int i = 0; i < DETA_MAX; i++) {
-		fread(&buf[i], sizeof(int), 1, fp[SAVE_1]);
+		fread(&buf[i], sizeof(int), 1, fp);
 	}
 
 	for (int i = 0; i < SAVE_MAX; i++) {
-		fclose(fp[i]);
+		fclose(fp);
 	}
 
 	
 	return 0;
 
 }
-//int Save(int savefile) {
-//	FILE* fp = 0;
-//#pragma warning(disable:4996)
-//
-//	//switch (savefile)
-//	//{
-//	//case 1:
-//	//	fp = fopen("Save/SaveFile1.txt", "w");	// ファイルオープン
-//	//	break;
-//
-//	//case 2:
-//	//	fp = fopen("Save/SaveFile2.txt", "w");	// ファイルオープン
-//	//	break;
-//
-//	//case 3:
-//	//	fp = fopen("Save/SaveFile3.txt", "w");	// ファイルオープン
-//	//	break;
-//	//}
-//
-//	////fprintf(fp, "%9d %10s %10d\n", &g_stagelock(仮）, g_name, g_score);
-//
-//	//fclose(fp);			//ファイルクローズ
-//
-//	return 0;
-//
-//}
+
+int Save(int savefile) {
+#pragma warning(disable:4996)
+	int  buf[DETA_MAX];	// セーブすべきデータを保存する変数
+	FILE* fp = 0;
+	
+	buf[DETA_MAPSELECT] = g_select_MAX;			// 今の段階でいけるマップを保存
+	buf[DETA_PLAYTIME] = g_playTime;				// 今のプレイタイムを保存
+	buf[DETA_SKILL_CUSTOM_1] = g_player.skillcustom[0];		// 現在装備しているスキル１
+	buf[DETA_SKILL_CUSTOM_2] = g_player.skillcustom[1];		// 現在装備しているスキル２
+	buf[DETA_SKILL_CUSTOM_3] = g_player.skillcustom[2];		// 現在装備しているスキル３
+
+	switch (savefile)
+	{
+	case 0:
+		fp = fopen("SaveData/SaveFile_1.bin", "wb");	// ファイルオープン
+		break;
+
+	case 1:
+		fp = fopen("SaveData/SaveFile_2.bin", "wb");	// ファイルオープン
+		break;
+
+	case 2:
+		fp = fopen("SaveData/SaveFile_3.bin", "wb");	// ファイルオープン
+		break;
+	}
+
+	// 書き込み
+	for (int i = 0; i < DETA_MAX; i++) {
+		fwrite(&buf[i], sizeof(int), 1, fp);
+	}
+
+	fclose(fp);			//ファイルクローズ
+
+	return 0;
+
+}
 
 //int Read(void){
 //	FILE* fp = 0;
@@ -173,3 +209,54 @@ int SaveData_Open(int buf[]) {
 //
 //}
 //
+//
+// フォルダを作成したり、見たりと、デバッグ用の関数
+int SaveData_CL() {
+	int  buf[SAVE_MAX][DETA_MAX];	// セーブすべきデータを保存する変数
+	FILE* fp[SAVE_MAX];
+	//for (int i = 0; i < SAVE_MAX; i++) {
+	//	buf[i][DETA_MAPSELECT] = 10;			// 今の段階でいけるマップを保存
+	//	buf[i][DETA_PLAYTIME] = 20;				// 今のプレイタイムを保存
+	//	buf[i][DETA_SKILL_CUSTOM_1] = 30;		// 現在装備しているスキル１
+	//	buf[i][DETA_SKILL_CUSTOM_2] = 40;		// 現在装備しているスキル２
+	//	buf[i][DETA_SKILL_CUSTOM_3] = 50;		// 現在装備しているスキル３
+	//}
+#pragma warning(disable:4996)
+	fp[SAVE_1] = fopen("SaveData/SaveFile_1.bin", "rb");
+	fp[SAVE_2] = fopen("SaveData/SaveFile_2.bin", "rb");
+	fp[SAVE_3] = fopen("SaveData/SaveFile_3.bin", "rb");
+
+	for (int i = 0; i < SAVE_MAX; i++) {
+		if (fp[i] == NULL) {
+			printf("ファイルをオープンできませんでした。\n");
+			return 1;
+		}
+	}
+
+	//// 書き込み
+	//for (int i = 0; i < SAVE_MAX; i++) {
+	//	for (int j = 0; j < DETA_MAX; j++) {
+	//		fwrite(&buf[i][j], sizeof(int), 1, fp[i]);
+	//	}
+	//}
+
+	//読み込み
+	for (int i = 0; i < SAVE_MAX; i++) {
+		for (int j = 0; j < DETA_MAX; j++) {
+			fread(&buf[i][j], sizeof(int), 1, fp[i]);
+		}
+	}
+	// デバッグ用で保存しているデータを表示
+	for (int i = 0; i < SAVE_MAX; i++) {
+		for (int j = 0; j < DETA_MAX; j++) {
+			DrawFormatString(200 * (j + 1), 200 * (i + 1), 0x00FF00, "%d", buf[i][j]);
+		}
+	}
+	for (int i = 0; i < SAVE_MAX; i++) {
+		fclose(fp[i]);
+	}
+
+
+	return 0;
+
+}
