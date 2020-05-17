@@ -18,14 +18,17 @@ void BossMove_Stage1() {
 
 	static int coolTime = 0;								// 硬直時間
 	static int moveFlg = BOSSMOVE_NOMOTION;					// 敵が移動するだけのフラグ　0:移動しない 1:上下に移動しながらプレイヤーに寄ってくる
+	static int attackSelect = 0;							// ボスの攻撃選択
 
 
 	if ((coolTime++ > 120)									// 硬直時間
 		&& (g_boss[0].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {					// ボスが移動していなければ
 
-		if (GetRand(2) == 1) {								//乱数で攻撃するか移動をするかを決定
-			g_boss[0].attackFlg = ENEMY_DROP;				// 攻撃する場合、フラグに対応した数字を入れる
+		attackSelect = GetRand(2);								//乱数で攻撃するか移動をするかを決定
+
+		if (attackSelect != 0) {
+			g_boss[0].attackFlg = attackSelect;				// 攻撃する場合、フラグに対応した数字を入れる
 			coolTime = 0;
 		}
 		else {	// 攻撃をしないとき

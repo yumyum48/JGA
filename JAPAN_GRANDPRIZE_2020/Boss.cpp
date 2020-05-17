@@ -110,7 +110,8 @@ void BossAttackDisp() {
 		case ENEMY_DROP:
 		
 			BossEnemyDropDisp();	// 弱い敵を出す
-			DrawFormatString(100, 600, 0xFF00FF, "ボスが攻撃してますよ！");
+			//DrawFormatString(100, 600, 0xFF00FF, "ボスが攻撃してますよ！");
+			g_boss[BOSS_STAGE1].attackFlg = 0;
 			break;
 
 		default:
@@ -123,13 +124,18 @@ void BossAttackDisp() {
 // ボスの攻撃の全体管理(動き)
 void BossAttackMove() {
 
-	DrawFormatString(100, 700, 0xFF00FF, "ボスが攻撃してますよ！");
+	//DrawFormatString(100, 700, 0xFF00FF, "ボスが攻撃してますよ！");
 
-	if (g_keyInfo.keyFlg & PAD_INPUT_4) g_boss[0].attackFlg = 0;
+	//if (g_keyInfo.keyFlg & PAD_INPUT_4) g_boss[0].attackFlg = 0;
 
 	switch (g_boss[0].attackFlg) {
 		case ENEMY_DROP:
-			BossEnemyDropMove();	// 弱い敵を出す
+			//BossEnemyDropMove();	// 弱い敵を出す
+			g_boss[BOSS_STAGE1].attackFlg = 0;
+			break;
+
+		case WATER_BULLET:
+			BossWaterBulletDisp();	// 水弾の発射
 			break;
 
 		default:
@@ -174,8 +180,6 @@ void BossWaterBulletDisp() {
 	static int noDamegeCnt = 60;		// ダメージを受け付けない時間
 	static bool attackFlg = FALSE;		// 攻撃判断フラグ	 treu:攻撃済  false:未攻撃
 
-	/*moveX -= 7.5;
-	moveY += 2.5;*/
 	// フレーム単位の被弾数の調整
 	if (noDamegeCnt++ < 60);
 
@@ -206,8 +210,10 @@ void BossWaterBulletDisp() {
 
 	// 水弾の表示
 	if (attackFlg == FALSE) {
-		moveX -= 3.0;
-		moveY += 1.0;
+		moveX -= 7.5;
+		moveY += 2.5;
+		/*moveX -= 3.0;
+		moveY += 1.0;*/
 		DrawRotaGraph(startX + moveX, startY + moveY,
 			3.0f, DX_PI_F / 180 * 335, g_pic.waterBullet[anime], TRUE, FALSE);
 	}
