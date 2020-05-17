@@ -14,7 +14,28 @@ extern int g_enemybeat;	// ƒGƒlƒ~[‚ğ“|‚µ‚½”‚ğƒJƒEƒ“ƒg‚·‚éƒOƒ[ƒoƒ‹•Ï”
 //extern int g_killCount;
 void MonsterDisp();		// ã‚¢“GAƒ{ƒX‚Ì•\¦
 void MonsterMove();		// ã‚¢“GAƒ{ƒX‚Ì“®‚«
-void EnemyDisp();		// “G‚Ì•`‰æ
+void EnemyDisp_stage1();		// “G‚Ì•`‰æ
+void EnemyDisp_stage2();		// “G‚Ì•`‰æ
+void EnemyDisp_stage3();		// “G‚Ì•`‰æ
+void EnemyDisp_stage4();		// “G‚Ì•`‰æ
+void EnemyDisp_stage5();		// “G‚Ì•`‰æ
+void EnemyDisp_stage6();		// “G‚Ì•`‰æ
+void EnemyDisp_stage7();		// “G‚Ì•`‰æ
+void EnemyDisp_stage8();		// “G‚Ì•`‰æ
 void EnemyMove();		// “G‚Ì“®‚«
 void EnemyInit();		// “G‚Ì‰Šú‰»
 void EnemyEvaporation();	// “G‚ÌŒ‚”j‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+
+
+
+void (* const EnemyDisp[MAP_MAX])() = {
+		EnemyDisp_stage1,
+		EnemyDisp_stage2,
+		EnemyDisp_stage3,
+		EnemyDisp_stage4,
+		EnemyDisp_stage5,
+		EnemyDisp_stage6,
+		EnemyDisp_stage7,
+		EnemyDisp_stage8,
+};		// “G‚Ì•`‰æ
+
