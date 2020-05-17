@@ -273,6 +273,7 @@ void EnemyLockOn() {
 
 // プレイヤーの間合いに入っている敵を倒す処理
 void EnemyCut() {
+	static int enemyNum = 0;	// 同時に倒した敵をカウントする変数
 
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		// 歩く敵
@@ -289,6 +290,7 @@ void EnemyCut() {
 			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
 				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
 				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].walk.x, g_enemy[i].walk.y);
 				g_enemy[i].walk.WalkInit();
 				//g_player.attackFlg = TRUE;
 			}
@@ -308,6 +310,7 @@ void EnemyCut() {
 				/*if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
 				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;*/
 				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].fly.x, g_enemy[i].fly.y);
 				g_enemy[i].fly.WalkInit();
 				//g_player.attackFlg = TRUE;
 			}
@@ -315,18 +318,19 @@ void EnemyCut() {
 	}
 	//boss
 	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
-		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE 
+		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE
 			|| (SkillMove[g_player.skillFlg - 1](g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
 			if (g_boss[0].hp > 0) {
 				if (g_keyInfo.keyFlg & PAD_INPUT_3) {
 					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
 					g_boss[0].hp--;
-					
+
 				}
 			}
 		}
 	}
 
+	enemyNum = 0;
 }
 // プレイヤーの画像と敵の画像の当たり判定 (TRUE: 当たった | FALSE: 当たらなかった)
 bool PlayerInterval(int ex, int ey, int ew, int eh) {
