@@ -18,6 +18,7 @@
 #include "Change_ScReen_Animation.h"
 #include "SkillCustom.h"
 #include "Save.h"
+#include "Sounds.h"
 #define DEBUG_TEXT_ON
 
 
@@ -73,9 +74,11 @@ int g_MutekiTime;				// プレイヤーの無敵時間
 
 trapInfo g_trap;				// トラップの情報
 
-int g_playTime;			// プレイ時間
+int g_playTime;					// プレイ時間
 
-int g_select_MAX;			// 今プレイヤーがいけるステージを制御する
+int g_select_MAX;				// 今プレイヤーがいけるステージを制御する
+
+int g_sound[BGM_MAX];			// BGMの変数
 /*********************************************
 
 * 関数のプロトタイプ宣言

@@ -99,7 +99,16 @@ struct enemyInfo {
         y = GROUND - 30;   // 敵のY座標の初期位置
         flg = FALSE;  // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
     }
-
+    void BufferAssignment(int ex, int ey) {
+        x = ex;
+        y = ey;
+        flg = TRUE;
+    }
+    void BufferInit() {
+        x = 0;
+        y = 0;
+        flg = FALSE;
+    }
 };
 
 struct enemyType {  // 敵の種類
