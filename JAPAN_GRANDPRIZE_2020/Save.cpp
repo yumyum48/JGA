@@ -31,8 +31,6 @@ int g_savefile;	// 今選択しているファイル
 //}
 void SaveModeDisp(int saveX, int saveY[]) {
 	int  buf[SAVE_MAX][DETA_MAX];	// セーブすべきデータを保存する変数
-	int save_MenuX = g_mouseInfo.mouseX;
-	int save_MenuY[3] = { g_mouseInfo.mouseY, g_mouseInfo.mouseY, g_mouseInfo.mouseY };
 	
 	int no_FileFlg[3] = { 0, 0, 0 };
 	// ファイルを読み取って、情報をbufに保存
@@ -48,7 +46,7 @@ void SaveModeDisp(int saveX, int saveY[]) {
 			DrawFormatString(saveX, saveY[i], 0x000000, "クリアしたステージ数: %d\nプレイタイム: %d秒\n", buf[i][0], buf[i][1]);
 		}
 		else {
-			DrawFormatString(saveX, saveY[i], 0x000000, "フォルダが存在していません");
+			DrawFormatString(saveX, saveY[i] + 50, 0x000000, "フォルダが存在していません");
 		}
 	}
 	//// デバッグ用で保存しているデータを表示
