@@ -33,10 +33,11 @@ int LoadPicture() {
 	if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
 
 	// •à‚­G‹›“G‰æ‘œ‚Ì“Ç‚İ‚İ
-	if ((g_pic.enemy_walk[0] = LoadGraph("image/enemy.png")) == -1) return -1;
+	if (LoadDivGraph("image/EnemyZako1.png", 4, 4, 1, 100, 100, g_pic.enemy_walk, 0) == -1)return -1;
 
-	// ”ò‚ÔG‹›“G‰æ‘œ‚Ì“Ç‚İ‚İ
-	if (LoadDivGraph("image/skill3.png", 2, 2, 1, 1443 / 5, 289, g_pic.enemy_fly, 0) == -1) return -1;
+	// ”ò‚ÔG‹›“G
+	if (LoadDivGraph("image/zkfry.png", 4, 4, 1, 574, 545, g_pic.enemy_fly, 0) == -1)return -1;
+
 	/*//ƒ}ƒbƒv‚Ì“Ç‚İ‚İ
 	if (LoadDivGraph("image/mori8sute.png", 24, 3, 8, 1024, 768, g_pic.map, 0) == -1)
 		return -1;*/
@@ -72,12 +73,12 @@ int LoadPicture() {
 	if ((g_pic.selectBack = LoadGraph("image/Select.png")) == -1) return -1;
 
 	// …’e‚Ì‰æ‘œ‚Ì“Ç‚İ‚İ
-	if (LoadDivGraph("image/watb1.png", 5, 5, 1, 32, 32, g_pic.waterBullet, 0) == -1);
+	if (LoadDivGraph("image/watb1.png", 5, 5, 1, 32, 32, g_pic.waterBullet, 0) == -1)return -1;
 
 	// “GŒ‚”j‚Ì…‚µ‚Ô‚«
-	if (LoadDivGraph("image/bassha.png", 5, 5, 1, 100, 100, g_pic.enemySplashes, 0) == -1);
+	if (LoadDivGraph("image/bassha.png", 5, 5, 1, 100, 100, g_pic.enemySplashes, 0) == -1)return -1;
 	// “GŒ‚”j‚Ìö‹C
-	if (LoadDivGraph("image/moku1.png", 5, 5, 1, 100, 100, g_pic.enemyVapour, 0) == -1);
+	if (LoadDivGraph("image/moku1.png", 5, 5, 1, 100, 100, g_pic.enemyVapour, 0) == -1)return -1;
 
 	// ƒXƒe[ƒWƒNƒŠƒA‚Ì[“¢”°Š®—¹]‚Ì•¶š
 	if ((g_pic.stageClearText = LoadGraph("image/stageClear.png")) == -1) return -1;

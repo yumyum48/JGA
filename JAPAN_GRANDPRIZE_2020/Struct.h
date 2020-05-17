@@ -32,8 +32,8 @@ struct image {
     int titleText[4];                   // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
     int SkillMotion[9];                 //スキルモーション画像
-    int enemy_walk[2];                  // 歩く雑魚敵のの画像
-    int enemy_fly[2];                   // 飛ぶ雑魚敵の画像
+    int enemy_walk[4];                  // 歩く雑魚敵のの画像
+    int enemy_fly[4];                   // 飛ぶ雑魚敵の画像
     int map[MAP_MAX * SCROLL_MAX];      // マップの画像
     int backMap[MAP_MAX * SCROLL_MAX];  // マップの背景
     int rain;                           // 雨の画像
@@ -89,15 +89,18 @@ struct enemyInfo {
     int x = 1000;
     int y = GROUND + 30;
     bool flg;
-    void WalkInit() {   // 敵の初期化
-        x = 1280;     // 敵のX座標の初期位置
-        y = GROUND + 30;   // 敵のY座標の初期位置
-        flg = FALSE;  // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+    int anime;
+    void WalkInit() {    // 敵の初期化
+        x = 1280;        // 敵のX座標の初期位置
+        y = GROUND + 30; // 敵のY座標の初期位置
+        flg = FALSE;     // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        anime = 0;       // アニメーションの初期化
     }
     void FlyInit() {
-        x = 1280;     // 敵のX座標の初期位置
+        x = 1280;          // 敵のX座標の初期位置
         y = GROUND - 30;   // 敵のY座標の初期位置
-        flg = FALSE;  // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        flg = FALSE;       // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        anime = 0;       // アニメーションの初期化
     }
     void BufferAssignment(int ex, int ey) {
         x = ex;
