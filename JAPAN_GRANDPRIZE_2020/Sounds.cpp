@@ -24,6 +24,11 @@ int LoadSounds(void) {				//サウンド読み込み
 	if ((g_sound[VOICE_SPECIAL] = LoadSoundMem("sounds/witch-special1.mp3")) == -1) return -1;	//主人公必殺ボイス
 	if ((g_sound[VOICE_DAMAGE] = LoadSoundMem("sounds/thief-boy-damage2.mp3")) == -1) return -1;	//主人公ダメージボイス
 
+	if ((g_sound[SKILL1_SE] = LoadSoundMem("sounds/se_maoudamashii_element_fire08.mp3")) == -1) return -1;	//スキル１SE
+	if ((g_sound[SKILL2_SE] = LoadSoundMem("sounds/se_maoudamashii_element_fire10.mp3")) == -1) return -1;	//スキル２SE
+	if ((g_sound[SKILL3_SE] = LoadSoundMem("sounds/se_maoudamashii_element_fire01.mp3")) == -1) return -1;	//スキル３SE
+
+
 	if ((g_sound[BOSS1_ATTACK] = LoadSoundMem("sounds/se_maoudamashii_element_water06.mp3")) == -1) return -1;	//ボス１攻撃音
 	if ((g_sound[BOSS3_ATTACK1] = LoadSoundMem("sounds/Boss2_1.mp3")) == -1) return -1;	//ボス３舌攻撃音
 	if ((g_sound[BOSS3_ATTACK2] = LoadSoundMem("sounds/boss_born.mp3")) == -1) return -1;	//ボス３毒沼攻撃音
