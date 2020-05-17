@@ -19,6 +19,7 @@
 #include "SkillCustom.h"
 #include "Save.h"
 #include "Sounds.h"
+#include "Load.h"
 #define DEBUG_TEXT_ON
 
 
@@ -176,7 +177,7 @@ void GameScene(int gameScene) {
 	case GAME_CLEAR:	GameClear();				break;	 // ゲームクリア
 	case GAME_STAGE_CLEAR:	StageClear();			break;	 // ゲームステージクリア
 	case GAME_SAVE:									break;	 // ゲームのセーブ
-	case GAME_LOAD:									break;	 // ゲームデータのロード
+	case GAME_LOAD:		GameLoad();							break;	 // ゲームデータのロード
 	case GAME_CHANGE_SCREEN_ANIMATION:	ChangeScreen_Animation();				break;	 // シーン切り替え時のアニメーションシーン
 	case GAME_SKILLCUSTOM:	SkillCustom();			break;	 // スキルカスタマイズ
 	}
