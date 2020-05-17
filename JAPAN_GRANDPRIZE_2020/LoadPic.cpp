@@ -9,9 +9,9 @@ int LoadPicture() {
 
 	// タイトルのテキスト画像
 	if ((g_pic.titleText[0] = LoadGraph("image/Title_Text2.png")) == -1) return -1;		// タイトルロゴ
-	if ((g_pic.titleText[1] = LoadGraph("image/NewGame.png")) == -1) return -1;			// タイトルロゴ
-	if ((g_pic.titleText[2] = LoadGraph("image/Continue.png")) == -1) return -1;		// タイトルロゴ
-	if ((g_pic.titleText[3] = LoadGraph("image/fin.png")) == -1) return -1;		// タイトルロゴ
+	if ((g_pic.titleText[1] = LoadGraph("image/NewGame1.png")) == -1) return -1;			// タイトルロゴ
+	if ((g_pic.titleText[2] = LoadGraph("image/Continue1.png")) == -1) return -1;		// タイトルロゴ
+	if ((g_pic.titleText[3] = LoadGraph("image/fin1.png")) == -1) return -1;		// タイトルロゴ
 	
 	
 
