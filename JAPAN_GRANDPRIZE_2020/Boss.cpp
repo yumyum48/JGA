@@ -93,6 +93,7 @@ void Boss_Knock_Down() {
 	
 	if (g_boss[g_select_Stage].hp <= 0) {
 		g_gameScene = GAME_STAGE_CLEAR;
+		g_select_MAX++;	// セレクトできるマップを増やす
 	}
 	
 }

@@ -16,6 +16,8 @@
 #include "GameTitle.h"
 #include "GameOver.h"
 #include "Change_ScReen_Animation.h"
+#include "SkillCustom.h"
+#include "Save.h"
 #define DEBUG_TEXT_ON
 
 
@@ -71,8 +73,9 @@ int g_MutekiTime;				// プレイヤーの無敵時間
 
 trapInfo g_trap;				// トラップの情報
 
+int g_playTime;			// プレイ時間
 
-
+int g_select_MAX;			// 今プレイヤーがいけるステージを制御する
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -93,12 +96,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_
 	// フルスクリーンにしないかどうか TRUE:しない FALSE:する
 	ChangeWindowMode(TRUE);
 
+	SetMainWindowText("アメニモマケズ");
 	// ウィンドウ画面の大きさ
 	SetGraphMode(1280, 768, 32);
 	
 	// DXライブラリの初期化
 	if (DxLib_Init() == -1) return  -1;
 	if (LoadPicture() == -1)return  -1;
+
+	// フォントを変える
+	ChangeFont("HG行書体");
 
 	// メイン関数を呼ぶ
 	Main();
@@ -124,6 +131,8 @@ int Main(void) {
 
 	// ゲームモードをタイトルへ
 	g_gameScene = GAME_TITLE;
+
+	
 	// メインループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0 && g_gameScene != GAME_END) {
 		// 画面のクリア	※描画類はこの関数の下へ！
@@ -137,7 +146,7 @@ int Main(void) {
 
 		// ゲームシーンの中を見て適当なゲーム画面を描画
 		GameScene(g_gameScene);
-		
+		//SaveData_CL();
 		// デバッグモード(変数の中の文字を描画)
 #ifdef DEBUG_TEXT_ON
 		DrawFormatString(0, 0, 0x0000FF, "keyFlg = %d", g_keyInfo.keyFlg);
@@ -166,6 +175,7 @@ void GameScene(int gameScene) {
 	case GAME_SAVE:									break;	 // ゲームのセーブ
 	case GAME_LOAD:									break;	 // ゲームデータのロード
 	case GAME_CHANGE_SCREEN_ANIMATION:	ChangeScreen_Animation();				break;	 // シーン切り替え時のアニメーションシーン
+	case GAME_SKILLCUSTOM:	SkillCustom();			break;	 // スキルカスタマイズ
 	}
 }
 

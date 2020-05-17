@@ -29,7 +29,7 @@ struct controler {
 // 画像の種類
 struct image {
     int title[2];                       // タイトル画像
-    int titleText[4];                      // タイトルのテキスト画像
+    int titleText[4];                   // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
     int SkillMotion[9];                 //スキルモーション画像
     int enemy_walk[2];                  // 歩く雑魚敵のの画像
@@ -40,15 +40,17 @@ struct image {
     int reticle;                        // 敵をロックオンした時の画像(レティクル画像)
     int PlayerUI;                       //playerのUI画像
     int Life[2];                        //playerのHP画像
-    int boss_1_1[16];                    // ボス_１の画像
-    int skill2[4];                       //スキル2のモーション画像(仮)
-    int skill3[5];                       //スキル3のモーション画像(仮)
+    int boss_1_1[16];                   // ボス_１の画像
+    int skill2[4];                      //スキル2のモーション画像(仮)
+    int skill3[5];                      //スキル3のモーション画像(仮)
     int selectBack;                     // セレクト画面の背景画像
     int waterBullet[5];                 // ボスの水弾の画像
     int trap;                           // トラップの画像
     int gauge;                          // ゲージの画像
     int enemyVapour[5];                 // 敵撃破時の蒸気の画像
     int enemySplashes[5];               // 敵を斬った時の水しぶきの画像
+    int stageClearText;                 // ステージをクリアした時の[討伐完了]の文字
+    int gameOverText;                   // ゲームオーバーの時の[討伐失敗]の文字
 
 };
 
@@ -63,6 +65,8 @@ struct playerInfo {
     bool attackFlg; // 攻撃しているかどうかのフラグ
     int skillcustom[3]; // 装備中のスキル取得
     float gauge;      //ゲージ
+    bool swordFlg; //TRUE = 抜刀, FALSE = 納刀
+    int timecount; //納刀抜刀の切り替えの時間
     void Init() {   // プレイヤーの初期化
         x = 100 * PLAYER_REDUCTION;
         y = GROUND;
@@ -73,6 +77,8 @@ struct playerInfo {
         skillGage = 100;
         skill_MAX = 3;
         gauge = 320;
+        swordFlg = FALSE;
+        timecount = 0;
     }
 
 };
@@ -252,6 +258,10 @@ struct picInfo {
     }
     void MenuWindowInit() {     // メニュー画面の初期化
         x = 1182; 
+        y = 39;
+    }
+    void MenuSaveWindowInit() { // セーブ画面の初期化
+        x = 1280;
         y = 39;
     }
     void SelectStageInit(int num) { // セレクト画面の初期化

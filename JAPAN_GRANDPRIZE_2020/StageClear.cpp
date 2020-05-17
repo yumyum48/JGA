@@ -8,6 +8,7 @@
 #include "Macro.h"
 #include "Map.h"
 #include "Struct.h"
+#include "Init.h"
 
 picInfo clearText;			// クリアした時の「討伐完了！！」の画像
 void StageClear() {
@@ -29,6 +30,7 @@ void StageClearMove() {
 	
 	if (Player_StageClearMove() == 1) {
 		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			GameInit();
 			g_gameScene = GAME_SELECT;
 		}
 	}
@@ -50,6 +52,9 @@ int Player_StageClearMove() {
 		g_player.x = 1200;
 		return 1;
 	}
+
+	if (g_player.attackFlg == TRUE) g_player.attackFlg = FALSE;
+	if (g_player.swordFlg == TRUE) g_player.swordFlg = FALSE;
 	
 	return 0;
 }

@@ -22,7 +22,7 @@ int g_resetMotion = 0;	//アニメーション始点
 int g_maxMotion = 7;	//終点
 int g_attackTime = 0;	//攻撃のクールタイム
 bool g_skillFlg;		// スキル中かどうかのフラグ
-bool g_swordFlg = FALSE; //TRUE = 抜刀, FALSE = 納刀
+//bool g_swordFlg = FALSE; //TRUE = 抜刀, FALSE = 納刀
 
 void PlayerDisp() {
 	static int anime = 0;							// プレイヤーの画像を変える
@@ -50,10 +50,10 @@ void PlayerDisp() {
 	DrawGraph(20, -40, g_pic.PlayerUI, TRUE);					//アイコン
 	//DrawBox(80, 120, 80 + gauge, 130, 0xFF0000, TRUE);
 	DrawRectGraph(20,-40,0,0,g_player.gauge,240,g_pic.gauge,TRUE,FALSE); //ゲージ
-	if (g_swordFlg == TRUE) {
+	if (g_player.swordFlg == TRUE) {
 		if (g_player.gauge > 0) g_player.gauge -= 0.1;
 	} else {
-		if (g_player.gauge < 320) g_player.gauge += 0.2;
+		if (g_player.gauge < 320) g_player.gauge += 1;
 	}
 
 	if (g_player.attackFlg == TRUE) g_player.gauge -= 2;
@@ -97,19 +97,19 @@ void PlayerAfterimage(int anime) {
 
 //プレイヤーのアニメーション
 void PlayerAnimation() {
-	static int time = 0;	//抜刀、納刀の切り替え
-	if (g_swordFlg == FALSE) {
-		if ((g_keyInfo.keyFlg & PAD_INPUT_4) || (g_keyInfo.keyFlg & PAD_INPUT_3)) {
-			time = 10;
+	//static int time = 0;	//抜刀、納刀の切り替え
+	if (g_player.swordFlg == FALSE) {
+		if (g_keyInfo.keyFlg & PAD_INPUT_4) {
+			g_player.timecount = 10;
 		}
 	} else {
 		if (g_keyInfo.keyFlg & PAD_INPUT_4){
-			time = 10;
+			g_player.timecount = 10;
 		}
 	}
 
 	//納刀状態のアニメーション
-	if (g_swordFlg == FALSE) {
+	if (g_player.swordFlg == FALSE) {
 		if (g_player.jumpFlg == TRUE) {		//ジャンプ
 			if (g_speed < 0) {
 				g_resetMotion = CLOSE_JUMP_UP;
@@ -131,7 +131,7 @@ void PlayerAnimation() {
 	}
 
 	//抜刀状態のアニメーション
-	if (g_swordFlg == TRUE) {
+	if (g_player.swordFlg == TRUE) {
 		if (g_player.jumpFlg == TRUE) {		//ジャンプ
 			if (g_speed < 0) {
 				g_resetMotion = OPEN_JUMP_UP;
@@ -152,17 +152,22 @@ void PlayerAnimation() {
 		}
 	}
 
-	if (time <= 10 && g_swordFlg == FALSE) {//抜刀
-		if (--time > 0) g_resetMotion = SWORD_OPEN_S, g_maxMotion = SWORD_OPEN_E;
+	if (g_player.timecount <= 10 && g_player.swordFlg == FALSE) {//抜刀
+		if (--g_player.timecount > 0) g_resetMotion = SWORD_OPEN_S, g_maxMotion = SWORD_OPEN_E;
 	}
-	if (time == 0 && g_swordFlg == FALSE) {
-		g_swordFlg = TRUE;
+	if (g_player.timecount == 0 && g_player.swordFlg == FALSE) {
+		g_player.swordFlg = TRUE;
 	}
-	if (time <= 10 && g_swordFlg == TRUE) {//納刀
-		if (--time > 0) g_resetMotion = SWORD_CLOSE_S, g_maxMotion = SWORD_CLOSE_E;
+	if (g_player.timecount <= 10 && g_player.swordFlg == TRUE) {//納刀
+		if (--g_player.timecount > 0) g_resetMotion = SWORD_CLOSE_S, g_maxMotion = SWORD_CLOSE_E;
 	}
-	if (time == 0 && g_swordFlg == TRUE) {
-		g_swordFlg = FALSE;
+	if (g_player.timecount == 0 && g_player.swordFlg == TRUE) {
+		g_player.swordFlg = FALSE;
+	}
+
+	if (g_boss[g_select_Stage].hp <= 0) {
+		g_resetMotion = CLOSE_MOVE_S;
+		g_maxMotion = CLOSE_MOVE_E;
 	}
 }
 

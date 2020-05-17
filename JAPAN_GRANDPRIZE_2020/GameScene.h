@@ -12,5 +12,6 @@ enum {	// ゲームシーン情報
 	GAME_SAVE,						// ゲームデータの保存
 	GAME_LOAD,						// セーブデータのロード
 	GAME_CHANGE_SCREEN_ANIMATION,	// 画面切り替えの際のアニメーション
+	GAME_SKILLCUSTOM,				// スキルカスタマイズ画面
 	GAME_END = 99,					// ゲームが終了してウィンドウが閉じる
 };
