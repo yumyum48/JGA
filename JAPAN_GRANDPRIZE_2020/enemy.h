@@ -5,6 +5,7 @@
 #define ENEMY_WIDTH		 (574 * 0.2)// エネミーの横幅
 #define ENEMY_HEIGHT	 (545 * 0.2)// エネミーの縦幅
 extern enemyType g_enemy[ENEMY_MAX];	// 敵の情報
+extern enemyInfo g_enemyBuffer[ENEMY_MAX];	// 撃破した敵の情報を格納する変数
 
 extern const int ENEMY_BEAT_MAX[MAP_MAX];	//各ステージの雑魚敵を倒す数です
 
@@ -16,3 +17,4 @@ void MonsterMove();		// 弱い敵、ボスの動き
 void EnemyDisp();		// 敵の描画
 void EnemyMove();		// 敵の動き
 void EnemyInit();		// 敵の初期化
+void EnemyEvaporation();	// 敵の撃破時のアニメーション
