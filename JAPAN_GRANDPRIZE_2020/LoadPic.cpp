@@ -79,6 +79,12 @@ int LoadPicture() {
 	// 敵撃破時の蒸気
 	if (LoadDivGraph("image/moku1.png", 5, 5, 1, 100, 100, g_pic.enemyVapour, 0) == -1);
 
+	// ステージクリア時の[討伐完了]の文字
+	if ((g_pic.stageClearText = LoadGraph("image/stageClear.png")) == -1) return -1;
+
+	// ゲームオーバー時の[討伐失敗]の文字
+	if ((g_pic.gameOverText = LoadGraph("image/gameOver.png")) == -1) return -1;
+
 
 	return 0;
 }
