@@ -10,6 +10,7 @@
 #include "Select.h"
 #include "GameScene.h"
 #include "Init.h"
+#include "Macro.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -70,18 +71,32 @@ void BossMoveMotion(int *coolTime, int *moveFlg){
 }
 
 void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg) {
+	static bool teleportFlg = FALSE;
 
-	if (g_boss[g_select_Stage].x > 0) {
+	if (g_boss[g_select_Stage].x > -BOSS_WIDTH
+		&& teleportFlg == FALSE) {
 		float angle;
 		angle = DX_TWO_PI / 120 * g_boss[0].x;	// ‰¡‚ÌU‚ê•
 		g_boss[g_select_Stage].y -= sin(angle) * 10;			// c‚ÌU‚ê•
 		g_boss[g_select_Stage].x -= 5;						// ƒ{ƒX‚ÌˆÚ“®—Ê
 	}
-	else {
-		g_boss[g_select_Stage].x = 700;
+	else if(g_boss[g_select_Stage].x <= -BOSS_WIDTH){
+		g_boss[g_select_Stage].x = WINDOW_WIDTH + BOSS_WIDTH;
 		g_boss[g_select_Stage].y = 160;
+		teleportFlg = TRUE;
+	}
+
+	if (teleportFlg == TRUE
+		&& g_boss[g_select_Stage].x > 700) {
+		float angle;
+		angle = DX_TWO_PI / 120 * g_boss[0].x;	// ‰¡‚ÌU‚ê•
+		g_boss[g_select_Stage].y -= sin(angle) * 10 - 0.8;			// c‚ÌU‚ê•
+		g_boss[g_select_Stage].x -= 5;						// ƒ{ƒX‚ÌˆÚ“®—Ê
+	}
+	else if (teleportFlg == TRUE) {
 		*coolTime = 0;
 		*moveFlg = BOSSMOVE_NOMOTION;
+		teleportFlg = FALSE;
 	}
 }
 /*********************************************
@@ -114,6 +129,10 @@ void BossAttackDisp() {
 			g_boss[BOSS_STAGE1].attackFlg = 0;
 			break;
 
+		case WATER_BULLET:
+			BossWaterBulletDisp();	// …’e‚Ì”­Ë
+			break;
+
 		default:
 			break;
 	}
@@ -135,7 +154,7 @@ void BossAttackMove() {
 			break;
 
 		case WATER_BULLET:
-			BossWaterBulletDisp();	// …’e‚Ì”­Ë
+			BossWaterBulletMove();	// …’e‚Ì”­Ë
 			break;
 
 		default:
@@ -182,13 +201,16 @@ void BossWaterBulletDisp() {
 
 	// ƒtƒŒ[ƒ€’PˆÊ‚Ì”í’e”‚Ì’²®
 	if (noDamegeCnt++ < 60);
-
+	
+	DrawBox(startX + moveX - 40, startY + moveY + 0,
+		startX + moveX + 40, startY + moveY - 20, 0xFFFFFF, FALSE);
 	// ƒvƒŒƒCƒ„[‚É…’e‚ª“–‚½‚Á‚½‚Ìˆ—
 	if (noDamegeCnt >= 60
-		&& (PlayerHitCheck(startX + moveX + 20, startY + moveY + 0,
-			startX + moveX - 40, startY + moveY - 20) == TRUE)) {
+		&& (PlayerHitCheck(startX + moveX - 40, startY + moveY + 0,
+			startX + moveX + 40, startY + moveY - 20) == TRUE)) {
 		g_player.hp--;
 		noDamegeCnt = 0;
+		anime = 4;
 		animationMax++;
 		attackFlg = TRUE;
 		if (noDamegeCnt >= 200) {
