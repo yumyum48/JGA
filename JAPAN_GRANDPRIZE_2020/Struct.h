@@ -79,6 +79,9 @@ struct playerInfo {
         gauge = 320;
         swordFlg = FALSE;
         timecount = 0;
+        skillcustom[0] = 1;
+        skillcustom[1] = 0;
+        skillcustom[2] = 0;
     }
 
 };
@@ -137,8 +140,8 @@ struct bossInfo {     // É{ÉXÇÃèÓïÒ
             break;
         case 1:
             hp = 10;
-            x = 872;
-            y = 160;
+            x = 823;
+            y = 397;
             popflg = 0;
             attackFlg = 0;
             break;
