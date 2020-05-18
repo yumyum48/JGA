@@ -248,20 +248,23 @@ void PlayerControl() {
 }
 
 int SkillChange() {
-	static int skillNum = 1;
+	static int skillNum = 0;
+	static int useSkill = 1;
 
 	// スキル選択
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
-		if (++skillNum > g_player.skill_MAX) skillNum = 1;
+		if (++skillNum > 2) skillNum = 0;
 	}
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
-		if (--skillNum < 1) skillNum = g_player.skill_MAX;
+		if (--skillNum < 0) skillNum = 2;
 	}
 	
 	// skillNumの中身
 	DrawFormatString(0, 500, 0xFEFFFF, "%d", skillNum);
+	
+	useSkill = g_player.skillcustom[skillNum];
 
-	return skillNum;
+	return useSkill;
 }
 
 
@@ -287,7 +290,7 @@ void EnemyCut() {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].walk.WalkInit();
 			}
-			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+			if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].walk.x, g_enemy[i].walk.y);
@@ -306,7 +309,7 @@ void EnemyCut() {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].fly.WalkInit();
 			}
-			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+			if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 				/*if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
 				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;*/
 				g_enemybeat++;			// エネミーを倒した数をカウント
@@ -321,7 +324,7 @@ void EnemyCut() {
 		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE
 			|| (SkillMove[g_player.skillFlg - 1](g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
 			if (g_boss[0].hp > 0) {
-				if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+				if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
 					g_boss[0].hp--;
 
@@ -393,5 +396,4 @@ bool PlayerHitCheck(int ex, int ey, int ew, int eh) {
 // プレイヤーの初期化処理
 void PlayerInit() {
 	g_player.Init();
-
 }
