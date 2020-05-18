@@ -292,3 +292,38 @@ void BossInit() {
 	}
 	
 }
+
+/***********************************************************
+
+// 数字を引数として三つ取り、その中の一つをランダムで返す
+
+***********************************************************/
+int InputRand(int rand1, int rand2, int rand3) {
+	int num = GetRand(3);
+	switch (num)
+	{
+	case 0: return rand1; break;
+	case 1: return rand2; break;
+	case 2: return rand3; break;
+	default: return 0;	  break;
+	}
+
+}
+/***********************************************************
+
+// ボスがダメージを受けたかどうかを調べる関数 TRUE: ボスがダメージを受けた FALSE: ボスはダメージを受けていない
+
+***********************************************************/
+bool BossDamageCheck(int bossHp) {
+	static int bossHpBuf = bossHp;
+
+	if (bossHp <= bossHpBuf) {
+		if (bossHp < bossHpBuf) {
+			bossHpBuf = bossHp;
+			return TRUE;
+		}
+	}
+
+	bossHpBuf = bossHp;
+	return FALSE;
+}

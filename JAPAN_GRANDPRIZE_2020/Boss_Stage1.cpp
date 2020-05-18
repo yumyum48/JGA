@@ -49,6 +49,10 @@ void BossMove_Stage1() {
 		BossAttackMove();	// ボスの攻撃
 	}
 
+	// ボスがダメージを受けた瞬間DrawBoxを出す
+	/*if (BossDamageCheck(g_boss[BOSS_STAGE1].hp) == 1) {
+		DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0x0000FF, TRUE);
+	}*/
 	Boss_Knock_Down();
 }
 
