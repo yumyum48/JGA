@@ -277,6 +277,7 @@ void EnemyLockOn() {
 // プレイヤーの間合いに入っている敵を倒す処理
 void EnemyCut() {
 	static int enemyNum = 0;	// 同時に倒した敵をカウントする変数
+	static int noDamageCnt = 61;// ボスの無敵時間
 
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		// 歩く敵
@@ -323,11 +324,15 @@ void EnemyCut() {
 	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
 		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE
 			|| (SkillMove[g_player.skillFlg - 1](g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
-			if (g_boss[0].hp > 0) {
+			if (++noDamageCnt > 60 && g_boss[0].hp > 0) {
+				if (g_player.skillFlg == 2) {
+					g_boss[0].hp--;
+					noDamageCnt = 0;
+				}
 				if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
 					g_boss[0].hp--;
-
+					noDamageCnt = 0;
 				}
 			}
 		}
