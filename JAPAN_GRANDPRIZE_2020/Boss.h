@@ -22,7 +22,9 @@
 
 ***********************************************************/
 enum {	// ボスの配列
-	BOSS_STAGE1,
+	BOSS_STAGE1
+	
+	,
 	BOSS_STAGE2,
 	BOSS_STAGE3,
 	BOSS_STAGE4,
@@ -40,7 +42,8 @@ enum {	// ボスの攻撃判断
 
 enum { // ボスの動きパターン
 	BOSSMOVE_NOMOTION,		// ノーモーション
-	BOSSMOVE_SPEEDDOWN,		// ボスが追い付かれる動き
+	BOSSMOVE_ATTACK,		// ボスがSin波で攻めてくる
+	BOSSMOVE_SPEEDDOWN,		// ボスがプレイヤーに追いつかれる動き
 };
 /***********************************************************
 

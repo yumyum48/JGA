@@ -61,8 +61,12 @@ void BossMoveMotion(int *coolTime, int *moveFlg){
 
 	switch (*moveFlg)
 	{
-	case BOSSMOVE_SPEEDDOWN:
+	case BOSSMOVE_ATTACK:
 		BossMoveMotion_Pattern1(coolTime, moveFlg);
+		break;
+
+	case BOSSMOVE_SPEEDDOWN:
+
 		break;
 	default:
 		break;
