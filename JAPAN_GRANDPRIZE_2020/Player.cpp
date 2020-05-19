@@ -322,16 +322,16 @@ void EnemyCut() {
 	}
 	//boss
 	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
-		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE
-			|| (SkillMove[g_player.skillFlg - 1](g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
-			if (++noDamageCnt > 60 && g_boss[0].hp > 0) {
+		if (PlayerInterval(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE
+			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
+			if (++noDamageCnt > 60 && g_boss[g_select_Stage].hp > 0) {
 				if (g_player.skillFlg == 2) {
-					g_boss[0].hp--;
+					g_boss[g_select_Stage].hp--;
 					noDamageCnt = 0;
 				}
 				if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
-					g_boss[0].hp--;
+					g_boss[g_select_Stage].hp--;
 					noDamageCnt = 0;
 				}
 			}
