@@ -14,10 +14,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
-	int x, y;
 
-};
 /*********************************************
 
 * ステージ１のボス
@@ -204,8 +201,11 @@ void BossEnemyDropDisp() {
 void BossEnemyDropMove() {
 	
 	EnemyMove();
-	for (int i = 0; i < ENEMY_MAX; i++) {
-		g_enemy[i].walk.x = g_enemy[i].walk.x - g_boss[g_select_Stage].x;
+	for (int i = 0; i < ENEMY_MAX; i++) {		//地上の敵の動き
+		if (g_enemy[i].walk.flg == TRUE) {
+			g_enemy[i].walk.x -= g_boss[g_select_Stage].x;
+
+		}
 	}
 }
 
