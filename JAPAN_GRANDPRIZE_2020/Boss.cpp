@@ -62,11 +62,11 @@ void BossMoveMotion(int *coolTime, int *moveFlg){
 	switch (*moveFlg)
 	{
 	case BOSSMOVE_ATTACK:
-		BossMoveMotion_Pattern1(coolTime, moveFlg);
+		BossMoveMotion_Pattern1(coolTime, moveFlg);		// ボスがサインはで接近
 		break;
 
 	case BOSSMOVE_SPEEDDOWN:
-
+		BossMoveMotion_Pattern2(coolTime, moveFlg);		// ボスのX軸が左に寄っていく
 		break;
 	default:
 		break;
@@ -101,6 +101,30 @@ void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg) {
 		*coolTime = 0;
 		*moveFlg = BOSSMOVE_NOMOTION;
 		teleportFlg = FALSE;
+	}
+}
+
+void BossMoveMotion_Pattern2(int* coolTime, int* moveFlg) {
+	static int chanceTime = 0;
+	static bool speedUpFlg = FALSE;
+	// ボスの移動スピードをだんだんと落とす
+	if (g_boss[g_select_Stage].x >= g_player.x + PLAYER_WIDTH && speedUpFlg == FALSE) {
+		g_boss[g_select_Stage].x -= 2;
+		if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {				// ボスがダメージを受けたかどうかを調べる関数 TRUE: ボスがダメージを受けた FALSE: ボスはダメージを受けていない
+			speedUpFlg = TRUE;
+		}
+	}
+	else if(chanceTime++ >= 120 || BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE){	// プレイヤーの目の前に来たら、攻撃できるようにチャンスタイムを作る
+		speedUpFlg = TRUE;			// 二秒立ったら、またはプレイヤーが攻撃をしたらボス２がスピードアップして元の位置まで戻る
+	}
+	if (speedUpFlg == TRUE && g_boss[g_select_Stage].x < 823) {
+		g_boss[BOSS_STAGE2].x += 2;	// ボスを最初の位置へと戻す
+	}
+	else if (g_boss[g_select_Stage].x >= 823) {
+		g_boss[g_select_Stage].x = 823;	// 最初の場所に戻ったら座標を固定
+		*coolTime = 0;					// クールタイム初期化
+		*moveFlg = 0;					// moveFlg初期化
+		speedUpFlg = FALSE;				// スピードアップフラグを初期化
 	}
 }
 /*********************************************
@@ -174,17 +198,17 @@ void BossAttackMove() {
 // 弱い敵を出す(表示)
 void BossEnemyDropDisp() {
 
-	static int enemypop_MAX = 0;
-		
+	static int enemypop_MAX = 5;
+	
 	for (int i = 0; i < enemypop_MAX; i++) {
-		DrawRotaGraph(g_enemy[i].walk.x, g_enemy[i].walk.y, 0.2, 0.0, g_pic.enemy_walk[0], TRUE);
+		DrawRotaGraph(g_enemy[i].walk.x, g_enemy[i].walk.y, 0.2, 0.0, g_pic.enemy_walk[g_enemy[i].walk.anime], TRUE);
 		
 		
 	}
 }
 // 弱い敵を出す(動き(当たり判定など))
 void BossEnemyDropMove() {
-
+	EnemyMove();
 }
 
 /*********************************************

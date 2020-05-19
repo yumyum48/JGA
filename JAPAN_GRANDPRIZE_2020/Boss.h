@@ -77,7 +77,8 @@ void BossWaterBulletDisp();				// 水弾で攻撃するボス専用の技の関数
 // ボスのスキルの動き
 void BossEnemyDropMove();				// 弱い敵を出すボス専用の技の関数
 void BossMoveMotion(int *coolTime, int *moveFlg);		//
-void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg);
+void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg);	// ボス１の隙モーション
+void BossMoveMotion_Pattern2(int* coolTime, int* moveFlg);	// ボス２の隙モーション
 void BossWaterBulletMove();				// 水弾で攻撃するボス専用の技の関数
 void (* const BossDisp[2])() = {		// ボスの表示
 	BossDisp_Stage1,

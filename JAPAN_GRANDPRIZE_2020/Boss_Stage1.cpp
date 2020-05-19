@@ -32,7 +32,7 @@ void BossMove_Stage1() {
 			coolTime = 0;
 		}
 		else {	// UŒ‚‚ğ‚µ‚È‚¢‚Æ‚«
-			moveFlg = BOSSMOVE_SPEEDDOWN;
+			moveFlg = BOSSMOVE_ATTACK;
 
 		}
 	}

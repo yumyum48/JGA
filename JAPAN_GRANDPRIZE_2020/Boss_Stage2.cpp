@@ -50,34 +50,27 @@ void BossMove_Stage2() {
 	static int attackSelect = 0;							// ボスの攻撃選択
 
 
-	if ((coolTime++ > 120)									// 硬直時間
+	if ((coolTime++ > 60)									// 硬直時間
 		&& (g_boss[BOSS_STAGE2].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {					// ボスが移動していなければ
 
-		attackSelect = InputRand(0, 1, 3);								//乱数で攻撃するか移動をするかを決定
+		attackSelect = InputRand(0, 0, 0);								//乱数で攻撃するか移動をするかを決定
 
 		if (attackSelect != 0) {
 			g_boss[BOSS_STAGE2].attackFlg = attackSelect;				// 攻撃する場合、フラグに対応した数字を入れる
 			coolTime = 0;
 		}
 		else {	// 攻撃をしないとき
-			moveFlg = BOSSMOVE_ATTACK;
+			moveFlg = BOSSMOVE_SPEEDDOWN;
 
 		}
 	}
 
-	// ボスの移動スピードをだんだんと落とす
-	if (g_boss[BOSS_STAGE2].x >= g_player.x + PLAYER_WIDTH) {
-		static int cnt = 0;
-		if (cnt++ % 120 == 0) {
-			g_boss[BOSS_STAGE2].x--;
-			//cnt = 0;
-		}
-	}
-	//if (moveFlg != BOSSMOVE_NOMOTION) {					// 行動パターン
+	
+	if (moveFlg != BOSSMOVE_NOMOTION) {					// 行動パターン
 
-	//	BossMoveMotion__Pattern2(&coolTime, &moveFlg);
-	//}
+		BossMoveMotion(&coolTime, &moveFlg);	// ボスの移動スピードをだんだんと落とす
+	}
 
 
 	//if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// ボスが攻撃していれば

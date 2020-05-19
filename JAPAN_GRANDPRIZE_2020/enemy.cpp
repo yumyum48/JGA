@@ -14,7 +14,7 @@ enemyInfo g_enemyBuffer[ENEMY_MAX];	// Œ‚”j‚µ‚½“G‚Ìî•ñ‚ğŠi”[‚·‚é•Ï”
 // ã‚¢“GAƒ{ƒX‚Ì•\¦
 void MonsterDisp() {
 	if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
-		EnemyDisp[0]();				// ã‚¢“G‚Ì•`‰æ
+		EnemyDisp[g_select_Stage]();				// ã‚¢“G‚Ì•`‰æ
 	}
 	else {
 		BossDisp[g_select_Stage]();					// ƒ{ƒX‚Ì•\¦
