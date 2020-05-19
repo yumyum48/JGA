@@ -149,12 +149,12 @@ void Boss_Knock_Down() {
 void BossAttackDisp() {
 	
 	
-	switch (g_boss[0].attackFlg) {
+	switch (g_boss[g_select_Stage].attackFlg) {
 		case ENEMY_DROP:
 		
 			BossEnemyDropDisp();	// 弱い敵を出す
 			//DrawFormatString(100, 600, 0xFF00FF, "ボスが攻撃してますよ！");
-			g_boss[BOSS_STAGE1].attackFlg = 0;
+			//g_boss[BOSS_STAGE1].attackFlg = 0;
 			break;
 
 		case WATER_BULLET:
@@ -175,10 +175,10 @@ void BossAttackMove() {
 
 	//if (g_keyInfo.keyFlg & PAD_INPUT_4) g_boss[0].attackFlg = 0;
 
-	switch (g_boss[0].attackFlg) {
+	switch (g_boss[g_select_Stage].attackFlg) {
 		case ENEMY_DROP:
-			//BossEnemyDropMove();	// 弱い敵を出す
-			g_boss[BOSS_STAGE1].attackFlg = 0;
+			BossEnemyDropMove();	// 弱い敵を出す
+			//g_boss[g_select_Stage].attackFlg = 0;
 			break;
 
 		case WATER_BULLET:
@@ -195,20 +195,18 @@ void BossAttackMove() {
 * ボスが弱い敵を出す攻撃をする関数
 
 */////////////////////////////////////////////
-// 弱い敵を出す(表示)
+// 歩く弱い敵を出す(表示)
 void BossEnemyDropDisp() {
-
-	static int enemypop_MAX = 5;
 	
-	for (int i = 0; i < enemypop_MAX; i++) {
-		DrawRotaGraph(g_enemy[i].walk.x, g_enemy[i].walk.y, 0.2, 0.0, g_pic.enemy_walk[g_enemy[i].walk.anime], TRUE);
-		
-		
-	}
+	EnemyDisp[0]();
 }
 // 弱い敵を出す(動き(当たり判定など))
 void BossEnemyDropMove() {
+	
 	EnemyMove();
+	for (int i = 0; i < ENEMY_MAX; i++) {
+		g_enemy[i].walk.x = g_enemy[i].walk.x - g_boss[g_select_Stage].x;
+	}
 }
 
 /*********************************************
