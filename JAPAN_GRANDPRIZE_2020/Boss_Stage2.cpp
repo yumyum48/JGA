@@ -13,6 +13,10 @@
 
 #define BOSS_STAGE2_WIDTH (271)		// ボスの横幅
 #define BOSS_STAGE2_HEIGHT (271)	// ボスの縦幅
+#define BOSS_WAVE_WIDTH		200		// 津波の横幅
+#define BOSS_WAVE_HEIGHT	150		// 津波の縦幅
+
+trapInfo g_wave;
 /*********************************************
 
 * ステージ２のボス
@@ -59,7 +63,7 @@ void BossMove_Stage2() {
 		&& (g_boss[BOSS_STAGE2].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {					// ボスが移動していなければ
 		
-		attackSelect = InputRand(0, ENEMY_DROP, ENEMY_DROP);								//乱数で攻撃するか移動をするかを決定
+		attackSelect = InputRand(WAVE_ATTACK, WAVE_ATTACK, WAVE_ATTACK);								//乱数で攻撃するか移動をするかを決定
 
 		if (attackSelect != 0) {
 			g_boss[BOSS_STAGE2].attackFlg = attackSelect;				// 攻撃する場合、フラグに対応した数字を入れる
@@ -94,4 +98,76 @@ void BossMove_Stage2() {
 	Boss_Knock_Down();
 }
 
+// ボスがジャンプして津波を発生
+void BossGenerateWave() {
+	const float gravity = 1;				// ジャンプに掛かる重力
+	const int rise = 3;						// ジャンプ時の上昇力
+	static int animationMax[2] = { 0, 0 };	// アニメーション最後尾	0:ボスジャンプ	1:津波
+	static int anime[2] = { 0, 0 };			// 現在表示している画像	0:ジャンプ  1:津波
+	static int noDamegeCnt = 60;			// ダメージを受け付けない時間
+	static int time = 0;					// アニメーション用時間変数
+	static float moveY = 0;					// 重力の加算用変数
+	static bool jumpFlg = FALSE;			// ボスがジャンプ済みかの判断用変数	TRUE:ジャンプ済み 
+
+	// ボスがジャンプするアニメーション
+	if (g_wave.dispFlg == FALSE) {
+
+		// アニメーションの加算
+		if (time++ % 12 == 11)anime[0]++;
+		if (anime[0] > animationMax[0])anime[0] = 0;
+
+		if (anime[0] < 1
+			&& jumpFlg == FALSE) {
+			g_boss[BOSS_STAGE2].x -= g_speedLevel;
+		}
+		else {
+			jumpFlg = TRUE;
+		}
+
+		// ジャンプ中の挙動
+		if (jumpFlg == TRUE) {
+			moveY += gravity;
+
+			if (g_boss[BOSS_STAGE2].y <= 397) {
+				g_boss[BOSS_STAGE2].x += g_speedLevel;
+				g_boss[BOSS_STAGE2].y -= rise + moveY;
+			}
+			if (g_boss[BOSS_STAGE2].y > 397) {
+				g_boss[BOSS_STAGE2].y = 397;
+				g_wave.dispFlg = TRUE;			// 津波を発生
+			}
+		}
+
+	}
+
+	// フレーム単位の被弾数の調整
+	if (noDamegeCnt++ < 60);
+
+	// 津波のアニメーション
+	if (g_wave.dispFlg == TRUE) {
+		g_wave.x -= g_speedLevel;
+
+		// 津波の描画
+		DrawBox(g_wave.x, g_wave.y,
+			g_wave.x + BOSS_WAVE_WIDTH, g_wave.y + BOSS_WAVE_HEIGHT, 0x0000FF, TRUE);
+
+		// 津波がプレイヤーに当たった際の処理
+		if (noDamegeCnt >= 60
+			&& PlayerHitCheck(g_wave.x, g_wave.y,
+				g_wave.x + BOSS_WAVE_WIDTH, g_wave.y + BOSS_WAVE_HEIGHT) == 1) {
+
+			noDamegeCnt = 0;
+			g_player.hp--;
+			g_boss[BOSS_STAGE2].attackFlg = 0;
+		}
+
+		// 津波が画面外に出る処理
+		if (g_wave.x + BOSS_WAVE_WIDTH < 0) {
+			jumpFlg = FALSE;
+			g_wave.dispFlg = FALSE;
+			g_boss[BOSS_STAGE2].attackFlg = 0;
+		}
+	}
+
+}
 
