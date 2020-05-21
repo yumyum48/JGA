@@ -25,7 +25,7 @@ void BossMove_Stage1() {
 		&& (g_boss[0].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {					// ボスが移動していなければ
 
-		attackSelect = GetRand(2);								//乱数で攻撃するか移動をするかを決定
+		attackSelect = InputRand(0, 0, WATER_BULLET);								//乱数で攻撃するか移動をするかを決定
 
 		if (attackSelect != 0) {
 			g_boss[0].attackFlg = attackSelect;				// 攻撃する場合、フラグに対応した数字を入れる

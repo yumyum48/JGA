@@ -38,6 +38,7 @@ enum {	// ボスの配列
 enum {	// ボスの攻撃判断
 	ENEMY_DROP = 1,			// 雑魚敵の生成
 	WATER_BULLET,			// 水弾での攻撃
+	WAVE_ATTACK,			// 津波での攻撃
 };
 
 enum { // ボスの動きパターン
@@ -87,6 +88,7 @@ void BossMoveMotion_Pattern2(int* coolTime, int* moveFlg);	// ボス２の隙モーショ
 void BossWaterBulletMove();				// 水弾で攻撃するボス専用の技の関数
 void BossAreaEnemyMove();				// ボスが出現しているときの雑魚の動き
 void BossAreaEnemyDisp();				// ボスが出現しているときの雑魚の表示
+void BossGenerateWave();				// 津波の発生
 void (* const BossDisp[2])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,
