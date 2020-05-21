@@ -93,17 +93,23 @@ struct enemyInfo {
     int y = GROUND + 30;
     bool flg;
     int anime;
-    void WalkInit() {    // 敵の初期化
-        x = 1280;        // 敵のX座標の初期位置
-        y = GROUND + 30; // 敵のY座標の初期位置
-        flg = FALSE;     // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
-        anime = 0;       // アニメーションの初期化
+    void WalkInit() {                  // 敵の初期化
+        x = 1280;                      // 敵のX座標の初期位置
+        y = GROUND + 30;               // 敵のY座標の初期位置
+        flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        anime = 0;                     // アニメーションの初期化
     }
     void FlyInit() {
-        x = 1280;          // 敵のX座標の初期位置
-        y = GROUND - 30;   // 敵のY座標の初期位置
-        flg = FALSE;       // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
-        anime = 0;       // アニメーションの初期化
+        x = 1280;                      // 敵のX座標の初期位置
+        y = GROUND - 30;               // 敵のY座標の初期位置
+        flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        anime = 0;                     // アニメーションの初期化
+    }
+    void BossAreaWlakInit(int bx, int by) {
+        x = bx - (574 * 0.2);          // 敵のX座標の初期位置
+        y = GROUND + 30;               // 敵のY座標の初期位置
+        flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        anime = 0;                     // アニメーションの初期化
     }
     void BufferAssignment(int ex, int ey) {
         x = ex;
@@ -129,7 +135,9 @@ struct bossInfo {     // ボスの情報
     int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
     int attackFlg;   // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
 
+    // 配列で初期化できるわこれ竹
     void Init_Stage(int num) {
+
         switch (num) {
         case 0:
             hp = 10;

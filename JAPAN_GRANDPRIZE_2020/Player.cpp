@@ -295,7 +295,12 @@ void EnemyCut() {
 				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].walk.x, g_enemy[i].walk.y);
-				g_enemy[i].walk.WalkInit();
+				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+					g_enemy[i].walk.WalkInit();
+				}
+				else {
+					g_enemy[i].walk.BossAreaWlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+				}
 				//g_player.attackFlg = TRUE;
 			}
 		}
@@ -307,13 +312,13 @@ void EnemyCut() {
 			DrawRotaGraph2(g_enemy[i].fly.x + (ENEMY_WIDTH / 3), g_enemy[i].fly.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
 			if (g_player.skillFlg == 2) {
-				g_enemybeat++;			// エネミーを倒した数をカウント
+				//g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].fly.WalkInit();
 			}
 			if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 				/*if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
 				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;*/
-				g_enemybeat++;			// エネミーを倒した数をカウント
+				//g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].fly.x, g_enemy[i].fly.y);
 				g_enemy[i].fly.WalkInit();
 				//g_player.attackFlg = TRUE;

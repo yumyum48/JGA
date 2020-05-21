@@ -13,9 +13,9 @@
 // マクロの定義
 
 ***********************************************************/
-#define BOSS_WIDTH	(280 * 2)				// ボスの横幅
-#define BOSS_HEIGHT	(200 * 2)				// ボスの縦幅
-
+#define BOSS_WIDTH			(280 * 2)		// ボスの横幅
+#define BOSS_HEIGHT			(200 * 2)		// ボスの縦幅
+#define BOSS_AREA_ENEMY_MAX (3)				// ボス戦のエネミーが出現する最大数
 /***********************************************************
 
 // 列挙体の宣言
@@ -85,6 +85,8 @@ void BossMoveMotion(int *coolTime, int *moveFlg);		//
 void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg);	// ボス１の隙モーション
 void BossMoveMotion_Pattern2(int* coolTime, int* moveFlg);	// ボス２の隙モーション
 void BossWaterBulletMove();				// 水弾で攻撃するボス専用の技の関数
+void BossAreaEnemyMove();				// ボスが出現しているときの雑魚の動き
+void BossAreaEnemyDisp();				// ボスが出現しているときの雑魚の表示
 void (* const BossDisp[2])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,

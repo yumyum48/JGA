@@ -24,7 +24,7 @@ void EnemyDisp_stage7();		// “G‚Ì•`‰æ
 void EnemyDisp_stage8();		// “G‚Ì•`‰æ
 void EnemyMove();		// “G‚Ì“®‚«
 void EnemyInit();		// “G‚Ì‰Šú‰»
-void EnemyEvaporation();	// “G‚ÌŒ‚”j‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+int EnemyEvaporation();	// “G‚ÌŒ‚”j‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
 
 
 

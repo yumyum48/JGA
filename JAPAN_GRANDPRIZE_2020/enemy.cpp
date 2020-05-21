@@ -70,7 +70,7 @@ void EnemyMove() {
 }
 
 // 敵撃破時のアニメーション
-void EnemyEvaporation(){
+int EnemyEvaporation(){
 	const int animationMax = 5;
 	// 0番目は水しぶきのアニメーション,1番目は蒸発のアニメーション
 	static int anime[ENEMY_MAX][2] = { { 0, 0},	
@@ -151,8 +151,10 @@ void EnemyEvaporation(){
 			g_enemyBuffer[i].flg = FALSE;
 			cntFlg[i] = FALSE;
 			g_enemybeat++;			// エネミーを倒した数をカウント
+			return 1;
 		}
 	}
+	return 0;
 }
 
 // 弱い敵の初期化

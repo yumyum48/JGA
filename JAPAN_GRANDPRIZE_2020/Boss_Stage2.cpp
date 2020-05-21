@@ -41,6 +41,11 @@ void BossDisp_Stage2() {
 	//DrawRotaGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, 0.9f, 0.0, g_pic.enemy_walk[0], FALSE, TRUE);
 	DrawBox(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, g_boss[BOSS_STAGE2].x + BOSS_STAGE2_WIDTH, g_boss[BOSS_STAGE2].y + BOSS_STAGE2_HEIGHT, 0x00FF00, TRUE);
 	
+	if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// ボスが攻撃していれば
+		//g_boss[BOSS_STAGE2].x = 700;
+		//g_boss[BOSS_STAGE2].y = 160;
+		BossAttackDisp();	// ボスの攻撃
+	}
 }
 
 // 動き
@@ -48,13 +53,13 @@ void BossMove_Stage2() {
 	static int coolTime = 0;								// 硬直時間
 	static int moveFlg = BOSSMOVE_NOMOTION;					// 敵が移動するだけのフラグ　0:移動しない 1:上下に移動しながらプレイヤーに寄ってくる
 	static int attackSelect = 0;							// ボスの攻撃選択
-
+	static int attackFlgBuf = g_boss[BOSS_STAGE2].attackFlg;// １フレーム前のボスのattackフラグを記憶する
 
 	if ((coolTime++ > 60)									// 硬直時間
 		&& (g_boss[BOSS_STAGE2].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {					// ボスが移動していなければ
-
-		attackSelect = InputRand(0, 0, 0);								//乱数で攻撃するか移動をするかを決定
+		
+		attackSelect = InputRand(0, ENEMY_DROP, ENEMY_DROP);								//乱数で攻撃するか移動をするかを決定
 
 		if (attackSelect != 0) {
 			g_boss[BOSS_STAGE2].attackFlg = attackSelect;				// 攻撃する場合、フラグに対応した数字を入れる
@@ -72,12 +77,19 @@ void BossMove_Stage2() {
 		BossMoveMotion(&coolTime, &moveFlg);	// ボスの移動スピードをだんだんと落とす
 	}
 
+	if (attackFlgBuf == 0 && g_boss[BOSS_STAGE2].attackFlg == ENEMY_DROP) {
+		for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
+			g_enemy[i].walk.BossAreaWlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+		}
+	}
+	if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// ボスが攻撃していれば
+		//g_boss[BOSS_STAGE2].x = 700;
+		//g_boss[BOSS_STAGE2].y = 160;
+		BossAttackMove();	// ボスの攻撃
+	}
 
-	//if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// ボスが攻撃していれば
-	//	g_boss[BOSS_STAGE2].x = 700;
-	//	g_boss[BOSS_STAGE2].y = 160;
-	//	BossAttackMove();	// ボスの攻撃
-	//}
+	// バッファーにボスのattackフラグを格納
+	attackFlgBuf = g_boss[BOSS_STAGE2].attackFlg;
 
 	Boss_Knock_Down();
 }
