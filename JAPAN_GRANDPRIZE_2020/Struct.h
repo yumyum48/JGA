@@ -51,6 +51,8 @@ struct image {
     int enemySplashes[5];               // 敵を斬った時の水しぶきの画像
     int stageClearText;                 // ステージをクリアした時の[討伐完了]の文字
     int gameOverText;                   // ゲームオーバーの時の[討伐失敗]の文字
+    int skillAicon[8];                  // skillのアイコン
+    int skillRing[2];                   // skillの装飾
 
 };
 

@@ -32,6 +32,12 @@ int LoadPicture() {
 	//スキル3モーション(仮)
 	if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
 
+	//スキルアイコン
+	if (LoadDivGraph("image/SkillAicon.png", 8, 8, 1, 100, 100, g_pic.skillAicon, 0) == -1) return -1;
+	//スキルアイコン装飾(仮)
+	if ((g_pic.skillRing[0] = LoadGraph("image/ring.png")) == -1) return -1;
+	if ((g_pic.skillRing[1] = LoadGraph("image/magatama.png")) == -1) return -1;
+
 	// 歩く雑魚敵画像の読み込み
 	if (LoadDivGraph("image/EnemyZako1.png", 4, 4, 1, 100, 100, g_pic.enemy_walk, 0) == -1)return -1;
 

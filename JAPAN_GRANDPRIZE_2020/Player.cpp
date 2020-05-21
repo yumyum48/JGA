@@ -22,6 +22,7 @@ int g_resetMotion = 0;	//アニメーション始点
 int g_maxMotion = 7;	//終点
 int g_attackTime = 0;	//攻撃のクールタイム
 bool g_skillFlg;		// スキル中かどうかのフラグ
+int g_SkillSelectAicon = 0; //スキルのアイコン移動
 //bool g_swordFlg = FALSE; //TRUE = 抜刀, FALSE = 納刀
 
 void PlayerDisp() {
@@ -58,7 +59,16 @@ void PlayerDisp() {
 
 	if (g_player.attackFlg == TRUE) g_player.gauge -= 2;
 	if (g_player.gauge < 0) g_player.gauge = 0;
-	
+
+	//スキル光表示
+	DrawRotaGraph(WINDOW_WIDTH / 2 + g_SkillSelectAicon, WINDOW_HEIGHT - 70, 1, -time / 8, g_pic.skillRing[0], TRUE);
+	//装備しているスキル表示
+	DrawGraph(WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT - 120, g_pic.skillAicon[g_player.skillcustom[0]], TRUE);
+	DrawGraph(WINDOW_WIDTH / 2 - 150, WINDOW_HEIGHT - 120, g_pic.skillAicon[g_player.skillcustom[1]], TRUE);
+	DrawGraph(WINDOW_WIDTH / 2 + 50, WINDOW_HEIGHT - 120, g_pic.skillAicon[g_player.skillcustom[2]], TRUE);
+	//勾玉表示
+	DrawRotaGraph(WINDOW_WIDTH / 2 + g_SkillSelectAicon, WINDOW_HEIGHT - 70, 1, time / 8, g_pic.skillRing[1], TRUE);
+
 }
 
 void PlayerMove() {
@@ -258,7 +268,11 @@ int SkillChange() {
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
 		if (--skillNum < 0) skillNum = 2;
 	}
-	
+
+	if (skillNum == 0) g_SkillSelectAicon = 0;
+	if (skillNum == 1) g_SkillSelectAicon = -100;
+	if (skillNum == 2) g_SkillSelectAicon = 100;
+
 	// skillNumの中身
 	DrawFormatString(0, 500, 0xFEFFFF, "%d", skillNum);
 	
