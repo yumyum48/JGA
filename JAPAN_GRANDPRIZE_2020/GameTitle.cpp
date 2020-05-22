@@ -55,7 +55,7 @@ void TitleDisp() {
 		// 何を選択しているかわかるように四角を視覚化
 		DrawBox(TITLETEXT_X[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD], TITLETEXT_X[TITLE_ROAD] + titleTextW[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD] + titleTextH[TITLE_ROAD], 0xFF0000, FALSE);
 		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
-			g_gameScene = GAME_SELECT;	// ゲームセレクトへ移動
+			g_gameScene = GAME_LOAD;	// ゲームセレクトへ移動
 			// ↑本当はロードするデータを選択してロードし終えてゲームセレクトへ移動
 		}
 		break;

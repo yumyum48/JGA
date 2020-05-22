@@ -10,13 +10,11 @@
 #include "Select.h"
 #include "GameScene.h"
 #include "Init.h"
+#include "Macro.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
-	int x, y;
 
-};
 /*********************************************
 
 * ステージ１のボス
@@ -60,8 +58,12 @@ void BossMoveMotion(int *coolTime, int *moveFlg){
 
 	switch (*moveFlg)
 	{
+	case BOSSMOVE_ATTACK:
+		BossMoveMotion_Pattern1(coolTime, moveFlg);		// ボスがサインはで接近
+		break;
+
 	case BOSSMOVE_SPEEDDOWN:
-		BossMoveMotion_Pattern1(coolTime, moveFlg);
+		BossMoveMotion_Pattern2(coolTime, moveFlg);		// ボスのX軸が左に寄っていく
 		break;
 	default:
 		break;
@@ -70,18 +72,56 @@ void BossMoveMotion(int *coolTime, int *moveFlg){
 }
 
 void BossMoveMotion_Pattern1(int* coolTime, int* moveFlg) {
+	static bool teleportFlg = FALSE;
 
-	if (g_boss[g_select_Stage].x > 0) {
+	if (g_boss[g_select_Stage].x > -BOSS_WIDTH
+		&& teleportFlg == FALSE) {
 		float angle;
 		angle = DX_TWO_PI / 120 * g_boss[0].x;	// 横の振れ幅
 		g_boss[g_select_Stage].y -= sin(angle) * 10;			// 縦の振れ幅
 		g_boss[g_select_Stage].x -= 5;						// ボスの移動量
 	}
-	else {
-		g_boss[g_select_Stage].x = 700;
+	else if(g_boss[g_select_Stage].x <= -BOSS_WIDTH){
+		g_boss[g_select_Stage].x = WINDOW_WIDTH + BOSS_WIDTH;
 		g_boss[g_select_Stage].y = 160;
+		teleportFlg = TRUE;
+	}
+
+	if (teleportFlg == TRUE
+		&& g_boss[g_select_Stage].x > 700) {
+		float angle;
+		angle = DX_TWO_PI / 120 * g_boss[0].x;	// 横の振れ幅
+		g_boss[g_select_Stage].y -= sin(angle) * 10 - 0.8;			// 縦の振れ幅
+		g_boss[g_select_Stage].x -= 5;						// ボスの移動量
+	}
+	else if (teleportFlg == TRUE) {
 		*coolTime = 0;
 		*moveFlg = BOSSMOVE_NOMOTION;
+		teleportFlg = FALSE;
+	}
+}
+
+void BossMoveMotion_Pattern2(int* coolTime, int* moveFlg) {
+	static int chanceTime = 0;
+	static bool speedUpFlg = FALSE;
+	// ボスの移動スピードをだんだんと落とす
+	if (g_boss[g_select_Stage].x >= g_player.x + PLAYER_WIDTH && speedUpFlg == FALSE) {
+		g_boss[g_select_Stage].x -= 2;
+		if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {				// ボスがダメージを受けたかどうかを調べる関数 TRUE: ボスがダメージを受けた FALSE: ボスはダメージを受けていない
+			speedUpFlg = TRUE;
+		}
+	}
+	else if(chanceTime++ >= 120 || BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE){	// プレイヤーの目の前に来たら、攻撃できるようにチャンスタイムを作る
+		speedUpFlg = TRUE;			// 二秒立ったら、またはプレイヤーが攻撃をしたらボス２がスピードアップして元の位置まで戻る
+	}
+	if (speedUpFlg == TRUE && g_boss[g_select_Stage].x < 823) {
+		g_boss[BOSS_STAGE2].x += 2;	// ボスを最初の位置へと戻す
+	}
+	else if (g_boss[g_select_Stage].x >= 823) {
+		g_boss[g_select_Stage].x = 823;	// 最初の場所に戻ったら座標を固定
+		*coolTime = 0;					// クールタイム初期化
+		*moveFlg = 0;					// moveFlg初期化
+		speedUpFlg = FALSE;				// スピードアップフラグを初期化
 	}
 }
 /*********************************************
@@ -106,11 +146,20 @@ void Boss_Knock_Down() {
 void BossAttackDisp() {
 	
 	
-	switch (g_boss[0].attackFlg) {
+	switch (g_boss[g_select_Stage].attackFlg) {
 		case ENEMY_DROP:
 		
 			BossEnemyDropDisp();	// 弱い敵を出す
-			DrawFormatString(100, 600, 0xFF00FF, "ボスが攻撃してますよ！");
+			//DrawFormatString(100, 600, 0xFF00FF, "ボスが攻撃してますよ！");
+			//g_boss[BOSS_STAGE1].attackFlg = 0;
+			break;
+
+		case WATER_BULLET:
+			BossWaterBulletDisp();	// 水弾の発射
+			break;
+
+		case WAVE_ATTACK:
+			BossGenerateWave();		// 津波の発生
 			break;
 
 		default:
@@ -123,13 +172,22 @@ void BossAttackDisp() {
 // ボスの攻撃の全体管理(動き)
 void BossAttackMove() {
 
-	DrawFormatString(100, 700, 0xFF00FF, "ボスが攻撃してますよ！");
+	//DrawFormatString(100, 700, 0xFF00FF, "ボスが攻撃してますよ！");
 
-	if (g_keyInfo.keyFlg & PAD_INPUT_4) g_boss[0].attackFlg = 0;
+	//if (g_keyInfo.keyFlg & PAD_INPUT_4) g_boss[0].attackFlg = 0;
 
-	switch (g_boss[0].attackFlg) {
+	switch (g_boss[g_select_Stage].attackFlg) {
 		case ENEMY_DROP:
 			BossEnemyDropMove();	// 弱い敵を出す
+			//g_boss[g_select_Stage].attackFlg = 0;
+			break;
+
+		case WATER_BULLET:
+			BossWaterBulletMove();	// 水弾の発射
+			break;
+
+		case WAVE_ATTACK:
+			BossGenerateWave();		// 津波の発生
 			break;
 
 		default:
@@ -142,20 +200,21 @@ void BossAttackMove() {
 * ボスが弱い敵を出す攻撃をする関数
 
 */////////////////////////////////////////////
-// 弱い敵を出す(表示)
+// 歩く弱い敵を出す(表示)
 void BossEnemyDropDisp() {
-
-	static int enemypop_MAX = 0;
-		
-	for (int i = 0; i < enemypop_MAX; i++) {
-		DrawRotaGraph(g_enemy[i].walk.x, g_enemy[i].walk.y, 0.2, 0.0, g_pic.enemy_walk[0], TRUE);
-		
-		
-	}
+	
+	EnemyDisp[0]();
 }
 // 弱い敵を出す(動き(当たり判定など))
 void BossEnemyDropMove() {
+	
+	EnemyMove();
+	for (int i = 0; i < ENEMY_MAX; i++) {		//地上の敵の動き
+		if (g_enemy[i].walk.flg == TRUE) {
+			g_enemy[i].walk.x -= g_boss[g_select_Stage].x;
 
+		}
+	}
 }
 
 /*********************************************
@@ -174,17 +233,18 @@ void BossWaterBulletDisp() {
 	static int noDamegeCnt = 60;		// ダメージを受け付けない時間
 	static bool attackFlg = FALSE;		// 攻撃判断フラグ	 treu:攻撃済  false:未攻撃
 
-	/*moveX -= 7.5;
-	moveY += 2.5;*/
 	// フレーム単位の被弾数の調整
 	if (noDamegeCnt++ < 60);
-
+	
+	DrawBox(startX + moveX - 40, startY + moveY + 0,
+		startX + moveX + 40, startY + moveY - 20, 0xFFFFFF, FALSE);
 	// プレイヤーに水弾が当たった時の処理
 	if (noDamegeCnt >= 60
-		&& (PlayerHitCheck(startX + moveX + 20, startY + moveY + 0,
-			startX + moveX - 40, startY + moveY - 20) == TRUE)) {
+		&& (PlayerHitCheck(startX + moveX - 40, startY + moveY + 0,
+			startX + moveX + 40, startY + moveY - 20) == TRUE)) {
 		g_player.hp--;
 		noDamegeCnt = 0;
+		anime = 4;
 		animationMax++;
 		attackFlg = TRUE;
 		if (noDamegeCnt >= 200) {
@@ -206,8 +266,10 @@ void BossWaterBulletDisp() {
 
 	// 水弾の表示
 	if (attackFlg == FALSE) {
-		moveX -= 3.0;
-		moveY += 1.0;
+		moveX -= 7.5;
+		moveY += 2.5;
+		/*moveX -= 3.0;
+		moveY += 1.0;*/
 		DrawRotaGraph(startX + moveX, startY + moveY,
 			3.0f, DX_PI_F / 180 * 335, g_pic.waterBullet[anime], TRUE, FALSE);
 	}
@@ -238,29 +300,45 @@ void BossWaterBulletDisp() {
 void BossWaterBulletMove() {
 
 }
-
-
-
-/*********************************************
-
-* ステージ３のボス
-
-*/////////////////////////////////////////////
-// 描画
-void BossDisp_Stage3() {
-	if (g_enemybeat >= 10) {
-		DrawBox(600, 0, 1280, 768, 0x0FF000, TRUE);
-	}
-}
-// 動き
-void BossMove_Stage3() {
-
-}
-
 // ボスの初期化
 void BossInit() {
 	for (int i = BOSS_STAGE1; i < BOSS_MAX; i++) {
 		g_boss[i].Init_Stage(i);
 	}
 	
+}
+
+/***********************************************************
+
+// 数字を引数として三つ取り、その中の一つをランダムで返す
+
+***********************************************************/
+int InputRand(int rand1, int rand2, int rand3) {
+	int num = GetRand(3);
+	switch (num)
+	{
+	case 0: return rand1; break;
+	case 1: return rand2; break;
+	case 2: return rand3; break;
+	default: return 0;	  break;
+	}
+
+}
+/***********************************************************
+
+// ボスがダメージを受けたかどうかを調べる関数 TRUE: ボスがダメージを受けた FALSE: ボスはダメージを受けていない
+
+***********************************************************/
+bool BossDamageCheck(int bossHp) {
+	static int bossHpBuf = bossHp;
+
+	if (bossHp <= bossHpBuf) {
+		if (bossHp < bossHpBuf) {
+			bossHpBuf = bossHp;
+			return TRUE;
+		}
+	}
+
+	bossHpBuf = bossHp;
+	return FALSE;
 }

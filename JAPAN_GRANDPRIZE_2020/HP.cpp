@@ -70,12 +70,12 @@ void HpMove(void) {
 		}
 	}
 
-	// ボスの当たり判定
-	if( (PlayerHitCheck(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE) 
-	&&  (noDamageCnt > 60) ){
-		g_player.hp--;
-		noDamageCnt = 0;				// 無敵時間発動
-	}
+	//// ボスの当たり判定
+	//if( (PlayerHitCheck(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE) 
+	//&&  (noDamageCnt > 60) ){
+	//	g_player.hp--;
+	//	noDamageCnt = 0;				// 無敵時間発動
+	//}
 
 	// HPが０になったらゲームオーバー
 	if (g_player.hp <= 0) {

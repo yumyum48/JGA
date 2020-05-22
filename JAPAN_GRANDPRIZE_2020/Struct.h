@@ -32,8 +32,8 @@ struct image {
     int titleText[4];                   // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
     int SkillMotion[9];                 //スキルモーション画像
-    int enemy_walk[2];                  // 歩く雑魚敵のの画像
-    int enemy_fly[2];                   // 飛ぶ雑魚敵の画像
+    int enemy_walk[4];                  // 歩く雑魚敵のの画像
+    int enemy_fly[4];                   // 飛ぶ雑魚敵の画像
     int map[MAP_MAX * SCROLL_MAX];      // マップの画像
     int backMap[MAP_MAX * SCROLL_MAX];  // マップの背景
     int rain;                           // 雨の画像
@@ -51,6 +51,8 @@ struct image {
     int enemySplashes[5];               // 敵を斬った時の水しぶきの画像
     int stageClearText;                 // ステージをクリアした時の[討伐完了]の文字
     int gameOverText;                   // ゲームオーバーの時の[討伐失敗]の文字
+    int skillAicon[8];                  // skillのアイコン
+    int skillRing[2];                   // skillの装飾
 
 };
 
@@ -79,6 +81,9 @@ struct playerInfo {
         gauge = 320;
         swordFlg = FALSE;
         timecount = 0;
+        skillcustom[0] = 1;
+        skillcustom[1] = 0;
+        skillcustom[2] = 0;
     }
 
 };
@@ -89,17 +94,35 @@ struct enemyInfo {
     int x = 1000;
     int y = GROUND + 30;
     bool flg;
-    void WalkInit() {   // 敵の初期化
-        x = 1280;     // 敵のX座標の初期位置
-        y = GROUND + 30;   // 敵のY座標の初期位置
-        flg = FALSE;  // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+    int anime;
+    void WalkInit() {                  // 敵の初期化
+        x = 1280;                      // 敵のX座標の初期位置
+        y = GROUND + 30;               // 敵のY座標の初期位置
+        flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        anime = 0;                     // アニメーションの初期化
     }
     void FlyInit() {
-        x = 1280;     // 敵のX座標の初期位置
-        y = GROUND - 30;   // 敵のY座標の初期位置
-        flg = FALSE;  // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        x = 1280;                      // 敵のX座標の初期位置
+        y = GROUND - 30;               // 敵のY座標の初期位置
+        flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        anime = 0;                     // アニメーションの初期化
     }
-
+    void BossAreaWlakInit(int bx, int by) {
+        x = bx - (574 * 0.2);          // 敵のX座標の初期位置
+        y = GROUND + 30;               // 敵のY座標の初期位置
+        flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+        anime = 0;                     // アニメーションの初期化
+    }
+    void BufferAssignment(int ex, int ey) {
+        x = ex;
+        y = ey;
+        flg = TRUE;
+    }
+    void BufferInit() {
+        x = 0;
+        y = 0;
+        flg = FALSE;
+    }
 };
 
 struct enemyType {  // 敵の種類
@@ -114,7 +137,9 @@ struct bossInfo {     // ボスの情報
     int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
     int attackFlg;   // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
 
+    // 配列で初期化できるわこれ竹
     void Init_Stage(int num) {
+
         switch (num) {
         case 0:
             hp = 10;
@@ -125,8 +150,8 @@ struct bossInfo {     // ボスの情報
             break;
         case 1:
             hp = 10;
-            x = 872;
-            y = 160;
+            x = 823;
+            y = 397;
             popflg = 0;
             attackFlg = 0;
             break;

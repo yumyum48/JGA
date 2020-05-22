@@ -9,9 +9,9 @@ int LoadPicture() {
 
 	// タイトルのテキスト画像
 	if ((g_pic.titleText[0] = LoadGraph("image/Title_Text2.png")) == -1) return -1;		// タイトルロゴ
-	if ((g_pic.titleText[1] = LoadGraph("image/NewGame.png")) == -1) return -1;			// タイトルロゴ
-	if ((g_pic.titleText[2] = LoadGraph("image/Continue.png")) == -1) return -1;		// タイトルロゴ
-	if ((g_pic.titleText[3] = LoadGraph("image/fin.png")) == -1) return -1;		// タイトルロゴ
+	if ((g_pic.titleText[1] = LoadGraph("image/NewGame1.png")) == -1) return -1;			// タイトルロゴ
+	if ((g_pic.titleText[2] = LoadGraph("image/Continue1.png")) == -1) return -1;		// タイトルロゴ
+	if ((g_pic.titleText[3] = LoadGraph("image/fin1.png")) == -1) return -1;		// タイトルロゴ
 	
 	
 
@@ -32,11 +32,18 @@ int LoadPicture() {
 	//スキル3モーション(仮)
 	if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
 
-	// 歩く雑魚敵画像の読み込み
-	if ((g_pic.enemy_walk[0] = LoadGraph("image/enemy.png")) == -1) return -1;
+	//スキルアイコン
+	if (LoadDivGraph("image/SkillAicon.png", 8, 8, 1, 100, 100, g_pic.skillAicon, 0) == -1) return -1;
+	//スキルアイコン装飾(仮)
+	if ((g_pic.skillRing[0] = LoadGraph("image/ring.png")) == -1) return -1;
+	if ((g_pic.skillRing[1] = LoadGraph("image/magatama.png")) == -1) return -1;
 
-	// 飛ぶ雑魚敵画像の読み込み
-	if (LoadDivGraph("image/skill3.png", 2, 2, 1, 1443 / 5, 289, g_pic.enemy_fly, 0) == -1) return -1;
+	// 歩く雑魚敵画像の読み込み
+	if (LoadDivGraph("image/EnemyZako1.png", 4, 4, 1, 100, 100, g_pic.enemy_walk, 0) == -1)return -1;
+
+	// 飛ぶ雑魚敵
+	if (LoadDivGraph("image/zkfry.png", 4, 4, 1, 574, 545, g_pic.enemy_fly, 0) == -1)return -1;
+
 	/*//マップの読み込み
 	if (LoadDivGraph("image/mori8sute.png", 24, 3, 8, 1024, 768, g_pic.map, 0) == -1)
 		return -1;*/
@@ -72,12 +79,12 @@ int LoadPicture() {
 	if ((g_pic.selectBack = LoadGraph("image/Select.png")) == -1) return -1;
 
 	// 水弾の画像の読み込み
-	if (LoadDivGraph("image/watb1.png", 5, 5, 1, 32, 32, g_pic.waterBullet, 0) == -1);
+	if (LoadDivGraph("image/watb1.png", 5, 5, 1, 32, 32, g_pic.waterBullet, 0) == -1)return -1;
 
 	// 敵撃破時の水しぶき
-	if (LoadDivGraph("image/bassha.png", 5, 5, 1, 100, 100, g_pic.enemySplashes, 0) == -1);
+	if (LoadDivGraph("image/bassha.png", 5, 5, 1, 100, 100, g_pic.enemySplashes, 0) == -1)return -1;
 	// 敵撃破時の蒸気
-	if (LoadDivGraph("image/moku1.png", 5, 5, 1, 100, 100, g_pic.enemyVapour, 0) == -1);
+	if (LoadDivGraph("image/moku1.png", 5, 5, 1, 100, 100, g_pic.enemyVapour, 0) == -1)return -1;
 
 	// ステージクリア時の[討伐完了]の文字
 	if ((g_pic.stageClearText = LoadGraph("image/stageClear.png")) == -1) return -1;

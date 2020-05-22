@@ -17,8 +17,7 @@
 *******************************************************/
 #define STAGE_NUMBER 7
 
-#define MENU_SELECT_WIDTH		 (400)	// メニュー画面の中の選択するメニュー一覧の横幅
-#define MENU_SELECT_HEIGHT		 (120)	// メニュー画面の中の選択するメニュー一覧の縦幅
+
 #define MENU_SAVE_BOX_XPOINT_MAX (724)	// メニュー画面とセーブ画面の背景が移動して表示されるX座標
 #define MENU_SAVE_BOX_MOBE		 (10)	// メニュー画面とセーブ画面の背景が移動するスピード
 #define MENU_BOX_XPOINT_MIN		 (1182)	// メニュー画面が隠れている時のX座標

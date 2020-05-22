@@ -18,6 +18,8 @@
 #include "Change_ScReen_Animation.h"
 #include "SkillCustom.h"
 #include "Save.h"
+#include "Sounds.h"
+#include "Load.h"
 #define DEBUG_TEXT_ON
 
 
@@ -73,9 +75,11 @@ int g_MutekiTime;				// プレイヤーの無敵時間
 
 trapInfo g_trap;				// トラップの情報
 
-int g_playTime;			// プレイ時間
+int g_playTime;					// プレイ時間
 
-int g_select_MAX;			// 今プレイヤーがいけるステージを制御する
+int g_select_MAX;				// 今プレイヤーがいけるステージを制御する
+
+int g_sound[BGM_MAX];			// BGMの変数
 /*********************************************
 
 * 関数のプロトタイプ宣言
@@ -173,7 +177,7 @@ void GameScene(int gameScene) {
 	case GAME_CLEAR:	GameClear();				break;	 // ゲームクリア
 	case GAME_STAGE_CLEAR:	StageClear();			break;	 // ゲームステージクリア
 	case GAME_SAVE:									break;	 // ゲームのセーブ
-	case GAME_LOAD:									break;	 // ゲームデータのロード
+	case GAME_LOAD:		GameLoad();							break;	 // ゲームデータのロード
 	case GAME_CHANGE_SCREEN_ANIMATION:	ChangeScreen_Animation();				break;	 // シーン切り替え時のアニメーションシーン
 	case GAME_SKILLCUSTOM:	SkillCustom();			break;	 // スキルカスタマイズ
 	}

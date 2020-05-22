@@ -30,7 +30,7 @@ void SkillDisp_1(int aniMAX, int aniMIN) {		//ŠÔ‡‚¢L‚Ñ‚é‚â‚Âiplayer.cpp‚ÌPlay
 	}
 	g_skillAniFlg = FALSE;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_3) && g_player.gauge > 100) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > 100) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 		} else {
@@ -69,7 +69,7 @@ void SkillDisp_2(int aniMAX, int aniMIN){ //”ò‚Î‚·‚â‚Â
 	// ƒXƒLƒ‹’†
 	//EnemyLockOn();
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_3) && g_skillAniFlg == FALSE && g_player.gauge > 100) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_skillAniFlg == FALSE && g_player.gauge > 100) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 		}
@@ -125,7 +125,7 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //ã•ûŒü‚É‰„‚Ñ‚é‚â‚Â
 
 	bool g_skillFlg = false;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_3) && g_player.gauge > 100) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > 100) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 		}

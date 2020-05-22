@@ -22,6 +22,7 @@ int g_resetMotion = 0;	//アニメーション始点
 int g_maxMotion = 7;	//終点
 int g_attackTime = 0;	//攻撃のクールタイム
 bool g_skillFlg;		// スキル中かどうかのフラグ
+int g_SkillSelectAicon = 0; //スキルのアイコン移動
 //bool g_swordFlg = FALSE; //TRUE = 抜刀, FALSE = 納刀
 
 void PlayerDisp() {
@@ -58,7 +59,16 @@ void PlayerDisp() {
 
 	if (g_player.attackFlg == TRUE) g_player.gauge -= 2;
 	if (g_player.gauge < 0) g_player.gauge = 0;
-	
+
+	//スキル光表示
+	DrawRotaGraph(WINDOW_WIDTH / 2 + g_SkillSelectAicon, WINDOW_HEIGHT - 70, 1, -time / 8, g_pic.skillRing[0], TRUE);
+	//装備しているスキル表示
+	DrawGraph(WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT - 120, g_pic.skillAicon[g_player.skillcustom[0]], TRUE);
+	DrawGraph(WINDOW_WIDTH / 2 - 150, WINDOW_HEIGHT - 120, g_pic.skillAicon[g_player.skillcustom[1]], TRUE);
+	DrawGraph(WINDOW_WIDTH / 2 + 50, WINDOW_HEIGHT - 120, g_pic.skillAicon[g_player.skillcustom[2]], TRUE);
+	//勾玉表示
+	DrawRotaGraph(WINDOW_WIDTH / 2 + g_SkillSelectAicon, WINDOW_HEIGHT - 70, 1, time / 8, g_pic.skillRing[1], TRUE);
+
 }
 
 void PlayerMove() {
@@ -248,20 +258,27 @@ void PlayerControl() {
 }
 
 int SkillChange() {
-	static int skillNum = 1;
+	static int skillNum = 0;
+	static int useSkill = 1;
 
 	// スキル選択
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
-		if (++skillNum > g_player.skill_MAX) skillNum = 1;
+		if (++skillNum > 2) skillNum = 0;
 	}
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
-		if (--skillNum < 1) skillNum = g_player.skill_MAX;
+		if (--skillNum < 0) skillNum = 2;
 	}
-	
+
+	if (skillNum == 0) g_SkillSelectAicon = 0;
+	if (skillNum == 1) g_SkillSelectAicon = -100;
+	if (skillNum == 2) g_SkillSelectAicon = 100;
+
 	// skillNumの中身
 	DrawFormatString(0, 500, 0xFEFFFF, "%d", skillNum);
+	
+	useSkill = g_player.skillcustom[skillNum];
 
-	return skillNum;
+	return useSkill;
 }
 
 
@@ -273,6 +290,8 @@ void EnemyLockOn() {
 
 // プレイヤーの間合いに入っている敵を倒す処理
 void EnemyCut() {
+	static int enemyNum = 0;	// 同時に倒した敵をカウントする変数
+	static int noDamageCnt = 61;// ボスの無敵時間
 
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		// 歩く敵
@@ -286,10 +305,16 @@ void EnemyCut() {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].walk.WalkInit();
 			}
-			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+			if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
 				g_enemybeat++;			// エネミーを倒した数をカウント
-				g_enemy[i].walk.WalkInit();
+				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].walk.x, g_enemy[i].walk.y);
+				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+					g_enemy[i].walk.WalkInit();
+				}
+				else {
+					g_enemy[i].walk.BossAreaWlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+				}
 				//g_player.attackFlg = TRUE;
 			}
 		}
@@ -301,13 +326,14 @@ void EnemyCut() {
 			DrawRotaGraph2(g_enemy[i].fly.x + (ENEMY_WIDTH / 3), g_enemy[i].fly.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
 			if (g_player.skillFlg == 2) {
-				g_enemybeat++;			// エネミーを倒した数をカウント
+				//g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].fly.WalkInit();
 			}
-			if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+			if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 				/*if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
 				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;*/
-				g_enemybeat++;			// エネミーを倒した数をカウント
+				//g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].fly.x, g_enemy[i].fly.y);
 				g_enemy[i].fly.WalkInit();
 				//g_player.attackFlg = TRUE;
 			}
@@ -315,18 +341,23 @@ void EnemyCut() {
 	}
 	//boss
 	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
-		if (PlayerInterval(g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE 
-			|| (SkillMove[g_player.skillFlg - 1](g_boss[0].x, g_boss[0].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
-			if (g_boss[0].hp > 0) {
-				if (g_keyInfo.keyFlg & PAD_INPUT_3) {
+		if (PlayerInterval(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE
+			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
+			if (++noDamageCnt > 60 && g_boss[g_select_Stage].hp > 0) {
+				if (g_player.skillFlg == 2) {
+					g_boss[g_select_Stage].hp--;
+					noDamageCnt = 0;
+				}
+				if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
-					g_boss[0].hp--;
-					
+					g_boss[g_select_Stage].hp--;
+					noDamageCnt = 0;
 				}
 			}
 		}
 	}
 
+	enemyNum = 0;
 }
 // プレイヤーの画像と敵の画像の当たり判定 (TRUE: 当たった | FALSE: 当たらなかった)
 bool PlayerInterval(int ex, int ey, int ew, int eh) {
@@ -389,5 +420,4 @@ bool PlayerHitCheck(int ex, int ey, int ew, int eh) {
 // プレイヤーの初期化処理
 void PlayerInit() {
 	g_player.Init();
-
 }
