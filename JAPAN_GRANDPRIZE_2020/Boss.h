@@ -16,6 +16,18 @@
 #define BOSS_WIDTH			(280 * 2)		// ボスの横幅
 #define BOSS_HEIGHT			(200 * 2)		// ボスの縦幅
 #define BOSS_AREA_ENEMY_MAX (3)				// ボス戦のエネミーが出現する最大数
+#define BOSS_STAGE2_WIDTH (271)		// ボスの横幅
+#define BOSS_STAGE2_HEIGHT (271)	// ボスの縦幅
+#define BOSS_STAGE3_WIDTH (380)
+#define BOSS_STAGE3_HEIGHT (380)
+
+/***********************************************************
+
+// 定数の宣言
+
+***********************************************************/
+const int BOSSFULL_WIDTH[MAP_MAX] = {BOSS_WIDTH, BOSS_STAGE2_WIDTH, BOSS_STAGE3_WIDTH};
+const int BOSSFULL_HEIGHT[MAP_MAX] = { BOSS_HEIGHT, BOSS_STAGE2_HEIGHT, BOSS_STAGE3_HEIGHT };
 /***********************************************************
 
 // 列挙体の宣言
