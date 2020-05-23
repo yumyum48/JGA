@@ -345,9 +345,7 @@ void BossWaterBulletDisp() {
 
 	// フレーム単位の被弾数の調整
 	if (noDamegeCnt++ < 60);
-	
-	DrawBox(startX + moveX - 40, startY + moveY + 0,
-		startX + moveX + 40, startY + moveY - 20, 0xFFFFFF, FALSE);
+
 	// プレイヤーに水弾が当たった時の処理
 	if (noDamegeCnt >= 60
 		&& (PlayerHitCheck(startX + moveX - 40, startY + moveY + 0,

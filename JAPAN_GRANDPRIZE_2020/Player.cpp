@@ -416,7 +416,7 @@ bool PlayerHitCheck(int ex, int ey, int ew, int eh) {
 	if( (g_player.x  <= ex + ew)
 	&&	(g_player.x + (PLAYER_WIDTH / 2) >= ex)
 	&&	(g_player.y  <= ey + eh)
-	&&	(g_player.y + (PLAYER_HEIGHT / 2) >= ey) ){
+	&&	(g_player.y + (PLAYER_HEIGHT) >= ey) ){
 		
 		return TRUE;
 	}
