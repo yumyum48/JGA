@@ -69,6 +69,8 @@ void BossDisp_Stage1();					// ステージ１のボスの表示
 void BossMove_Stage1();					// ステージ１のボスの動き
 void BossDisp_Stage2();					// ステージ２のボスの表示
 void BossMove_Stage2();					// ステージ２のボスの動き
+void BossDisp_Stage3();					// ステージ３のボスの表示
+void BossMove_Stage3();					// ステージ３のボスの動き
 
 void Boss_Knock_Down();					// ボスの当たり判定
 
@@ -89,13 +91,15 @@ void BossWaterBulletMove();				// 水弾で攻撃するボス専用の技の関数
 void BossAreaEnemyMove();				// ボスが出現しているときの雑魚の動き
 void BossAreaEnemyDisp();				// ボスが出現しているときの雑魚の表示
 void BossGenerateWave();				// ボスが津波を発生させて攻撃
-void (* const BossDisp[2])() = {		// ボスの表示
+void (* const BossDisp[3])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,
+	BossDisp_Stage3,
 };
 
-void (* const BossMove[2])() = {		// ボスの動き
+void (* const BossMove[3])() = {		// ボスの動き
 	BossMove_Stage1,
 	BossMove_Stage2,
+	BossMove_Stage3,
 };
 

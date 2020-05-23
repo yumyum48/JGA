@@ -346,8 +346,8 @@ void EnemyCut() {
 	}
 	//boss
 	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
-		if (PlayerInterval(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE
-			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
+		if (PlayerInterval(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE
+			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE)) {
 			if (++noDamageCnt > 60 && g_boss[g_select_Stage].hp > 0) {
 				if (g_player.skillFlg == 2) {
 					g_boss[g_select_Stage].hp--;

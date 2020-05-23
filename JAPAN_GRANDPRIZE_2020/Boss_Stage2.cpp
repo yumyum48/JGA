@@ -63,7 +63,7 @@ void BossMove_Stage2() {
 		&& (g_boss[BOSS_STAGE2].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {					// ボスが移動していなければ
 		
-		attackSelect = InputRand(WAVE_ATTACK, WAVE_ATTACK, WAVE_ATTACK);								//乱数で攻撃するか移動をするかを決定
+		attackSelect = InputRand(0, ENEMY_DROP, ENEMY_DROP);								//乱数で攻撃するか移動をするかを決定
 
 		if (attackSelect != 0) {
 			g_boss[BOSS_STAGE2].attackFlg = attackSelect;				// 攻撃する場合、フラグに対応した数字を入れる
