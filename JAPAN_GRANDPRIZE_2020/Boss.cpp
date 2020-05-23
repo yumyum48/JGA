@@ -65,6 +65,7 @@ void BossMoveMotion(int *coolTime, int *moveFlg){
 	case BOSSMOVE_SPEEDDOWN:
 		BossMoveMotion_Pattern2(coolTime, moveFlg);		// ボスのX軸が左に寄っていく
 		break;
+		
 	default:
 		break;
 	}
@@ -115,7 +116,7 @@ void BossMoveMotion_Pattern2(int* coolTime, int* moveFlg) {
 		speedUpFlg = TRUE;			// 二秒立ったら、またはプレイヤーが攻撃をしたらボス２がスピードアップして元の位置まで戻る
 	}
 	if (speedUpFlg == TRUE && g_boss[g_select_Stage].x < 823) {
-		g_boss[BOSS_STAGE2].x += 2;	// ボスを最初の位置へと戻す
+		g_boss[g_select_Stage].x += 2;	// ボスを最初の位置へと戻す
 	}
 	else if (g_boss[g_select_Stage].x >= 823) {
 		g_boss[g_select_Stage].x = 823;	// 最初の場所に戻ったら座標を固定
