@@ -203,15 +203,92 @@ void BossAttackMove() {
 // 歩く弱い敵を出す(表示)
 void BossEnemyDropDisp() {
 	
-	EnemyDisp[0]();
+	BossAreaEnemyDisp();
 }
 // 弱い敵を出す(動き(当たり判定など))
 void BossEnemyDropMove() {
-	
-	EnemyMove();
-	for (int i = 0; i < ENEMY_MAX; i++) {		//地上の敵の動き
-		if (g_enemy[i].walk.flg == TRUE) {
-			g_enemy[i].walk.x -= g_boss[g_select_Stage].x;
+
+
+	BossAreaEnemyMove();
+
+}
+// 
+void BossAreaEnemyDisp() {
+	static int coolTime = 0;
+	static int enemyDropCnt = 0;
+	static bool enemy_dispFlg_Buf[BOSS_AREA_ENEMY_MAX] = { FALSE, FALSE, FALSE }; // 
+	// 
+	if (++coolTime > 30) {
+		//
+		for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
+			if (g_enemy[i].walk.flg == FALSE && enemyDropCnt < 3) {
+				g_enemy[i].walk.flg = TRUE;
+				coolTime = 0;
+				enemyDropCnt++;
+				enemy_dispFlg_Buf[i] = TRUE;
+				break;
+			}
+		}
+	}
+
+	// 
+	for (int i = 0; i < ENEMY_MAX; i++) {
+		const int animation_Max = 3;
+		static int time = 0;
+
+		// 
+		if (time++ % 8 == 0) {
+			g_enemy[i].walk.anime++;
+			g_enemy[i].fly.anime++;
+		}
+
+		// 
+		if (g_enemy[i].walk.anime > animation_Max)g_enemy[i].walk.anime = 0;
+
+
+		if (g_enemy[i].walk.flg == TRUE)        //
+			DrawRotaGraph2(g_enemy[i].walk.x, g_enemy[i].walk.y,
+				0, 0, 1.0, 0.0, g_pic.enemy_walk[g_enemy[i].walk.anime], TRUE);
+		//DrawRotaGraph(g_enemy[i].fly.x, g_enemy[i].fly.y, 1.0f, 0.0, g_pic.flyEnemy[0], TRUE, FALSE);
+	}
+
+	// 
+	EnemyEvaporation();
+	if (enemyDropCnt >= 3) {
+		static int waitTime = 0;
+		if (waitTime++ >= 120) {
+			g_boss[g_select_Stage].attackFlg = 0;    // 
+			enemyDropCnt = 0;                            // 
+			enemy_dispFlg_Buf[0] = { FALSE };        // 
+			enemy_dispFlg_Buf[1] = { FALSE };
+			enemy_dispFlg_Buf[2] = { FALSE };
+			waitTime = 0;
+		}
+	}
+
+}
+// 
+void BossAreaEnemyMove() {
+	static int enemyCnt;        // 
+
+
+	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {        //
+		EnemyMove();
+		for (int i = 0; i < ENEMY_MAX; i++) {        //
+			if (g_enemy[i].walk.flg == TRUE) {
+				g_enemy[i].walk.x -= g_speedLevel + 3;
+
+				g_enemy[i].walk.x -= g_boss[g_select_Stage].x;
+
+			}
+			/*if (enemy_dispFlg_Buf[i] == TRUE && g_enemy[i].walk.flg == FALSE) {
+				enemyCnt++;
+			}*/
+			if (g_enemy[i].walk.x + ENEMY_WIDTH < 0) {
+
+				g_enemy[i].walk.BossAreaWlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+				//g_enemy[i].walk.flg = TRUE;
+			}
 
 		}
 	}
