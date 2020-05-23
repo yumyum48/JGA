@@ -1,6 +1,5 @@
 #pragma once
 #include "DxLib.h"
-
 int LoadSounds(void);				//ƒTƒEƒ“ƒh“Ç‚İ‚İ
 
 enum {

@@ -162,7 +162,13 @@ void BossAttackDisp() {
 		case BOSSATTACK_WAVE_ATTACK:
 			BossGenerateWave();		// 津波の発生
 			break;
+		case BOSSATTACK_JUMPANDPOISON:
+			BossJumpOrPoison_Disp();// ボスがジャンプして稀に毒を出す表示
+			break;
 
+		case BOSSATTACK_LONGTON:
+
+			break;
 		default:
 			break;
 	}
@@ -191,10 +197,29 @@ void BossAttackMove() {
 			BossGenerateWave();		// 津波の発生
 			break;
 
+		case BOSSATTACK_JUMPANDPOISON:
+			BossJumpOrPoison_Move();// ボスがジャンプして稀に毒を出す動き
+			break;
+
+		case BOSSATTACK_LONGTON:
+
+			break;
 		default:
 			break;
 	}
 	
+}
+/*********************************************
+
+* ボスがジャンプして稀に毒を出す処理
+
+*/////////////////////////////////////////////
+void BossJumpOrPoison_Disp() {
+
+}
+
+void BossJumpOrPoison_Move() {
+
 }
 /*********************************************
 
@@ -209,9 +234,7 @@ void BossEnemyDropDisp() {
 // 弱い敵を出す(動き(当たり判定など))
 void BossEnemyDropMove() {
 
-
 	BossAreaEnemyMove();
-
 }
 // 
 void BossAreaEnemyDisp() {
@@ -238,30 +261,31 @@ void BossAreaEnemyDisp() {
 		const int animation_Max = 3;
 		static int time = 0;
 
-		// 
+		// アニメーションのカウント
 		if (time++ % 8 == 0) {
 			g_enemy[i].walk.anime++;
 			g_enemy[i].fly.anime++;
 		}
 
-		// 
+		// アニメーションの初期化
 		if (g_enemy[i].walk.anime > animation_Max)g_enemy[i].walk.anime = 0;
 
 
-		if (g_enemy[i].walk.flg == TRUE)        //
+		if (g_enemy[i].walk.flg == TRUE)        // 雑魚敵の描画
 			DrawRotaGraph2(g_enemy[i].walk.x, g_enemy[i].walk.y,
 				0, 0, 1.0, 0.0, g_pic.enemy_walk[g_enemy[i].walk.anime], TRUE); 
 		//DrawRotaGraph(g_enemy[i].fly.x, g_enemy[i].fly.y, 1.0f, 0.0, g_pic.flyEnemy[0], TRUE, FALSE);
 	}
 
 	
-
+	// 雑魚敵が倒されたかを確認
 	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
 		if (enemy_dispFlg_Buf[i] == TRUE && g_enemy[i].walk.flg == FALSE) {
 			enemyDropCnt++;
 		}
 	}
 
+	// 出現した雑魚敵が全て倒されていたら攻撃終了
 	if (enemyDropCnt >= 3) {
 		static int waitTime = 0;
 		if (waitTime++ >= 120) {
@@ -386,13 +410,7 @@ void BossWaterBulletDisp() {
 void BossWaterBulletMove() {
 
 }
-// ボスの初期化
-void BossInit() {
-	for (int i = BOSS_STAGE1; i < BOSS_MAX; i++) {
-		g_boss[i].Init_Stage(i);
-	}
-	
-}
+
 
 /***********************************************************
 
@@ -427,4 +445,17 @@ bool BossDamageCheck(int bossHp) {
 
 	bossHpBuf = bossHp;
 	return FALSE;
+}
+
+
+/***********************************************************
+
+// ボスの初期化
+
+***********************************************************/
+void BossInit() {
+	for (int i = BOSS_STAGE1; i < BOSS_MAX; i++) {
+		g_boss[i].Init_Stage(i);
+	}
+
 }

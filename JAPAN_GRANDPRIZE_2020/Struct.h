@@ -142,64 +142,57 @@ struct bossInfo {     // ボスの情報
     // 配列で初期化できるわこれ竹
     void Init_Stage(int num) {
 
-        switch (num) {
-        case 0:
+        switch (num) {  // ボスの初期化
+        case 0:         // ステージ１のボスを初期化
             hp = 10;
             x = 872;
             y = 160;
             popflg = 0;
             attackFlg = 0;
             break;
-        case 1:
+        case 1:         // ステージ２のボスを初期化
             hp = 10;
             x = 823;
             y = 397;
             popflg = 0;
             attackFlg = 0;
             break;
-        case 2:
+        case 2:         // ステージ３のボスを初期化
+            hp = 10;
+            x = 822;
+            y = 290;
+            popflg = 0;
+            attackFlg = 0;
+            break;
+        case 3:         // ステージ４のボスを初期化
             hp = 10;
             x = 872;
             y = 160;
             popflg = 0;
             attackFlg = 0;
             break;
-        case 3:
+        case 4:         // ステージ５のボスを初期化
             hp = 10;
             x = 872;
             y = 160;
             popflg = 0;
             attackFlg = 0;
             break;
-        case 4:
+        case 5:         // ステージ６のボスを初期化
             hp = 10;
             x = 872;
             y = 160;
             popflg = 0;
             attackFlg = 0;
             break;
-        case 5:
+        case 6:         // ステージ７のボスを初期化
             hp = 10;
             x = 872;
             y = 160;
             popflg = 0;
             attackFlg = 0;
             break;
-        case 6:
-            hp = 10;
-            x = 872;
-            y = 160;
-            popflg = 0;
-            attackFlg = 0;
-            break;
-        case 7:
-            hp = 10;
-            x = 872;
-            y = 160;
-            popflg = 0;
-            attackFlg = 0;
-            break;
-        case 8:
+        case 7:         // ステージ８のボスを初期化
             hp = 10;
             x = 872;
             y = 160;

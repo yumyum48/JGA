@@ -51,6 +51,8 @@ enum {	// ボスの攻撃判断
 	BOSSATTACK_ENEMY_DROP = 1,			// 雑魚敵の生成
 	BOSSATTACK_WATER_BULLET,			// 水弾での攻撃
 	BOSSATTACK_WAVE_ATTACK,			// 津波での攻撃
+	BOSSATTACK_JUMPANDPOISON,			// カエルのジャンプと稀に毒を出す攻撃
+	BOSSATTACK_LONGTON,					// 舌を伸ばす攻撃
 };
 
 enum { // ボスの動きパターン
@@ -103,6 +105,9 @@ void BossWaterBulletMove();				// 水弾で攻撃するボス専用の技の関数
 void BossAreaEnemyMove();				// ボスが出現しているときの雑魚の動き
 void BossAreaEnemyDisp();				// ボスが出現しているときの雑魚の表示
 void BossGenerateWave();				// ボスが津波を発生させて攻撃
+void BossJumpOrPoison_Disp();			// ボスがジャンプして稀に毒を出す表示		
+void BossJumpOrPoison_Move();			// ボスがジャンプして稀に毒を出す動き
+
 void (* const BossDisp[3])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,
