@@ -84,7 +84,7 @@ void PlayerMove() {
 void PlayerAfterimage(int anime) {
 	static int resetMotion_Buf[3] = { 0, 0, 0 };		// マイフレームのプレイヤーのアニメーションを格納
 	static int maxMotion_Buf[3] = { 0, 0, 0 };		// マイフレームのプレイヤーのアニメーションを格納
-	if (g_player.skillFlg == 1) {
+	if (g_player.swordFlg == TRUE) {
 		int anime_Buf = anime - 1;					// 過去のプレイヤーアニメーションを格納する
 		resetMotion_Buf[2] = resetMotion_Buf[1];
 		resetMotion_Buf[1] = resetMotion_Buf[0];
@@ -161,18 +161,19 @@ void PlayerAnimation() {
 			g_maxMotion = 32;
 		}
 	}
-
-	if (g_player.timecount <= 10 && g_player.swordFlg == FALSE) {//抜刀
+	if (g_player.timecount <= 10 && g_player.swordFlg == FALSE) {//通常時の抜刀
 		if (--g_player.timecount > 0) g_resetMotion = SWORD_OPEN_S, g_maxMotion = SWORD_OPEN_E;
 	}
 	if (g_player.timecount == 0 && g_player.swordFlg == FALSE) {
 		g_player.swordFlg = TRUE;
+		if(g_player.useSkillFlg == TRUE) g_player.attackFlg = TRUE;
 	}
 	if (g_player.timecount <= 10 && g_player.swordFlg == TRUE) {//納刀
 		if (--g_player.timecount > 0) g_resetMotion = SWORD_CLOSE_S, g_maxMotion = SWORD_CLOSE_E;
 	}
 	if (g_player.timecount == 0 && g_player.swordFlg == TRUE) {
 		g_player.swordFlg = FALSE;
+		g_player.useSkillFlg = FALSE;
 	}
 
 	if (g_boss[g_select_Stage].hp <= 0) {
@@ -218,6 +219,8 @@ void PlayerControl() {
 	if (g_attackTime > 20) {
 		g_attackTime = 0;
 		g_player.attackFlg = FALSE;
+		if(g_player.useSkillFlg == TRUE)g_player.timecount = 10;
+
 	}
 	if (g_player.x > 100 && g_player.attackFlg == FALSE) {
 		g_player.x -= 10.0F;
@@ -305,7 +308,8 @@ void EnemyCut() {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].walk.WalkInit();
 			}
-			if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			if (g_player.attackFlg == TRUE) {
 				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].walk.x, g_enemy[i].walk.y);
@@ -329,7 +333,8 @@ void EnemyCut() {
 				//g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].fly.WalkInit();
 			}
-			if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			if (g_player.attackFlg == TRUE) {
 				/*if (g_skillFlg == TRUE) g_player.x = g_enemy[i].fly.x - PLAYER_WIDTH;
 				g_player.y = g_enemy[i].fly.y - PLAYER_HEIGHT;*/
 				//g_enemybeat++;			// エネミーを倒した数をカウント
@@ -341,14 +346,15 @@ void EnemyCut() {
 	}
 	//boss
 	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
-		if (PlayerInterval(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE
-			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSS_WIDTH, BOSS_HEIGHT) == TRUE)) {
+		if (PlayerInterval(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE
+			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE)) {
 			if (++noDamageCnt > 60 && g_boss[g_select_Stage].hp > 0) {
 				if (g_player.skillFlg == 2) {
 					g_boss[g_select_Stage].hp--;
 					noDamageCnt = 0;
 				}
-				if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+				//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+				if (g_player.attackFlg == TRUE) {
 					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
 					g_boss[g_select_Stage].hp--;
 					noDamageCnt = 0;

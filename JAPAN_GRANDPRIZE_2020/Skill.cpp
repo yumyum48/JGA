@@ -33,10 +33,11 @@ void SkillDisp_1(int aniMAX, int aniMIN) {		//間合い伸びるやつ（player.cppのPlay
 	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > 100) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
+			g_player.useSkillFlg = TRUE;
 		} else {
 			g_player.attackFlg = TRUE;
-			g_motion = 0;
 		}
+		g_motion = 0;
 	}
 	// スキル中
 	EnemyLockOn();
@@ -72,13 +73,14 @@ void SkillDisp_2(int aniMAX, int aniMIN){ //飛ばすやつ
 	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_skillAniFlg == FALSE && g_player.gauge > 100) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
+			g_player.useSkillFlg = TRUE;
 		}
 		else {
 			g_player.attackFlg = TRUE;
-			g_skill_Y = g_player.y;
-			g_skillAniFlg = TRUE;
-			g_motion = 3;
 		}
+		g_skill_Y = g_player.y;
+		g_skillAniFlg = TRUE;
+		g_motion = 3;
 	}
 
 	if(g_skillAniFlg == TRUE){
@@ -128,11 +130,12 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //上方向に延びるやつ
 	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > 100) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
+			g_player.useSkillFlg = TRUE;
 		}
 		else {
 			g_player.attackFlg = TRUE;
-			g_motion = 6;
 		}
+		g_motion = 6;
 	}
 	// スキル中
 	EnemyLockOn();

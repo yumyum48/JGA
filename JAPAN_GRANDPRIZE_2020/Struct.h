@@ -69,6 +69,7 @@ struct playerInfo {
     float gauge;      //ゲージ
     bool swordFlg; //TRUE = 抜刀, FALSE = 納刀
     int timecount; //納刀抜刀の切り替えの時間
+    bool useSkillFlg;   //スキルを使うときに納刀状態か抜刀状態か TRUE = 抜刀, FALSE = 納刀
     void Init() {   // プレイヤーの初期化
         x = 100 * PLAYER_REDUCTION;
         y = GROUND;
@@ -80,6 +81,7 @@ struct playerInfo {
         skill_MAX = 3;
         gauge = 320;
         swordFlg = FALSE;
+        useSkillFlg = FALSE;
         timecount = 0;
         skillcustom[0] = 1;
         skillcustom[1] = 0;

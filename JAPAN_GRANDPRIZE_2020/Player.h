@@ -8,20 +8,20 @@
 extern playerInfo g_player;									// プレイヤーの情報
 
 enum PlayerAnime {											// プレイヤーのアニメーション
-	CLOSE_MOVE_S = 0,			//納刀状態:走り
-	CLOSE_MOVE_E = 7,
-	OPEN_MOVE_S = 8,			//抜刀状態:走り
-	OPEN_MOVE_E = 15,
+	CLOSE_MOVE_S = 0,			//納刀状態:走り(開始)
+	CLOSE_MOVE_E = 7,			//納刀状態:走り(終了)
+	OPEN_MOVE_S = 8,			//抜刀状態:走り(開始)
+	OPEN_MOVE_E = 15,			//抜刀状態:走り(終了)
 	CLOSE_JUMP_UP = 16,			//納刀状態:ジャンプ上昇
-	CLOSE_JUMP_DOWN_S = 17,		//納刀状態:ジャンプ下降
-	CLOSE_JUMP_DOWN_E = 18,
+	CLOSE_JUMP_DOWN_S = 17,		//納刀状態:ジャンプ下降(開始)
+	CLOSE_JUMP_DOWN_E = 18,		//納刀状態:ジャンプ下降(終了)
 	OPEN_JUMP_UP = 24,			//抜刀状態:ジャンプ上昇
-	OPEN_JUMP_DOWN_S = 25,		//抜刀状態:ジャンプ下降
-	OPEN_JUMP_DOWN_E = 26,
-	SWORD_OPEN_S = 32,			//抜刀モーション
-	SWORD_OPEN_E = 33,
-	SWORD_CLOSE_S = 40,			//納刀モーション
-	SWORD_CLOSE_E = 41,
+	OPEN_JUMP_DOWN_S = 25,		//抜刀状態:ジャンプ下降(開始)
+	OPEN_JUMP_DOWN_E = 26,		//抜刀状態:ジャンプ下降(終了)
+	SWORD_OPEN_S = 32,			//抜刀モーション(開始)
+	SWORD_OPEN_E = 33,			//抜刀モーション(終了)
+	SWORD_CLOSE_S = 40,			//納刀モーション(開始)
+	SWORD_CLOSE_E = 41,			//納刀モーション(終了)
 	DAMAGE = 48					//ダメージ
 };
 
