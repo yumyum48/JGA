@@ -148,18 +148,18 @@ void BossAttackDisp() {
 	
 	
 	switch (g_boss[g_select_Stage].attackFlg) {
-		case ENEMY_DROP:
+		case BOSSATTACK_ENEMY_DROP:
 		
 			BossEnemyDropDisp();	// ã‚¢“G‚ğo‚·
 			//DrawFormatString(100, 600, 0xFF00FF, "ƒ{ƒX‚ªUŒ‚‚µ‚Ä‚Ü‚·‚æI");
 			//g_boss[BOSS_STAGE1].attackFlg = 0;
 			break;
 
-		case WATER_BULLET:
+		case BOSSATTACK_WATER_BULLET:
 			BossWaterBulletDisp();	// …’e‚Ì”­Ë
 			break;
 
-		case WAVE_ATTACK:
+		case BOSSATTACK_WAVE_ATTACK:
 			BossGenerateWave();		// ’Ã”g‚Ì”­¶
 			break;
 
@@ -178,16 +178,16 @@ void BossAttackMove() {
 	//if (g_keyInfo.keyFlg & PAD_INPUT_4) g_boss[0].attackFlg = 0;
 
 	switch (g_boss[g_select_Stage].attackFlg) {
-		case ENEMY_DROP:
+		case BOSSATTACK_ENEMY_DROP:
 			BossEnemyDropMove();	// ã‚¢“G‚ğo‚·
 			//g_boss[g_select_Stage].attackFlg = 0;
 			break;
 
-		case WATER_BULLET:
+		case BOSSATTACK_WATER_BULLET:
 			BossWaterBulletMove();	// …’e‚Ì”­Ë
 			break;
 
-		case WAVE_ATTACK:
+		case BOSSATTACK_WAVE_ATTACK:
 			BossGenerateWave();		// ’Ã”g‚Ì”­¶
 			break;
 

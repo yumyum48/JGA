@@ -65,7 +65,7 @@ void BossMove_Stage2() {
 		&& (g_boss[BOSS_STAGE2].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {					// ボスが移動していなければ
 		
-		attackSelect = InputRand(0, ENEMY_DROP, ENEMY_DROP);								//乱数で攻撃するか移動をするかを決定
+		attackSelect = InputRand(0, BOSSATTACK_ENEMY_DROP, BOSSATTACK_ENEMY_DROP);								//乱数で攻撃するか移動をするかを決定
 
 		if (attackSelect != 0) {
 			g_boss[BOSS_STAGE2].attackFlg = attackSelect;				// 攻撃する場合、フラグに対応した数字を入れる
@@ -77,7 +77,7 @@ void BossMove_Stage2() {
 		}
 	}
 
-	if (attackFlgBuf == 0 && g_boss[BOSS_STAGE2].attackFlg == ENEMY_DROP) {
+	if (attackFlgBuf == 0 && g_boss[BOSS_STAGE2].attackFlg == BOSSATTACK_ENEMY_DROP) {
 		for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
 			g_enemy[i].walk.BossAreaWlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
 		}

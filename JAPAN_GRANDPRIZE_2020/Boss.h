@@ -48,9 +48,9 @@ enum {	// ボスの配列
 };
 
 enum {	// ボスの攻撃判断
-	ENEMY_DROP = 1,			// 雑魚敵の生成
-	WATER_BULLET,			// 水弾での攻撃
-	WAVE_ATTACK,			// 津波での攻撃
+	BOSSATTACK_ENEMY_DROP = 1,			// 雑魚敵の生成
+	BOSSATTACK_WATER_BULLET,			// 水弾での攻撃
+	BOSSATTACK_WAVE_ATTACK,			// 津波での攻撃
 };
 
 enum { // ボスの動きパターン
