@@ -11,8 +11,7 @@
 #include "GameScene.h"
 #include "Init.h"
 
-#define BOSS_STAGE2_WIDTH (271)		// ボスの横幅
-#define BOSS_STAGE2_HEIGHT (271)	// ボスの縦幅
+
 #define BOSS_WAVE_WIDTH		200		// 津波の横幅
 #define BOSS_WAVE_HEIGHT	150		// 津波の縦幅
 
@@ -43,6 +42,7 @@ void BossDisp_Stage2() {
 	//DrawBox(g_mouseInfo.mouseX, g_mouseInfo.monseY, g_mouseInfo.mouseX + bw, g_mouseInfo.monseY + bh, 0x00FF00, TRUE);
 
 	//DrawRotaGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, 0.9f, 0.0, g_pic.enemy_walk[0], FALSE, TRUE);
+
 	DrawBox(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, g_boss[BOSS_STAGE2].x + BOSS_STAGE2_WIDTH, g_boss[BOSS_STAGE2].y + BOSS_STAGE2_HEIGHT, 0x00FF00, TRUE);
 	
 	if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// ボスが攻撃していれば
@@ -50,6 +50,8 @@ void BossDisp_Stage2() {
 		//g_boss[BOSS_STAGE2].y = 160;
 		BossAttackDisp();	// ボスの攻撃
 	}
+
+
 }
 
 // 動き
@@ -75,26 +77,26 @@ void BossMove_Stage2() {
 		}
 	}
 
-	
-	if (moveFlg != BOSSMOVE_NOMOTION) {					// 行動パターン
-
-		BossMoveMotion(&coolTime, &moveFlg);	// ボスの移動スピードをだんだんと落とす
-	}
-
 	if (attackFlgBuf == 0 && g_boss[BOSS_STAGE2].attackFlg == ENEMY_DROP) {
 		for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
 			g_enemy[i].walk.BossAreaWlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
 		}
 	}
+	if (moveFlg != BOSSMOVE_NOMOTION) {					// 行動パターン
+
+		BossMoveMotion(&coolTime, &moveFlg);	// ボスの移動スピードをだんだんと落とす
+	}
+
+	
 	if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// ボスが攻撃していれば
 		//g_boss[BOSS_STAGE2].x = 700;
 		//g_boss[BOSS_STAGE2].y = 160;
 		BossAttackMove();	// ボスの攻撃
 	}
 
+
 	// バッファーにボスのattackフラグを格納
 	attackFlgBuf = g_boss[BOSS_STAGE2].attackFlg;
-
 	Boss_Knock_Down();
 }
 

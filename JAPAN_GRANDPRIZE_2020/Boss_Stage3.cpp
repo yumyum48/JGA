@@ -20,7 +20,7 @@
 // 描画
 void BossDisp_Stage3() {
 	// ボスの大きさ測るメーター
-	static int bw = 0;
+	/*static int bw = 0;
 	static int bh = 0;
 	if (g_keyInfo.nowKey & PAD_INPUT_UP) {
 		bh--;
@@ -35,9 +35,11 @@ void BossDisp_Stage3() {
 		bw--;
 	}
 	DrawFormatString(300, 300, 0xFF0000, "bw = %d \n bh = %d", bw, bh);
-	DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + bw, g_mouseInfo.mouseY + bh, 0x00FF00, TRUE);
+	DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + bw, g_mouseInfo.mouseY + bh, 0x00FF00, TRUE);*/
 
 	//DrawRotaGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, 0.9f, 0.0, g_pic.enemy_walk[0], FALSE, TRUE);
+	g_boss[BOSS_STAGE3].x = 822;
+	g_boss[BOSS_STAGE3].y = 290;
 	DrawBox(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, g_boss[BOSS_STAGE3].x + BOSS_STAGE3_WIDTH, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT, 0x00FF00, TRUE);
 
 	//if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// ボスが攻撃していれば
@@ -58,25 +60,22 @@ void BossMove_Stage3() {
 		&& (g_boss[BOSS_STAGE3].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {					// ボスが移動していなければ
 
-		attackSelect = InputRand(0, ENEMY_DROP, ENEMY_DROP);								//乱数で攻撃するか移動をするかを決定
+		attackSelect = InputRand(1, 1, 1);								//乱数で攻撃するか移動をするかを決定
 
 		if (attackSelect != 0) {
 			g_boss[BOSS_STAGE3].attackFlg = attackSelect;				// 攻撃する場合、フラグに対応した数字を入れる
 			coolTime = 0;
 		}
-		else {	// 攻撃をしないとき
-			moveFlg = BOSSMOVE_SPEEDDOWN;
-
-		}
+		//else {	// 攻撃をしないとき
+		//	moveFlg = BOSSMOVE_SPEEDDOWN;
+		//}
 	}
 
+	//if (moveFlg != BOSSMOVE_NOMOTION) {					// 行動パターン
 
-	if (moveFlg != BOSSMOVE_NOMOTION) {					// 行動パターン
+	//	BossMoveMotion(&coolTime, &moveFlg);	// ボスの移動スピードをだんだんと落とす
+	//}
 
-		BossMoveMotion(&coolTime, &moveFlg);	// ボスの移動スピードをだんだんと落とす
-	}
-
-	
 	if (g_boss[BOSS_STAGE3].attackFlg != 0) {						// ボスが攻撃していれば
 		//g_boss[BOSS_STAGE2].x = 700;
 		//g_boss[BOSS_STAGE2].y = 160;
