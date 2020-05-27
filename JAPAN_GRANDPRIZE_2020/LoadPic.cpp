@@ -69,8 +69,10 @@ int LoadPicture() {
 	if ((g_pic.reticle = LoadGraph("image/Reticle.png")) == -1) return -1;
 
 	// ボス_１の画像読み込み
-	if (LoadDivGraph("image/Boss_1.png", 16, 8, 2, 280, 200, g_pic.boss_1_1, 0) == -1)
-		return -1;
+	if (LoadDivGraph("image/Boss_1.png", 16, 8, 2, 280, 200, g_pic.boss_1_1, 0) == -1)return -1;
+
+	// ボス_２の画像読み込み
+	if (LoadDivGraph("image/ZakoOPAll.png", 9, 9, 1, 44.4, 44, g_pic.boss_2_1, 0) == -1)return -1;
 
 	//// ボス_１の泡画像読み込み
 	//if (LoadDivGraph("image/Boss1_Water.png", 8, 8, 0, 280, 200, g_pic.boss_1_2, 0) == -1)

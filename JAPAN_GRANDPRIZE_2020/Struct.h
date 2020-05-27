@@ -41,6 +41,7 @@ struct image {
     int PlayerUI;                       //playerのUI画像
     int Life[2];                        //playerのHP画像
     int boss_1_1[16];                   // ボス_１の画像
+    int boss_2_1[9];                    // ボス_２の画像
     int skill2[4];                      //スキル2のモーション画像(仮)
     int skill3[5];                      //スキル3のモーション画像(仮)
     int selectBack;                     // セレクト画面の背景画像
@@ -236,6 +237,11 @@ struct trapInfo {
     bool dispFlg;	// トラップを出現させるかどうかのフラグ	TRUE: 出現させる FALSE: 出現させない
     void Init() {
         x = 1300;
+        y = 574;
+        dispFlg = FALSE;
+    }
+    void WaveInit(float bossX) {
+        x = bossX;
         y = 574;
         dispFlg = FALSE;
     }
