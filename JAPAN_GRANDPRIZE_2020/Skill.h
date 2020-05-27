@@ -3,6 +3,17 @@
 
 #define PLAYER_SKILLS    8								// プレイヤーの使用できるスキルの数
 
+enum {//各スキルのゲージ使用量
+	SKILL1_GAUGE = 50,		//スキル1のゲージ使用量
+	SKILL2_GAUGE = 150,		//スキル2のゲージ使用量
+	SKILL3_GAUGE = 100,		//スキル3のゲージ使用量
+	SKILL4_GAUGE = 150,		//スキル4のゲージ使用量
+	SKILL5_GAUGE = 200,		//スキル5のゲージ使用量
+	SKILL6_GAUGE = 200,		//スキル6のゲージ使用量
+	SKILL7_GAUGE = 100,		//スキル7のゲージ使用量
+	SKILL8_GAUGE = 100,		//スキル8のゲージ使用量
+};
+
 extern bool g_skillswitch;
 
 void SkillDisp_1(int aniMAX, int aniMIN);											//

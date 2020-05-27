@@ -42,8 +42,9 @@ struct image {
     int Life[2];                        //playerのHP画像
     int boss_1_1[16];                   // ボス_１の画像
     int boss_2_1[9];                    // ボス_２の画像
-    int skill2[4];                      //スキル2のモーション画像(仮)
-    int skill3[5];                      //スキル3のモーション画像(仮)
+    //int skill2[4];                      //スキル2のモーション画像(仮)
+    //int skill3[5];                      //スキル3のモーション画像(仮)
+    int skillEffect[40];                //スキルエフェクト画像
     int selectBack;                     // セレクト画面の背景画像
     int waterBullet[5];                 // ボスの水弾の画像
     int trap;                           // トラップの画像
@@ -71,6 +72,8 @@ struct playerInfo {
     bool swordFlg; //TRUE = 抜刀, FALSE = 納刀
     int timecount; //納刀抜刀の切り替えの時間
     bool useSkillFlg;   //スキルを使うときに納刀状態か抜刀状態か TRUE = 抜刀, FALSE = 納刀
+    bool barrierFlg;    //スキル6 バリアのフラグ TRUE = バリア有, FALSE = バリア無
+    int useSkillGage;   //消費するスキルゲージの量
     void Init() {   // プレイヤーの初期化
         x = 100 * PLAYER_REDUCTION;
         y = GROUND;
@@ -83,6 +86,8 @@ struct playerInfo {
         gauge = 320;
         swordFlg = FALSE;
         useSkillFlg = FALSE;
+        barrierFlg = FALSE;
+        useSkillGage = 0;
         timecount = 0;
         skillcustom[0] = 1;
         skillcustom[1] = 0;

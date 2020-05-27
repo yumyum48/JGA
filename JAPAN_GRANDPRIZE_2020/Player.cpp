@@ -39,7 +39,7 @@ void PlayerDisp() {
 		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[anime], TRUE);
 	}
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
-	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[0].hp);
+	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[g_select_Stage].hp);
 	DrawFormatString(0, 400, 0xFF0000, "%d", g_player.skillFlg);
 	
 	if (g_player.skillFlg != 0) {
@@ -54,10 +54,16 @@ void PlayerDisp() {
 	if (g_player.swordFlg == TRUE) {
 		if (g_player.gauge > 0) g_player.gauge -= 0.1;
 	} else {
-		if (g_player.gauge < 320) g_player.gauge += 1;
+		if (g_player.gauge < 320 && g_player.useSkillGage <= 0) g_player.gauge += 1;
 	}
 
-	if (g_player.attackFlg == TRUE) g_player.gauge -= 2;
+	//スキル使用時のゲージ減少
+	//if (g_player.attackFlg == TRUE) g_player.gauge -= 2;
+	if (g_player.useSkillGage > 0) {
+		g_player.useSkillGage -= g_player.skillFlg;
+		g_player.gauge -= g_player.skillFlg;
+	}
+
 	if (g_player.gauge < 0) g_player.gauge = 0;
 
 	//スキル光表示
@@ -222,7 +228,7 @@ void PlayerControl() {
 		if(g_player.useSkillFlg == TRUE)g_player.timecount = 10;
 
 	}
-	if (g_player.x > 100 && g_player.attackFlg == FALSE) {
+	if (g_player.x > 100 && g_player.attackFlg == FALSE && g_player.y >= GROUND) {
 		g_player.x -= 10.0F;
 	}
 
@@ -264,12 +270,14 @@ int SkillChange() {
 	static int skillNum = 0;
 	static int useSkill = 1;
 
-	// スキル選択
-	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
-		if (++skillNum > 2) skillNum = 0;
-	}
-	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
-		if (--skillNum < 0) skillNum = 2;
+	if (g_player.attackFlg == FALSE) {
+		// スキル選択
+		if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
+			if (++skillNum > 2) skillNum = 0,SkillInit();
+		}
+		if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
+			if (--skillNum < 0) skillNum = 2, SkillInit();
+		}
 	}
 
 	if (skillNum == 0) g_SkillSelectAicon = 0;

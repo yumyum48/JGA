@@ -28,9 +28,11 @@ int LoadPicture() {
 	if ((g_pic.gauge = LoadGraph("image/AiconGauge.png")) == -1) return -1;
 
 	//スキル2モーション(仮)
-	if (LoadDivGraph("image/skill2.png", 4, 4, 1, 200, 200, g_pic.skill2, 0) == -1) return -1;
+	//if (LoadDivGraph("image/skill2.png", 4, 4, 1, 200, 200, g_pic.skill2, 0) == -1) return -1;
 	//スキル3モーション(仮)
-	if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
+	//if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
+	//スキルエフェクト
+	if (LoadDivGraph("image/Skill_effect.png", 20, 5, 4, 400, 400, g_pic.skillEffect, 0) == -1) return -1;
 
 	//スキルアイコン
 	if (LoadDivGraph("image/SkillAicon.png", 8, 8, 1, 100, 100, g_pic.skillAicon, 0) == -1) return -1;
