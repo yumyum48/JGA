@@ -231,7 +231,7 @@ void BossLongTon_Disp() {
 }
 
 void BossLongTon_Move() {
-	static int boss_JumpFlg = OFF;
+	static int boss_JumpFlg = BOSS_3_JUMPOFF;
 	if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {
 
 	}
