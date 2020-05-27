@@ -13,10 +13,12 @@
 #include "Change_ScReen_Animation.h"
 #include "StageClear.h"
 #include "GameOver.h"
+#include "HP.h"
 // それぞれの初期化処理
 void GameInit() {
 	MapInit();			// マップデータの初期化処理
 	PlayerInit();		// プレイヤーの初期化処理
+	HpInit();			// HP関係の初期化
 	EnemyInit();		// エネミーの初期化処理
 	RainInit();			// 雨のアニメーションの初期化処理
 	BossInit();			// ボスの情報を初期化

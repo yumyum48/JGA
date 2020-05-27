@@ -276,6 +276,11 @@ struct picInfo {
         x = 0;
         y = 0;
     }
+    void Boss3_TonInit() {  // ボス３の舌の初期化
+        x = 819;
+        y = 344;
+        
+    }
     void MenuWindowInit() {     // メニュー画面の初期化
         x = 1182; 
         y = 39;

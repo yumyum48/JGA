@@ -71,7 +71,7 @@ int g_enemybeat;				// エネミーを倒した数をカウントする
 
 playerInfo g_player;			// プレイヤーの情報
 
-int g_MutekiTime;				// プレイヤーの無敵時間
+int g_noDamageCnt;				// プレイヤーの無敵時間
 
 trapInfo g_trap;				// トラップの情報
 

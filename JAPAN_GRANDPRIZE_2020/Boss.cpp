@@ -167,7 +167,7 @@ void BossAttackDisp() {
 			break;
 
 		case BOSSATTACK_LONGTON:
-
+			BossLongTon_Disp();		// ボスが舌を伸ばす攻撃
 			break;
 		default:
 			break;
@@ -178,10 +178,6 @@ void BossAttackDisp() {
 }
 // ボスの攻撃の全体管理(動き)
 void BossAttackMove() {
-
-	//DrawFormatString(100, 700, 0xFF00FF, "ボスが攻撃してますよ！");
-
-	//if (g_keyInfo.keyFlg & PAD_INPUT_4) g_boss[0].attackFlg = 0;
 
 	switch (g_boss[g_select_Stage].attackFlg) {
 		case BOSSATTACK_ENEMY_DROP:
@@ -208,6 +204,38 @@ void BossAttackMove() {
 			break;
 	}
 	
+}
+
+picInfo g_boss3_Ton;	// ボス３の舌の情報
+void BossLongTon_Disp() {
+	static int plas = 0;			// 長くしていく
+	int tonX = 819;	// 舌の画像のX座標
+	int tonY = 344;	// 舌の画像のY座標
+	int tonW = tonX + plas;
+	int tonH = tonY + 100;
+
+	DrawFormatString(500, 500, 0x0000FF, "tonX=%d\ntonW=%d", tonX, tonW);
+	DrawBox(tonX, tonY, tonW, tonH, 0xFFFF00, TRUE);
+	if (tonW > 0) {
+		plas -= 5;
+	}
+	else {
+		tonW = 0;
+	}
+	// 表示で舌は動かす
+
+
+
+
+	// X座標をマイナスしてプレイヤーに追いつかれる
+	g_boss[BOSS_STAGE3].x -= 2;
+}
+
+void BossLongTon_Move() {
+
+	if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {
+
+	}
 }
 /*********************************************
 

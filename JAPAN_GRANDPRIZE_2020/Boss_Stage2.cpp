@@ -10,7 +10,7 @@
 #include "Select.h"
 #include "GameScene.h"
 #include "Init.h"
-
+#include "HP.h"
 
 #define BOSS_WAVE_WIDTH		200		// 津波の横幅
 #define BOSS_WAVE_HEIGHT	150		// 津波の縦幅
@@ -106,7 +106,7 @@ void BossGenerateWave() {
 	const int rise = 3;						// ジャンプ時の上昇力
 	static int animationMax[2] = { 0, 0 };	// アニメーション最後尾	0:ボスジャンプ	1:津波
 	static int anime[2] = { 0, 0 };			// 現在表示している画像	0:ジャンプ  1:津波
-	static int noDamegeCnt = 60;			// ダメージを受け付けない時間
+	//static int g_noDamegeCnt = 60;			// ダメージを受け付けない時間
 	static int time = 0;					// アニメーション用時間変数
 	static float moveY = 0;					// 重力の加算用変数
 	static bool jumpFlg = FALSE;			// ボスがジャンプ済みかの判断用変数	TRUE:ジャンプ済み 
@@ -142,9 +142,6 @@ void BossGenerateWave() {
 
 	}
 
-	// フレーム単位の被弾数の調整
-	if (noDamegeCnt++ < 60);
-
 	// 津波のアニメーション
 	if (g_wave.dispFlg == TRUE) {
 		g_wave.x -= g_speedLevel;
@@ -154,11 +151,11 @@ void BossGenerateWave() {
 			g_wave.x + BOSS_WAVE_WIDTH, g_wave.y + BOSS_WAVE_HEIGHT, 0x0000FF, TRUE);
 
 		// 津波がプレイヤーに当たった際の処理
-		if (noDamegeCnt >= 60
+		if (g_noDamageCnt >= 60
 			&& PlayerHitCheck(g_wave.x, g_wave.y,
 				g_wave.x + BOSS_WAVE_WIDTH, g_wave.y + BOSS_WAVE_HEIGHT) == 1) {
 
-			noDamegeCnt = 0;
+			g_noDamageCnt = 0;
 			g_player.hp--;
 			g_boss[BOSS_STAGE2].attackFlg = 0;
 		}

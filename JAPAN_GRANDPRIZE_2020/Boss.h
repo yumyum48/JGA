@@ -107,7 +107,7 @@ void BossAreaEnemyDisp();				// ボスが出現しているときの雑魚の表示
 void BossGenerateWave();				// ボスが津波を発生させて攻撃
 void BossJumpOrPoison_Disp();			// ボスがジャンプして稀に毒を出す表示		
 void BossJumpOrPoison_Move();			// ボスがジャンプして稀に毒を出す動き
-
+void BossLongTon_Disp();				// ボスが舌を伸ばして攻撃する攻撃の表示
 void (* const BossDisp[3])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,

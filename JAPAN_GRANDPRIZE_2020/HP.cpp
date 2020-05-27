@@ -36,17 +36,16 @@ void HpDisp(void) {
 
 // HP‚ÌŒ¸­
 void HpMove(void) {
-	static int noDamageCnt = 61;
 
-	if(noDamageCnt++ < 60)DrawBox(g_player.x, g_player.y, g_player.x + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, 0xffffff, FALSE);
+	if(g_noDamageCnt++ < 60)DrawBox(g_player.x, g_player.y, g_player.x + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, 0xffffff, FALSE);
 
 	//if (g_keyInfo.keyFlg & PAD_INPUT_A) --g_player.hp;
 
 	// ƒgƒ‰ƒbƒv‚Æ‚ÌÚG”»’è
-	if (noDamageCnt > 60 && g_player.attackFlg == FALSE) {
+	if (g_noDamageCnt > 60 && g_player.attackFlg == FALSE) {
 		if (PlayerHitCheck(g_trap.x, g_trap.y, g_trap.x + 100, g_trap.y + 100) == TRUE) {
 			--g_player.hp;
-			noDamageCnt = 0;		// –³“GŠÔ”­“®
+			g_noDamageCnt = 0;		// –³“GŠÔ”­“®
 			g_trap.Init();																// ƒgƒ‰ƒbƒv‚ª‰æ–ÊŠO‚É“ü‚Á‚½ê‡‰Šú‰»
 			g_trap.dispFlg = FALSE;
 		}
@@ -55,17 +54,17 @@ void HpMove(void) {
 	// ã‚¢“G‚Æ‚ÌÚG”»’è
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		if (g_enemy[i].walk.flg == TRUE
-			&& noDamageCnt > 60) {		//’nã‚Ì“G‚Ì“–‚½‚è”»’è
+			&& g_noDamageCnt > 60) {		//’nã‚Ì“G‚Ì“–‚½‚è”»’è
 			if (PlayerHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE) {
 				--g_player.hp;
-				noDamageCnt = 0;		// –³“GŠÔ”­“®
+				g_noDamageCnt = 0;		// –³“GŠÔ”­“®
 			}
 		}
 		if (g_enemy[i].fly.flg == TRUE
-			&& noDamageCnt > 60) {		//‹ó’†‚Ì“G‚Ì“–‚½‚è”»’è
+			&& g_noDamageCnt > 60) {		//‹ó’†‚Ì“G‚Ì“–‚½‚è”»’è
 			if (PlayerHitCheck(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE) {
 				--g_player.hp;
-				noDamageCnt = 0;		// –³“GŠÔ”­“®
+				g_noDamageCnt = 0;		// –³“GŠÔ”­“®
 			}
 		}
 	}
@@ -83,6 +82,9 @@ void HpMove(void) {
 	}
 }
 
+void HpInit() {
+	g_noDamageCnt = 61;	// –³“GŠÔ‰ğœó‘Ô‚Ö‚Æ‰Šú‰»
+}
 //// ƒqƒbƒgƒ|ƒCƒ“ƒg‚ÌŒ¸­
 //void DecreaseHP(void) {
 //	//if (g_keyInfo.keyFlg & PAD_INPUT_A) --g_player.hp;
