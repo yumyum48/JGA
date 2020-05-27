@@ -61,6 +61,11 @@ enum { // ボスの動きパターン
 	BOSSMOVE_SPEEDDOWN,		// ボスがプレイヤーに追いつかれる動き
 };
 
+enum {	// ボス３のジャンプフラグ操作
+	BOSS_3_JUMPOFF,
+	BOSS_3_JUMPON,
+	BOSS_3_DOWN,
+};
 struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
 	int x, y;
 

@@ -90,7 +90,7 @@ struct playerInfo {
         useSkillGage = 0;
         timecount = 0;
         skillcustom[0] = 1;
-        skillcustom[1] = 0;
+        skillcustom[1] = 4;
         skillcustom[2] = 0;
     }
 

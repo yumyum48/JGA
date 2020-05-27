@@ -47,11 +47,7 @@ void BossDisp_Stage3() {
 }
 
 
-enum {	// ボス３のジャンプフラグ操作
-	OFF,
-	JUMP,
-	DOWN,
-};
+
 
 // 動き(これクラスのがよくね？?ね？)メモ：ブラッシュアップでボスが円を描くようにジャンプさせる
 void BossMove_Stage3() {
@@ -60,38 +56,38 @@ void BossMove_Stage3() {
 	//static int attackSelect = 0;					// ボスの攻撃選択
 	int boss_MaxUp = 97;							// ボス３がジャンプしていけるY座標最高度
 	int boss_MaxDown = 290;							// ボス３の落下した際のY地点
-	static int boss_JumpFlg = OFF;					// ボスのジャンプをするフラグ0: 下降する地面なら座標変わらずそのまま　1:ジャンプする 2: 下降する
+	static int boss_JumpFlg = BOSS_3_JUMPOFF;					// ボスのジャンプをするフラグ0: 下降する地面なら座標変わらずそのまま　1:ジャンプする 2: 下降する
 	
 	//	ボスがジャンプをするのか攻撃をするのかを判断する(乱数で決定)
-	if( (g_boss[BOSS_STAGE3].y >= boss_MaxDown) && (coolTime++ >= 15) && (boss_JumpFlg == OFF) && (g_boss[BOSS_STAGE3].attackFlg == 0) ){	// 地面にいるとき クールタイムが一定時間たっているとき ボスがジャンプしている時　ボスが攻撃していないとき
+	if( (g_boss[BOSS_STAGE3].y >= boss_MaxDown) && (coolTime++ >= 15) && (boss_JumpFlg == BOSS_3_JUMPOFF) && (g_boss[BOSS_STAGE3].attackFlg == 0) ){	// 地面にいるとき クールタイムが一定時間たっているとき ボスがジャンプしている時　ボスが攻撃していないとき
 			
 		int num = GetRand(2);
 		if (num == 0) {
 			g_boss[BOSS_STAGE3].attackFlg = BOSSATTACK_LONGTON;	// 舌を伸ばす攻撃
 		}
 		else {
-			boss_JumpFlg = JUMP;
+			boss_JumpFlg = BOSS_3_JUMPON;
 		}
 
 	}
 	//coolTime = 0;
-	if (boss_JumpFlg == JUMP) {	// 上昇
+	if (boss_JumpFlg == BOSS_3_JUMPON) {	// 上昇
 		if (g_boss[BOSS_STAGE3].y >= boss_MaxUp) {		// ボスを特定地点まで上に上げる
 			g_boss[BOSS_STAGE3].y -= 2;
 		}
 		else if (g_boss[BOSS_STAGE3].y < boss_MaxUp) {	// 特定地点まで来たら座標を固定
 			g_boss[BOSS_STAGE3].y = boss_MaxUp;
-			boss_JumpFlg = DOWN;	// 下降させる
+			boss_JumpFlg = BOSS_3_DOWN;	// 下降させる
 
 		}
 	}
-	else if (boss_JumpFlg == DOWN) {	// 下降
+	else if (boss_JumpFlg == BOSS_3_DOWN) {	// 下降
 		if (g_boss[BOSS_STAGE3].y < boss_MaxDown) {		// ボスを特定地点まで上に上げる
 			g_boss[BOSS_STAGE3].y += 2;
 		}
 		else if (g_boss[BOSS_STAGE3].y >= boss_MaxDown) {	// 特定地点まで来たら座標を固定
 			g_boss[BOSS_STAGE3].y = boss_MaxDown;
-			boss_JumpFlg = OFF;	// ジャンプフラグをオフへ
+			boss_JumpFlg = BOSS_3_JUMPOFF;	// ジャンプフラグをオフへ
 			coolTime = 0;		// クールタイムを初期化
 		}
 

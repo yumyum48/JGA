@@ -11,6 +11,7 @@
 #include "GameScene.h"
 #include "Init.h"
 #include "Macro.h"
+#include "HP.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -225,14 +226,12 @@ void BossLongTon_Disp() {
 	// 表示で舌は動かす
 
 
-
-
 	// X座標をマイナスしてプレイヤーに追いつかれる
 	g_boss[BOSS_STAGE3].x -= 2;
 }
 
 void BossLongTon_Move() {
-
+	static int boss_JumpFlg = OFF;
 	if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {
 
 	}
