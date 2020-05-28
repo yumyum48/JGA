@@ -199,7 +199,7 @@ void BossAttackMove() {
 			break;
 
 		case BOSSATTACK_LONGTON:
-
+			BossLongTon_Move();
 			break;
 		default:
 			break;
@@ -210,13 +210,11 @@ void BossAttackMove() {
 picInfo g_boss3_Ton;	// ボス３の舌の情報
 void BossLongTon_Disp() {
 	static int plas = 0;			// 長くしていく
-	int tonX = 819;	// 舌の画像のX座標
-	int tonY = 344;	// 舌の画像のY座標
-	int tonW = tonX + plas;
-	int tonH = tonY + 100;
+	int tonW = g_boss3_Ton.x + plas;
+	int tonH = g_boss3_Ton.y + 100;
 
-	DrawFormatString(500, 500, 0x0000FF, "tonX=%d\ntonW=%d", tonX, tonW);
-	DrawBox(tonX, tonY, tonW, tonH, 0xFFFF00, TRUE);
+	//DrawFormatString(500, 500, 0x0000FF, "tonX=%d\ntonW=%d", tonX, tonW);
+	DrawBox(g_boss3_Ton.x, g_boss3_Ton.y, tonW, tonH, 0xFFFF00, TRUE);
 	if (tonW > 0) {
 		plas -= 5;
 	}
@@ -225,16 +223,79 @@ void BossLongTon_Disp() {
 	}
 	// 表示で舌は動かす
 
+	DrawBox(822, 97, 822+10, 97+10, 0x00FF00, TRUE);
 
-	// X座標をマイナスしてプレイヤーに追いつかれる
-	g_boss[BOSS_STAGE3].x -= 2;
+	if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {		// ボスが攻撃されたら攻撃中断してジャンプして逃げる
+		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
+		plas = 0;
+
+		//boss_JumpFlg = BOSS_3_JUMPON;
+	}															   // ボスがプレイヤーに当たったら、ダメージを与えて逃げる
+	else if (PlayerHitCheck(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, BOSS_STAGE3_WIDTH, BOSS_STAGE3_HEIGHT) == TRUE) {
+		g_player.hp--;
+		g_noDamageCnt = 0;
+		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
+		plas = 0;
+	}
 }
 
 void BossLongTon_Move() {
-	static int boss_JumpFlg = BOSS_3_JUMPOFF;
-	if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {
+
+	g_boss[BOSS_STAGE3].x -= 2;
+
+	//if (Boss_3_Jump(&coolTime, &boss_JumpFlg, 1) == TRUE) {
+	//	g_boss[BOSS_STAGE3].attackFlg = 0;	// attackフラグをオフへ
+	//}
+}
+
+bool Boss_3_Jump(int *coolTime, int *boss_JumpFlg, int jumpType) {
+	int boss_MaxUp = 97;							// ボス３がジャンプしていけるY座標最高度
+	int boss_MaxDown = 290;							// ボス３の落下した際のY地点
+	int boss_startX = 822;							// ボス３のX座標の初期値
+
+
+	if (*boss_JumpFlg == BOSS_3_JUMPON) {	// 上昇
+		if (g_boss[BOSS_STAGE3].y >= boss_MaxUp) {		// ボスを特定地点まで上に上げる
+			
+			if (jumpType == 1) {	// 受けたジャンプフラグが攻撃中なのかどうかを確認して１なら横に飛ばす
+				if (g_boss[BOSS_STAGE3].x < boss_startX) {
+					g_boss[BOSS_STAGE3].x += 6;	// ボスが横に吹っ飛ぶ
+					g_boss[BOSS_STAGE3].y -= 2;	// 若干上に上がりながら
+				}
+				else {
+					*boss_JumpFlg = BOSS_3_DOWN;	// 下降させる
+				}
+			}
+			else {
+
+				g_boss[BOSS_STAGE3].y -= 2;	// 真上にジャンプする
+			}
+		}
+		else if (g_boss[BOSS_STAGE3].y < boss_MaxUp) {	// 特定地点まで来たら座標を固定
+			g_boss[BOSS_STAGE3].y = boss_MaxUp;			
+			*boss_JumpFlg = BOSS_3_DOWN;	// 下降させる
+
+		}
+	}
+	else if (*boss_JumpFlg == BOSS_3_DOWN) {	// 下降
+		if (g_boss[BOSS_STAGE3].y < boss_MaxDown) {		// ボスを特定地点まで上に上げる
+			g_boss[BOSS_STAGE3].y += 2;
+		}
+		else if (g_boss[BOSS_STAGE3].y >= boss_MaxDown) {	// 特定地点まで来たら座標を固定
+			//g_boss[BOSS_STAGE3].x = boss_startX;
+			g_boss[BOSS_STAGE3].y = boss_MaxDown;
+			
+			*boss_JumpFlg = BOSS_3_JUMPOFF;	// ジャンプフラグをオフへ
+			*coolTime = 0;		// クールタイムを初期化
+			return TRUE;
+		}
+
 
 	}
+
+	return FALSE;
+
+
 }
 /*********************************************
 
@@ -471,7 +532,22 @@ bool BossDamageCheck(int bossHp) {
 	bossHpBuf = bossHp;
 	return FALSE;
 }
+/***********************************************************
 
+// ボスが攻撃を終えたかを調べる関数TRUE: ボスの攻撃終了 FALSE: ボスは攻撃中、または終了してしばらくたっている
+
+***********************************************************/
+bool BossAttackCheck(int bossAttackFlg) {
+	static int bossAttackBuf = bossAttackFlg;
+
+	if (bossAttackFlg == 0 && bossAttackBuf != 0) {		
+		bossAttackBuf = bossAttackFlg;
+		return TRUE;
+	}
+
+	bossAttackBuf = bossAttackFlg;
+	return FALSE;
+}
 
 /***********************************************************
 
@@ -482,5 +558,6 @@ void BossInit() {
 	for (int i = BOSS_STAGE1; i < BOSS_MAX; i++) {
 		g_boss[i].Init_Stage(i);
 	}
+	g_boss3_Ton.Boss3_TonInit();
 
 }
