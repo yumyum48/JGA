@@ -225,6 +225,7 @@ void BossLongTon_Disp() {
 
 	DrawBox(822, 97, 822+10, 97+10, 0x00FF00, TRUE);
 
+
 	if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {		// ボスが攻撃されたら攻撃中断してジャンプして逃げる
 		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
 		plas = 0;
@@ -556,8 +557,8 @@ bool BossAttackCheck(int bossAttackFlg) {
 ***********************************************************/
 void BossInit() {
 	for (int i = BOSS_STAGE1; i < BOSS_MAX; i++) {
-		g_boss[i].Init_Stage(i);
+		g_boss[i].Init_Stage(i);		// 全ステージのボスの初期化
 	}
-	g_boss3_Ton.Boss3_TonInit();
-
+	g_boss3_Ton.Boss3_TonInit();	// ステージ３のボスの舌の初期化
+	Boss_Stage4_Init();	// ボスステージ４の雲の初期化
 }

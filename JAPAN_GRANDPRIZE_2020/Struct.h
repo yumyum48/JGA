@@ -172,8 +172,8 @@ struct bossInfo {     // ボスの情報
             break;
         case 3:         // ステージ４のボスを初期化
             hp = 10;
-            x = 872;
-            y = 160;
+            x = 843;
+            y = 45 + 286;
             popflg = 0;
             attackFlg = 0;
             break;
@@ -280,9 +280,10 @@ struct slowInfo {
 };
 
 struct picInfo {
-    int x;          //X座標
-    int y;          //Y座標
-
+    int x;          // X座標
+    int y;          // Y座標
+    int w;          // 幅
+    int h;          // 高さ
     picInfo() {
         x = 0;
         y = 0;
@@ -291,6 +292,13 @@ struct picInfo {
         x = 819;
         y = 344;
         
+    }
+    void Boss4_CloudInit() {    // ボス４の雲の初期化
+        x = 843;
+        y = 45;
+        w = x + 314;    // 座標をX～にする
+        h = y + 286;    // 座標をY～にする
+
     }
     void MenuWindowInit() {     // メニュー画面の初期化
         x = 1182; 
