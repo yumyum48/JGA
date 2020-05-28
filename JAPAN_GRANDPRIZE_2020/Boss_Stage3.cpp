@@ -47,21 +47,24 @@ void BossDisp_Stage3() {
 }
 
 
-
-
 // 動き(これクラスのがよくね？?ね？)メモ：ブラッシュアップでボスが円を描くようにジャンプさせる
 void BossMove_Stage3() {
 	static int coolTime = 0;						// 硬直時間
-	//static int moveFlg = BOSSMOVE_NOMOTION;			// 敵が移動するだけのフラグ　0:移動しない 1:上下に移動しながらプレイヤーに寄ってくる
-	//static int attackSelect = 0;					// ボスの攻撃選択
-	int boss_MaxUp = 97;							// ボス３がジャンプしていけるY座標最高度
 	int boss_MaxDown = 290;							// ボス３の落下した際のY地点
-	static int boss_JumpFlg = BOSS_3_JUMPOFF;					// ボスのジャンプをするフラグ0: 下降する地面なら座標変わらずそのまま　1:ジャンプする 2: 下降する
-	
+	static int boss_JumpFlg = BOSS_3_JUMPOFF;		// ボスのジャンプをするフラグ0: 下降する地面なら座標変わらずそのまま　1:ジャンプする 2: 下降する
+	int boss_startX = 822;							// ボス３のX座標の初期値
+
+
+	int num = 0;//GetRand(2);
+	if (BossAttackCheck(g_boss[BOSS_STAGE3].attackFlg) == TRUE)	// ボスが前フレームで攻撃をしていたかを確認
+		num = 1;	// していれば、座標調整のため強制ジャンプ
+
 	//	ボスがジャンプをするのか攻撃をするのかを判断する(乱数で決定)
-	if( (g_boss[BOSS_STAGE3].y >= boss_MaxDown) && (coolTime++ >= 15) && (boss_JumpFlg == BOSS_3_JUMPOFF) && (g_boss[BOSS_STAGE3].attackFlg == 0) ){	// 地面にいるとき クールタイムが一定時間たっているとき ボスがジャンプしている時　ボスが攻撃していないとき
+	if( (g_boss[BOSS_STAGE3].y >= boss_MaxDown) 
+	&&  (coolTime++ >= 15) 
+	&& (boss_JumpFlg == BOSS_3_JUMPOFF) 
+	&& (g_boss[BOSS_STAGE3].attackFlg == 0) ) {	// 地面にいるとき クールタイムが一定時間たっているとき ボスがジャンプしている時　ボスが攻撃していないとき
 			
-		int num = GetRand(2);
 		if (num == 0) {
 			g_boss[BOSS_STAGE3].attackFlg = BOSSATTACK_LONGTON;	// 舌を伸ばす攻撃
 		}
@@ -71,31 +74,18 @@ void BossMove_Stage3() {
 
 	}
 	//coolTime = 0;
-	if (boss_JumpFlg == BOSS_3_JUMPON) {	// 上昇
-		if (g_boss[BOSS_STAGE3].y >= boss_MaxUp) {		// ボスを特定地点まで上に上げる
-			g_boss[BOSS_STAGE3].y -= 2;
-		}
-		else if (g_boss[BOSS_STAGE3].y < boss_MaxUp) {	// 特定地点まで来たら座標を固定
-			g_boss[BOSS_STAGE3].y = boss_MaxUp;
-			boss_JumpFlg = BOSS_3_DOWN;	// 下降させる
-
-		}
+	int jumpTypeflg = 0;	// 0なら真上 1ならX座標を修正しながら戻る
+	if (g_boss[BOSS_STAGE3].x < boss_startX) {
+		jumpTypeflg = 1;
 	}
-	else if (boss_JumpFlg == BOSS_3_DOWN) {	// 下降
-		if (g_boss[BOSS_STAGE3].y < boss_MaxDown) {		// ボスを特定地点まで上に上げる
-			g_boss[BOSS_STAGE3].y += 2;
-		}
-		else if (g_boss[BOSS_STAGE3].y >= boss_MaxDown) {	// 特定地点まで来たら座標を固定
-			g_boss[BOSS_STAGE3].y = boss_MaxDown;
-			boss_JumpFlg = BOSS_3_JUMPOFF;	// ジャンプフラグをオフへ
-			coolTime = 0;		// クールタイムを初期化
-		}
-
-
+	else {
+		g_boss[BOSS_STAGE3].x = boss_startX;
+		jumpTypeflg = 0;
 	}
+	Boss_3_Jump(&coolTime, &boss_JumpFlg, jumpTypeflg);
+
 	if (g_boss[BOSS_STAGE3].attackFlg != 0) {						// ボスが攻撃していれば
 		BossAttackMove();	// ボスの攻撃
-		
 		
 	}
 	
