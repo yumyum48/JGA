@@ -5,9 +5,12 @@
 #include "Struct.h"
 #include "Player.h"
 #include "Sounds.h"
+#include "Picture.h"
 
 static int g_Skill_Num = 1;	//選択しているスキル番号
 int g_set = 0;			//セットした番号
+int debug = 1;
+int con_1, con_2;		//配列コントロール変数
 
 void SkillCustom() {
 	SkillCustom_Move();
@@ -23,6 +26,8 @@ void SkillCustom_Disp() {
 	DrawFormatString(10, 60, 0xFFFFFF, "%d", g_player.skillcustom[1]);
 	DrawFormatString(20, 60, 0xFFFFFF, "%d", g_player.skillcustom[2]);
 	DrawFormatString(0, 80, 0xFFFFFF, "%d", g_Skill_Num);
+	DrawFormatString(10, 80, 0xFFFFFF, "%d", debug);
+
 
 	DrawFormatString(0, 100, 0xFFFFFF, "%d", g_set);
 
@@ -30,58 +35,46 @@ void SkillCustom_Disp() {
 	DrawString(800, 800, "↑ボタンでスキル決定", 0xFFFFFF);
 	DrawString(800, 900, "↓ボタンでスキル解除", 0xFFFFFF);
 
-	//スキル選択見た目
-	DrawCircle(600, 450, 100, 0xFF0000, TRUE);			//スキル１
-	DrawCircle(330, 380, 70, 0x00FF00, TRUE);			//スキル２
-	DrawCircle(240, 230, 40, 0xFFFF00, TRUE);			//スキル３
-	DrawCircle(450, 145, 20, 0xFF00FF, TRUE);			//スキル４
-	DrawCircle(805, 145, 20, 0x00FFFF, TRUE);			//スキル５
-	DrawCircle(1000, 230, 40, 0xFFFFFF, TRUE);			//スキル６
-	DrawCircle(870, 380, 70, 0x0000FF, TRUE);			//スキル７
+	SkillChoice_Dis();
 
-	DrawBox(35, 650, 280, 735, 0xFFFFFF, FALSE);
+	DrawExtendGraph(35, 650, 320, 735, g_pic.skilChoiceBox, FALSE);
 
 	//スキル格納の場所
 	{
 		if (g_player.skillcustom[0] != 0) {
 			switch (g_player.skillcustom[0]) {
-			case 1: DrawCircle(85, 695, 30, 0xFF0000, TRUE); break;
-			case 2: DrawCircle(85, 695, 30, 0x00FF00, TRUE); break;
-			case 3: DrawCircle(85, 695, 30, 0xFFFF00, TRUE); break;
-			case 4: DrawCircle(85, 695, 30, 0xFF00FF, TRUE); break;
-			case 5: DrawCircle(85, 695, 30, 0x00FFFF, TRUE); break;
-			case 6: DrawCircle(85, 695, 30, 0xFFFFFF, TRUE); break;
-			case 7: DrawCircle(85, 695, 30, 0x0000FF, TRUE); break;
+			case 1: DrawRotaGraph(83, 695, 1, 0,  g_pic.skillAicon[1], TRUE, FALSE);break;   //DrawCircle(85, 695, 30, 0xFF0000, TRUE); break;
+			case 2: DrawRotaGraph(83, 695, 1, 0, g_pic.skillAicon[2], TRUE, FALSE); break;
+			case 3: DrawRotaGraph(83, 695, 1, 0, g_pic.skillAicon[3], TRUE, FALSE); break;
+			case 4: DrawRotaGraph(83, 695, 1, 0, g_pic.skillAicon[4], TRUE, FALSE); break;
+			case 5: DrawRotaGraph(83, 695, 1, 0, g_pic.skillAicon[5], TRUE, FALSE); break;
+			case 6: DrawRotaGraph(83, 695, 1, 0, g_pic.skillAicon[6], TRUE, FALSE); break;
+			case 7: DrawRotaGraph(83, 695, 1, 0, g_pic.skillAicon[7], TRUE, FALSE); break;
 			default: break;
 			}
 		}
 		if (g_player.skillcustom[1] != 0) {
-			if (g_player.skillcustom[0] != g_player.skillcustom[1]) {
-				switch (g_player.skillcustom[1]) {
-				case 1: DrawCircle(155, 695, 30, 0xFF0000, TRUE); break;
-				case 2: DrawCircle(155, 695, 30, 0x00FF00, TRUE); break;
-				case 3: DrawCircle(155, 695, 30, 0xFFFF00, TRUE); break;
-				case 4: DrawCircle(155, 695, 30, 0xFF00FF, TRUE); break;
-				case 5: DrawCircle(155, 695, 30, 0x00FFFF, TRUE); break;
-				case 6: DrawCircle(155, 695, 30, 0xFFFFFF, TRUE); break;
-				case 7: DrawCircle(155, 695, 30, 0x0000FF, TRUE); break;
-				default: break;
-				}
+			switch (g_player.skillcustom[1]) {
+			case 1: DrawRotaGraph(178, 695, 1, 0, g_pic.skillAicon[1], TRUE, FALSE); break;
+			case 2: DrawRotaGraph(178, 695, 1, 0, g_pic.skillAicon[2], TRUE, FALSE);  break;
+			case 3: DrawRotaGraph(178, 695, 1, 0, g_pic.skillAicon[3], TRUE, FALSE);  break;
+			case 4: DrawRotaGraph(178, 695, 1, 0, g_pic.skillAicon[4], TRUE, FALSE);  break;
+			case 5: DrawRotaGraph(178, 695, 1, 0, g_pic.skillAicon[5], TRUE, FALSE);  break;
+			case 6: DrawRotaGraph(178, 695, 1, 0, g_pic.skillAicon[6], TRUE, FALSE);  break;
+			case 7: DrawRotaGraph(178, 695, 1, 0, g_pic.skillAicon[7], TRUE, FALSE);  break;
+			default: break;
 			}
 		}
 		if (g_player.skillcustom[2] != 0) {
-			if (g_player.skillcustom[0] != g_player.skillcustom[2]
-				&& g_player.skillcustom[1] != g_player.skillcustom[2]) {
-				switch (g_player.skillcustom[2]) {
-				case 1: DrawCircle(225, 695, 30, 0xFF0000, TRUE); break;
-				case 2: DrawCircle(225, 695, 30, 0x00FF00, TRUE); break;
-				case 3: DrawCircle(225, 695, 30, 0xFFFF00, TRUE); break;
-				case 4: DrawCircle(225, 695, 30, 0xFF00FF, TRUE); break;
-				case 5: DrawCircle(225, 695, 30, 0x00FFFF, TRUE); break;
-				case 6: DrawCircle(225, 695, 30, 0xFFFFFF, TRUE); break;
-				case 7: DrawCircle(225, 695, 30, 0x0000FF, TRUE); break;
-				default: break;
-				}
+			switch (g_player.skillcustom[2]) {
+			case 1: DrawRotaGraph(273, 695, 1, 0, g_pic.skillAicon[1], TRUE, FALSE); break;
+			case 2: DrawRotaGraph(273, 695, 1, 0, g_pic.skillAicon[2], TRUE, FALSE); break;
+			case 3: DrawRotaGraph(273, 695, 1, 0, g_pic.skillAicon[3], TRUE, FALSE); break;
+			case 4: DrawRotaGraph(273, 695, 1, 0, g_pic.skillAicon[4], TRUE, FALSE); break;
+			case 5: DrawRotaGraph(273, 695, 1, 0, g_pic.skillAicon[5], TRUE, FALSE); break;
+			case 6: DrawRotaGraph(273, 695, 1, 0, g_pic.skillAicon[6], TRUE, FALSE); break;
+			case 7: DrawRotaGraph(273, 695, 1, 0, g_pic.skillAicon[7], TRUE, FALSE); break;
+			default: break;
 			}
 		}
 	}
@@ -90,7 +83,13 @@ void SkillCustom_Disp() {
 
 // スキルカスタマイズの動き
 void SkillCustom_Move() {
-	int g_kari;				//仮格納
+	static int comparation;				//仮格納
+	static bool Storage = TRUE;
+
+	if (Storage == TRUE) {
+		for (int st_num = 0; st_num < 3; st_num++) g_player.skillcustom[g_set++] = 0, Storage = FALSE;
+		g_set = 0;
+	}
 
 	//スキル選択
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) if (++g_Skill_Num > 7) g_Skill_Num = 1;
@@ -98,18 +97,109 @@ void SkillCustom_Move() {
 
 	//スキル決定（仮）
 	if ((g_keyInfo.keyFlg & PAD_INPUT_UP) && g_set < 3) {
-		
-		g_kari = g_Skill_Num;
-		
-		if ((g_kari != g_player.skillcustom[0])
-			&& (g_kari != g_player.skillcustom[1])
-			&& (g_kari != g_player.skillcustom[2])) {
-			g_player.skillcustom[g_set++] = g_kari;
+
+		comparation = g_Skill_Num;
+
+		if ((comparation != g_player.skillcustom[0])
+			&& (comparation != g_player.skillcustom[1])
+			&& (comparation != g_player.skillcustom[2])) {
+			g_player.skillcustom[g_set++] = comparation;
 		}
 	}
 
 	//スキル解除(仮)
 	if ((g_keyInfo.keyFlg & PAD_INPUT_DOWN) && g_set > 0) g_player.skillcustom[--g_set] = 0;
-	
-	if (g_keyInfo.keyFlg & PAD_INPUT_A) g_gameScene = GAME_SELECT;
+
+	if (g_keyInfo.keyFlg & PAD_INPUT_A) g_gameScene = GAME_SELECT,Storage = TRUE;
+}
+
+void SkillChoice_Dis()
+{
+	static int animering = 0;
+
+	for (g_choice.choice_num = 1; g_choice.choice_num < 8; g_choice.choice_num++) {
+		DrawExtendGraph(g_choice.x[g_choice.choice_num],
+			g_choice.y[g_choice.choice_num], 
+			g_choice.w[g_choice.choice_num], 
+			g_choice.h[g_choice.choice_num], 
+			g_pic.skillAicon[g_choice.choice_num], TRUE);
+	}
+
+	if(++animering % 4 == 0) DrawRotaGraph(633, 500, 2.6, animering / 8, g_pic.skillRing[1], TRUE, FALSE);
+
+	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) SkillAni_Plus();
+	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) SkillAni_Min();
+
+}
+
+void SkillAni_Plus() {
+	int box = 7;
+
+	g_choice.x_esc = g_choice.x[7];
+	g_choice.y_esc = g_choice.y[7];
+	g_choice.w_esc = g_choice.w[7];
+	g_choice.h_esc = g_choice.h[7];
+
+	for (int i = 8; i > 1; i--) {
+		if (box + (i - 9) > 0) {
+			g_choice.x_null = g_choice.x[box];
+			g_choice.y_null = g_choice.y[box];
+			g_choice.w_null = g_choice.w[box];
+			g_choice.h_null = g_choice.h[box];
+
+			g_choice.x[box + (i - 8)] = g_choice.x[box + (i - 9)];
+			g_choice.y[box + (i - 8)] = g_choice.y[box + (i - 9)];
+			g_choice.w[box + (i - 8)] = g_choice.w[box + (i - 9)];
+			g_choice.h[box + (i - 8)] = g_choice.h[box + (i - 9)];
+
+			g_choice.x[box + (i - 9)] = g_choice.x_null;
+			g_choice.y[box + (i - 9)] = g_choice.y_null;
+			g_choice.w[box + (i - 9)] = g_choice.w_null;
+			g_choice.h[box + (i - 9)] = g_choice.h_null;
+		}
+		else {
+			g_choice.x[1] = g_choice.x_esc;
+			g_choice.y[1] = g_choice.y_esc;
+			g_choice.w[1] = g_choice.w_esc;
+			g_choice.h[1] = g_choice.h_esc;
+
+			box = 7;
+		}
+	}
+}
+
+void SkillAni_Min() {
+	int box = 1;//g_choice.mana_num;
+
+	g_choice.x_esc = g_choice.x[1];
+	g_choice.y_esc = g_choice.y[1];
+	g_choice.w_esc = g_choice.w[1];
+	g_choice.h_esc = g_choice.h[1];
+
+	for (int i = 1; i < 8; i++) {
+		if ((box + i) < 8) {
+			g_choice.x_null = g_choice.x[box];
+			g_choice.y_null = g_choice.y[box];
+			g_choice.w_null = g_choice.w[box];
+			g_choice.h_null = g_choice.h[box];
+
+			g_choice.x[box + (i - 1)] = g_choice.x[box + i];
+			g_choice.y[box + (i - 1)] = g_choice.y[box + i];
+			g_choice.w[box + (i - 1)] = g_choice.w[box + i];
+			g_choice.h[box + (i - 1)] = g_choice.h[box + i];
+
+			g_choice.x[box + i] = g_choice.x_null;
+			g_choice.y[box + i] = g_choice.y_null;
+			g_choice.w[box + i] = g_choice.w_null;
+			g_choice.h[box + i] = g_choice.h_null;
+		}
+		else {
+			g_choice.x[7] = g_choice.x_esc;
+			g_choice.y[7] = g_choice.y_esc;
+			g_choice.w[7] = g_choice.w_esc;
+			g_choice.h[7] = g_choice.h_esc;
+
+			box = 1;
+		}
+	}
 }

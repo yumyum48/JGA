@@ -40,6 +40,9 @@ int LoadPicture() {
 	if ((g_pic.skillRing[0] = LoadGraph("image/ring.png")) == -1) return -1;
 	if ((g_pic.skillRing[1] = LoadGraph("image/magatama.png")) == -1) return -1;
 
+	//スキル選択画面のセットボックス
+	if ((g_pic.skilChoiceBox = LoadGraph("image/SkillChoiceBox.png")) == -1) return -1;
+
 	// 歩く雑魚敵画像の読み込み
 	if (LoadDivGraph("image/EnemyZako1.png", 4, 4, 1, 100, 100, g_pic.enemy_walk, 0) == -1)return -1;
 

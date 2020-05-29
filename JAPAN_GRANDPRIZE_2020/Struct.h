@@ -55,7 +55,7 @@ struct image {
     int gameOverText;                   // ゲームオーバーの時の[討伐失敗]の文字
     int skillAicon[8];                  // skillのアイコン
     int skillRing[2];                   // skillの装飾
-
+    int skilChoiceBox;                  //skillcustomの選択箱
 };
 
 // プレイヤーの情報
