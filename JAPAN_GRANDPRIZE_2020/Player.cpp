@@ -346,7 +346,7 @@ void EnemyCut() {
 					g_enemy[i].walk.WalkInit();
 				}
 				else {
-					g_enemy[i].walk.BossAreaWlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+					g_enemy[i].walk.BossArea_WlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
 				}
 				//g_player.attackFlg = TRUE;
 			}

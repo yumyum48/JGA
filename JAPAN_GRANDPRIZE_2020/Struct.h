@@ -109,6 +109,7 @@ struct enemyInfo {
     int y = GROUND + 30;
     bool flg;
     int anime;
+    
     void WalkInit() {                  // 敵の初期化
         x = 1280;                      // 敵のX座標の初期位置
         y = GROUND + 30;               // 敵のY座標の初期位置
@@ -121,11 +122,29 @@ struct enemyInfo {
         flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
         anime = 0;                     // アニメーションの初期化
     }
-    void BossAreaWlakInit(int bx, int by) {
+    void BossArea_WlakInit(int bx, int by) {
         x = bx - (574 * 0.2);          // 敵のX座標の初期位置
         y = GROUND + 30;               // 敵のY座標の初期位置
         flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
         anime = 0;                     // アニメーションの初期化
+    }
+    void BossArea_CloudInit(int bx, int by, int cloudPic) {   //　ボスエリアのミニ雲の初期化
+        int ew;
+        int eh;
+        GetGraphSize(cloudPic, &ew, &eh);
+        x = bx + ew; //bx - (574 * 0.2);←実際のミニ雲のイラスト待ち
+        y = GROUND - 30;
+        flg = FALSE;
+        anime = 0;
+    }
+    void BossArea_SpiderInit(int bx, int by, int spiderPic) {   //　ボスエリアのミニ蜘蛛の初期化
+        int ew;
+        int eh;
+        GetGraphSize(spiderPic, &ew, &eh);
+        x = bx + ew; //bx - (574 * 0.2);←実際のミニ蜘蛛のイラスト待ち
+        y = GROUND;
+        flg = FALSE;
+        anime = 0;
     }
     void BufferAssignment(int ex, int ey) {
         x = ex;
@@ -139,10 +158,11 @@ struct enemyInfo {
     }
 };
 
-struct enemyType {  // 敵の種類
-    enemyInfo fly;  // 飛ぶ敵
-    enemyInfo walk; // 歩く敵
-
+struct enemyType {      // 敵の種類
+    enemyInfo fly;      // 飛ぶ敵
+    enemyInfo walk;     // 歩く敵
+    enemyInfo cloud;    // 雲
+    enemyInfo spider;   // 蜘蛛
 };
 
 struct bossInfo {     // ボスの情報
