@@ -233,7 +233,8 @@ void BossLongTon_Disp() {
 		//boss_JumpFlg = BOSS_3_JUMPON;
 	}															   // ボスがプレイヤーに当たったら、ダメージを与えて逃げる
 	else if (PlayerHitCheck(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, BOSS_STAGE3_WIDTH, BOSS_STAGE3_HEIGHT) == TRUE) {
-		g_player.hp--;
+		if (g_player.barrierFlg == FALSE) --g_player.hp;
+		else g_player.barrierFlg = FALSE;
 		g_noDamageCnt = 0;
 		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
 		plas = 0;
@@ -439,7 +440,8 @@ void BossWaterBulletDisp() {
 	if (noDamegeCnt >= 60
 		&& (PlayerHitCheck(startX + moveX - 40, startY + moveY + 0,
 			startX + moveX + 40, startY + moveY - 20) == TRUE)) {
-		g_player.hp--;
+		if (g_player.barrierFlg == FALSE) --g_player.hp;
+		else g_player.barrierFlg = FALSE;
 		noDamegeCnt = 0;
 		anime = 4;
 		animationMax++;

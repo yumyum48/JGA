@@ -16,6 +16,7 @@
 
 */////////////////////////////////////////////
 picInfo g_boss4_Cloud;	// ボス４の雲の情報
+picInfo g_boss4_Thread;	// ボス４の糸の情報
 /*********************************************
 
 * ステージ３のボス
@@ -42,8 +43,10 @@ void BossDisp_Stage4() {
 	DrawFormatString(300, 300, 0xFF0000, "bw = %d \n bh = %d", bw, bh);
 	
 	DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + bw, g_mouseInfo.mouseY + bh, 0x00FF00, TRUE);
-
-
+	//g_boss4_Cloud.x = g_mouseInfo.mouseX;
+	//g_boss4_Cloud.y = g_mouseInfo.mouseY;
+	//g_boss4_Cloud.w = g_boss4_Cloud.x + bw;
+	//g_boss4_Cloud.h = g_boss4_Cloud.y + bh;
 	DrawBox(g_boss4_Cloud.x, g_boss4_Cloud.y, g_boss4_Cloud.w, g_boss4_Cloud.h, 0xFFFFFF, TRUE);
 	DrawBox(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, g_boss[BOSS_STAGE4].x + BOSS_STAGE4_WIDTH, g_boss[BOSS_STAGE4].y + BOSS_STAGE4_HEIGHT, 0x00FF00, TRUE);
 

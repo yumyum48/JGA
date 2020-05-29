@@ -297,9 +297,12 @@ struct picInfo {
     }
     void Boss4_CloudInit() {    // ボス４の雲の初期化
         x = 843;
-        y = 45;
-        w = x + 314;    // 座標をX～にする
-        h = y + 286;    // 座標をY～にする
+        y = 36;
+        w = x + 265;    // 座標をX～にする
+        h = y + 134;    // 座標をY～にする
+
+    }
+    void Boss4_Thread() {
 
     }
     void MenuWindowInit() {     // メニュー画面の初期化

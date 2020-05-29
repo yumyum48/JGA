@@ -156,7 +156,8 @@ void BossGenerateWave() {
 				g_wave.x + BOSS_WAVE_WIDTH, g_wave.y + BOSS_WAVE_HEIGHT) == 1) {
 
 			g_noDamageCnt = 0;
-			g_player.hp--;
+			if (g_player.barrierFlg == FALSE) --g_player.hp;
+			else g_player.barrierFlg = FALSE;
 			g_boss[BOSS_STAGE2].attackFlg = 0;
 		}
 
