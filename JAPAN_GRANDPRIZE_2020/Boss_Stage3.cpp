@@ -55,7 +55,7 @@ void BossMove_Stage3() {
 	int boss_startX = 822;							// ボス３のX座標の初期値
 
 
-	int num = 0;//GetRand(2);
+	int num = GetRand(2);
 	if (BossAttackCheck(g_boss[BOSS_STAGE3].attackFlg) == TRUE)	// ボスが前フレームで攻撃をしていたかを確認
 		num = 1;	// していれば、座標調整のため強制ジャンプ
 

@@ -20,14 +20,16 @@
 #define BOSS_STAGE2_HEIGHT (271)	// ボスの縦幅
 #define BOSS_STAGE3_WIDTH (380)
 #define BOSS_STAGE3_HEIGHT (380)
+#define BOSS_STAGE4_WIDTH (314)
+#define BOSS_STAGE4_HEIGHT (286)
 
 /***********************************************************
 
 // 定数の宣言
 
 ***********************************************************/
-const int BOSSFULL_WIDTH[MAP_MAX] = {BOSS_WIDTH, BOSS_STAGE2_WIDTH, BOSS_STAGE3_WIDTH};
-const int BOSSFULL_HEIGHT[MAP_MAX] = { BOSS_HEIGHT, BOSS_STAGE2_HEIGHT, BOSS_STAGE3_HEIGHT };
+const int BOSSFULL_WIDTH[MAP_MAX] = {BOSS_WIDTH, BOSS_STAGE2_WIDTH, BOSS_STAGE3_WIDTH, BOSS_STAGE4_WIDTH};
+const int BOSSFULL_HEIGHT[MAP_MAX] = { BOSS_HEIGHT, BOSS_STAGE2_HEIGHT, BOSS_STAGE3_HEIGHT, BOSS_STAGE4_HEIGHT};
 /***********************************************************
 
 // 列挙体の宣言
@@ -92,10 +94,13 @@ void BossDisp_Stage2();					// ステージ２のボスの表示
 void BossMove_Stage2();					// ステージ２のボスの動き
 void BossDisp_Stage3();					// ステージ３のボスの表示
 void BossMove_Stage3();					// ステージ３のボスの動き
+void BossDisp_Stage4();					// ステージ４のボスの表示
+void BossMove_Stage4();					// ステージ４のボスの動き
 
 void Boss_Knock_Down();					// ボスの当たり判定
 
 void BossInit();						// ボスの初期化
+void Boss_Stage4_Init();				// ボス４の雲の初期化
 
 void BossAttackDisp();					// ボスの攻撃
 void BossAttackMove();					// ボスの攻撃
@@ -117,15 +122,18 @@ void BossJumpOrPoison_Move();			// ボスがジャンプして稀に毒を出す動き
 void BossLongTon_Disp();				// ボスが舌を伸ばして攻撃する攻撃の表示
 void BossLongTon_Move();				// ボスが舌を伸ばして攻撃する動き
 bool Boss_3_Jump(int* coolTime, int* boss_JumpFlg, int jumpType);	// TRUE: ジャンプ終了 FALSE: ジャンプ開始	// ボス３のジャンプ (jumpTypeは０を入れると通常ジャンプ、１を入れるとずれたX座標を修正しながらジャンプ)
-void (* const BossDisp[3])() = {		// ボスの表示
+void (* const BossDisp[4])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,
 	BossDisp_Stage3,
+	BossDisp_Stage4,
+
 };
 
-void (* const BossMove[3])() = {		// ボスの動き
+void (* const BossMove[4])() = {		// ボスの動き
 	BossMove_Stage1,
 	BossMove_Stage2,
 	BossMove_Stage3,
+	BossMove_Stage4,
 };
 
