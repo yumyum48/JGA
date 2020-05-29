@@ -18,7 +18,7 @@ int LoadPicture() {
 	// プレイヤー画像の読み込み
 	if (LoadDivGraph("image/player3.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
 	//スキルモーション画像
-	if (LoadDivGraph("image/Skill_player.png", 9, 3, 3, 280, 200, g_pic.SkillMotion, 0) == -1) return -1;
+	if (LoadDivGraph("image/Skill_player.png", 12, 3, 4, 280, 200, g_pic.SkillMotion, 0) == -1) return -1;
 	//UI画像
 	if ((g_pic.PlayerUI = LoadGraph("image/Aicon2.png")) == -1) return -1;
 	//Life画像

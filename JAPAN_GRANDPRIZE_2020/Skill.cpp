@@ -32,7 +32,8 @@ void SkillDisp_1(int aniMAX, int aniMIN) {		//間合い伸びるやつ（player.cppのPlay
 		g_skillAnime[i] = 0;
 	}*/
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL1_GAUGE) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL1_GAUGE
+		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -42,6 +43,7 @@ void SkillDisp_1(int aniMAX, int aniMIN) {		//間合い伸びるやつ（player.cppのPlay
 		g_motion = 0;
 		g_skillAniFlg = TRUE;
 		g_player.useSkillGage = SKILL1_GAUGE;
+		g_player.skillCoolTime[g_player.skillNo] = SKILL1_COOLTIME;
 	}
 	// スキル中
 	EnemyLockOn();
@@ -81,7 +83,8 @@ void SkillDisp_2(int aniMAX, int aniMIN){ //飛ばすやつ
 	// スキル中
 	//EnemyLockOn();
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_skillAniFlg == FALSE && g_player.gauge > SKILL2_GAUGE) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_skillAniFlg == FALSE && g_player.gauge > SKILL2_GAUGE
+		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -93,6 +96,7 @@ void SkillDisp_2(int aniMAX, int aniMIN){ //飛ばすやつ
 		g_skillAniFlg = TRUE;
 		g_motion = 3;
 		g_player.useSkillGage = SKILL2_GAUGE;
+		g_player.skillCoolTime[g_player.skillNo] = SKILL2_COOLTIME;
 	}
 
 	if(g_skillAniFlg == TRUE){
@@ -140,7 +144,8 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //上方向に延びるやつ
 
 	bool g_skillFlg = false;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL3_GAUGE) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL3_GAUGE
+		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -150,6 +155,7 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //上方向に延びるやつ
 		}
 		g_motion = 6;
 		g_player.useSkillGage = SKILL3_GAUGE;
+		g_player.skillCoolTime[g_player.skillNo] = SKILL3_COOLTIME;
 	}
 	// スキル中
 	EnemyLockOn();
@@ -189,12 +195,13 @@ bool SkillMove_3(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 
 }
 
-void SkillDisp_4(int aniMAX, int aniMIN) { //大ジャンプ
+void SkillDisp_4(int aniMAX, int aniMIN) { //エレクトロニックスーパージャンプ
 	static int effect_X = 0;
 	static int effect_Y = 0;
 	static float effect_Ani = 0;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL4_GAUGE && g_player.y >= GROUND) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL4_GAUGE && g_player.y >= GROUND
+		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -203,7 +210,7 @@ void SkillDisp_4(int aniMAX, int aniMIN) { //大ジャンプ
 			g_player.attackFlg = TRUE;
 		}
 		g_player.useSkillGage = SKILL4_GAUGE;
-		g_noDamageCnt = 0;
+		g_player.skillCoolTime[g_player.skillNo] = SKILL4_COOLTIME;
 	}
 
 	if (g_player.attackFlg == TRUE) {
@@ -214,12 +221,14 @@ void SkillDisp_4(int aniMAX, int aniMIN) { //大ジャンプ
 		effect_Y = g_player.y;
 		if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) g_skill_X = g_boss[g_select_Stage].x - 200;
 		else g_skill_X = g_player.x;
+		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.SkillMotion[9], TRUE);
 	}
 	if (g_skillAniFlg == TRUE) {
 		DrawFormatString(500, 500, 0xff0000, "%d", g_skill_X);
 		DrawFormatString(500, 600, 0xff0000, "%d", g_boss[g_select_Stage].popflg);
 		g_player.y += g_skill_Y;
 		g_skill_Y += 2.0F;
+		g_noDamageCnt = 0;
 		if(g_skill_X > g_player.x)g_player.x += 15.0F;
 		//if(g_player.x < WINDOW_WIDTH/2)g_player.x += 10.0F;
 		if (g_player.y >= GROUND) {
@@ -249,12 +258,13 @@ bool SkillMove_4(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 
 }
 
-void SkillDisp_5(int aniMAX, int aniMIN) { //ギガスラ
+void SkillDisp_5(int aniMAX, int aniMIN) { //強化技
 	//static int skill_X = 100;
 	//static int skill_Y = 490;
 	//static int anime = 0;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL5_GAUGE) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL5_GAUGE
+		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -264,6 +274,7 @@ void SkillDisp_5(int aniMAX, int aniMIN) { //ギガスラ
 		}
 		//g_skillAniFlg = TRUE;
 		g_player.useSkillGage = SKILL5_GAUGE;
+		g_player.skillCoolTime[g_player.skillNo] = SKILL5_COOLTIME;
 	}
 	// スキル中
 	EnemyLockOn();
@@ -294,7 +305,8 @@ void SkillDisp_6(int aniMAX, int aniMIN) { //ヴぁリア
 	//static int skill_Y = 490;
 	//static int anime = 0;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL6_GAUGE && g_player.barrierFlg == FALSE) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL6_GAUGE && g_player.barrierFlg == FALSE
+		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -304,6 +316,7 @@ void SkillDisp_6(int aniMAX, int aniMIN) { //ヴぁリア
 		}
 		g_player.barrierFlg = TRUE;
 		g_player.useSkillGage = SKILL6_GAUGE;
+		g_player.skillCoolTime[g_player.skillNo] = SKILL6_COOLTIME;
 	}
 
 	// スキル中

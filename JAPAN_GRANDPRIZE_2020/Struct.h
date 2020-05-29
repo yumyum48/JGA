@@ -31,7 +31,7 @@ struct image {
     int title[2];                       // タイトル画像
     int titleText[4];                   // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
-    int SkillMotion[9];                 //スキルモーション画像
+    int SkillMotion[12];                 //スキルモーション画像
     int enemy_walk[4];                  // 歩く雑魚敵のの画像
     int enemy_fly[4];                   // 飛ぶ雑魚敵の画像
     int map[MAP_MAX * SCROLL_MAX];      // マップの画像
@@ -74,6 +74,8 @@ struct playerInfo {
     bool useSkillFlg;   //スキルを使うときに納刀状態か抜刀状態か TRUE = 抜刀, FALSE = 納刀
     bool barrierFlg;    //スキル6 バリアのフラグ TRUE = バリア有, FALSE = バリア無
     int useSkillGage;   //消費するスキルゲージの量
+    float skillCoolTime[3];  //スキル再使用のクールタイム格納
+    int skillNo; //使用した装備中のスキルの配列番号
     void Init() {   // プレイヤーの初期化
         x = 100 * PLAYER_REDUCTION;
         y = GROUND;
@@ -83,7 +85,7 @@ struct playerInfo {
         skillFlg = 0;
         skillGage = 100;
         skill_MAX = 3;
-        gauge = 320;
+        gauge = 265;
         swordFlg = FALSE;
         useSkillFlg = FALSE;
         barrierFlg = FALSE;
@@ -92,6 +94,10 @@ struct playerInfo {
         skillcustom[0] = 1;
         skillcustom[1] = 4;
         skillcustom[2] = 0;
+        skillCoolTime[0] = 0;
+        skillCoolTime[1] = 0;
+        skillCoolTime[2] = 0;
+        skillNo = 0;
     }
 
 };

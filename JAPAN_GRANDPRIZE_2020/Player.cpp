@@ -28,6 +28,7 @@ int g_SkillSelectAicon = 0; //スキルのアイコン移動
 void PlayerDisp() {
 	static int anime = 0;							// プレイヤーの画像を変える
 	static int time = 0;							// 画像を切り替えるタイミング調整
+	static float skillTime[3] = { 0 };				// スキルクールタイム
 
 	if (++time % 4 == 0) anime++;
 	if (anime < g_resetMotion || anime > g_maxMotion) anime = g_resetMotion;
@@ -41,6 +42,8 @@ void PlayerDisp() {
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[g_select_Stage].hp);
 	DrawFormatString(0, 400, 0xFF0000, "%d", g_player.skillFlg);
+	DrawFormatString(0, 600, 0xFFFF00, "%f", g_player.skillCoolTime[g_player.skillNo]);
+	DrawFormatString(0, 700, 0x00FFFF, "%d", g_player.skillNo);
 	
 	if (g_player.skillFlg != 0) {
 		SkillDisp[g_player.skillFlg - 1](g_maxMotion, g_resetMotion);
@@ -50,11 +53,11 @@ void PlayerDisp() {
 	//static float gauge = 320;
 	DrawGraph(20, -40, g_pic.PlayerUI, TRUE);					//アイコン
 	//DrawBox(80, 120, 80 + gauge, 130, 0xFF0000, TRUE);
-	DrawRectGraph(20,-40,0,0,g_player.gauge,240,g_pic.gauge,TRUE,FALSE); //ゲージ
+	DrawRectGraph(75,-40,0,0,g_player.gauge,240,g_pic.gauge,TRUE,FALSE); //ゲージ
 	if (g_player.swordFlg == TRUE) {
 		if (g_player.gauge > 0) g_player.gauge -= 0.1;
 	} else {
-		if (g_player.gauge < 320 && g_player.useSkillGage <= 0) g_player.gauge += 1;
+		if (g_player.gauge < 265 && g_player.useSkillGage <= 0) g_player.gauge += 0.5;
 	}
 
 	//スキル使用時のゲージ減少
@@ -66,15 +69,31 @@ void PlayerDisp() {
 
 	if (g_player.gauge < 0) g_player.gauge = 0;
 
+	//スキルの再使用までのクールタイム
+	for (int i = 0; i < 3; i++) {
+		if ((g_keyInfo.keyFlg & PAD_INPUT_A) && skillTime[i] <= 0) {
+			skillTime[i] = g_player.skillCoolTime[i];
+		}
+		if (g_player.skillCoolTime[i] > 0) g_player.skillCoolTime[i] -= 0.1F;
+		if (g_player.skillCoolTime[i] < 0) g_player.skillCoolTime[i] = 0.0F;
+	}
+
 	//スキル光表示
 	DrawRotaGraph(WINDOW_WIDTH / 2 + g_SkillSelectAicon, WINDOW_HEIGHT - 70, 1, -time / 8, g_pic.skillRing[0], TRUE);
 	//装備しているスキル表示
 	DrawGraph(WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT - 120, g_pic.skillAicon[g_player.skillcustom[0]], TRUE);
 	DrawGraph(WINDOW_WIDTH / 2 - 150, WINDOW_HEIGHT - 120, g_pic.skillAicon[g_player.skillcustom[1]], TRUE);
 	DrawGraph(WINDOW_WIDTH / 2 + 50, WINDOW_HEIGHT - 120, g_pic.skillAicon[g_player.skillcustom[2]], TRUE);
+
+	//クールタイム
+	SetDrawBright(255, 0, 0);
+	DrawCircleGauge(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 70, (g_player.skillCoolTime[0]/ skillTime[0]) * float(100), g_pic.skillAicon[g_player.skillcustom[0]]);
+	DrawCircleGauge(WINDOW_WIDTH / 2 - 100, WINDOW_HEIGHT - 70, (g_player.skillCoolTime[1] / skillTime[1]) * float(100), g_pic.skillAicon[g_player.skillcustom[1]]);
+	DrawCircleGauge(WINDOW_WIDTH / 2 + 100, WINDOW_HEIGHT - 70, (g_player.skillCoolTime[2] / skillTime[2]) * float(100), g_pic.skillAicon[g_player.skillcustom[2]]);
+	SetDrawBright(255, 255, 255);
+
 	//勾玉表示
 	DrawRotaGraph(WINDOW_WIDTH / 2 + g_SkillSelectAicon, WINDOW_HEIGHT - 70, 1, time / 8, g_pic.skillRing[1], TRUE);
-
 }
 
 void PlayerMove() {
@@ -229,7 +248,7 @@ void PlayerControl() {
 
 	}
 	if (g_player.x > 100 && g_player.attackFlg == FALSE && g_player.y >= GROUND) {
-		g_player.x -= 10.0F;
+		g_player.x -= 5.0F;
 	}
 
 	if (g_player.x < 100) g_player.x = 100;
@@ -267,8 +286,8 @@ void PlayerControl() {
 }
 
 int SkillChange() {
-	static int skillNum = 0;
-	static int useSkill = 1;
+	static int skillNum = 0; //配列
+	static int useSkill = 1; //使うスキル
 
 	if (g_player.attackFlg == FALSE) {
 		// スキル選択
@@ -287,6 +306,8 @@ int SkillChange() {
 	// skillNumの中身
 	DrawFormatString(0, 500, 0xFEFFFF, "%d", skillNum);
 	
+	g_player.skillNo = skillNum;
+
 	useSkill = g_player.skillcustom[skillNum];
 
 	return useSkill;

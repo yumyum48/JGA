@@ -14,6 +14,18 @@ enum {//各スキルのゲージ使用量
 	SKILL8_GAUGE = 100,		//スキル8のゲージ使用量
 };
 
+enum {//各スキルの再使用クールタイム
+	SKILL1_COOLTIME = 10,	//スキル1のクールタイム
+	SKILL2_COOLTIME = 25,	//スキル2のクールタイム
+	SKILL3_COOLTIME = 15,	//スキル3のクールタイム
+	SKILL4_COOLTIME = 60,	//スキル4のクールタイム
+	SKILL5_COOLTIME = 50,	//スキル5のクールタイム
+	SKILL6_COOLTIME = 100,	//スキル6のクールタイム
+	SKILL7_COOLTIME = 50,	//スキル7のクールタイム
+	SKILL8_COOLTIME = 50,	//スキル8のクールタイム
+
+};
+
 extern bool g_skillswitch;
 
 void SkillDisp_1(int aniMAX, int aniMIN);											//
