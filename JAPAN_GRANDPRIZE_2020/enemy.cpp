@@ -7,7 +7,7 @@
 #include "Boss.h"
 #include "Select.h"
 
-enemyInfo g_enemyBuffer[ENEMY_MAX];	// Œ‚”j‚µ‚½“G‚Ìî•ñ‚ğŠi”[‚·‚é•Ï”
+
 
 
 

@@ -81,6 +81,8 @@ int g_select_MAX;				// 今プレイヤーがいけるステージを制御する
 
 int g_sound[BGM_MAX];			// BGMの変数
 
+enemyInfo g_enemyBuffer[ENEMY_MAX];	// 撃破した敵の情報を格納する変数
+
 ChoiceInfo g_choice;			//
 /*********************************************
 
