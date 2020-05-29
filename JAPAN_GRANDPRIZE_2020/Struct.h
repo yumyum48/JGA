@@ -284,9 +284,11 @@ struct picInfo {
     int y;          // Y座標
     int w;          // 幅
     int h;          // 高さ
-    picInfo() {
+    picInfo() {     // コントラスタによる初期化
         x = 0;
         y = 0;
+        w = 0;          
+        h = 0;          
     }
     void Boss3_TonInit() {  // ボス３の舌の初期化
         x = 819;

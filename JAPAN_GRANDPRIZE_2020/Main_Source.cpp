@@ -80,6 +80,8 @@ int g_playTime;					// プレイ時間
 int g_select_MAX;				// 今プレイヤーがいけるステージを制御する
 
 int g_sound[BGM_MAX];			// BGMの変数
+
+ChoiceInfo g_choice;			//
 /*********************************************
 
 * 関数のプロトタイプ宣言
