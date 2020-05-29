@@ -85,7 +85,7 @@ struct playerInfo {
         skillFlg = 0;
         skillGage = 100;
         skill_MAX = 3;
-        gauge = 320;
+        gauge = 265;
         swordFlg = FALSE;
         useSkillFlg = FALSE;
         barrierFlg = FALSE;

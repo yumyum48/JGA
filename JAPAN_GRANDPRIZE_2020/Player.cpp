@@ -53,11 +53,11 @@ void PlayerDisp() {
 	//static float gauge = 320;
 	DrawGraph(20, -40, g_pic.PlayerUI, TRUE);					//アイコン
 	//DrawBox(80, 120, 80 + gauge, 130, 0xFF0000, TRUE);
-	DrawRectGraph(20,-40,0,0,g_player.gauge,240,g_pic.gauge,TRUE,FALSE); //ゲージ
+	DrawRectGraph(75,-40,0,0,g_player.gauge,240,g_pic.gauge,TRUE,FALSE); //ゲージ
 	if (g_player.swordFlg == TRUE) {
 		if (g_player.gauge > 0) g_player.gauge -= 0.1;
 	} else {
-		if (g_player.gauge < 320 && g_player.useSkillGage <= 0) g_player.gauge += 1;
+		if (g_player.gauge < 265 && g_player.useSkillGage <= 0) g_player.gauge += 0.5;
 	}
 
 	//スキル使用時のゲージ減少
