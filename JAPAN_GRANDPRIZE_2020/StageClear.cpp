@@ -16,7 +16,7 @@
 #include "Boss.h"
 #include "Select.h"
 
-bool g_animationScene = FALSE;	// アニメーションを終了させてテキストを表示させるフラグ	TRUE:テキストの表示ON	FALSE:ボスを撃破するアニメーション中
+bool g_animationScene = FALSE;	// アニメーションを終了させてテキストを表示させるフラグ	TRUE:テキストの表示ON	FALSE:ボスを撃破するアニメーション
 
 picInfo g_clearText;			// クリアした時の「討伐完了！！」の画像
 void StageClear() {
@@ -59,6 +59,7 @@ void StageClearMove() {
 
 				if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 
+					g_animationScene = FALSE;
 					GameInit();
 					g_gameScene = GAME_SELECT;
 				}
@@ -133,8 +134,8 @@ void BossDefeatAnimationMove() {
 
 	// アニメーション時間の管理
 	if (animationDelay > 200) {			// アニメーション終了時の初期化処理
-		g_animationScene = TRUE;
 		animationDelay = 0;
+		g_animationScene = TRUE;
 	}
 }
 
