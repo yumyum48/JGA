@@ -79,7 +79,7 @@ void BossMove_Stage2() {
 
 	if (attackFlgBuf == 0 && g_boss[BOSS_STAGE2].attackFlg == BOSSATTACK_ENEMY_DROP) {
 		for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
-			g_enemy[i].walk.BossAreaWlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+			g_enemy[i].walk.BossArea_WlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
 		}
 	}
 	if (moveFlg != BOSSMOVE_NOMOTION) {					// 行動パターン

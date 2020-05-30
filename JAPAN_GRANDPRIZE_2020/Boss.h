@@ -36,9 +36,7 @@ const int BOSSFULL_HEIGHT[MAP_MAX] = { BOSS_HEIGHT, BOSS_STAGE2_HEIGHT, BOSS_STA
 
 ***********************************************************/
 enum {	// ボスの配列
-	BOSS_STAGE1
-	
-	,
+	BOSS_STAGE1,
 	BOSS_STAGE2,
 	BOSS_STAGE3,
 	BOSS_STAGE4,
@@ -55,6 +53,8 @@ enum {	// ボスの攻撃判断
 	BOSSATTACK_WAVE_ATTACK,				// 津波での攻撃
 	BOSSATTACK_JUMPANDPOISON,			// カエルのジャンプと稀に毒を出す攻撃
 	BOSSATTACK_LONGTON,					// 舌を伸ばす攻撃
+	BOSSATTACK_MINISPIDER_DROP,			// ミニスパイダーをドロップする
+	BOSSATTACK_MINICLOUD,				// ミニ雲をドロップする
 };
 
 enum { // ボスの動きパターン
@@ -68,6 +68,7 @@ enum {	// ボス３のジャンプフラグ操作
 	BOSS_3_JUMPON,
 	BOSS_3_DOWN,
 };
+
 struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
 	int x, y;
 
@@ -121,6 +122,9 @@ void BossJumpOrPoison_Disp();			// ボスがジャンプして稀に毒を出す表示
 void BossJumpOrPoison_Move();			// ボスがジャンプして稀に毒を出す動き
 void BossLongTon_Disp();				// ボスが舌を伸ばして攻撃する攻撃の表示
 void BossLongTon_Move();				// ボスが舌を伸ばして攻撃する動き
+void Boss_MiniSpider_Drop_Disp();		// ミニ蜘蛛を出す攻撃の表示
+void Boss_MiniSpider_Drop_Move();		// ミニ蜘蛛を出す攻撃の動き
+
 bool Boss_3_Jump(int* coolTime, int* boss_JumpFlg, int jumpType);	// TRUE: ジャンプ終了 FALSE: ジャンプ開始	// ボス３のジャンプ (jumpTypeは０を入れると通常ジャンプ、１を入れるとずれたX座標を修正しながらジャンプ)
 void (* const BossDisp[4])() = {		// ボスの表示
 	BossDisp_Stage1,

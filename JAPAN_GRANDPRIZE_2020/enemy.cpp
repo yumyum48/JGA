@@ -162,6 +162,7 @@ void EnemyInit() {
 	for (int i = 0; i < 3; i++) {
 		g_enemy[i].walk.WalkInit();
 		g_enemy[i].fly.FlyInit();
+
 	}
 
 	for (int i = 0; i < ENEMY_MAX; i++) {

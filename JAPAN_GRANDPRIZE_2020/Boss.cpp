@@ -15,6 +15,12 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+/*********************************************
+
+* グローバル変数の宣言
+
+*/////////////////////////////////////////////
+picInfo g_boss3_Ton;	// ボス３の舌の情報
 
 /*********************************************
 
@@ -152,8 +158,6 @@ void BossAttackDisp() {
 		case BOSSATTACK_ENEMY_DROP:
 		
 			BossEnemyDropDisp();	// 弱い敵を出す
-			//DrawFormatString(100, 600, 0xFF00FF, "ボスが攻撃してますよ！");
-			//g_boss[BOSS_STAGE1].attackFlg = 0;
 			break;
 
 		case BOSSATTACK_WATER_BULLET:
@@ -163,12 +167,17 @@ void BossAttackDisp() {
 		case BOSSATTACK_WAVE_ATTACK:
 			BossGenerateWave();		// 津波の発生
 			break;
+		
 		case BOSSATTACK_JUMPANDPOISON:
 			BossJumpOrPoison_Disp();// ボスがジャンプして稀に毒を出す表示
 			break;
 
 		case BOSSATTACK_LONGTON:
 			BossLongTon_Disp();		// ボスが舌を伸ばす攻撃
+			break;
+
+		case BOSSATTACK_MINISPIDER_DROP:
+			Boss_MiniSpider_Drop_Disp();
 			break;
 		default:
 			break;
@@ -201,13 +210,34 @@ void BossAttackMove() {
 		case BOSSATTACK_LONGTON:
 			BossLongTon_Move();
 			break;
+
+		case BOSSATTACK_MINISPIDER_DROP:
+			Boss_MiniSpider_Drop_Move();
+			break;
+
 		default:
 			break;
 	}
 	
 }
 
-picInfo g_boss3_Ton;	// ボス３の舌の情報
+/*********************************************
+
+* ミニ蜘蛛を出す
+
+*/////////////////////////////////////////////
+void Boss_MiniSpider_Drop_Disp() {
+
+}
+void Boss_MiniSpider_Drop_Move() {
+
+}
+/*********************************************
+
+* カエルのボスが舌を伸ばす攻撃
+
+*/////////////////////////////////////////////
+
 void BossLongTon_Disp() {
 	static int plas = 0;			// 長くしていく
 	int tonW = g_boss3_Ton.x + plas;
@@ -250,6 +280,11 @@ void BossLongTon_Move() {
 	//}
 }
 
+/*********************************************
+
+* ボス３のジャンプする動き
+
+*/////////////////////////////////////////////
 bool Boss_3_Jump(int *coolTime, int *boss_JumpFlg, int jumpType) {
 	int boss_MaxUp = 97;							// ボス３がジャンプしていけるY座標最高度
 	int boss_MaxDown = 290;							// ボス３の落下した際のY地点
@@ -326,6 +361,7 @@ void BossEnemyDropMove() {
 
 	BossAreaEnemyMove();
 }
+
 // 
 void BossAreaEnemyDisp() {
 	static int coolTime = 0;
@@ -345,7 +381,7 @@ void BossAreaEnemyDisp() {
 		}
 
 	}
-
+	
 	// 雑魚敵の描画
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		const int animation_Max = 3;
@@ -354,7 +390,7 @@ void BossAreaEnemyDisp() {
 		// アニメーションのカウント
 		if (time++ % 8 == 0) {
 			g_enemy[i].walk.anime++;
-			g_enemy[i].fly.anime++;
+			
 		}
 
 		// アニメーションの初期化
@@ -409,8 +445,8 @@ void BossAreaEnemyMove() {
 			
 		if (g_enemy[i].walk.x + ENEMY_WIDTH < 0) {
 
-			g_enemy[i].walk.BossAreaWlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
-				//g_enemy[i].walk.flg = TRUE;
+			g_enemy[i].walk.BossArea_WlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+			//g_enemy[i].walk.flg = TRUE;
 		}
 
 		
