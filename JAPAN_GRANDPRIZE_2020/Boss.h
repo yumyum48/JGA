@@ -54,7 +54,8 @@ enum {	// ボスの攻撃判断
 	BOSSATTACK_JUMPANDPOISON,			// カエルのジャンプと稀に毒を出す攻撃
 	BOSSATTACK_LONGTON,					// 舌を伸ばす攻撃
 	BOSSATTACK_MINISPIDER_DROP,			// ミニスパイダーをドロップする
-	BOSSATTACK_MINICLOUD,				// ミニ雲をドロップする
+	BOSSATTACK_MINICLOUD_DROP,			// ミニ雲をドロップする
+	BOSSATTACK_LIGHTNING,				// 雷撃による攻撃
 };
 
 enum { // ボスの動きパターン
@@ -87,8 +88,8 @@ extern bossInfo g_boss[MAP_MAX];		// ボスの情報
 ***********************************************************/
 int InputRand(int rand1, int rand2, int rand3);	// 数字を引数として三つ取り、その中の一つをランダムで返す
 bool BossDamageCheck(int bossHp);				// ボスがダメージを受けたかどうかを調べる関数 TRUE: ボスがダメージを受けた FALSE: ボスはダメージを受けていない
-bool BossAttackCheck(int bossAttackFlg);// ボスが攻撃を終えたかを調べる関数TRUE: ボスの攻撃終了 FALSE: ボスは攻撃中、または終了してしばらくたっている
-
+bool BossNoAttackCheck(int bossAttackFlg);		// ボスが攻撃を終えたかを調べる関数TRUE: ボスの攻撃終了 FALSE: ボスは攻撃中、または終了してしばらくたっている
+bool BossDropAttackCheck(int bossAttackFlg);	// ボスがエネミーをドロップするかを調べる関数TRUE: ボスの攻撃開始 FALSE: ボスは攻撃中、または終了してしばらくたっている
 void BossDisp_Stage1();					// ステージ１のボスの表示
 void BossMove_Stage1();					// ステージ１のボスの動き
 void BossDisp_Stage2();					// ステージ２のボスの表示
@@ -124,7 +125,10 @@ void BossLongTon_Disp();				// ボスが舌を伸ばして攻撃する攻撃の表示
 void BossLongTon_Move();				// ボスが舌を伸ばして攻撃する動き
 void Boss_MiniSpider_Drop_Disp();		// ミニ蜘蛛を出す攻撃の表示
 void Boss_MiniSpider_Drop_Move();		// ミニ蜘蛛を出す攻撃の動き
-
+void Boss_MiniCloud_Drop_Disp();		// ミニ雲を出す攻撃の表示
+void Boss_MiniCloud_Drop_Move();		// ミニ雲を出す攻撃の動き
+void Boss_Lightning_Disp();				// 雷撃の表示
+void Boss_Lightning_Move();				// 雷撃の動き
 bool Boss_3_Jump(int* coolTime, int* boss_JumpFlg, int jumpType);	// TRUE: ジャンプ終了 FALSE: ジャンプ開始	// ボス３のジャンプ (jumpTypeは０を入れると通常ジャンプ、１を入れるとずれたX座標を修正しながらジャンプ)
 void (* const BossDisp[4])() = {		// ボスの表示
 	BossDisp_Stage1,

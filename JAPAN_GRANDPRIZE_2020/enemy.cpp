@@ -34,7 +34,7 @@ void MonsterMove() {
 
 // 弱い敵の動き
 void EnemyMove() {
-	// 敵がいないときボスの動きを起動
+	
 
 	for (int i = 0; i < ENEMY_MAX; i++) {		//地上の敵の動き
 		if (g_enemy[i].walk.flg == TRUE) {
@@ -58,10 +58,10 @@ void EnemyMove() {
 	for (int i = 0; i < ENEMY_MAX; i++) {		//空中の敵の動き
 		if (g_enemy[i].fly.flg == TRUE) {
 			g_enemy[i].fly.x -= g_speedLevel+3;
-			g_enemy[i].fly.y = GROUND - 200;
+			g_enemy[i].fly.y = (GROUND - ENEMY_HEIGHT) - 200;
 		}
 
-		if (g_enemy[i].fly.x + (574 * 0.2) < 0) {
+		if (g_enemy[i].fly.x + ENEMY_WIDTH < 0) {
 
 			g_enemy[i].fly.FlyInit();
 		}
@@ -157,6 +157,44 @@ int EnemyEvaporation(){
 	return 0;
 }
 
+// 歩く敵の初期化
+void enemyInfo::WalkInit() {                 // 敵の初期化
+	x = 1280;								 // 敵のX座標の初期位置
+	y = GROUND - ENEMY_HEIGHT;       // 敵のY座標の初期位置
+	flg = FALSE;							 // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+	anime = 0;								 // アニメーションの初期化
+}
+
+// 飛ぶ敵の初期化
+void enemyInfo::FlyInit() {
+	x = 1280;                      // 敵のX座標の初期位置
+	y = GROUND - ENEMY_HEIGHT;               // 敵のY座標の初期位置
+	flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+	anime = 0;                     // アニメーションの初期化
+}
+// ボスエリアの歩く雑魚敵の初期化
+void enemyInfo::BossArea_WlakInit(int bx, int by) {
+	x = bx - ENEMY_WIDTH;          // 敵のX座標の初期位置
+	y = GROUND - ENEMY_HEIGHT;     // 敵のY座標の初期位置
+	flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+	anime = 0;                     // アニメーションの初期化
+}
+// ボスエリアのミニ雲の初期化
+void enemyInfo::BossArea_CloudInit(int bx, int by) {   //　ボスエリアのミニ雲の初期化
+
+	x = bx - ENEMY_WIDTH;            // 敵のX座標の初期位置
+	y = GROUND - ENEMY_HEIGHT;                // 敵のY座標の初期位置
+	flg = FALSE;                    // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+	anime = 0;                      // アニメーションの初期化
+}
+// ボスエリアのミニ蜘蛛の初期化
+void enemyInfo::BossArea_SpiderInit(int bx, int by) {   //　ボスエリアのミニ蜘蛛の初期化
+	
+	x = bx - ENEMY_WIDTH;                 // 敵のX座標の初期位置
+	y = GROUND - ENEMY_HEIGHT;                          // 敵のY座標の初期位置
+	flg = FALSE;                         // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+	anime = 0;                           // アニメーションの初期化
+}
 // 弱い敵の初期化
 void EnemyInit() {
 	for (int i = 0; i < 3; i++) {

@@ -179,6 +179,14 @@ void BossAttackDisp() {
 		case BOSSATTACK_MINISPIDER_DROP:
 			Boss_MiniSpider_Drop_Disp();
 			break;
+		
+		case BOSSATTACK_MINICLOUD_DROP:
+			Boss_MiniCloud_Drop_Disp();
+			break; 
+
+		case BOSSATTACK_LIGHTNING:
+
+			break;
 		default:
 			break;
 	}
@@ -215,22 +223,196 @@ void BossAttackMove() {
 			Boss_MiniSpider_Drop_Move();
 			break;
 
+		case BOSSATTACK_MINICLOUD_DROP:
+			Boss_MiniCloud_Drop_Move();
+			break;
+
+		case BOSSATTACK_LIGHTNING:
+		
+			break;
 		default:
 			break;
 	}
 	
 }
+/*********************************************
 
+* ミニ雲を出す
+
+*/////////////////////////////////////////////
+void Boss_MiniCloud_Drop_Disp() {
+	static int coolTime = 0;
+	static int enemyDropCnt = 0;
+	static bool enemy_dispFlg_Buf[BOSS_AREA_ENEMY_MAX] = { FALSE, FALSE, FALSE }; // 
+	static int enemy_cnt = 0;	// 出現したエネミーの要素番号
+	// クールタイム
+	if (++coolTime > 60) {
+		// エネミーの出現フラグをオンにする
+
+		if (g_enemy[enemy_cnt].cloud.flg == FALSE && enemy_cnt < 3) {
+			g_enemy[enemy_cnt].cloud.flg = TRUE;
+			coolTime = 0;
+
+			enemy_dispFlg_Buf[enemy_cnt] = TRUE;
+			enemy_cnt++;
+		}
+
+	}
+
+	// 雑魚敵の描画
+	for (int i = 0; i < ENEMY_MAX; i++) {
+		const int animation_Max = 3;
+		static int time = 0;
+
+		// アニメーションのカウント
+		if (time++ % 8 == 0) {
+			g_enemy[i].cloud.anime++;
+
+		}
+
+		// アニメーションの初期化
+		if (g_enemy[i].cloud.anime > animation_Max)g_enemy[i].cloud.anime = 0;
+
+
+		if (g_enemy[i].cloud.flg == TRUE)        // 雑魚敵の描画
+			DrawRotaGraph2(g_enemy[i].cloud.x, g_enemy[i].cloud.y,
+				0, 0, 0.2, 0.0, g_pic.enemy_fly[g_enemy[i].cloud.anime], TRUE);
+		//DrawRotaGraph(g_enemy[i].fly.x, g_enemy[i].fly.y, 1.0f, 0.0, g_pic.flyEnemy[0], TRUE, FALSE);
+	}
+
+	// 雑魚敵が倒されたかを確認
+	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
+		if (enemy_dispFlg_Buf[i] == TRUE && g_enemy[i].cloud.flg == FALSE) {
+			enemyDropCnt++;
+		}
+	}
+
+	// 出現した雑魚敵が全て倒されていたら攻撃終了
+	if (enemyDropCnt >= 3) {
+		static int waitTime = 0;
+		if (waitTime++ >= 120) {
+			g_boss[g_select_Stage].attackFlg = 0;    // attackフラグを初期化
+			enemyDropCnt = 0;                        // エネミーを出した回数を初期化
+			enemy_cnt = 0;							 // エネミーの出現した回数を初期化
+			enemy_dispFlg_Buf[0] = { FALSE };        // エネミーの出現フラグバッファーを初期化
+			enemy_dispFlg_Buf[1] = { FALSE };
+			enemy_dispFlg_Buf[2] = { FALSE };
+			waitTime = 0;
+		}
+	}
+
+	// 敵の蒸発アニメーション
+	EnemyEvaporation();
+}
+void Boss_MiniCloud_Drop_Move() {
+
+	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {        // ミニ雲の最大数回す
+
+
+		if (g_enemy[i].cloud.flg == TRUE) {
+			g_enemy[i].cloud.x -= (g_speedLevel - 3);	   // ミニ雲を移動
+			g_enemy[i].cloud.y = (GROUND - ENEMY_HEIGHT) - 200;
+			//g_enemy[i].walk.x -= g_boss[g_select_Stage].x;
+
+		}
+
+		if (g_enemy[i].cloud.x + ENEMY_WIDTH < 0) {		// ミニ雲が範囲外まで行くと初期化
+
+			g_enemy[i].cloud.BossArea_CloudInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+			
+		}
+	}
+}
 /*********************************************
 
 * ミニ蜘蛛を出す
 
 */////////////////////////////////////////////
+// 表示
 void Boss_MiniSpider_Drop_Disp() {
+	static int coolTime = 0;
+	static int enemyDropCnt = 0;
+	static bool enemy_dispFlg_Buf[BOSS_AREA_ENEMY_MAX] = { FALSE, FALSE, FALSE }; // 
+	static int enemy_cnt = 0;	// 出現したエネミーの要素番号
+	// クールタイム
+	if (++coolTime > 60) {
+		// エネミーの出現フラグをオンにする
 
+		if (g_enemy[enemy_cnt].spider.flg == FALSE && enemy_cnt < 3) {
+			g_enemy[enemy_cnt].spider.flg = TRUE;
+			coolTime = 0;
+
+			enemy_dispFlg_Buf[enemy_cnt] = TRUE;
+			enemy_cnt++;
+		}
+
+	}
+
+	// 雑魚敵の描画
+	for (int i = 0; i < ENEMY_MAX; i++) {
+		const int animation_Max = 3;
+		static int time = 0;
+
+		// アニメーションのカウント
+		if (time++ % 8 == 0) {
+			g_enemy[i].spider.anime++;
+
+		}
+
+		// アニメーションの初期化
+		if (g_enemy[i].spider.anime > animation_Max)g_enemy[i].spider.anime = 0;
+
+
+		if (g_enemy[i].spider.flg == TRUE)        // 雑魚敵の描画
+			DrawRotaGraph2(g_enemy[i].spider.x, g_enemy[i].spider.y,
+				0, 0, 1.0, 0.0, g_pic.enemy_walk[g_enemy[i].spider.anime], TRUE);
+		//DrawRotaGraph(g_enemy[i].fly.x, g_enemy[i].fly.y, 1.0f, 0.0, g_pic.flyEnemy[0], TRUE, FALSE);
+	}
+
+	// 雑魚敵が倒されたかを確認
+	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
+		if (enemy_dispFlg_Buf[i] == TRUE && g_enemy[i].spider.flg == FALSE) {
+			enemyDropCnt++;
+		}
+	}
+
+	// 出現した雑魚敵が全て倒されていたら攻撃終了
+	if (enemyDropCnt >= 3) {
+		static int waitTime = 0;
+		if (waitTime++ >= 120) {
+			g_boss[g_select_Stage].attackFlg = 0;    // attackフラグを初期化
+			enemyDropCnt = 0;                        // エネミーを出した回数を初期化
+			enemy_cnt = 0;							 // エネミーの出現した回数を初期化
+			enemy_dispFlg_Buf[0] = { FALSE };        // エネミーの出現フラグバッファーを初期化
+			enemy_dispFlg_Buf[1] = { FALSE };
+			enemy_dispFlg_Buf[2] = { FALSE };
+			waitTime = 0;
+		}
+	}
+
+	// 敵の蒸発アニメーション
+	EnemyEvaporation();
 }
+// 動き
 void Boss_MiniSpider_Drop_Move() {
 
+
+	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {        // ミニ蜘蛛の最大数回す
+
+
+		if (g_enemy[i].spider.flg == TRUE) {
+			g_enemy[i].spider.x -= (g_speedLevel - 3);		// ミニ蜘蛛の移動
+
+			//g_enemy[i].walk.x -= g_boss[g_select_Stage].x;
+
+		}
+
+		if (g_enemy[i].spider.x + ENEMY_WIDTH < 0) {		// 画面外にいくと初期化
+
+			g_enemy[i].spider.BossArea_SpiderInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+			//g_enemy[i].walk.flg = TRUE;
+		}
+	}
 }
 /*********************************************
 
@@ -430,20 +612,19 @@ void BossAreaEnemyDisp() {
 }
 // 
 void BossAreaEnemyMove() {
-	static int enemyCnt;        // 
 
 
-	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {        //
+	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {        // 歩く雑魚敵の最大数回す
 		
 		
 		if (g_enemy[i].walk.flg == TRUE) {
-			g_enemy[i].walk.x -= (g_speedLevel - 3);
+			g_enemy[i].walk.x -= (g_speedLevel - 3);		// 歩く雑魚敵の移動
 
 			//g_enemy[i].walk.x -= g_boss[g_select_Stage].x;
 
 		}
 			
-		if (g_enemy[i].walk.x + ENEMY_WIDTH < 0) {
+		if (g_enemy[i].walk.x + ENEMY_WIDTH < 0) {			// 画面外へいくと初期化
 
 			g_enemy[i].walk.BossArea_WlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
 			//g_enemy[i].walk.flg = TRUE;
@@ -576,7 +757,7 @@ bool BossDamageCheck(int bossHp) {
 // ボスが攻撃を終えたかを調べる関数TRUE: ボスの攻撃終了 FALSE: ボスは攻撃中、または終了してしばらくたっている
 
 ***********************************************************/
-bool BossAttackCheck(int bossAttackFlg) {
+bool BossNoAttackCheck(int bossAttackFlg) {
 	static int bossAttackBuf = bossAttackFlg;
 
 	if (bossAttackFlg == 0 && bossAttackBuf != 0) {		
@@ -587,7 +768,23 @@ bool BossAttackCheck(int bossAttackFlg) {
 	bossAttackBuf = bossAttackFlg;
 	return FALSE;
 }
+/***********************************************************
 
+// ボスが違う攻撃をするたびエネミードロップを初期化する関数TRUE: ボスの攻撃開始 FALSE: ボスは攻撃中、または終了してしばらくたっている
+
+***********************************************************/
+bool BossDropAttackCheck(int bossAttackFlg) {
+	static int bossAttackBuf = bossAttackFlg;
+
+	/*if (bossAttackFlg != 0 && bossAttackBuf == 0) {*/
+	if (bossAttackFlg != bossAttackBuf) {
+		bossAttackBuf = bossAttackFlg;
+		return TRUE;
+	}
+
+	bossAttackBuf = bossAttackFlg;
+	return FALSE;
+}
 /***********************************************************
 
 // ボスの初期化

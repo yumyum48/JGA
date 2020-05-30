@@ -76,76 +76,25 @@ struct playerInfo {
     int useSkillGage;   //消費するスキルゲージの量
     float skillCoolTime[3];  //スキル再使用のクールタイム格納
     int skillNo; //使用した装備中のスキルの配列番号
-    void Init() {   // プレイヤーの初期化
-        x = 100 * PLAYER_REDUCTION;
-        y = GROUND;
-        hp = 3;
-        attackFlg = FALSE;
-        jumpFlg = FALSE;
-        skillFlg = 0;
-        skillGage = 100;
-        skill_MAX = 3;
-        gauge = 265;
-        swordFlg = FALSE;
-        useSkillFlg = FALSE;
-        barrierFlg = FALSE;
-        useSkillGage = 0;
-        timecount = 0;
-        skillcustom[0] = 1;
-        skillcustom[1] = 4;
-        skillcustom[2] = 0;
-        skillCoolTime[0] = 0;
-        skillCoolTime[1] = 0;
-        skillCoolTime[2] = 0;
-        skillNo = 0;
-    }
+    void Init();   // プレイヤーの初期化//Player.cppの一番下あたりで定義
 
 };
 
 // 敵の情報
 struct enemyInfo {
 
-    int x = 1000;
-    int y = GROUND + 30;
-    bool flg;
-    int anime;
+    int x = 574 * 0.2;                       // 敵のX座標の初期位置
+    int y = GROUND - (545 * 0.5);            // 敵のY座標の初期位置
+    int flg = FALSE;                         // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
+    int anime = 0;                           // アニメーションの初期化
     
-    void WalkInit() {                  // 敵の初期化
-        x = 1280;                      // 敵のX座標の初期位置
-        y = GROUND + 30;               // 敵のY座標の初期位置
-        flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
-        anime = 0;                     // アニメーションの初期化
-    }
-    void FlyInit() {
-        x = 1280;                      // 敵のX座標の初期位置
-        y = GROUND - 30;               // 敵のY座標の初期位置
-        flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
-        anime = 0;                     // アニメーションの初期化
-    }
-    void BossArea_WlakInit(int bx, int by) {
-        x = bx - (574 * 0.2);          // 敵のX座標の初期位置
-        y = GROUND + 30;               // 敵のY座標の初期位置
-        flg = FALSE;                   // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
-        anime = 0;                     // アニメーションの初期化
-    }
-    void BossArea_CloudInit(int bx, int by, int cloudPic) {   //　ボスエリアのミニ雲の初期化
-        int ew;
-        int eh;
-        GetGraphSize(cloudPic, &ew, &eh);
-        x = bx + ew; //bx - (574 * 0.2);←実際のミニ雲のイラスト待ち
-        y = GROUND - 30;
-        flg = FALSE;
-        anime = 0;
-    }
-    void BossArea_SpiderInit(int bx, int by, int spiderPic) {   //　ボスエリアのミニ蜘蛛の初期化
-        int ew;
-        int eh;
-        GetGraphSize(spiderPic, &ew, &eh);
-        x = bx + ew; //bx - (574 * 0.2);←実際のミニ蜘蛛のイラスト待ち
-        y = GROUND;
-        flg = FALSE;
-        anime = 0;
-    }
+    void WalkInit();                 // 歩く敵の初期化
+
+    void FlyInit();                  // 飛ぶ敵の初期化
+
+    void BossArea_WlakInit(int bx, int by);
+    void BossArea_CloudInit(int bx, int by);   //　ボスエリアのミニ雲の初期化
+    void BossArea_SpiderInit(int bx, int by);   //　ボスエリアのミニ蜘蛛の初期化
     void BufferAssignment(int ex, int ey) {
         x = ex;
         y = ey;

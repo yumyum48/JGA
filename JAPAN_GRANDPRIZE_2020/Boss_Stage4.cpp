@@ -10,13 +10,22 @@
 #include "Select.h"
 #include "GameScene.h"
 #include "Init.h"
+
+struct rightningInfo {		// 雷撃の情報
+	int x;				// X座標
+	int y;				// Y座標
+	int cnt;	// ボス４の雷撃が来るまでのカウント
+	float exRate;		// 拡大率
+
+};
 /*********************************************
 
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-picInfo g_boss4_Cloud;	// ボス４の雲の情報
-picInfo g_boss4_Thread;	// ボス４の糸の情報
+picInfo g_boss4_Cloud;		// ボス４の雲の情報
+picInfo g_boss4_Thread;		// ボス４の糸の情報
+rightningInfo g_rightning;	// 雷撃の情報
 /*********************************************
 
 * ステージ３のボス
@@ -48,7 +57,7 @@ void BossDisp_Stage4() {
 	//g_boss4_Cloud.w = g_boss4_Cloud.x + bw;
 	//g_boss4_Cloud.h = g_boss4_Cloud.y + bh;
 	
-
+	DrawRotaGraph(g_boss4_Cloud.w / 2, g_boss4_Cloud.h / 2, g_rightning.exRate, 2.0, g_pic.enemy_walk[0], TRUE);
 	// 雲の表示
 	DrawBox(g_boss4_Cloud.x, g_boss4_Cloud.y, g_boss4_Cloud.w, g_boss4_Cloud.h, 0xFFFFFF, TRUE);
 	// 糸の表示
@@ -59,6 +68,7 @@ void BossDisp_Stage4() {
 	if (g_boss[BOSS_STAGE4].attackFlg != 0) {						// ボスが攻撃していれば
 		BossAttackDisp();	// ボスの攻撃
 	}
+	DrawFormatString(600, 200, 0xFFFFFF, "cnt = %d", g_rightning.cnt);
 }
 
 
@@ -73,7 +83,11 @@ void BossMove_Stage4() {
 		&& (g_boss[BOSS_STAGE4].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {							// ボスが移動していなければ
 
-		attackSelect = InputRand(BOSSATTACK_MINISPIDER_DROP, BOSSATTACK_MINISPIDER_DROP, BOSSATTACK_MINISPIDER_DROP);			//乱数で攻撃するか移動をするかを決定
+		int enumSet = BOSSATTACK_MINISPIDER_DROP;
+		if (g_rightning.cnt > 1800)
+			enumSet = 1;
+
+		attackSelect = InputRand(BOSSATTACK_MINISPIDER_DROP, BOSSATTACK_MINICLOUD_DROP, enumSet);			//乱数で攻撃するか移動をするかを決定
 
 		if (attackSelect != 0) {
 			g_boss[BOSS_STAGE4].attackFlg = attackSelect;				// 攻撃する場合、フラグに対応した数字を入れる
@@ -86,13 +100,19 @@ void BossMove_Stage4() {
 	}
 
 	// バッファーと比べて雑魚敵生成してないときは雑魚敵を初期化
-	if (BossAttackCheck(g_boss[BOSS_STAGE4].attackFlg) == TRUE) {
+	if (BossNoAttackCheck(g_boss[BOSS_STAGE4].attackFlg) == TRUE) {
 		for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
-			g_enemy[i].cloud.BossArea_CloudInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, g_pic.enemy_fly[0]);
-			g_enemy[i].spider.BossArea_SpiderInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, g_pic.enemy_walk[0]);
+			g_enemy[i].cloud.BossArea_CloudInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+			g_enemy[i].spider.BossArea_SpiderInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
 		}
 	}
-
+	// バッファーと比べて雑魚敵生成する時雑魚敵を初期化
+	if (BossDropAttackCheck(g_boss[BOSS_STAGE4].attackFlg) == TRUE) {
+		for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
+			g_enemy[i].cloud.BossArea_CloudInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+			g_enemy[i].spider.BossArea_SpiderInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
+		}
+	}
 	//// 攻撃無しで行動
 	//if (moveFlg != BOSSMOVE_NOMOTION) {					// 行動パターン
 
@@ -105,7 +125,29 @@ void BossMove_Stage4() {
 		BossAttackMove();	// ボスの攻撃
 	}
 
+	
+	//if (g_boss4_Rightning_Cnt >= 1800) {		// カウントを１の差でDispの部分を制御
+	//	g_boss4_Rightning_Cnt = 1799;
+	//}
+	// 雷撃を落とすカウント
+	g_rightning.cnt++;
+
 	Boss_Knock_Down();	// ボスが倒されてる処理
+}
+
+void Boss_Lightning_Disp() {
+	
+	
+
+
+	//if()
+	//g_rightning.cnt = 0;				 // 雷撃までのカウントを初期化
+	//g_boss[g_select_Stage].attackFlg = 0;    // attackフラグを初期化
+}
+void Boss_Lightning_Move() {
+	
+
+
 }
 // ボス４の必要な情報の初期化
 void Boss_Stage4_Init() {

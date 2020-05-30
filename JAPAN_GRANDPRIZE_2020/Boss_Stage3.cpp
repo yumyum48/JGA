@@ -56,7 +56,7 @@ void BossMove_Stage3() {
 
 
 	int num = GetRand(2);
-	if (BossAttackCheck(g_boss[BOSS_STAGE3].attackFlg) == TRUE)	// ボスが前フレームで攻撃をしていたかを確認
+	if (BossNoAttackCheck(g_boss[BOSS_STAGE3].attackFlg) == TRUE)	// ボスが前フレームで攻撃をしていたかを確認
 		num = 1;	// していれば、座標調整のため強制ジャンプ
 
 	//	ボスがジャンプをするのか攻撃をするのかを判断する(乱数で決定)
