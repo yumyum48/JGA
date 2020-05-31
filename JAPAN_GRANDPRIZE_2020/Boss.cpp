@@ -14,6 +14,7 @@
 #include "HP.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "Trap.h"
 
 /*********************************************
 
@@ -185,7 +186,7 @@ void BossAttackDisp() {
 			break; 
 
 		case BOSSATTACK_LIGHTNING:
-
+			Boss_Lightning_Disp();
 			break;
 		default:
 			break;
@@ -228,12 +229,32 @@ void BossAttackMove() {
 			break;
 
 		case BOSSATTACK_LIGHTNING:
-		
+			Boss_Lightning_Move();
 			break;
 		default:
 			break;
 	}
 	
+}
+/*********************************************
+
+* 毒のトラップを設置
+
+*/////////////////////////////////////////////
+void Poison_Trap_Disp() {
+	if (g_trap.dispFlg == TRUE) {
+		DrawRotaGraph2(g_trap.x, g_trap.y, 0, 0, 0.3, 0.0, g_pic.trap, TRUE);
+	}
+}
+void Poison_Trap_Move() {
+	if (g_trap.dispFlg == TRUE) {
+		g_trap.x -= g_speedLevel;														// トラップのX座標をスクロール速度と同じ値で加算させる
+
+		if (g_trap.x + 100 < 0) {
+			g_trap.Init();																// トラップが画面外に入った場合初期化
+			g_trap.dispFlg = FALSE;
+		}
+	}
 }
 /*********************************************
 

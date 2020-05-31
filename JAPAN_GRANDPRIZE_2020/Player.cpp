@@ -218,10 +218,10 @@ void PlayerJump() {
 	g_player.y += g_speed;
 	g_speed += G;
 
-	if (g_player.y >= GROUND) {
+	if (g_player.y >= GROUND - PLAYER_HEIGHT) {
 		g_player.jumpFlg = FALSE;
 		g_speed = 0.0F;
-		g_player.y = GROUND;
+		g_player.y = GROUND - PLAYER_HEIGHT;
 	}
 }
 // ボタンを押した時の処理
@@ -247,7 +247,7 @@ void PlayerControl() {
 		if(g_player.useSkillFlg == TRUE)g_player.timecount = 10;
 
 	}
-	if (g_player.x > 100 && g_player.attackFlg == FALSE && g_player.y >= GROUND) {
+	if (g_player.x > 100 && g_player.attackFlg == FALSE && g_player.y >= GROUND - PLAYER_HEIGHT) {
 		g_player.x -= 5.0F;
 	}
 
@@ -372,6 +372,56 @@ void EnemyCut() {
 				//g_player.attackFlg = TRUE;
 			}
 		}
+		// ミニ蜘蛛
+		if ((g_enemy[i].spider.flg == TRUE)
+			&& ((PlayerInterval(g_enemy[i].spider.x, g_enemy[i].spider.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
+				|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].spider.x, g_enemy[i].spider.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
+			// レティクル表示
+			DrawRotaGraph2(g_enemy[i].spider.x + (ENEMY_WIDTH / 3), g_enemy[i].spider.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
+			// 敵を倒す処理
+			if (g_player.skillFlg == 2) {
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemy[i].spider.WalkInit();
+			}
+			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			if (g_player.attackFlg == TRUE) {
+				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].spider.x, g_enemy[i].spider.y);
+				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+					g_enemy[i].spider.WalkInit();																// 倒されたら初期化
+				}
+				else {
+					g_enemy[i].spider.BossArea_SpiderInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);	// ボスエリアで倒された場合初期化方法を変える
+				}
+				//g_player.attackFlg = TRUE;
+			}
+		}
+		// ミニ雲
+		if ((g_enemy[i].cloud.flg == TRUE)
+			&& ((PlayerInterval(g_enemy[i].cloud.x, g_enemy[i].cloud.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
+				|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].cloud.x, g_enemy[i].cloud.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
+			// レティクル表示
+			DrawRotaGraph2(g_enemy[i].cloud.x + (ENEMY_WIDTH / 3), g_enemy[i].cloud.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
+			// 敵を倒す処理
+			if (g_player.skillFlg == 2) {
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemy[i].cloud.FlyInit();
+			}
+			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			if (g_player.attackFlg == TRUE) {
+				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].cloud.x, g_enemy[i].cloud.y);
+				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+					g_enemy[i].cloud.WalkInit();																// 倒されたら初期化
+				}
+				else {	
+					g_enemy[i].cloud.BossArea_CloudInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);	// ボスエリアで倒された場合初期化方法を変える
+				}
+				//g_player.attackFlg = TRUE;
+			}
+		}
 	}
 	//boss
 	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
@@ -451,6 +501,31 @@ bool PlayerHitCheck(int ex, int ey, int ew, int eh) {
 	}
 
 	return FALSE;
+}
+
+// プレイヤーの初期化処理
+void playerInfo::Init() {
+	x = 100 * PLAYER_REDUCTION;
+	y = GROUND - PLAYER_HEIGHT;
+	hp = 3;
+	attackFlg = FALSE;
+	jumpFlg = FALSE;
+	skillFlg = 0;
+	skillGage = 100;
+	skill_MAX = 3;
+	gauge = 265;
+	swordFlg = FALSE;
+	useSkillFlg = FALSE;
+	barrierFlg = FALSE;
+	useSkillGage = 0;
+	timecount = 0;
+	skillcustom[0] = 1;
+	skillcustom[1] = 4;
+	skillcustom[2] = 0;
+	skillCoolTime[0] = 0;
+	skillCoolTime[1] = 0;
+	skillCoolTime[2] = 0;
+	skillNo = 0;
 }
 // プレイヤーの初期化処理
 void PlayerInit() {

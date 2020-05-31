@@ -4,7 +4,7 @@
 #include "Select.h"
 #include "Trap.h"
 #include "Picture.h"
-
+#include "enemy.h"
 								
 
 /*********************************************
@@ -14,13 +14,14 @@
 */////////////////////////////////////////////
 void TrapDisp() {
 	
-	
-	if (GetRand(10) == 1) g_trap.dispFlg = TRUE;										// ランダムでトラップを出現させるフラグをオンにする
-	
-	if (g_trap.dispFlg == TRUE) {
-		DrawFormatString(500, 0, 0xFF00FF, "トラップ出てますよ！");
-		DrawRotaGraph2(g_trap.x, g_trap.y, 0, 0, 0.3, 0.0, g_pic.trap, TRUE);	// トラップを表示
+	if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+		if (GetRand(10) == 1) g_trap.dispFlg = TRUE;										// ランダムでトラップを出現させるフラグをオンにする
 	}
+		if (g_trap.dispFlg == TRUE) {
+			DrawFormatString(500, 0, 0xFF00FF, "トラップ出てますよ！");
+			DrawRotaGraph2(g_trap.x, g_trap.y, 0, 0, 0.3, 0.0, g_pic.trap, TRUE);	// トラップを表示
+		}
+	
 }
 
 
@@ -30,6 +31,7 @@ void TrapDisp() {
 
 */////////////////////////////////////////////
 void TrapMove() {
+
 	if (g_trap.dispFlg) {
 		g_trap.x -= g_speedLevel;														// トラップのX座標をスクロール速度と同じ値で加算させる
 

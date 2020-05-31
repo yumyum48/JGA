@@ -56,6 +56,7 @@ enum {	// ボスの攻撃判断
 	BOSSATTACK_MINISPIDER_DROP,			// ミニスパイダーをドロップする
 	BOSSATTACK_MINICLOUD_DROP,			// ミニ雲をドロップする
 	BOSSATTACK_LIGHTNING,				// 雷撃による攻撃
+	BOSSATTACK_POISON_TRAP,				// 毒のトラップを設置
 };
 
 enum { // ボスの動きパターン
@@ -129,6 +130,8 @@ void Boss_MiniCloud_Drop_Disp();		// ミニ雲を出す攻撃の表示
 void Boss_MiniCloud_Drop_Move();		// ミニ雲を出す攻撃の動き
 void Boss_Lightning_Disp();				// 雷撃の表示
 void Boss_Lightning_Move();				// 雷撃の動き
+void Poison_Trap_Disp();				// 毒のトラップの表示
+void Poison_Trap_Move();				// 毒のトラップの動き
 bool Boss_3_Jump(int* coolTime, int* boss_JumpFlg, int jumpType);	// TRUE: ジャンプ終了 FALSE: ジャンプ開始	// ボス３のジャンプ (jumpTypeは０を入れると通常ジャンプ、１を入れるとずれたX座標を修正しながらジャンプ)
 void (* const BossDisp[4])() = {		// ボスの表示
 	BossDisp_Stage1,

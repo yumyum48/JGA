@@ -183,7 +183,7 @@ void enemyInfo::BossArea_WlakInit(int bx, int by) {
 void enemyInfo::BossArea_CloudInit(int bx, int by) {   //　ボスエリアのミニ雲の初期化
 
 	x = bx - ENEMY_WIDTH;            // 敵のX座標の初期位置
-	y = GROUND - ENEMY_HEIGHT;                // 敵のY座標の初期位置
+	y = (GROUND - ENEMY_HEIGHT) - 200;                // 敵のY座標の初期位置
 	flg = FALSE;                    // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
 	anime = 0;                      // アニメーションの初期化
 }
