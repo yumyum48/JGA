@@ -15,6 +15,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "Trap.h"
+#include "Skill.h"
 
 #define BOSS_TON_HEIGHT	70		// ボスの舌の高さ
 
@@ -691,7 +692,7 @@ void BossWaterBulletDisp() {
 	static bool attackFlg = FALSE;		// 攻撃判断フラグ	 treu:攻撃済  false:未攻撃
 
 	// フレーム単位の被弾数の調整
-	if (noDamegeCnt++ < 60);
+	noDamegeCnt++;
 
 	// プレイヤーに水弾が当たった時の処理
 	if (noDamegeCnt >= 60
@@ -715,6 +716,20 @@ void BossWaterBulletDisp() {
 		g_boss[BOSS_STAGE1].attackFlg = 0;
 	}
 
+	// 水弾が切られた時の処理
+	if( (g_player.attackFlg == TRUE)
+		&& (noDamegeCnt >= 30)
+		&& (* SkillMove[g_player.skillFlg])(startX + moveX - 40, startY + moveY - 20, 65, 55) == TRUE){
+		noDamegeCnt = 0;
+		anime = 4;
+		animationMax++;
+		attackFlg = TRUE;
+		if (noDamegeCnt >= 20) {
+			g_boss[BOSS_STAGE1].attackFlg = 0;
+		}
+
+	}
+
 	// 水弾のアニメーション
 	if (anime < animationMax) {
 		if (time++ % 15 == 14)anime++;
@@ -728,6 +743,8 @@ void BossWaterBulletDisp() {
 		moveY += 1.0;*/
 		DrawRotaGraph(startX + moveX, startY + moveY,
 			3.0f, DX_PI_F / 180 * 335, g_pic.waterBullet[anime], TRUE, FALSE);
+		/*DrawBox(startX + moveX - 40, startY + moveY - 20,
+			startX + moveX + 25, startY + moveY + 35, 0xFF0000, FALSE);*/
 	}
 	else if (attackFlg == TRUE) {
 		DrawRotaGraph(startX + moveX, startY + moveY,
