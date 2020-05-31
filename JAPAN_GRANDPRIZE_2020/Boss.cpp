@@ -16,6 +16,8 @@
 #include <math.h>
 #include "Trap.h"
 
+#define BOSS_TON_HEIGHT	70		// ボスの舌の高さ
+
 /*********************************************
 
 * グローバル変数の宣言
@@ -443,28 +445,36 @@ void Boss_MiniSpider_Drop_Move() {
 
 void BossLongTon_Disp() {
 	static int plas = 0;			// 長くしていく
-	int tonW = g_boss3_Ton.x + plas;
-	int tonH = g_boss3_Ton.y + 100;
 
-	//DrawFormatString(500, 500, 0x0000FF, "tonX=%d\ntonW=%d", tonX, tonW);
-	DrawBox(g_boss3_Ton.x, g_boss3_Ton.y, tonW, tonH, 0xFFFF00, TRUE);
-	if (tonW > 0) {
+	// ボスの舌の座標の初期化
+	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);
+	// ボスの舌の幅と高さの初期化
+	int tonW = g_boss3_Ton.x + plas;
+	int tonH = g_boss3_Ton.y + BOSS_TON_HEIGHT;
+
+	DrawFormatString(500, 500, 0x0000FF, "plas=%d\tonH=%d", plas, tonH);
+	// 舌の画像
+	DrawModiGraph(tonW, g_boss3_Ton.y,	// 左上
+		g_boss3_Ton.x, g_boss3_Ton.y,					// 右上
+		g_boss3_Ton.x, tonH,			// 右下
+		tonW, tonH,		// 左下
+		g_pic.bossTongue, TRUE);
+	//DrawBox(g_boss3_Ton.x, g_boss3_Ton.y, tonW, tonH, 0xFFFF00, TRUE);
+
+	// 舌の画像を引き延ばす処理
+	if (tonW > -100) {
 		plas -= 5;
 	}
 	else {
 		tonW = 0;
 	}
-	// 表示で舌は動かす
-
-	DrawBox(822, 97, 822+10, 97+10, 0x00FF00, TRUE);
-
 
 	if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {		// ボスが攻撃されたら攻撃中断してジャンプして逃げる
 		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
 		plas = 0;
 
 		//boss_JumpFlg = BOSS_3_JUMPON;
-	}															   // ボスがプレイヤーに当たったら、ダメージを与えて逃げる
+	}														   // ボスがプレイヤーに当たったら、ダメージを与えて逃げる
 	else if (PlayerHitCheck(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, BOSS_STAGE3_WIDTH, BOSS_STAGE3_HEIGHT) == TRUE) {
 		if (g_player.barrierFlg == FALSE) --g_player.hp;
 		else g_player.barrierFlg = FALSE;
@@ -472,6 +482,15 @@ void BossLongTon_Disp() {
 		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
 		plas = 0;
 	}
+
+	// ボスの舌がプレイヤーに当たったら、ダメージを与えて逃げる		* 横幅で -10 しているのはプレイヤーに当たらない為の調整
+	if (PlayerHitCheck(g_boss3_Ton.x + plas, g_boss3_Ton.y, (plas * -1), BOSS_TON_HEIGHT - 10) == TRUE) {
+		if (g_player.barrierFlg == FALSE) --g_player.hp;
+		else g_player.barrierFlg = FALSE;
+		g_noDamageCnt = 0;
+		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
+		plas = 0;
+	}	
 }
 
 void BossLongTon_Move() {
@@ -489,9 +508,9 @@ void BossLongTon_Move() {
 
 */////////////////////////////////////////////
 bool Boss_3_Jump(int *coolTime, int *boss_JumpFlg, int jumpType) {
-	int boss_MaxUp = 97;							// ボス３がジャンプしていけるY座標最高度
-	int boss_MaxDown = 290;							// ボス３の落下した際のY地点
-	int boss_startX = 822;							// ボス３のX座標の初期値
+	int boss_MaxUp = 150;									// ボス３がジャンプしていけるY座標最高度
+	int boss_MaxDown = GROUND - BOSS_STAGE3_HEIGHT;			// ボス３の落下した際のY地点
+	int boss_startX = 822;									// ボス３のX座標の初期値
 
 
 	if (*boss_JumpFlg == BOSS_3_JUMPON) {	// 上昇
@@ -667,7 +686,7 @@ void BossWaterBulletDisp() {
 	static int time = 0;				// 経過時間
 	static int startX = g_boss[BOSS_STAGE1].x + 100,
 				startY = g_boss[BOSS_STAGE1].y + 200;	// 水弾の初期位置
-	static float moveX = 0, moveY = 0;	// 水弾の移動量
+	static int moveX = 0, moveY = 0;	// 水弾の移動量
 	static int noDamegeCnt = 60;		// ダメージを受け付けない時間
 	static bool attackFlg = FALSE;		// 攻撃判断フラグ	 treu:攻撃済  false:未攻撃
 
@@ -815,6 +834,6 @@ void BossInit() {
 	for (int i = BOSS_STAGE1; i < BOSS_MAX; i++) {
 		g_boss[i].Init_Stage(i);		// 全ステージのボスの初期化
 	}
-	g_boss3_Ton.Boss3_TonInit();	// ステージ３のボスの舌の初期化
+	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);// ステージ３のボスの舌の初期化
 	Boss_Stage4_Init();	// ボスステージ４の雲の初期化
 }

@@ -79,6 +79,9 @@ int LoadPicture() {
 	// ボス_２の画像読み込み
 	if (LoadDivGraph("image/ZakoOPAll.png", 9, 9, 1, 44.4, 44, g_pic.boss_2_1, 0) == -1)return -1;
 
+	// ボス_３の画像読み込み
+	if (LoadDivGraph("image/BossFlog.png", 5, 5, 1, 128, 128, g_pic.boss_3_1, 0) == -1)return -1;
+
 	//// ボス_１の泡画像読み込み
 	//if (LoadDivGraph("image/Boss1_Water.png", 8, 8, 0, 280, 200, g_pic.boss_1_2, 0) == -1)
 	//	return -1;
@@ -98,6 +101,10 @@ int LoadPicture() {
 
 	// ゲームオーバー時の[討伐失敗]の文字
 	if ((g_pic.gameOverText = LoadGraph("image/gameOver.png")) == -1) return -1;
+
+	// ボス３の舌の座像
+	if ((g_pic.bossTongue = LoadGraph("image/tongue.png")) == -1) return -1;
+
 
 
 	return 0;

@@ -18,9 +18,9 @@
 #define BOSS_AREA_ENEMY_MAX (3)				// ボス戦のエネミーが出現する最大数
 #define BOSS_STAGE2_WIDTH (271)		// ボスの横幅
 #define BOSS_STAGE2_HEIGHT (271)	// ボスの縦幅
-#define BOSS_STAGE3_WIDTH (380)
-#define BOSS_STAGE3_HEIGHT (380)
-#define BOSS_STAGE4_WIDTH (314)
+#define BOSS_STAGE3_WIDTH  (128 * 3.5)// ボスの横幅
+#define BOSS_STAGE3_HEIGHT (128 * 3.5)// ボスの縦幅
+#define BOSS_STAGE4_WIDTH  (314)
 #define BOSS_STAGE4_HEIGHT (286)
 
 /***********************************************************
