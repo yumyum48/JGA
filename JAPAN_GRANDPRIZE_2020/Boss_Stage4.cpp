@@ -19,13 +19,12 @@ struct rightningInfo {		// 雷撃の情報
 	float exRate;		// 拡大率
 
 };
+
 /*********************************************
 
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-picInfo g_boss4_Cloud;		// ボス４の雲の情報
-picInfo g_boss4_Thread;		// ボス４の糸の情報
 rightningInfo g_rightning;	// 雷撃の情報
 /*********************************************
 
@@ -95,8 +94,7 @@ void BossMove_Stage4() {
 			g_enemy[i].cloud.BossArea_CloudInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
 			g_enemy[i].spider.BossArea_SpiderInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);	
 		}
-							// トラップの情報の初期化
-
+						
 		int enumSet = BOSSATTACK_MINICLOUD_DROP;
 		if (g_rightning.cnt >= 1800)									// 雷撃のカウントが30秒以上なら雷撃を落とさせる準備をする
 			enumSet = BOSSATTACK_LIGHTNING;
@@ -182,5 +180,5 @@ void Boss_Lightning_Move() {
 // ボス４の必要な情報の初期化
 void Boss_Stage4_Init() {
 	g_boss4_Cloud.Boss4_CloudInit();
-	g_boss4_Thread.Boss4_Thread();
+	g_boss4_Thread.ThreadInit();
 }

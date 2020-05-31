@@ -5,8 +5,6 @@
 #include "Macro.h"
 //#include "Player.h"
 
-
-
 // マウスの入力状態
 struct mouse {
     int mouseX, mouseY;
@@ -284,7 +282,7 @@ struct picInfo {
         h = y + 134;    // 座標をY～にする
 
     }
-    void Boss4_Thread() {
+    void Boss4_ThreadInit() {
         x = 995;
         y = 170;
         w = x + 6;    // 座標をX～にする
