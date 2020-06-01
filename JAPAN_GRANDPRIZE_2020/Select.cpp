@@ -15,9 +15,7 @@
 /******************************************************
 // マクロの定義
 *******************************************************/
-#define STAGE_NUMBER 7
-
-
+#define STAGE_NUMBER			 (7)
 #define MENU_SAVE_BOX_XPOINT_MAX (724)	// メニュー画面とセーブ画面の背景が移動して表示されるX座標
 #define MENU_SAVE_BOX_MOBE		 (10)	// メニュー画面とセーブ画面の背景が移動するスピード
 #define MENU_BOX_XPOINT_MIN		 (1182)	// メニュー画面が隠れている時のX座標
@@ -98,9 +96,7 @@ void SelectDisp(void) {
 
 				Get_NowDisp(GAME_PLAY, 2);
 				//g_gameScene = GAME_CHANGE_SCREEN_ANIMATION;
-
 			}
-			
 		}
 		// メニュー画面が出ているとき
 		else if (g_menuFlg == MENU_ON) {
@@ -262,7 +258,7 @@ void MenuScrollOut() {
 /******************************************************
 // ステージを決定させるカーソルを操作させる
 *******************************************************/
-void StageSelectOper() {
+void StageSelectOper() {/
 	//メニューカーソル移動処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
 		if (++g_select_Stage > g_select_MAX) g_select_Stage = 0;

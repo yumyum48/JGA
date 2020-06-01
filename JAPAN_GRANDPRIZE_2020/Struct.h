@@ -5,8 +5,6 @@
 #include "Macro.h"
 //#include "Player.h"
 
-
-
 // マウスの入力状態
 struct mouse {
     int mouseX, mouseY;
@@ -42,11 +40,13 @@ struct image {
     int Life[2];                        //playerのHP画像
     int boss_1_1[16];                   // ボス_１の画像
     int boss_2_1[9];                    // ボス_２の画像
+    int boss_3_1[5];                    // ボス_３の画像
     //int skill2[4];                      //スキル2のモーション画像(仮)
     //int skill3[5];                      //スキル3のモーション画像(仮)
     int skillEffect[40];                //スキルエフェクト画像
     int selectBack;                     // セレクト画面の背景画像
     int waterBullet[5];                 // ボスの水弾の画像
+    int bossTongue;                     // ボス３の舌の画像
     int trap;                           // トラップの画像
     int gauge;                          // ゲージの画像
     int enemyVapour[5];                 // 敵撃破時の蒸気の画像
@@ -141,7 +141,7 @@ struct bossInfo {     // ボスの情報
         case 2:         // ステージ３のボスを初期化
             hp = 10;
             x = 822;
-            y = 290;
+            y = GROUND - 128 * 3.5;
             popflg = 0;
             attackFlg = 0;
             break;
@@ -265,10 +265,15 @@ struct picInfo {
         w = 0;          
         h = 0;          
     }
-    void Boss3_TonInit() {  // ボス３の舌の初期化
+    /*void Boss3_TonInit() {  // ボス３の舌の初期化
         x = 819;
-        y = 344;
+        y = 440;
         
+    }*/
+    void Boss3_TonInit(int bossX, int bossY) {  // ボス３の舌の初期化
+        x = bossX + 100;
+        y = bossY;
+
     }
     void Boss4_CloudInit() {    // ボス４の雲の初期化
         x = 868;
@@ -277,7 +282,7 @@ struct picInfo {
         h = y + 134;    // 座標をY～にする
 
     }
-    void Boss4_Thread() {
+    void Boss4_ThreadInit() {
         x = 995;
         y = 170;
         w = x + 6;    // 座標をX～にする
@@ -294,7 +299,7 @@ struct picInfo {
     }
     void SelectStageInit(int num) { // セレクト画面の初期化
         switch (num) {
-        case 0: 
+        /*case 0: 
             x = 217;
             y = 599;
             break;
@@ -329,8 +334,18 @@ struct picInfo {
         default:
             x = 0;
             y = 0;
-            break;
-            
+            break;*/
+
+        case 0:  x = 217; y = 99;  break;
+        case 1:  x = 558; y = 129; break;
+        case 2:  x = 926; y = 178; break;
+        case 3:  x = 689; y = 310; break;
+        case 4:  x = 451; y = 381; break;
+        case 5:  x = 224; y = 506; break;
+        case 6:  x = 508; y = 563; break;
+        case 7:  x = 826; y = 499; break;
+        default: x = 0;   y = 0;   break;
+
         }
     };
 };

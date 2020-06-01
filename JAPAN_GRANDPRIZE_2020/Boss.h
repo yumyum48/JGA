@@ -18,18 +18,20 @@
 #define BOSS_AREA_ENEMY_MAX (3)				// ボス戦のエネミーが出現する最大数
 #define BOSS_STAGE2_WIDTH (271)		// ボスの横幅
 #define BOSS_STAGE2_HEIGHT (271)	// ボスの縦幅
-#define BOSS_STAGE3_WIDTH (380)
-#define BOSS_STAGE3_HEIGHT (380)
-#define BOSS_STAGE4_WIDTH (314)
+#define BOSS_STAGE3_WIDTH  (128 * 3.5)// ボスの横幅
+#define BOSS_STAGE3_HEIGHT (128 * 3.5)// ボスの縦幅
+#define BOSS_STAGE4_WIDTH  (314)
 #define BOSS_STAGE4_HEIGHT (286)
+#define BOSS_STAGE5_WIDTH  (324)
+#define BOSS_STAGE5_HEIGHT (415)
 
 /***********************************************************
 
 // 定数の宣言
 
 ***********************************************************/
-const int BOSSFULL_WIDTH[MAP_MAX] = {BOSS_WIDTH, BOSS_STAGE2_WIDTH, BOSS_STAGE3_WIDTH, BOSS_STAGE4_WIDTH};
-const int BOSSFULL_HEIGHT[MAP_MAX] = { BOSS_HEIGHT, BOSS_STAGE2_HEIGHT, BOSS_STAGE3_HEIGHT, BOSS_STAGE4_HEIGHT};
+const int BOSSFULL_WIDTH[MAP_MAX] = {BOSS_WIDTH, BOSS_STAGE2_WIDTH, BOSS_STAGE3_WIDTH, BOSS_STAGE4_WIDTH, BOSS_STAGE5_WIDTH };
+const int BOSSFULL_HEIGHT[MAP_MAX] = { BOSS_HEIGHT, BOSS_STAGE2_HEIGHT, BOSS_STAGE3_HEIGHT, BOSS_STAGE4_HEIGHT, BOSS_STAGE5_HEIGHT};
 /***********************************************************
 
 // 列挙体の宣言
@@ -70,7 +72,14 @@ enum {	// ボス３のジャンプフラグ操作
 	BOSS_3_JUMPON,
 	BOSS_3_DOWN,
 };
+struct boss4_parts :public picInfo {	//ボス４の雲と糸の情報 
+	int hp;
+	void ThreadInit() {
+		Boss4_ThreadInit();
+		hp = 5;
+	}
 
+};
 struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
 	int x, y;
 
@@ -81,7 +90,8 @@ struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
 
 ***********************************************************/
 extern bossInfo g_boss[MAP_MAX];		// ボスの情報
-
+extern boss4_parts g_boss4_Cloud;		// ボス４の雲の情報
+extern boss4_parts g_boss4_Thread;		// ボス４の糸の情報
 /***********************************************************
 
 // 関数の宣言
@@ -99,7 +109,8 @@ void BossDisp_Stage3();					// ステージ３のボスの表示
 void BossMove_Stage3();					// ステージ３のボスの動き
 void BossDisp_Stage4();					// ステージ４のボスの表示
 void BossMove_Stage4();					// ステージ４のボスの動き
-
+void BossDisp_Stage5();					// ステージ５のボスの表示
+void BossMove_Stage5();					// ステージ５のボスの動き
 void Boss_Knock_Down();					// ボスの当たり判定
 
 void BossInit();						// ボスの初期化
@@ -133,18 +144,20 @@ void Boss_Lightning_Move();				// 雷撃の動き
 void Poison_Trap_Disp();				// 毒のトラップの表示
 void Poison_Trap_Move();				// 毒のトラップの動き
 bool Boss_3_Jump(int* coolTime, int* boss_JumpFlg, int jumpType);	// TRUE: ジャンプ終了 FALSE: ジャンプ開始	// ボス３のジャンプ (jumpTypeは０を入れると通常ジャンプ、１を入れるとずれたX座標を修正しながらジャンプ)
-void (* const BossDisp[4])() = {		// ボスの表示
+void (* const BossDisp[5])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,
 	BossDisp_Stage3,
 	BossDisp_Stage4,
+	BossDisp_Stage5,
 
 };
 
-void (* const BossMove[4])() = {		// ボスの動き
+void (* const BossMove[5])() = {		// ボスの動き
 	BossMove_Stage1,
 	BossMove_Stage2,
 	BossMove_Stage3,
 	BossMove_Stage4,
+	BossMove_Stage5,
 };
 

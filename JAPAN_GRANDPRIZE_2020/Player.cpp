@@ -440,6 +440,13 @@ void EnemyCut() {
 				}
 			}
 		}
+		// Ž…
+		if (PlayerInterval(g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE
+			|| (SkillMove[g_player.skillFlg - 1](g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE)) {
+			if (++noDamageCnt > 60 && g_boss4_Thread.hp <= 0) {
+				DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFFFFFF, TRUE);
+			}
+		}
 	}
 
 	enemyNum = 0;
@@ -520,7 +527,7 @@ void playerInfo::Init() {
 	useSkillGage = 0;
 	timecount = 0;
 	skillcustom[0] = 1;
-	skillcustom[1] = 4;
+	skillcustom[1] = 0;
 	skillcustom[2] = 0;
 	skillCoolTime[0] = 0;
 	skillCoolTime[1] = 0;
