@@ -96,7 +96,8 @@ struct enemyInfo {
 
     void BossArea_WlakInit(int bx, int by);
     void BossArea_CloudInit(int bx, int by);   //　ボスエリアのミニ雲の初期化
-    void BossArea_SpiderInit(int bx, int by);   //　ボスエリアのミニ蜘蛛の初期化
+    void BossArea_SpiderInit(int bx, int by);  //　ボスエリアのミニ蜘蛛の初期化
+    void BossArea_KurageInit(int by);          // ボスエリアのクラゲの初期化
     void BufferAssignment(int ex, int ey) {
         x = ex;
         y = ey;
@@ -112,8 +113,9 @@ struct enemyInfo {
 struct enemyType {      // 敵の種類
     enemyInfo fly;      // 飛ぶ敵
     enemyInfo walk;     // 歩く敵
-    enemyInfo cloud;    // 雲
-    enemyInfo spider;   // 蜘蛛
+    enemyInfo cloud;    // ミニ雲
+    enemyInfo spider;   // ミニ蜘蛛
+    enemyInfo kurage;   // ミニクラゲ
 };
 
 struct bossInfo {     // ボスの情報
