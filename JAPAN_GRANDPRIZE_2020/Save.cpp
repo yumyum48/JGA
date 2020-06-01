@@ -31,8 +31,11 @@ int g_savefile;	// 今選択しているファイル
 //}
 void SaveModeDisp(int saveX, int saveY[]) {
 	int  buf[SAVE_MAX][DETA_MAX];	// セーブすべきデータを保存する変数
+	int minute[3] = { 0 };			// 分
+	int second[3] = { 0 };			// 秒
 	
 	int no_FileFlg[3] = { 0, 0, 0 };
+
 	// ファイルを読み取って、情報をbufに保存
 	for (int i = 0; i < SAVE_MAX; i++) {
 		if (SaveData_Open(buf[i], i) == 1) {	// もし保存ファイルが存在していないなら
@@ -40,10 +43,21 @@ void SaveModeDisp(int saveX, int saveY[]) {
 			no_FileFlg[i] = 1;
 		}
 	}
+
+	//play時間を分:秒にする
+	for (int i = 0; i < SAVE_MAX;) {
+		if (buf[i][1] >= 60 * (minute[i]+1)) minute[i]++;
+		else second[i] = buf[i][1] - 60 * minute[i] , i++;
+	}
+
+
 	for (int i = 0; i < SAVE_MAX; i++) {
 		SetFontSize(30);
 		if (no_FileFlg[i] == 0) {
-			DrawFormatString(saveX, saveY[i], 0x000000, "クリアしたステージ数: %d\nプレイタイム: %d秒\n", buf[i][0], buf[i][1]);
+			if(minute[i] <= 99)
+				DrawFormatString(saveX, saveY[i], 0x000000, "クリアしたステージ数: %d\nプレイタイム: %02d分 %02d秒\n", buf[i][0]+1, minute[i],second[i]);
+			else
+				DrawFormatString(saveX, saveY[i], 0x000000, "クリアしたステージ数: %d\nプレイタイム: %d秒\n", buf[i][0] + 1, buf[i][1]);
 		}
 		else {
 			DrawFormatString(saveX, saveY[i] + 50, 0x000000, "フォルダが存在していません");
