@@ -32,10 +32,10 @@ int LoadPicture() {
 	//スキル3モーション(仮)
 	//if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
 	//スキルエフェクト
-	if (LoadDivGraph("image/Skill_effect.png", 20, 5, 4, 400, 400, g_pic.skillEffect, 0) == -1) return -1;
+	if (LoadDivGraph("image/Skill_effect.png", 25, 5, 5, 400, 400, g_pic.skillEffect, 0) == -1) return -1;
 
 	//スキルアイコン
-	if (LoadDivGraph("image/SkillAicon.png", 8, 8, 1, 100, 100, g_pic.skillAicon, 0) == -1) return -1;
+	if (LoadDivGraph("image/SkillAicon2.png", 8, 8, 1, 100, 100, g_pic.skillAicon, 0) == -1) return -1;
 	//スキルアイコン装飾(仮)
 	if ((g_pic.skillRing[0] = LoadGraph("image/ring.png")) == -1) return -1;
 	if ((g_pic.skillRing[1] = LoadGraph("image/magatama.png")) == -1) return -1;

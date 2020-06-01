@@ -73,6 +73,8 @@ struct playerInfo {
     int timecount; //納刀抜刀の切り替えの時間
     bool useSkillFlg;   //スキルを使うときに納刀状態か抜刀状態か TRUE = 抜刀, FALSE = 納刀
     bool barrierFlg;    //スキル6 バリアのフラグ TRUE = バリア有, FALSE = バリア無
+    bool powerUpFlg;    //スキル5 火力上昇フラグ TRUE = ON, FALSE = OFF
+    int powerUpTime;    //スキル5 火力上昇時間
     int useSkillGage;   //消費するスキルゲージの量
     float skillCoolTime[3];  //スキル再使用のクールタイム格納
     int skillNo; //使用した装備中のスキルの配列番号
@@ -94,7 +96,8 @@ struct enemyInfo {
 
     void BossArea_WlakInit(int bx, int by);
     void BossArea_CloudInit(int bx, int by);   //　ボスエリアのミニ雲の初期化
-    void BossArea_SpiderInit(int bx, int by);   //　ボスエリアのミニ蜘蛛の初期化
+    void BossArea_SpiderInit(int bx, int by);  //　ボスエリアのミニ蜘蛛の初期化
+    void BossArea_KurageInit(int by);          // ボスエリアのクラゲの初期化
     void BufferAssignment(int ex, int ey) {
         x = ex;
         y = ey;
@@ -110,8 +113,9 @@ struct enemyInfo {
 struct enemyType {      // 敵の種類
     enemyInfo fly;      // 飛ぶ敵
     enemyInfo walk;     // 歩く敵
-    enemyInfo cloud;    // 雲
-    enemyInfo spider;   // 蜘蛛
+    enemyInfo cloud;    // ミニ雲
+    enemyInfo spider;   // ミニ蜘蛛
+    enemyInfo kurage;   // ミニクラゲ
 };
 
 struct bossInfo {     // ボスの情報
@@ -154,8 +158,8 @@ struct bossInfo {     // ボスの情報
             break;
         case 4:         // ステージ５のボスを初期化
             hp = 10;
-            x = 872;
-            y = 160;
+            x = 808;
+            y = 134;
             popflg = 0;
             attackFlg = 0;
             break;

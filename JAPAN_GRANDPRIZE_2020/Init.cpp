@@ -37,5 +37,8 @@ void Reset(){
 	g_select_MAX = 0;			// プレイヤーが行けるステージを１のみにする
 	g_player.skill_MAX = 1;	// プレイヤーの取得しているスキルをゲーム開始状態に戻す
 	g_playTime = 0;	// プレイ時間を初期化
+	g_player.skillcustom[0] = 1;
+	g_player.skillcustom[1] = 0;
+	g_player.skillcustom[2] = 0;
 	GameInit();
 }

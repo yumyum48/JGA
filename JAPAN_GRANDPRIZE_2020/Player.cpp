@@ -29,9 +29,36 @@ void PlayerDisp() {
 	static int anime = 0;							// プレイヤーの画像を変える
 	static int time = 0;							// 画像を切り替えるタイミング調整
 	static float skillTime[3] = { 0 };				// スキルクールタイム
+	static int skill6Anime[2] = { 0 };				//スキル6アニメーション
 
 	if (++time % 4 == 0) anime++;
 	if (anime < g_resetMotion || anime > g_maxMotion) anime = g_resetMotion;
+
+	if (g_player.barrierFlg == TRUE) {
+		//スキル6バリア表示
+		if (skill6Anime[0] < 150 && skill6Anime[1] == 0) skill6Anime[0] += 5;
+		if (skill6Anime[0] > 50 && skill6Anime[1] == 1) skill6Anime[0] -= 5;
+		if (skill6Anime[0] >= 150) skill6Anime[1] = 1;
+		if (skill6Anime[0] <= 50) skill6Anime[1] = 0;
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50 + skill6Anime[0]);
+		DrawGraph(g_player.x - 80, g_player.y - 300, g_pic.skillEffect[20], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200 - skill6Anime[0]);
+		DrawGraph(g_player.x - 80, g_player.y - 300, g_pic.skillEffect[21], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+
+	if (g_player.powerUpFlg == TRUE) {//スキル5　仮
+		DrawBox(g_player.x, g_player.y, g_player.x + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, 0x00ffff, TRUE);
+		if (g_player.powerUpTime > 0) g_player.powerUpTime--;
+		else {
+			if (g_player.jumpFlg == FALSE) {
+				g_noDamageCnt = 0;
+				if (g_player.x < 1000) g_player.x += 50, g_player.jumpFlg == FALSE, EnemyCut();
+				else g_player.powerUpTime = SKILL5_TIME, g_player.powerUpFlg = FALSE;
+			}
+		}
+	}
 
 	// 残像
 	PlayerAfterimage(anime);
@@ -44,6 +71,7 @@ void PlayerDisp() {
 	DrawFormatString(0, 400, 0xFF0000, "%d", g_player.skillFlg);
 	DrawFormatString(0, 600, 0xFFFF00, "%f", g_player.skillCoolTime[g_player.skillNo]);
 	DrawFormatString(0, 700, 0x00FFFF, "%d", g_player.skillNo);
+	DrawFormatString(0, 750, 0x0000FF, "%d", g_player.powerUpTime);
 	
 	if (g_player.skillFlg != 0) {
 		SkillDisp[g_player.skillFlg - 1](g_maxMotion, g_resetMotion);
@@ -72,10 +100,15 @@ void PlayerDisp() {
 	//スキルの再使用までのクールタイム
 	for (int i = 0; i < 3; i++) {
 		if ((g_keyInfo.keyFlg & PAD_INPUT_A) && skillTime[i] <= 0) {
-			skillTime[i] = g_player.skillCoolTime[i];
+			if (g_player.swordFlg == FALSE) {
+				skillTime[i] = g_player.skillCoolTime[i];
+			}else {
+				g_player.skillCoolTime[i] = g_player.skillCoolTime[i] / 2;
+				skillTime[i] = g_player.skillCoolTime[i];
+			}
 		}
 		if (g_player.skillCoolTime[i] > 0) g_player.skillCoolTime[i] -= 0.1F;
-		if (g_player.skillCoolTime[i] < 0) g_player.skillCoolTime[i] = 0.0F;
+		if (g_player.skillCoolTime[i] < 0) g_player.skillCoolTime[i] = 0.0F, skillTime[i] = 0;
 	}
 
 	//スキル光表示
@@ -87,13 +120,14 @@ void PlayerDisp() {
 
 	//クールタイム
 	SetDrawBright(255, 0, 0);
-	DrawCircleGauge(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 70, (g_player.skillCoolTime[0]/ skillTime[0]) * float(100), g_pic.skillAicon[g_player.skillcustom[0]]);
+	DrawCircleGauge(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 70, (g_player.skillCoolTime[0] / skillTime[0]) * float(100), g_pic.skillAicon[g_player.skillcustom[0]]);
 	DrawCircleGauge(WINDOW_WIDTH / 2 - 100, WINDOW_HEIGHT - 70, (g_player.skillCoolTime[1] / skillTime[1]) * float(100), g_pic.skillAicon[g_player.skillcustom[1]]);
 	DrawCircleGauge(WINDOW_WIDTH / 2 + 100, WINDOW_HEIGHT - 70, (g_player.skillCoolTime[2] / skillTime[2]) * float(100), g_pic.skillAicon[g_player.skillcustom[2]]);
 	SetDrawBright(255, 255, 255);
 
 	//勾玉表示
 	DrawRotaGraph(WINDOW_WIDTH / 2 + g_SkillSelectAicon, WINDOW_HEIGHT - 70, 1, time / 8, g_pic.skillRing[1], TRUE);
+
 }
 
 void PlayerMove() {
@@ -429,13 +463,20 @@ void EnemyCut() {
 			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE)) {
 			if (++noDamageCnt > 60 && g_boss[g_select_Stage].hp > 0) {
 				if (g_player.skillFlg == 2) {
-					g_boss[g_select_Stage].hp--;
+					g_boss[g_select_Stage].hp -= 1;
 					noDamageCnt = 0;
 				}
 				//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 				if (g_player.attackFlg == TRUE) {
 					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
-					g_boss[g_select_Stage].hp--;
+					if (g_player.skillFlg == 1) g_boss[g_select_Stage].hp -= 2;
+					if (g_player.skillFlg == 3) g_boss[g_select_Stage].hp -= 3;
+					if (g_player.powerUpFlg == TRUE) g_boss[g_select_Stage].hp -= 1;
+					noDamageCnt = 0;
+				}
+
+				if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
+					g_boss[g_select_Stage].hp -= 5;
 					noDamageCnt = 0;
 				}
 			}
@@ -463,6 +504,15 @@ bool PlayerInterval(int ex, int ey, int ew, int eh) {
 		}
 	}
 
+	if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
+
+		if (((long int)g_player.x + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
+			&& ((long int)g_player.x + (long int)PLAYER_WIDTH + PLAYER_WIDTH >= ex)
+			&& ((long int)g_player.y - (long int)PLAYER_HEIGHT <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
+			&& ((long int)g_player.y + (long int)PLAYER_HEIGHT >= ey)) {
+			return TRUE;
+		}
+	}
 	////間合いが伸びるスキル判定
 	//if (g_player.skillFlg == 1) {
 	//	if (((long int)g_player.x + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
@@ -524,11 +574,13 @@ void playerInfo::Init() {
 	swordFlg = FALSE;
 	useSkillFlg = FALSE;
 	barrierFlg = FALSE;
+	powerUpFlg = FALSE;
+	powerUpTime = SKILL5_TIME;
 	useSkillGage = 0;
 	timecount = 0;
-	skillcustom[0] = 1;
-	skillcustom[1] = 0;
-	skillcustom[2] = 0;
+	//skillcustom[0] = 1;
+	//skillcustom[1] = 0;
+	//skillcustom[2] = 0;
 	skillCoolTime[0] = 0;
 	skillCoolTime[1] = 0;
 	skillCoolTime[2] = 0;
