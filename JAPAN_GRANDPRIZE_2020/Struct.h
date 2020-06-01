@@ -73,6 +73,8 @@ struct playerInfo {
     int timecount; //納刀抜刀の切り替えの時間
     bool useSkillFlg;   //スキルを使うときに納刀状態か抜刀状態か TRUE = 抜刀, FALSE = 納刀
     bool barrierFlg;    //スキル6 バリアのフラグ TRUE = バリア有, FALSE = バリア無
+    bool powerUpFlg;    //スキル5 火力上昇フラグ TRUE = ON, FALSE = OFF
+    int powerUpTime;    //スキル5 火力上昇時間
     int useSkillGage;   //消費するスキルゲージの量
     float skillCoolTime[3];  //スキル再使用のクールタイム格納
     int skillNo; //使用した装備中のスキルの配列番号

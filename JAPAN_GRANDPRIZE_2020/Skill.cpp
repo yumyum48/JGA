@@ -200,7 +200,7 @@ void SkillDisp_4(int aniMAX, int aniMIN) { //エレクトロニックスーパージャンプ
 	static int effect_Y = 0;
 	static float effect_Ani = 0;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL4_GAUGE && g_player.y >= GROUND
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL4_GAUGE && g_player.y >= GROUND - PLAYER_HEIGHT
 		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
@@ -231,14 +231,14 @@ void SkillDisp_4(int aniMAX, int aniMIN) { //エレクトロニックスーパージャンプ
 		g_noDamageCnt = 0;
 		if(g_skill_X > g_player.x)g_player.x += 15.0F;
 		//if(g_player.x < WINDOW_WIDTH/2)g_player.x += 10.0F;
-		if (g_player.y >= GROUND) {
+		if (g_player.y >= GROUND - PLAYER_HEIGHT) {
 			g_player.jumpFlg = FALSE;
-			g_player.y = GROUND;
+			g_player.y = GROUND - PLAYER_HEIGHT;
 		}
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - g_skillAnime[3] * 8);
 		DrawGraph(effect_X - 150, effect_Y, g_pic.skillEffect[17 + int(effect_Ani - 0.1F)], TRUE);
-		DrawGraph(effect_X - 100 - g_skillAnime[3] * 8, GROUND - 150, g_pic.skillEffect[15 + int(effect_Ani - 0.1F)], TRUE);
+		DrawGraph(effect_X - 100 - g_skillAnime[3] * 8, GROUND - PLAYER_HEIGHT - 150, g_pic.skillEffect[15 + int(effect_Ani - 0.1F)], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		if (effect_Ani < 1.99) effect_Ani += 0.2F;
 		else effect_Ani = 0;
@@ -273,9 +273,11 @@ void SkillDisp_5(int aniMAX, int aniMIN) { //強化技
 			g_player.attackFlg = TRUE;
 		}
 		//g_skillAniFlg = TRUE;
+		g_player.powerUpFlg = TRUE;
 		g_player.useSkillGage = SKILL5_GAUGE;
 		g_player.skillCoolTime[g_player.skillNo] = SKILL5_COOLTIME;
 	}
+	/*
 	// スキル中
 	EnemyLockOn();
 
@@ -283,19 +285,12 @@ void SkillDisp_5(int aniMAX, int aniMIN) { //強化技
 		DrawBox(g_skill_X + PLAYER_WIDTH, g_player.y, g_skill_X + PLAYER_WIDTH + PLAYER_WIDTH / 2, g_player.y + PLAYER_HEIGHT, 0x0000ff, false);
 		g_skill_Y = g_player.y;
 		g_skill_X = g_player.x;
-	}
+	}*/
 }
 
 bool SkillMove_5(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 
-	//当たり判定これで合ってるかわからん
-	if (((long int)g_skill_X/2 + (long int)PLAYER_WIDTH <= ex + ew)		// 敵のX座標が、プレイヤーのX座標内だったら真
-		&& ((long int)g_skill_X + ((long int)PLAYER_WIDTH + (long int)PLAYER_WIDTH)/2 >= ex)
-		&& ((long int)g_player.y <= ey + eh)		// 敵のY座標が、プレイヤーのY座標内だったら真
-		&& ((long int)g_player.y + (long int)PLAYER_HEIGHT >= ey)) {
-		return TRUE;
-	}
-
+	//ここには必要なし
 	return FALSE;
 
 }

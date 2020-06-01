@@ -2,9 +2,10 @@
 #include "DxLib.h"
 
 #define PLAYER_SKILLS    8								// プレイヤーの使用できるスキルの数
+#define SKILL5_TIME		 600					//スキル5の火力上昇時間
 
 enum {//各スキルのゲージ使用量
-	SKILL1_GAUGE = 50,		//スキル1のゲージ使用量
+	SKILL1_GAUGE = 25,		//スキル1のゲージ使用量
 	SKILL2_GAUGE = 150,		//スキル2のゲージ使用量
 	SKILL3_GAUGE = 100,		//スキル3のゲージ使用量
 	SKILL4_GAUGE = 150,		//スキル4のゲージ使用量
@@ -19,7 +20,7 @@ enum {//各スキルの再使用クールタイム
 	SKILL2_COOLTIME = 25,	//スキル2のクールタイム
 	SKILL3_COOLTIME = 15,	//スキル3のクールタイム
 	SKILL4_COOLTIME = 60,	//スキル4のクールタイム
-	SKILL5_COOLTIME = 50,	//スキル5のクールタイム
+	SKILL5_COOLTIME = 100,	//スキル5のクールタイム
 	SKILL6_COOLTIME = 100,	//スキル6のクールタイム
 	SKILL7_COOLTIME = 50,	//スキル7のクールタイム
 	SKILL8_COOLTIME = 50,	//スキル8のクールタイム
