@@ -62,9 +62,12 @@ void PlayerDisp() {
 
 	// 残像
 	PlayerAfterimage(anime);
-	//プレイヤー
-	if (g_player.attackFlg == FALSE) {
+	//プレイヤーの描画
+	if (g_player.attackFlg == FALSE && g_noDamageCnt >= 60) {
 		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[anime], TRUE);
+	} else if (g_noDamageCnt <= 60) {
+		if (g_noDamageCnt % 12 == 0) //無敵時間発生時
+		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[48], TRUE);
 	}
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[g_select_Stage].hp);
