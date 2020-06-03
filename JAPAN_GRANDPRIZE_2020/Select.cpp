@@ -258,7 +258,7 @@ void MenuScrollOut() {
 /******************************************************
 // ステージを決定させるカーソルを操作させる
 *******************************************************/
-void StageSelectOper() {/
+void StageSelectOper() {
 	//メニューカーソル移動処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
 		if (++g_select_Stage > g_select_MAX) g_select_Stage = 0;

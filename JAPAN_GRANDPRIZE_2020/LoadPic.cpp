@@ -54,13 +54,13 @@ int LoadPicture() {
 		return -1;*/
 
 	// マップ読み込み
-	if (LoadDivGraph("image/Stage1_main2.png", 4, 4, 1, 250, 400, g_pic.map, 0) == -1)
+	if (LoadDivGraph("image/Stage_main_ALL.png", 28, 4, 7, 250, 400, g_pic.map, 0) == -1)
 		return -1;
 	//// マップ背景読み込み
 	//if ((g_pic.backMap = LoadGraph("image/Stage1_Back2.png")) == -1) return -1;
 	
 		// マップ背景読み込み
-	if (LoadDivGraph("image/Stage1_Back2.png", 4, 4, 1, 250, 400, g_pic.backMap, 0) == -1)
+	if (LoadDivGraph("image/Stage_back_ALL.png", 28, 4, 7, 250, 400, g_pic.backMap, 0) == -1)
 		return -1;
 	/*
 	if (LoadDivGraph("images/Cnt2.png", 10, 10, 1, 57, 80, g_NumImage, 0) == -1)
