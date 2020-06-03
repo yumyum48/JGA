@@ -59,6 +59,8 @@ enum {	// ƒ{ƒX‚ÌUŒ‚”»’f
 	BOSSATTACK_MINICLOUD_DROP,			// ƒ~ƒj‰_‚ğƒhƒƒbƒv‚·‚é
 	BOSSATTACK_LIGHTNING,				// —‹Œ‚‚É‚æ‚éUŒ‚
 	BOSSATTACK_POISON_TRAP,				// “Å‚Ìƒgƒ‰ƒbƒv‚ğİ’u
+	BOSSATTACK_MINIKURAGE_AIR,			// ‹ó’†‚Ìƒ~ƒjƒNƒ‰ƒQ‚ÌUŒ‚(Boss_MiniKurage_DropŠÖ”‚ğƒ{ƒX‚É“ü‚ê‚È‚¢‚Æg‚¦‚È‚¢)
+	BOSSATTACK_MINIKURAGE_GROUND,		// ’nã‚Ìƒ~ƒjƒNƒ‰ƒQ‚ÌUŒ‚(Boss_MiniKurage_DropŠÖ”‚ğƒ{ƒX‚É“ü‚ê‚È‚¢‚Æg‚¦‚È‚¢)
 };
 
 enum { // ƒ{ƒX‚Ì“®‚«ƒpƒ^[ƒ“
@@ -101,6 +103,9 @@ int InputRand(int rand1, int rand2, int rand3);	// ”š‚ğˆø”‚Æ‚µ‚ÄO‚Âæ‚èA‚»‚
 bool BossDamageCheck(int bossHp);				// ƒ{ƒX‚ªƒ_ƒ[ƒW‚ğó‚¯‚½‚©‚Ç‚¤‚©‚ğ’²‚×‚éŠÖ” TRUE: ƒ{ƒX‚ªƒ_ƒ[ƒW‚ğó‚¯‚½ FALSE: ƒ{ƒX‚Íƒ_ƒ[ƒW‚ğó‚¯‚Ä‚¢‚È‚¢
 bool BossNoAttackCheck(int bossAttackFlg);		// ƒ{ƒX‚ªUŒ‚‚ğI‚¦‚½‚©‚ğ’²‚×‚éŠÖ”TRUE: ƒ{ƒX‚ÌUŒ‚I—¹ FALSE: ƒ{ƒX‚ÍUŒ‚’†A‚Ü‚½‚ÍI—¹‚µ‚Ä‚µ‚Î‚ç‚­‚½‚Á‚Ä‚¢‚é
 bool BossDropAttackCheck(int bossAttackFlg);	// ƒ{ƒX‚ªƒGƒlƒ~[‚ğƒhƒƒbƒv‚·‚é‚©‚ğ’²‚×‚éŠÖ”TRUE: ƒ{ƒX‚ÌUŒ‚ŠJn FALSE: ƒ{ƒX‚ÍUŒ‚’†A‚Ü‚½‚ÍI—¹‚µ‚Ä‚µ‚Î‚ç‚­‚½‚Á‚Ä‚¢‚é
+void Boss_MiniKurage_DropFlg();					// ƒ~ƒjƒNƒ‰ƒQ‚ğo‚·ƒtƒ‰ƒOŠÇ—
+void KurageHit();								// ƒvƒŒƒCƒ„[‚ªƒNƒ‰ƒQ‚É“–‚½‚é‚Æƒ_ƒ[ƒW‚ğó‚¯‚é
+
 void BossDisp_Stage1();					// ƒXƒe[ƒW‚P‚Ìƒ{ƒX‚Ì•\¦
 void BossMove_Stage1();					// ƒXƒe[ƒW‚P‚Ìƒ{ƒX‚Ì“®‚«
 void BossDisp_Stage2();					// ƒXƒe[ƒW‚Q‚Ìƒ{ƒX‚Ì•\¦
@@ -144,6 +149,10 @@ void Boss_Lightning_Move();				// —‹Œ‚‚Ì“®‚«
 void Poison_Trap_Disp();				// “Å‚Ìƒgƒ‰ƒbƒv‚Ì•\¦
 void Poison_Trap_Move();				// “Å‚Ìƒgƒ‰ƒbƒv‚Ì“®‚«
 bool Boss_3_Jump(int* coolTime, int* boss_JumpFlg, int jumpType);	// TRUE: ƒWƒƒƒ“ƒvI—¹ FALSE: ƒWƒƒƒ“ƒvŠJn	// ƒ{ƒX‚R‚ÌƒWƒƒƒ“ƒv (jumpType‚Í‚O‚ğ“ü‚ê‚é‚Æ’ÊíƒWƒƒƒ“ƒvA‚P‚ğ“ü‚ê‚é‚Æ‚¸‚ê‚½XÀ•W‚ğC³‚µ‚È‚ª‚çƒWƒƒƒ“ƒv)
+void Boss_MiniKurage_Drop_Disp();		// ƒ{ƒXƒGƒŠƒA‚Ìƒ~ƒjƒNƒ‰ƒQ‚Ì•\¦
+void Boss_MiniKurage_Drop_Move();		// ƒ{ƒXƒGƒŠƒA‚Ìƒ~ƒjƒNƒ‰ƒQ‚Ì“®‚«
+void BossMiniKurage_Attack_Air(int attackKurageBuf_Air, bool* ataackFlg_AirKurage);		// ƒ~ƒjƒNƒ‰ƒQ‚Ì‹ó’†“ËŒ‚I
+void BossMiniKurage_Attack_Ground(int attackKurageBuf_Ground, bool* attackFlg_GroundKurage);	// ƒ~ƒjƒNƒ‰ƒQ‚Ì’nãUŒ‚I
 void (* const BossDisp[5])() = {		// ƒ{ƒX‚Ì•\¦
 	BossDisp_Stage1,
 	BossDisp_Stage2,

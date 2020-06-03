@@ -191,6 +191,13 @@ void enemyInfo::BossArea_SpiderInit(int bx, int by) {   //　ボスエリアのミニ蜘蛛
 	flg = FALSE;                         // 敵を表示しているかどうかのフラグ TRUE:表示している FALSE:表示していない
 	anime = 0;                           // アニメーションの初期化
 }
+// ボスエリアのクラゲの初期化
+void enemyInfo::BossArea_KurageInit(int by) {
+	x = WINDOW_WIDTH;
+	y = by;
+	flg = FALSE;
+	anime = 0;
+}
 // 弱い敵の初期化
 void EnemyInit() {
 	for (int i = 0; i < 3; i++) {
