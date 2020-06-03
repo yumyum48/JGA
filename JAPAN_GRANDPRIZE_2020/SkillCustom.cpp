@@ -6,11 +6,15 @@
 #include "Player.h"
 #include "Sounds.h"
 #include "Picture.h"
+#include "Select.h"
 
 static int g_Skill_Num = 1;	//選択しているスキル番号
 int g_set = 0;			//セットした番号
 int debug = 1;
 int con_1, con_2;		//配列コントロール変数
+
+bool costomEndFlg = FALSE;	//画面移動時の確認フラグ
+
 
 void SkillCustom() {
 	SkillCustom_Move();
@@ -29,16 +33,34 @@ void SkillCustom_Disp() {
 	DrawFormatString(10, 80, 0xFFFFFF, "%d", debug);
 
 
+
 	DrawFormatString(0, 100, 0xFFFFFF, "%d", g_set);
 
 	//お知らせ用
-	DrawString(800, 800, "↑ボタンでスキル決定", 0xFFFFFF);
-	DrawString(800, 900, "↓ボタンでスキル解除", 0xFFFFFF);
+	//DrawString(800, 800, "↑ボタンでスキル決定", 0xFFFFFF);
+	//DrawString(800, 900, "↓ボタンでスキル解除", 0xFFFFFF);
+
+	//仮
+	SetFontSize(40);
+	DrawString(1000, 650, "決定", 0xFF0000);
+	if (costomEndFlg == TRUE) DrawBox(1000, 650, 1100, 700, 0xFF0000, FALSE);
 
 	SkillChoice_Dis();
 
 	DrawExtendGraph(35, 650, 320, 735, g_pic.skilChoiceBox, FALSE);
 
+	DrawRotaGraph(178, 695, 1, 0, g_pic.skillAicon[g_player.skillcustom[0]], TRUE, FALSE);
+	DrawRotaGraph(83, 695, 1, 0, g_pic.skillAicon[g_player.skillcustom[1]], TRUE, FALSE);
+	DrawRotaGraph(273, 695, 1, 0, g_pic.skillAicon[g_player.skillcustom[2]], TRUE, FALSE);
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
+	SetDrawBright(255, 0, 0);
+	if (g_set < 1) DrawRotaGraph(178, 695, 1, 0, g_pic.skillAicon[g_player.skillcustom[0]], TRUE, FALSE);
+	if (g_set < 2) DrawRotaGraph(83, 695, 1, 0, g_pic.skillAicon[g_player.skillcustom[1]], TRUE, FALSE);
+	if (g_set < 3) DrawRotaGraph(273, 695, 1, 0, g_pic.skillAicon[g_player.skillcustom[2]], TRUE, FALSE);
+	SetDrawBright(255, 255, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	/*
 	//スキル格納の場所
 	{
 		if (g_player.skillcustom[0] != 0) {
@@ -77,7 +99,7 @@ void SkillCustom_Disp() {
 			default: break;
 			}
 		}
-	}
+	}*/
 }
 
 
@@ -86,9 +108,20 @@ void SkillCustom_Move() {
 	static int comparation;				//仮格納
 	static bool Storage = TRUE;
 
-	if (Storage == TRUE) {
+	/*if (Storage == TRUE) {
 		for (int st_num = 0; st_num < 3; st_num++) g_player.skillcustom[g_set++] = 0, Storage = FALSE;
 		g_set = 0;
+	}*/
+	if (Storage == TRUE) {
+		if (g_player.skillcustom[g_set] != 0) {
+			g_set++;
+			if (g_set >= 3) {
+				g_set = 0;
+				Storage = FALSE;
+				costomEndFlg = FALSE;
+			}
+		}
+		else Storage = FALSE;
 	}
 
 	//スキル選択
@@ -96,26 +129,50 @@ void SkillCustom_Move() {
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) 	if (--g_Skill_Num < 1) g_Skill_Num = 7;
 
 	//スキル決定（仮）
-	if ((g_keyInfo.keyFlg & PAD_INPUT_UP) && g_set < 3) {
+	//if ((g_keyInfo.keyFlg & PAD_INPUT_UP) && g_set < 3) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_set < 3 && costomEndFlg == FALSE) {
 
 		comparation = g_Skill_Num;
 
-		if ((comparation != g_player.skillcustom[0])
+		
+		/*if ((comparation != g_player.skillcustom[0])
 			&& (comparation != g_player.skillcustom[1])
 			&& (comparation != g_player.skillcustom[2])) {
 			g_player.skillcustom[g_set++] = comparation;
+		}*/
+
+		if(g_set == 0) g_player.skillcustom[g_set++] = comparation;
+		if (g_set == 1) {
+			if(comparation != g_player.skillcustom[0])
+				g_player.skillcustom[g_set++] = comparation;
+		}
+		if (g_set == 2) {
+			if ((comparation != g_player.skillcustom[0])
+				&& (comparation != g_player.skillcustom[1]))
+				g_player.skillcustom[g_set++] = comparation;
 		}
 	}
 
 	//スキル解除(仮)
-	if ((g_keyInfo.keyFlg & PAD_INPUT_DOWN) && g_set > 0) g_player.skillcustom[--g_set] = 0;
+	//if ((g_keyInfo.keyFlg & PAD_INPUT_DOWN) && g_set > 0) g_player.skillcustom[--g_set] = 0;
+	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set > 0) {
+		g_player.skillcustom[--g_set] = 0;
+	}
 
-	if (g_keyInfo.keyFlg & PAD_INPUT_A) g_gameScene = GAME_SELECT,Storage = TRUE;
+	//セレクト画面に戻る
+	//if (g_keyInfo.keyFlg & PAD_INPUT_A) g_gameScene = GAME_SELECT,Storage = TRUE;
+
+	if (costomEndFlg == TRUE && (g_keyInfo.keyFlg & PAD_INPUT_A)) g_gameScene = GAME_SELECT, Storage = TRUE, costomEndFlg = FALSE;
+	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && costomEndFlg == TRUE) costomEndFlg = FALSE;
+
+	if (g_set == 3 || g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
+		costomEndFlg = TRUE;
+	}
 }
 
 void SkillChoice_Dis()
 {
-	static int animering = 0;
+	static float animering = 0;
 
 	for (g_choice.choice_num = 1; g_choice.choice_num < 8; g_choice.choice_num++) {
 		DrawExtendGraph(g_choice.x[g_choice.choice_num],
@@ -125,7 +182,8 @@ void SkillChoice_Dis()
 			g_pic.skillAicon[g_choice.choice_num], TRUE);
 	}
 
-	if(++animering % 4 == 0) DrawRotaGraph(633, 500, 2.6, animering / 8, g_pic.skillRing[1], TRUE, FALSE);
+	animering += 0.1F;
+	DrawRotaGraph(633, 500, 2.6, animering, g_pic.skillRing[1], TRUE, FALSE);
 
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) SkillAni_Plus();
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) SkillAni_Min();
