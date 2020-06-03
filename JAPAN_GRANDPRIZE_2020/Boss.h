@@ -61,6 +61,7 @@ enum {	// ボスの攻撃判断
 	BOSSATTACK_POISON_TRAP,				// 毒のトラップを設置
 	BOSSATTACK_MINIKURAGE_AIR,			// 空中のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
 	BOSSATTACK_MINIKURAGE_GROUND,		// 地上のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
+	BOSSATTACK_TACKLE,					// ボスのタックル攻撃
 };
 
 enum { // ボスの動きパターン
@@ -120,6 +121,7 @@ void Boss_Knock_Down();					// ボスの当たり判定
 
 void BossInit();						// ボスの初期化
 void Boss_Stage4_Init();				// ボス４の雲の初期化
+void Boss5_Init();						// ボス５の初期化
 
 void BossAttackDisp();					// ボスの攻撃
 void BossAttackMove();					// ボスの攻撃
@@ -151,8 +153,11 @@ void Poison_Trap_Move();				// 毒のトラップの動き
 bool Boss_3_Jump(int* coolTime, int* boss_JumpFlg, int jumpType);	// TRUE: ジャンプ終了 FALSE: ジャンプ開始	// ボス３のジャンプ (jumpTypeは０を入れると通常ジャンプ、１を入れるとずれたX座標を修正しながらジャンプ)
 void Boss_MiniKurage_Drop_Disp();		// ボスエリアのミニクラゲの表示
 void Boss_MiniKurage_Drop_Move();		// ボスエリアのミニクラゲの動き
-void BossMiniKurage_Attack_Air(int attackKurageBuf_Air, bool* ataackFlg_AirKurage);		// ミニクラゲの空中突撃！
-void BossMiniKurage_Attack_Ground(int attackKurageBuf_Ground, bool* attackFlg_GroundKurage);	// ミニクラゲの地上攻撃！
+void BossMiniKurage_Attack_Air(int cntBuf_Air, bool* ataackFlg_AirKurage);		// ミニクラゲの空中突撃！
+void BossMiniKurage_Attack_Ground(int cntBuf_Ground, bool* attackFlg_GroundKurage);	// ミニクラゲの地上攻撃！
+void Boss_Tackle_Disp();				// ボスがタックルする表示
+void Boss_Tackle_Move();				// ボスがタックルする動き
+
 void (* const BossDisp[5])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,

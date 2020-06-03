@@ -368,7 +368,7 @@ void EnemyCut() {
 			&& ((PlayerInterval(g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
 			|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].walk.x, g_enemy[i].walk.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
 			// レティクル表示
-			DrawRotaGraph2(g_enemy[i].walk.x + (ENEMY_WIDTH / 3), g_enemy[i].walk.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
+			//DrawRotaGraph2(g_enemy[i].walk.x + (ENEMY_WIDTH / 3), g_enemy[i].walk.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
 			if (g_player.skillFlg == 2) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
@@ -393,7 +393,7 @@ void EnemyCut() {
 			&& ((PlayerInterval(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
 			|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
 			// レティクル表示
-			DrawRotaGraph2(g_enemy[i].fly.x + (ENEMY_WIDTH / 3), g_enemy[i].fly.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
+			//DrawRotaGraph2(g_enemy[i].fly.x + (ENEMY_WIDTH / 3), g_enemy[i].fly.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
 			if (g_player.skillFlg == 2) {
 				//g_enemybeat++;			// エネミーを倒した数をカウント
@@ -414,7 +414,7 @@ void EnemyCut() {
 			&& ((PlayerInterval(g_enemy[i].spider.x, g_enemy[i].spider.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
 				|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].spider.x, g_enemy[i].spider.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
 			// レティクル表示
-			DrawRotaGraph2(g_enemy[i].spider.x + (ENEMY_WIDTH / 3), g_enemy[i].spider.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
+			//DrawRotaGraph2(g_enemy[i].spider.x + (ENEMY_WIDTH / 3), g_enemy[i].spider.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
 			if (g_player.skillFlg == 2) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
@@ -439,7 +439,7 @@ void EnemyCut() {
 			&& ((PlayerInterval(g_enemy[i].cloud.x, g_enemy[i].cloud.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
 				|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].cloud.x, g_enemy[i].cloud.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
 			// レティクル表示
-			DrawRotaGraph2(g_enemy[i].cloud.x + (ENEMY_WIDTH / 3), g_enemy[i].cloud.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
+			//DrawRotaGraph2(g_enemy[i].cloud.x + (ENEMY_WIDTH / 3), g_enemy[i].cloud.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
 			// 敵を倒す処理
 			if (g_player.skillFlg == 2) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
@@ -459,7 +459,33 @@ void EnemyCut() {
 				//g_player.attackFlg = TRUE;
 			}
 		}
+		// ミニクラゲ
+		if ((g_enemy[i].kurage.flg == TRUE)
+			&& ((PlayerInterval(g_enemy[i].kurage.x, g_enemy[i].kurage.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
+				|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].kurage.x, g_enemy[i].kurage.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
+			// レティクル表示
+		//	DrawRotaGraph2(g_enemy[i].kurage.x + (ENEMY_WIDTH / 3), g_enemy[i].kurage.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
+			// 敵を倒す処理
+			if (g_player.skillFlg == 2) {
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemy[i].kurage.BossArea_KurageInit(g_boss[g_select_Stage].y);
+			}
+			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			if (g_player.attackFlg == TRUE) {
+				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].kurage.x, g_enemy[i].kurage.y);
+				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+					g_enemy[i].kurage.FlyInit();																// 倒されたら初期化
+				}
+				else {
+					g_enemy[i].kurage.BossArea_KurageInit(g_boss[g_select_Stage].y);	// ボスエリアで倒された場合初期化方法を変える
+				}
+				//g_player.attackFlg = TRUE;
+			}
+		}
 	}
+
 	//boss
 	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
 		if (PlayerInterval(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE

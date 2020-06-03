@@ -123,8 +123,8 @@ struct bossInfo {     // ボスの情報
     int x, y;         // 座標
     int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
     int attackFlg;   // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
-
-    // 配列で初期化できるわこれ竹
+    int coolTime;     // 硬直時間
+    
     void Init_Stage(int num) {
 
         switch (num) {  // ボスの初期化
@@ -162,6 +162,7 @@ struct bossInfo {     // ボスの情報
             y = 134;
             popflg = 0;
             attackFlg = 0;
+            coolTime = 0;
             break;
         case 5:         // ステージ６のボスを初期化
             hp = 10;
@@ -169,6 +170,7 @@ struct bossInfo {     // ボスの情報
             y = 160;
             popflg = 0;
             attackFlg = 0;
+            coolTime = 0;
             break;
         case 6:         // ステージ７のボスを初期化
             hp = 10;
@@ -176,6 +178,7 @@ struct bossInfo {     // ボスの情報
             y = 160;
             popflg = 0;
             attackFlg = 0;
+            coolTime = 0;
             break;
         case 7:         // ステージ８のボスを初期化
             hp = 10;

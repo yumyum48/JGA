@@ -208,6 +208,7 @@ void EnemyInit() {
 
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		g_enemyBuffer[i].BufferInit();
+		g_enemy[i].kurage.BossArea_KurageInit(g_boss[g_select_Stage].y);
 	}
 	
 	//g_coolTime = 0;
