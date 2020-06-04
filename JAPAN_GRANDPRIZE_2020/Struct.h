@@ -55,8 +55,11 @@ struct image {
     int gameOverText;                   // ゲームオーバーの時の[討伐失敗]の文字
     int skillAicon[8];                  // skillのアイコン
     int skillRing[2];                   // skillの装飾
-    int skilChoiceBox;                  //skillcustomの選択箱
-    int customBackimage;                //skillcustomの背景
+    int skilChoiceBox;                  // skillcustomの選択箱
+    int customBackimage;                // skillcustomの背景
+    int spiderKids[4];                  // 子蜘蛛の画像
+    int spiderThread;                   // くもの糸の画像
+    int thundercloud;                   // 雷雲の画像
 };
 
 // プレイヤーの情報

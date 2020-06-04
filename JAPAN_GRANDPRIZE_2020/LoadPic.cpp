@@ -107,6 +107,13 @@ int LoadPicture() {
 	// ƒ{ƒX‚R‚Ìã‚ÌÀ‘œ
 	if ((g_pic.bossTongue = LoadGraph("image/tongue.png")) == -1) return -1;
 
+	// q’wå‚Ì‰æ‘œ
+	if (LoadDivGraph("image/SpederKids.png", 4, 4, 1, 64, 64, g_pic.spiderKids, 0) == -1)return -1;
+
+	// —‹‰_‚Ì‰æ‘œ
+	if ((g_pic.thundercloud = LoadGraph("image/Cloud.png")) == -1) return -1;
+	// ‚­‚à‚Ì…‚Ì‰æ‘œ
+	if ((g_pic.spiderThread = LoadGraph("image/String.png")) == -1) return -1;
 
 
 	return 0;
