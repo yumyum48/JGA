@@ -360,7 +360,7 @@ void EnemyLockOn() {
 // プレイヤーの間合いに入っている敵を倒す処理
 void EnemyCut() {
 	static int enemyNum = 0;	// 同時に倒した敵をカウントする変数
-	static int noDamageCnt = 61;// ボスの無敵時間
+	//static int noDamageCnt = 61;// ボスの無敵時間
 
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		// 歩く敵
@@ -490,10 +490,10 @@ void EnemyCut() {
 	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
 		if (PlayerInterval(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE
 			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE)) {
-			if (++noDamageCnt > 60 && g_boss[g_select_Stage].hp > 0) {
+			if (/*++noDamageCnt > 60 &&*/ g_boss[g_select_Stage].hp > 0) {
 				if (g_player.skillFlg == 2) {
 					g_boss[g_select_Stage].hp -= 1;
-					noDamageCnt = 0;
+					//noDamageCnt = 0;
 				}
 				//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 				if (g_player.attackFlg == TRUE) {
@@ -501,19 +501,19 @@ void EnemyCut() {
 					if (g_player.skillFlg == 1) g_boss[g_select_Stage].hp -= 2;
 					if (g_player.skillFlg == 3) g_boss[g_select_Stage].hp -= 3;
 					if (g_player.powerUpFlg == TRUE) g_boss[g_select_Stage].hp -= 1;
-					noDamageCnt = 0;
+					//noDamageCnt = 0;
 				}
 
 				if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
 					g_boss[g_select_Stage].hp -= 5;
-					noDamageCnt = 0;
+					//noDamageCnt = 0;
 				}
 			}
 		}
 		// 糸
 		if (PlayerInterval(g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE
 			|| (SkillMove[g_player.skillFlg - 1](g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE)) {
-			if (++noDamageCnt > 60 && g_boss4_Thread.hp <= 0) {
+			if (/*++noDamageCnt > 60 &&*/ g_boss4_Thread.hp <= 0) {
 				DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFFFFFF, TRUE);
 			}
 		}
