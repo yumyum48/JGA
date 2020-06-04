@@ -56,6 +56,7 @@ struct image {
     int skillAicon[8];                  // skillのアイコン
     int skillRing[2];                   // skillの装飾
     int skilChoiceBox;                  //skillcustomの選択箱
+    int customBackimage;                //skillcustomの背景
 };
 
 // プレイヤーの情報

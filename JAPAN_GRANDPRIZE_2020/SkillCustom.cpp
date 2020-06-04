@@ -14,8 +14,8 @@ int debug = 1;
 int con_1, con_2;		//配列コントロール変数
 
 bool costomEndFlg = FALSE;	//画面移動時の確認フラグ
-
 bool skill_ReleaseFlg[7] = { FALSE }; //スキル解放フラグ
+int past_Skill[3] = { 0 };	//前のスキル情報を保存
 
 
 void SkillCustom() {
@@ -27,6 +27,7 @@ void SkillCustom() {
 // スキルカスタマイズの表示
 void SkillCustom_Disp() {
 
+	DrawRotaGraph2(0, 0, 0, 0, 8.0, 0.0, g_pic.customBackimage, TRUE);		// 背景表示
 	//デバッグ用
 	DrawFormatString(0, 60, 0xFFFFFF, "%d", g_player.skillcustom[0]);
 	DrawFormatString(10, 60, 0xFFFFFF, "%d", g_player.skillcustom[1]);
@@ -44,8 +45,8 @@ void SkillCustom_Disp() {
 
 	//仮
 	SetFontSize(40);
-	DrawString(1000, 650, "決定", 0xFF0000);
-	if (costomEndFlg == TRUE) DrawBox(1000, 650, 1100, 700, 0xFF0000, FALSE);
+	DrawString(1000, 650, "決定", 0x00FF00);
+	if (costomEndFlg == TRUE) DrawBox(1000, 650, 1100, 700, 0x00FF00, FALSE);
 
 	SkillChoice_Dis();
 
@@ -118,6 +119,9 @@ void SkillCustom_Move() {
 		g_set = 0;
 	}*/
 	if (Storage == TRUE) {
+		//前のスキル情報を保存
+		for (int i = 0; i < 3; i++) past_Skill[i] = g_player.skillcustom[i];
+
 		if (g_player.skillcustom[g_set] != 0) {
 			g_set++;
 			if (g_set >= 3) {
@@ -161,8 +165,12 @@ void SkillCustom_Move() {
 
 	//スキル解除(仮)
 	//if ((g_keyInfo.keyFlg & PAD_INPUT_DOWN) && g_set > 0) g_player.skillcustom[--g_set] = 0;
-	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set > 0) {
-		g_player.skillcustom[--g_set] = 0;
+	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set > 0) g_player.skillcustom[--g_set] = 0;
+	else if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set == 0) {
+			for (int i = 0; i < 3; i++) g_player.skillcustom[i] = past_Skill[i];
+			g_gameScene = GAME_SELECT;
+			Storage = TRUE;
+			costomEndFlg = FALSE;
 	}
 
 	//セレクト画面に戻る
@@ -171,6 +179,8 @@ void SkillCustom_Move() {
 	//セレクト画面に戻る
 	if (costomEndFlg == TRUE && (g_keyInfo.keyFlg & PAD_INPUT_A)) {
 		if (g_player.skillcustom[0] == 0) g_player.skillcustom[0] = 1; //何も装備しなかった場合スキル１を入れる
+		if (g_set == 1) g_player.skillcustom[1] = 0, g_player.skillcustom[2] = 0;
+		if (g_set == 2)g_player.skillcustom[2] = 0;
 		g_gameScene = GAME_SELECT;
 		Storage = TRUE;
 		costomEndFlg = FALSE;
