@@ -14,6 +14,8 @@ int debug = 1;
 int con_1, con_2;		//配列コントロール変数
 
 bool costomEndFlg = FALSE;	//画面移動時の確認フラグ
+bool skill_ReleaseFlg[7] = { FALSE }; //スキル解放フラグ
+int past_Skill[3] = { 0 };	//前のスキル情報を保存
 
 
 void SkillCustom() {
@@ -25,6 +27,7 @@ void SkillCustom() {
 // スキルカスタマイズの表示
 void SkillCustom_Disp() {
 
+	DrawRotaGraph2(0, 0, 0, 0, 8.0, 0.0, g_pic.customBackimage, TRUE);		// 背景表示
 	//デバッグ用
 	DrawFormatString(0, 60, 0xFFFFFF, "%d", g_player.skillcustom[0]);
 	DrawFormatString(10, 60, 0xFFFFFF, "%d", g_player.skillcustom[1]);
@@ -34,7 +37,7 @@ void SkillCustom_Disp() {
 
 
 
-	DrawFormatString(0, 100, 0xFFFFFF, "%d", g_set);
+	DrawFormatString(0, 100, 0xFF0000, "%d", skill_ReleaseFlg[g_Skill_Num - 1]);
 
 	//お知らせ用
 	//DrawString(800, 800, "↑ボタンでスキル決定", 0xFFFFFF);
@@ -42,8 +45,8 @@ void SkillCustom_Disp() {
 
 	//仮
 	SetFontSize(40);
-	DrawString(1000, 650, "決定", 0xFF0000);
-	if (costomEndFlg == TRUE) DrawBox(1000, 650, 1100, 700, 0xFF0000, FALSE);
+	DrawString(1000, 650, "決定", 0x00FF00);
+	if (costomEndFlg == TRUE) DrawBox(1000, 650, 1100, 700, 0x00FF00, FALSE);
 
 	SkillChoice_Dis();
 
@@ -108,11 +111,17 @@ void SkillCustom_Move() {
 	static int comparation;				//仮格納
 	static bool Storage = TRUE;
 
+	//スキル解放情報更新
+	for (int i = 0; i < g_select_MAX + 1; i++) skill_ReleaseFlg[i] = TRUE;
+
 	/*if (Storage == TRUE) {
 		for (int st_num = 0; st_num < 3; st_num++) g_player.skillcustom[g_set++] = 0, Storage = FALSE;
 		g_set = 0;
 	}*/
 	if (Storage == TRUE) {
+		//前のスキル情報を保存
+		for (int i = 0; i < 3; i++) past_Skill[i] = g_player.skillcustom[i];
+
 		if (g_player.skillcustom[g_set] != 0) {
 			g_set++;
 			if (g_set >= 3) {
@@ -140,31 +149,45 @@ void SkillCustom_Move() {
 			&& (comparation != g_player.skillcustom[2])) {
 			g_player.skillcustom[g_set++] = comparation;
 		}*/
-
-		if(g_set == 0) g_player.skillcustom[g_set++] = comparation;
-		if (g_set == 1) {
-			if(comparation != g_player.skillcustom[0])
-				g_player.skillcustom[g_set++] = comparation;
-		}
-		if (g_set == 2) {
-			if ((comparation != g_player.skillcustom[0])
-				&& (comparation != g_player.skillcustom[1]))
-				g_player.skillcustom[g_set++] = comparation;
+		if (skill_ReleaseFlg[comparation - 1] == TRUE) {
+			if (g_set == 0) g_player.skillcustom[g_set++] = comparation;
+			if (g_set == 1) {
+				if (comparation != g_player.skillcustom[0])
+					g_player.skillcustom[g_set++] = comparation;
+			}
+			if (g_set == 2) {
+				if ((comparation != g_player.skillcustom[0])
+					&& (comparation != g_player.skillcustom[1]))
+					g_player.skillcustom[g_set++] = comparation;
+			}
 		}
 	}
 
 	//スキル解除(仮)
 	//if ((g_keyInfo.keyFlg & PAD_INPUT_DOWN) && g_set > 0) g_player.skillcustom[--g_set] = 0;
-	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set > 0) {
-		g_player.skillcustom[--g_set] = 0;
+	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set > 0) g_player.skillcustom[--g_set] = 0;
+	else if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set == 0) {
+			for (int i = 0; i < 3; i++) g_player.skillcustom[i] = past_Skill[i];
+			g_gameScene = GAME_SELECT;
+			Storage = TRUE;
+			costomEndFlg = FALSE;
 	}
 
 	//セレクト画面に戻る
 	//if (g_keyInfo.keyFlg & PAD_INPUT_A) g_gameScene = GAME_SELECT,Storage = TRUE;
 
-	if (costomEndFlg == TRUE && (g_keyInfo.keyFlg & PAD_INPUT_A)) g_gameScene = GAME_SELECT, Storage = TRUE, costomEndFlg = FALSE;
+	//セレクト画面に戻る
+	if (costomEndFlg == TRUE && (g_keyInfo.keyFlg & PAD_INPUT_A)) {
+		if (g_player.skillcustom[0] == 0) g_player.skillcustom[0] = 1; //何も装備しなかった場合スキル１を入れる
+		if (g_set == 1) g_player.skillcustom[1] = 0, g_player.skillcustom[2] = 0;
+		if (g_set == 2)g_player.skillcustom[2] = 0;
+		g_gameScene = GAME_SELECT;
+		Storage = TRUE;
+		costomEndFlg = FALSE;
+	}
+	//決定キャンセル
 	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && costomEndFlg == TRUE) costomEndFlg = FALSE;
-
+	//決定確認
 	if (g_set == 3 || g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
 		costomEndFlg = TRUE;
 	}
@@ -180,6 +203,17 @@ void SkillChoice_Dis()
 			g_choice.w[g_choice.choice_num], 
 			g_choice.h[g_choice.choice_num], 
 			g_pic.skillAicon[g_choice.choice_num], TRUE);
+		if (skill_ReleaseFlg[g_choice.choice_num - 1] == FALSE) {
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+			SetDrawBright(0, 0, 0);
+			DrawExtendGraph(g_choice.x[g_choice.choice_num],
+				g_choice.y[g_choice.choice_num],
+				g_choice.w[g_choice.choice_num],
+				g_choice.h[g_choice.choice_num],
+				g_pic.skillAicon[g_choice.choice_num], TRUE);
+			SetDrawBright(255, 255, 255);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		}
 	}
 
 	animering += 0.1F;

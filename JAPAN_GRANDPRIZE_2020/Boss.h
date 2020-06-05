@@ -77,9 +77,11 @@ enum {	// ƒ{ƒX‚R‚ÌƒWƒƒƒ“ƒvƒtƒ‰ƒO‘€ì
 };
 struct boss4_parts :public picInfo {	//ƒ{ƒX‚S‚Ì‰_‚Æ…‚Ìî•ñ 
 	int hp;
+	bool dispFlg;
 	void ThreadInit() {
 		Boss4_ThreadInit();
 		hp = 5;
+		dispFlg = TRUE;
 	}
 
 };
@@ -157,6 +159,8 @@ void BossMiniKurage_Attack_Air(int cntBuf_Air, bool* ataackFlg_AirKurage);		// ƒ
 void BossMiniKurage_Attack_Ground(int cntBuf_Ground, bool* attackFlg_GroundKurage);	// ƒ~ƒjƒNƒ‰ƒQ‚Ì’nãUŒ‚I
 void Boss_Tackle_Disp();				// ƒ{ƒX‚ªƒ^ƒbƒNƒ‹‚·‚é•\¦
 void Boss_Tackle_Move();				// ƒ{ƒX‚ªƒ^ƒbƒNƒ‹‚·‚é“®‚«
+void ThreadMove();                        // ‚­‚à‚Ì…‚Ì“à•”ˆ—
+void SpiderNoThreadMove();                // ‚­‚à‚Ì…‚ªØ‚ê‚½‚Ì“®‚«
 
 void (* const BossDisp[5])() = {		// ƒ{ƒX‚Ì•\¦
 	BossDisp_Stage1,

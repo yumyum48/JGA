@@ -42,6 +42,8 @@ int LoadPicture() {
 
 	//スキル選択画面のセットボックス
 	if ((g_pic.skilChoiceBox = LoadGraph("image/SkillChoiceBox.png")) == -1) return -1;
+	//スキル選択画面の背景
+	if ((g_pic.customBackimage = LoadGraph("image/skillcustom_back.png")) == -1) return -1;
 
 	// 歩く雑魚敵画像の読み込み
 	if (LoadDivGraph("image/EnemyZako1.png", 4, 4, 1, 100, 100, g_pic.enemy_walk, 0) == -1)return -1;
@@ -105,6 +107,13 @@ int LoadPicture() {
 	// ボス３の舌の座像
 	if ((g_pic.bossTongue = LoadGraph("image/tongue.png")) == -1) return -1;
 
+	// 子蜘蛛の画像
+	if (LoadDivGraph("image/SpederKids.png", 4, 4, 1, 64, 64, g_pic.spiderKids, 0) == -1)return -1;
+
+	// 雷雲の画像
+	if ((g_pic.thundercloud = LoadGraph("image/Cloud.png")) == -1) return -1;
+	// くもの糸の画像
+	if ((g_pic.spiderThread = LoadGraph("image/String.png")) == -1) return -1;
 
 
 	return 0;
