@@ -86,6 +86,8 @@ enemyInfo g_enemyBuffer[ENEMY_MAX];	// 撃破した敵の情報を格納する変数
 
 ChoiceInfo g_choice;			//
 
+mapInfo g_map[SCROLL_MAX];		// マップの情報
+
 boss4_parts g_boss4_Thread;		// ボス４の糸の情報
 boss4_parts g_boss4_Cloud;		// ボス４の雲の情報
 /*********************************************

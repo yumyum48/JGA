@@ -1,7 +1,6 @@
 #pragma once
 #include "DxLib.h"
 #include "Boss.h"
-#include "DxLib.h"
 #include "Struct.h"
 #include "Picture.h"
 #include "enemy.h"
@@ -44,7 +43,7 @@ enum {	// ボスの配列
 	BOSS_STAGE4,
 	BOSS_STAGE5,
 	BOSS_STAGE6,
-	BOSS_STAGE7,
+	BOSS_LASTBOSS,
 	BOSS_STAGE8,
 	BOSS_MAX,
 };
@@ -119,6 +118,12 @@ void BossDisp_Stage4();					// ステージ４のボスの表示
 void BossMove_Stage4();					// ステージ４のボスの動き
 void BossDisp_Stage5();					// ステージ５のボスの表示
 void BossMove_Stage5();					// ステージ５のボスの動き
+void BossDisp_Stage6();					// ステージ６のボスの表示
+void BossMove_Stage6();					// ステージ６のボスの動き
+void BossDisp_Stage_Last();				// ラスボスの表示
+void BossMove_Stage_Last();				// ラスボスの動き
+
+
 void Boss_Knock_Down();					// ボスの当たり判定
 
 void BossInit();						// ボスの初期化
@@ -162,20 +167,23 @@ void Boss_Tackle_Move();				// ボスがタックルする動き
 void ThreadMove();                        // くもの糸の内部処理
 void SpiderNoThreadMove();                // くもの糸が切れた時の動き
 
-void (* const BossDisp[5])() = {		// ボスの表示
+void (* const BossDisp[MAP_MAX])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,
 	BossDisp_Stage3,
 	BossDisp_Stage4,
 	BossDisp_Stage5,
+	BossDisp_Stage6,
+	BossDisp_Stage_Last,
 
 };
 
-void (* const BossMove[5])() = {		// ボスの動き
+void (* const BossMove[MAP_MAX])() = {		// ボスの動き
 	BossMove_Stage1,
 	BossMove_Stage2,
 	BossMove_Stage3,
 	BossMove_Stage4,
 	BossMove_Stage5,
+	BossMove_Stage6,
+	BossMove_Stage_Last,
 };
-
