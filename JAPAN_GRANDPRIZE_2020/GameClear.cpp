@@ -6,6 +6,8 @@
 #include "GameScene.h"
 #include "Player.h"
 #include "Rain.h"
+#include "Map.h"
+
 void GameClear() {
 	GameClearDisp();
 	GameClearMove();
