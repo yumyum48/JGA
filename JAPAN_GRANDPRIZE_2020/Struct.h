@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DxLib.h"
-#include "Map.h"
+//#include "Map.h"
 #include "Macro.h"
 //#include "Player.h"
 
@@ -199,7 +199,7 @@ struct bossType {     // ボスの種類
 
 // マップの情報
 struct mapInfo {
-    float x, y; // マップのX,Y座標
+    int x, y; // マップのX,Y座標
     void MapInit1() {   // スクロール１の座標
         x = 0*2;
         y = 0;
