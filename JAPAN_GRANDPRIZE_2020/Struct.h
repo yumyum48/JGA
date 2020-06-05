@@ -29,7 +29,7 @@ struct image {
     int title[2];                       // タイトル画像
     int titleText[4];                   // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
-    int SkillMotion[12];                 //スキルモーション画像
+    int SkillMotion[15];                 //スキルモーション画像
     int enemy_walk[4];                  // 歩く雑魚敵のの画像
     int enemy_fly[4];                   // 飛ぶ雑魚敵の画像
     int map[MAP_MAX * SCROLL_MAX];      // マップの画像

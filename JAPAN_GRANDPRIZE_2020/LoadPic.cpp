@@ -18,7 +18,7 @@ int LoadPicture() {
 	// プレイヤー画像の読み込み
 	if (LoadDivGraph("image/player3.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
 	//スキルモーション画像
-	if (LoadDivGraph("image/Skill_player.png", 12, 3, 4, 280, 200, g_pic.SkillMotion, 0) == -1) return -1;
+	if (LoadDivGraph("image/Skill_player.png", 15, 3, 5, 280, 200, g_pic.SkillMotion, 0) == -1) return -1;
 	//UI画像
 	if ((g_pic.PlayerUI = LoadGraph("image/Aicon2.png")) == -1) return -1;
 	//Life画像
@@ -32,7 +32,7 @@ int LoadPicture() {
 	//スキル3モーション(仮)
 	//if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
 	//スキルエフェクト
-	if (LoadDivGraph("image/Skill_effect.png", 25, 5, 5, 400, 400, g_pic.skillEffect, 0) == -1) return -1;
+	if (LoadDivGraph("image/Skill_effect.png", 30, 5, 6, 400, 400, g_pic.skillEffect, 0) == -1) return -1;
 
 	//スキルアイコン
 	if (LoadDivGraph("image/SkillAicon2.png", 8, 8, 1, 100, 100, g_pic.skillAicon, 0) == -1) return -1;

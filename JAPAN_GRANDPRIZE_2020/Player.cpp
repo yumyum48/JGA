@@ -30,6 +30,7 @@ void PlayerDisp() {
 	static int time = 0;							// 画像を切り替えるタイミング調整
 	static float skillTime[3] = { 0 };				// スキルクールタイム
 	static int skill6Anime[2] = { 0 };				//スキル6アニメーション
+	static int skill5Anime = 0;					//スキル5アニメーション
 
 	if (++time % 4 == 0) anime++;
 	if (anime < g_resetMotion || anime > g_maxMotion) anime = g_resetMotion;
@@ -41,10 +42,10 @@ void PlayerDisp() {
 		if (skill6Anime[0] >= 150) skill6Anime[1] = 1;
 		if (skill6Anime[0] <= 50) skill6Anime[1] = 0;
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50 + skill6Anime[0]);
-		DrawGraph(g_player.x - 80, g_player.y - 300, g_pic.skillEffect[20], TRUE);
+		DrawGraph(g_player.x - 80, g_player.y - 300, g_pic.skillEffect[25], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200 - skill6Anime[0]);
-		DrawGraph(g_player.x - 80, g_player.y - 300, g_pic.skillEffect[21], TRUE);
+		DrawGraph(g_player.x - 80, g_player.y - 300, g_pic.skillEffect[26], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
@@ -54,8 +55,8 @@ void PlayerDisp() {
 		else {
 			if (g_player.jumpFlg == FALSE) {
 				g_noDamageCnt = 0;
-				if (g_player.x < 1000) g_player.x += 50, g_player.jumpFlg == FALSE, EnemyCut();
-				else g_player.powerUpTime = SKILL5_TIME, g_player.powerUpFlg = FALSE;
+				if (g_player.x < 900) g_player.x += 50, g_player.jumpFlg == FALSE, EnemyCut();
+				else g_player.powerUpTime = SKILL5_TIME, g_player.powerUpFlg = FALSE, skill5Anime = 0;
 			}
 		}
 	}
@@ -65,9 +66,15 @@ void PlayerDisp() {
 	//プレイヤーの描画
 	if (g_player.attackFlg == FALSE && g_noDamageCnt >= 60) {
 		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[anime], TRUE);
-	} else if (g_noDamageCnt <= 60) {
+	} else if (g_player.powerUpFlg == TRUE && g_player.powerUpTime == 0) {//スキル５突進
+		skill5Anime++;
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (skill5Anime * 10));
+		DrawRotaGraph((g_player.x) - skill5Anime * 25, g_player.y - 190, 2, 0.0, g_pic.skillEffect[20 + (skill5Anime/5)], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.SkillMotion[13], TRUE);
+	} else if (g_noDamageCnt <= 60 && g_player.powerUpTime > 0) {
 		if (g_noDamageCnt % 12 == 0) //無敵時間発生時
-		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[48], TRUE);
+			DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[48], TRUE);
 	}
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[g_select_Stage].hp);
@@ -75,6 +82,7 @@ void PlayerDisp() {
 	DrawFormatString(0, 600, 0xFFFF00, "%f", g_player.skillCoolTime[g_player.skillNo]);
 	DrawFormatString(0, 700, 0x00FFFF, "%d", g_player.skillNo);
 	DrawFormatString(0, 750, 0x0000FF, "%d", g_player.powerUpTime);
+	DrawFormatString(100, 750, 0xFF00FF, "%d", skill5Anime);
 	
 	if (g_player.skillFlg != 0) {
 		SkillDisp[g_player.skillFlg - 1](g_maxMotion, g_resetMotion);
@@ -247,7 +255,7 @@ void PlayerAnimation() {
 // ジャンプ処理
 void PlayerJump() {
 	//ジャンプ処理(×ボタン)
-	if (g_player.jumpFlg == FALSE && g_keyInfo.keyFlg & PAD_INPUT_2) {
+	if (g_player.jumpFlg == FALSE && g_keyInfo.keyFlg & PAD_INPUT_2 && g_player.powerUpTime > 0) {
 		g_speed = -JUMP_POWER;
 		g_player.jumpFlg = TRUE;
 	}
