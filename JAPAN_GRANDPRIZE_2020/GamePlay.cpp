@@ -15,8 +15,9 @@
 // ゲームプレイのメイン関数
 void GamePlay() {
 	// デバッグ用で一旦入れ替えGamePlayMove();
-	GamePlayDisp();
 	GamePlayMove();
+	GamePlayDisp();
+
 	static int timecnt = 0;	// フレーム単位で加算する
 	if (timecnt++ >= 60) {
 		g_playTime++;	// プレイタイムを加算
@@ -44,7 +45,7 @@ void GamePlayMove() {
 	PlayerMove();					// プレイヤーの動き
 	RainMove();						// 雨の動き
 	TrapMove();						// トラップの動き
-	HpMove();						// HPの計算処理
+	//HpMove();						// HPの計算処理
 }
 
 

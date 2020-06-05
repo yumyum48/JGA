@@ -14,15 +14,9 @@ mapInfo g_backmap[SCROLL_MAX];		// マップ背景の描画
 // マップの表示
 void MapDisp() {
 	
-	
 	// マップの描画
 	for (int i = 0; i < SCROLL_MAX; i++) {
-
 		DrawRotaGraph2(g_backmap[i].x, g_backmap[i].y, 0, 0, 2.0, 0.0, g_pic.backMap[(SCROLL_MAX * g_select_Stage) + i], TRUE);
-		
-		//DrawFormatString(100, 100, 0xFF0000, "%d", g_game_stage);
-		
-		
 	}
 	for (int i = 0; i < SCROLL_MAX; i++) {
 		DrawRotaGraph2(g_map[i].x, g_map[i].y, 0, 0, 2.0, 0.0, g_pic.map[(SCROLL_MAX * g_select_Stage) + i], TRUE);
