@@ -129,9 +129,10 @@ void BossMove_Stage_Last() {
 					g_boss_Yamatano[i].y += moveY / 2;			// 下に下がっていく(ゆっくり)
 
 				}
-				else if( (upFlg[i] == FALSE )					// 所定の位置まで来たら
-				&&		 (g_boss_Yamatano[i].y >= BOSS_UPMAX) ){
-					
+				else if ((upFlg[i] == FALSE)					// 所定の位置まで来たら
+					&& (g_boss_Yamatano[i].y >= BOSS_UPMAX))
+				{
+
 					for (int i = 0; i < YAMATANO_NECK; i++) {	// アップフラグを初期化して
 						upFlg[i] = TRUE;
 					}
@@ -158,8 +159,8 @@ void Last_Boss_SnakeDispFlg_Managar() {
 	if (g_lastBoss_StartAnimeFlg != TRUE) {
 		int cnt = 0;		// 表示されているボスのカウント
 		int killCnt = 0;	// 倒されているボスのカウント
-		int offCnt = 0;	// 表示されていないボスのカウント
-		int tagBuf = 0;			// 表示されている蛇のタグを確認
+		int offCnt = 0;		// 表示されていないボスのカウント
+		int tagBuf = 0;		// 表示されている蛇のタグを確認
 		for (int i = 0; i < YAMATANO_NECK; i++) {
 			if( (g_boss_Yamatano[i].popflg == LASTBOSS_ON) 
 			|| (g_boss_Yamatano[i].popflg == LASTBOSS_MINION) ){
@@ -178,7 +179,9 @@ void Last_Boss_SnakeDispFlg_Managar() {
 
 			for (int i = 0; i < disp; i++) {
 				int next = YAMATANO_NECK - offCnt;	// 次のボスの添え字
-
+				if (next >= 7) {
+					break;
+				}
 				if (disp == 1) {
 					if (tagBuf == TAG_BOSS_LEFT) {
 						g_boss_Yamatano[next].lasbossInit(2);	// 左側に設置
@@ -187,19 +190,20 @@ void Last_Boss_SnakeDispFlg_Managar() {
 						g_boss_Yamatano[next].lasbossInit(3);	// 右側に設置
 					}
 					g_boss_Yamatano[next].popflg = LASTBOSS_MINION;
+					
 				}
 				else if (disp == 2) {
-
+					//if()
 					g_boss_Yamatano[next].lasbossInit(i + 2);	// 左右に設置 2は、添え字合わせ(Y座標を地面と同じ座標に初期化するので)
 					g_boss_Yamatano[next].popflg = LASTBOSS_MINION;
+					
 				}
 				offCnt--;
-
 			}
 
 			// ７体の蛇が倒されていたらラスボスを召喚
 			if (killCnt >= YAMATANO_NECK) {
-				g_boss[BOSS_LASTBOSS].popflg = TRUE;
+				g_boss[BOSS_LASTBOSS].popflg = 1;
 			}
 
 		}
@@ -274,7 +278,6 @@ void LastBossRightNingAnime() {
 				}
 				if (trans <= 0) {
 					g_lastBoss_StartAnimeFlg = FALSE;	// ボスがよく見えるようになったらアニメーション終了
-
 				}
 			}
 		}
