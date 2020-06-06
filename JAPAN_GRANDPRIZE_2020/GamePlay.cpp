@@ -35,6 +35,7 @@ void GamePlayDisp() {
 	TrapDisp();						// トラップの表示
 	HpDisp();						// HP表示処理
 	
+	LastBossRightNingAnime();
 }
 
 // ゲームプレイの動き

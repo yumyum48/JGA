@@ -126,9 +126,9 @@ struct bossInfo {     // ボスの情報
     int hp;           // 体力
     int x, y;         // 座標
     int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
-    int attackFlg;   // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
+    int attackFlg;    // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
     int coolTime;     // 硬直時間
-    
+    bool damageFlg;    // ダメージを食らっていたら被弾モーションを行う : TRUE:食らっている FALSE: 食らっていない
     void Init_Stage(int num) {
 
         switch (num) {  // ボスの初期化

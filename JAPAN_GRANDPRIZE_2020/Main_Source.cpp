@@ -44,52 +44,54 @@
 
 //定数の宣言
 
-const int ENEMY_BEAT_MAX[MAP_MAX] = { 1,1,1,1,1,1,1,1 };	//各ステージの雑魚敵を倒す数です
+const int ENEMY_BEAT_MAX[MAP_MAX] = { 1,1,1,1,1,1,0,0 };	//各ステージの雑魚敵を倒す数です
 
 /*********************************************
 
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-mouse g_mouseInfo;				// マウスの状態管理
-image g_pic;					// 画像の管理
-key g_keyInfo;					// キーボードの状態管理
-int g_gameScene;				// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
+mouse g_mouseInfo;								// マウスの状態管理
+image g_pic;									// 画像の管理
+key g_keyInfo;									// キーボードの状態管理
+int g_gameScene;								// 画面のシーンの制御	// 0:ゲームタイトル 1:ステージセレクト 2:ゲームプレイ3:ゲームオーバー4:ゲームクリア
 
-DINPUT_JOYSTATE g_controler;
-controler g_button;
+DINPUT_JOYSTATE g_controler;					// ??
+controler g_button;								// ??
 
-int g_select_Stage;				//ステージをセレクト
-enemyType g_enemy[ENEMY_MAX];	// 敵の情報
+int g_select_Stage;								//ステージをセレクト
+enemyType g_enemy[ENEMY_MAX];					// 敵の情報
 
-int g_speedLevel;				// スクロールレベルの設定を保存
+int g_speedLevel;								// スクロールレベルの設定を保存
 
 bool g_skillswitch;
 
-bossInfo g_boss[MAP_MAX];		//ボスの情報
+bossInfo g_boss[MAP_MAX];						//ボスの情報
 
-int g_enemybeat;				// エネミーを倒した数をカウントする
+int g_enemybeat;								// エネミーを倒した数をカウントする
 
-playerInfo g_player;			// プレイヤーの情報
+playerInfo g_player;							// プレイヤーの情報
 
-int g_noDamageCnt;				// プレイヤーの無敵時間
+int g_noDamageCnt;								// プレイヤーの無敵時間
 
-trapInfo g_trap;				// トラップの情報
+trapInfo g_trap;								// トラップの情報
 
-int g_playTime;					// プレイ時間
+int g_playTime;									// プレイ時間
 
-int g_select_MAX;				// 今プレイヤーがいけるステージを制御する
+int g_select_MAX;								// 今プレイヤーがいけるステージを制御する
 
-int g_sound[BGM_MAX];			// BGMの変数
+int g_sound[BGM_MAX];							// BGMの変数
 
-enemyInfo g_enemyBuffer[ENEMY_MAX];	// 撃破した敵の情報を格納する変数
+enemyInfo g_enemyBuffer[ENEMY_MAX];				// 撃破した敵の情報を格納する変数
 
-ChoiceInfo g_choice;			//
+ChoiceInfo g_choice;							// ??
 
-mapInfo g_map[SCROLL_MAX];		// マップの情報
+mapInfo g_map[SCROLL_MAX];						// マップの情報
 
-boss4_parts g_boss4_Thread;		// ボス４の糸の情報
-boss4_parts g_boss4_Cloud;		// ボス４の雲の情報
+boss4_parts g_boss4_Thread;						// ボス４の糸の情報
+boss4_parts g_boss4_Cloud;						// ボス４の雲の情報
+
+lasbossInfo g_boss_Yamatano[YAMATANO_NECK];		// ラスボスの７本の蛇
 /*********************************************
 
 * 関数のプロトタイプ宣言

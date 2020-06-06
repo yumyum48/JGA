@@ -519,10 +519,22 @@ void EnemyCut() {
 			}
 		}
 		// Ž…
-		if (PlayerInterval(g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE
-			|| (SkillMove[g_player.skillFlg - 1](g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE)) {
-			if (++noDamageCnt > 60 && g_boss4_Thread.hp <= 0) {
-				DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFFFFFF, TRUE);
+		if (g_select_Stage == BOSS_STAGE4) {
+			if (PlayerInterval(g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE
+				|| (SkillMove[g_player.skillFlg - 1](g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE)) {
+				if (++noDamageCnt > 60 && g_boss4_Thread.hp <= 0) {
+					DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFFFFFF, TRUE);
+				}
+			}
+		}
+		for (int i = 0; i < YAMATANO_NECK; i++) {
+			if (g_select_Stage == BOSS_LASTBOSS) {
+				if (PlayerInterval(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h) == TRUE
+					|| (SkillMove[g_player.skillFlg - 1](g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h) == TRUE)) {
+					
+					g_boss_Yamatano[i].hp -= 1;
+					g_boss_Yamatano[i].damageFlg = TRUE;
+				}
 			}
 		}
 	}

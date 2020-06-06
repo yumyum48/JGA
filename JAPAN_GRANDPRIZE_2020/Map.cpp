@@ -35,7 +35,8 @@ void MapMove() {
 			MapReset(i);								// マップが画面外に入ったら次のところにセットされる
 		}
 
-		g_backmap[i].x = Scroll(g_backmap[i].x, 3);
+		if(g_select_Stage != BOSS_LASTBOSS)
+			g_backmap[i].x = Scroll(g_backmap[i].x, 3);	// セレクトされた画面がボス以外なら左から右へ背景をゆっくり動かす
 		if (g_backmap[i].x + SCREEN_WIDTH <= 0) {
 			MapReset2(i);							// マップが画面外に入ったら次のところにセットされる
 		}

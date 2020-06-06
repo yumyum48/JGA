@@ -12,18 +12,18 @@
 // マクロの定義
 
 ***********************************************************/
-#define BOSS_WIDTH			(280 * 2)		// ボスの横幅
-#define BOSS_HEIGHT			(200 * 2)		// ボスの縦幅
-#define BOSS_AREA_ENEMY_MAX (3)				// ボス戦のエネミーが出現する最大数
-#define BOSS_STAGE2_WIDTH (271)		// ボスの横幅
-#define BOSS_STAGE2_HEIGHT (271)	// ボスの縦幅
-#define BOSS_STAGE3_WIDTH  (128 * 3.5)// ボスの横幅
-#define BOSS_STAGE3_HEIGHT (128 * 3.5)// ボスの縦幅
-#define BOSS_STAGE4_WIDTH  (314)
-#define BOSS_STAGE4_HEIGHT (286)
-#define BOSS_STAGE5_WIDTH  (324)
-#define BOSS_STAGE5_HEIGHT (415)
-
+#define BOSS_WIDTH			(280 * 2)	// ボスの横幅
+#define BOSS_HEIGHT			(200 * 2)	// ボスの縦幅
+#define BOSS_AREA_ENEMY_MAX (3)			// ボス戦のエネミーが出現する最大数
+#define BOSS_STAGE2_WIDTH   (271)		// ボスの横幅
+#define BOSS_STAGE2_HEIGHT  (271)		// ボスの縦幅
+#define BOSS_STAGE3_WIDTH   (128 * 3.5)	// ボスの横幅
+#define BOSS_STAGE3_HEIGHT  (128 * 3.5)	// ボスの縦幅
+#define BOSS_STAGE4_WIDTH   (314)		// ボスの横幅
+#define BOSS_STAGE4_HEIGHT  (286)		// ボスの縦幅
+#define BOSS_STAGE5_WIDTH   (324)		// ボスの横幅
+#define BOSS_STAGE5_HEIGHT  (415)		// ボスの縦幅
+#define YAMATANO_NECK	    (7)			 // ヤマタノオロチの蛇の数 - 本体　(このマクロは本体以外の首の配列に使うため)
 /***********************************************************
 
 // 定数の宣言
@@ -74,6 +74,20 @@ enum {	// ボス３のジャンプフラグ操作
 	BOSS_3_JUMPON,
 	BOSS_3_DOWN,
 };
+
+
+enum {	// ラスボス前の７体の蛇
+	LASTBOOS_OFF,	// 出現させない
+	LASTBOSS_ON,	// 出現させる
+	LASTBOSS_KILL,	// 倒した
+};
+struct lasbossInfo : public bossInfo {	// ラスボスの７体の蛇の情報
+	int w;	// 幅
+	int h;	// 高さ
+
+	void lasbossInit(int num);// ラスボスの本体以外(7体の蛇の初期化)
+	
+};
 struct boss4_parts :public picInfo {	//ボス４の雲と糸の情報 
 	int hp;
 	bool dispFlg;
@@ -88,14 +102,16 @@ struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
 	int x, y;
 
 };
+
 /***********************************************************
 
 // グローバル変数の宣言
 
 ***********************************************************/
-extern bossInfo g_boss[MAP_MAX];		// ボスの情報
-extern boss4_parts g_boss4_Cloud;		// ボス４の雲の情報
-extern boss4_parts g_boss4_Thread;		// ボス４の糸の情報
+extern bossInfo g_boss[MAP_MAX];					// ボスの情報
+extern boss4_parts g_boss4_Cloud;					// ボス４の雲の情報
+extern boss4_parts g_boss4_Thread;					// ボス４の糸の情報
+extern lasbossInfo g_boss_Yamatano[YAMATANO_NECK];	// ラスボスの７本の蛇
 /***********************************************************
 
 // 関数の宣言
@@ -107,6 +123,8 @@ bool BossNoAttackCheck(int bossAttackFlg);		// ボスが攻撃を終えたかを調べる関数T
 bool BossDropAttackCheck(int bossAttackFlg);	// ボスがエネミーをドロップするかを調べる関数TRUE: ボスの攻撃開始 FALSE: ボスは攻撃中、または終了してしばらくたっている
 void Boss_MiniKurage_DropFlg();					// ミニクラゲを出すフラグ管理
 void KurageHit();								// プレイヤーがクラゲに当たるとダメージを受ける
+
+void LastBossRightNingAnime();			// 最後のボスの出現アニメーション(終わったらラスボスの出現アニメーションをオンへ!)
 
 void BossDisp_Stage1();					// ステージ１のボスの表示
 void BossMove_Stage1();					// ステージ１のボスの動き
@@ -125,10 +143,11 @@ void BossMove_Stage_Last();				// ラスボスの動き
 
 
 void Boss_Knock_Down();					// ボスの当たり判定
-
+void Boss_Snake_Knockdown();			// 蛇が倒される処理
 void BossInit();						// ボスの初期化
 void Boss_Stage4_Init();				// ボス４の雲の初期化
 void Boss5_Init();						// ボス５の初期化
+void LastBossInit();					// ラスボスの７体の蛇の初期化
 
 void BossAttackDisp();					// ボスの攻撃
 void BossAttackMove();					// ボスの攻撃

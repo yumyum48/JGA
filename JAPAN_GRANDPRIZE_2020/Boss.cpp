@@ -900,4 +900,5 @@ void BossInit() {
 	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);// ステージ３のボスの舌の初期化
 	Boss_Stage4_Init();	// ボスステージ４の雲の初期化
 	Boss5_Init();		// ボス５の初期化
+	LastBossInit();		// ラスボスの首７本の初期化
 }
