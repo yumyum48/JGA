@@ -92,6 +92,8 @@ boss4_parts g_boss4_Thread;						// ボス４の糸の情報
 boss4_parts g_boss4_Cloud;						// ボス４の雲の情報
 
 lasbossInfo g_boss_Yamatano[YAMATANO_NECK];		// ラスボスの７本の蛇
+bool g_lastBoss_StartAnimeFlg;	// 出現アニメーション用のフラグ　TRUE:出現アニメーションをする FALSE:出現アニメーションをしない
+
 /*********************************************
 
 * 関数のプロトタイプ宣言

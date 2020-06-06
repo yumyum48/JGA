@@ -182,7 +182,7 @@ struct bossInfo {     // É{ÉXÇÃèÓïÒ
             hp = 10;
             x = 872;
             y = 160;
-            popflg = 0;
+            popflg = FALSE;
             attackFlg = 0;
             coolTime = 0;
             break;

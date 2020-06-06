@@ -767,7 +767,7 @@ void BossWaterBulletDisp() {
 	// …’e‚ªØ‚ç‚ê‚½Žž‚Ìˆ—
 	if( (g_player.attackFlg == TRUE)
 		&& (noDamegeCnt >= 30)
-		&& (* SkillMove[g_player.skillFlg])(startX + moveX - 40, startY + moveY - 20, 65, 55) == TRUE){
+		&& (* SkillMove[g_player.skillFlg - 1])(startX + moveX - 40, startY + moveY - 20, 65, 55) == TRUE){
 		noDamegeCnt = 0;
 		anime = 4;
 		animationMax++;

@@ -80,11 +80,17 @@ enum {	// ラスボス前の７体の蛇
 	LASTBOOS_OFF,	// 出現させない
 	LASTBOSS_ON,	// 出現させる
 	LASTBOSS_KILL,	// 倒した
+	LASTBOSS_MINION,// 出現して、登場はしていない
+};
+
+enum {	// ラスボスの前の７体の蛇が右にいるか左にいるかのタグ
+	TAG_BOSS_LEFT,		// 左にいる
+	TAG_BOSS_RIGHT,		// 右にいる
 };
 struct lasbossInfo : public bossInfo {	// ラスボスの７体の蛇の情報
 	int w;	// 幅
 	int h;	// 高さ
-
+	int tag;// ボスが右と左、どちらにいるかを格納する
 	void lasbossInit(int num);// ラスボスの本体以外(7体の蛇の初期化)
 	
 };
@@ -112,6 +118,7 @@ extern bossInfo g_boss[MAP_MAX];					// ボスの情報
 extern boss4_parts g_boss4_Cloud;					// ボス４の雲の情報
 extern boss4_parts g_boss4_Thread;					// ボス４の糸の情報
 extern lasbossInfo g_boss_Yamatano[YAMATANO_NECK];	// ラスボスの７本の蛇
+extern bool g_lastBoss_StartAnimeFlg;	// 出現アニメーション用のフラグ　TRUE:出現アニメーションをする FALSE:出現アニメーションをしない
 /***********************************************************
 
 // 関数の宣言
@@ -125,6 +132,7 @@ void Boss_MiniKurage_DropFlg();					// ミニクラゲを出すフラグ管理
 void KurageHit();								// プレイヤーがクラゲに当たるとダメージを受ける
 
 void LastBossRightNingAnime();			// 最後のボスの出現アニメーション(終わったらラスボスの出現アニメーションをオンへ!)
+void Last_Boss_SnakeDispFlg_Managar();	// ラスボス前の蛇の出現フラグを管理
 
 void BossDisp_Stage1();					// ステージ１のボスの表示
 void BossMove_Stage1();					// ステージ１のボスの動き
