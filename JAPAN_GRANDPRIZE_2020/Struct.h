@@ -295,7 +295,7 @@ struct picInfo {
         h = y + 134;    // 座標をY～にする
 
     }
-    void Boss4_ThreadInit() {
+    void Boss4_ThreadInit() {   // ボス４の糸の初期化
         x = 995;
         y = 170;
         w = x + 6;    // 座標をX～にする

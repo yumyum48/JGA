@@ -21,6 +21,8 @@
 #define BOSS_STAGE3_HEIGHT  (128 * 3.5)	// ƒ{ƒX‚Ìc•
 #define BOSS_STAGE4_WIDTH   (314)		// ƒ{ƒX‚Ì‰¡•
 #define BOSS_STAGE4_HEIGHT  (286)		// ƒ{ƒX‚Ìc•
+#define	BOSS_THREAD_WIDTH	(6)			// …‚Ì‰¡•
+#define	BOSS_CLOUD_HEIGHT  (134)		// ‰_‚Ì‚‚³
 #define BOSS_STAGE5_WIDTH   (324)		// ƒ{ƒX‚Ì‰¡•
 #define BOSS_STAGE5_HEIGHT  (415)		// ƒ{ƒX‚Ìc•
 #define YAMATANO_NECK	    (7)			 // ƒ„ƒ}ƒ^ƒmƒIƒƒ`‚ÌÖ‚Ì” - –{‘Ì@(‚±‚Ìƒ}ƒNƒ‚Í–{‘ÌˆÈŠO‚Ìñ‚Ì”z—ñ‚Ég‚¤‚½‚ß)
@@ -67,6 +69,7 @@ enum { // ƒ{ƒX‚Ì“®‚«ƒpƒ^[ƒ“
 	BOSSMOVE_NOMOTION,		// ƒm[ƒ‚[ƒVƒ‡ƒ“
 	BOSSMOVE_ATTACK,		// ƒ{ƒX‚ªSin”g‚ÅU‚ß‚Ä‚­‚é
 	BOSSMOVE_SPEEDDOWN,		// ƒ{ƒX‚ªƒvƒŒƒCƒ„[‚É’Ç‚¢‚Â‚©‚ê‚é“®‚«
+	BOSSMOVE_DOWN,			// UŒ‚AˆÚ“®‚ª‚Å‚«‚È‚¢ó‘Ô
 };
 
 enum {	// ƒ{ƒX‚R‚ÌƒWƒƒƒ“ƒvƒtƒ‰ƒO‘€ì
@@ -92,9 +95,14 @@ struct boss4_parts :public picInfo {	//ƒ{ƒX‚S‚Ì‰_‚Æ…‚Ìî•ñ
 	int hp;
 	bool dispFlg;
 	void ThreadInit() {
-		Boss4_ThreadInit();
+		Boss4_ThreadInit();							// ‚­‚à‚Ì…‰Šú‰»
 		hp = 5;
 		dispFlg = TRUE;
+	}
+	void ThreadReSet(int cloudX, int cloudY) {		// ‚­‚à‚Ì…‚ğ—‹‰_‚É‡‚í‚¹‚ÄÄƒZƒbƒg
+		x = cloudX - (BOSS_THREAD_WIDTH / 2) + 265 / 2;
+		y = cloudY + (BOSS_CLOUD_HEIGHT / 2);
+		w = cloudX + (BOSS_THREAD_WIDTH / 2) + 265 / 2;
 	}
 
 };
@@ -183,8 +191,8 @@ void BossMiniKurage_Attack_Air(int cntBuf_Air, bool* ataackFlg_AirKurage);		// ƒ
 void BossMiniKurage_Attack_Ground(int cntBuf_Ground, bool* attackFlg_GroundKurage);	// ƒ~ƒjƒNƒ‰ƒQ‚Ì’nãUŒ‚I
 void Boss_Tackle_Disp();				// ƒ{ƒX‚ªƒ^ƒbƒNƒ‹‚·‚é•\¦
 void Boss_Tackle_Move();				// ƒ{ƒX‚ªƒ^ƒbƒNƒ‹‚·‚é“®‚«
-void ThreadMove();                        // ‚­‚à‚Ì…‚Ì“à•”ˆ—
-void SpiderNoThreadMove();                // ‚­‚à‚Ì…‚ªØ‚ê‚½‚Ì“®‚«
+void ThreadMove(int* moveFlg);          // ‚­‚à‚Ì…‚Ì“à•”ˆ—
+void SpiderNoThreadMove(int* moveFlg);  // ‚­‚à‚Ì…‚ªØ‚ê‚½‚Ì“®‚«
 
 void (* const BossDisp[MAP_MAX])() = {		// ƒ{ƒX‚Ì•\¦
 	BossDisp_Stage1,
