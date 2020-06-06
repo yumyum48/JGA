@@ -24,6 +24,7 @@ int g_attackTime = 0;	//攻撃のクールタイム
 bool g_skillFlg;		// スキル中かどうかのフラグ
 int g_SkillSelectAicon = 0; //スキルのアイコン移動
 //bool g_swordFlg = FALSE; //TRUE = 抜刀, FALSE = 納刀
+int g_cloneDamage = 0;		//スキル7のダメージ変化
 
 void PlayerDisp() {
 	static int anime = 0;							// プレイヤーの画像を変える
@@ -31,9 +32,15 @@ void PlayerDisp() {
 	static float skillTime[3] = { 0 };				// スキルクールタイム
 	static int skill6Anime[2] = { 0 };				//スキル6アニメーション
 	static int skill5Anime = 0;					//スキル5アニメーション
+	static int lifeBox = 3;						//ライフを一時的に保存
 
 	if (++time % 4 == 0) anime++;
 	if (anime < g_resetMotion || anime > g_maxMotion) anime = g_resetMotion;
+
+	if (g_player.hp != lifeBox) {//ダメージを受けたらスキル7解除
+		if(g_player.cloneFlg == TRUE)g_player.cloneFlg = FALSE;
+		lifeBox = g_player.hp;
+	}
 
 	if (g_player.barrierFlg == TRUE) {
 		//スキル6バリア表示
@@ -64,7 +71,7 @@ void PlayerDisp() {
 	// 残像
 	PlayerAfterimage(anime);
 	//プレイヤーの描画
-	if (g_player.attackFlg == FALSE && g_noDamageCnt >= 60) {
+	if (g_player.attackFlg == FALSE && g_noDamageCnt > 60) {
 		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[anime], TRUE);
 	} else if (g_player.powerUpFlg == TRUE && g_player.powerUpTime == 0) {//スキル５突進
 		skill5Anime++;
@@ -72,17 +79,23 @@ void PlayerDisp() {
 		DrawRotaGraph((g_player.x) - skill5Anime * 25, g_player.y - 190, 2, 0.0, g_pic.skillEffect[20 + (skill5Anime/5)], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.SkillMotion[13], TRUE);
-	} else if (g_noDamageCnt <= 60 && g_player.powerUpTime > 0) {
+	} else if (g_noDamageCnt < 60 && g_player.powerUpTime > 0) {
 		if (g_noDamageCnt % 12 == 0) //無敵時間発生時
 			DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[48], TRUE);
 	}
+
+	//スキル7の分身
+	if (g_player.cloneFlg == TRUE) {
+		DrawRotaGraph2(g_player.x - 25, g_player.y + 2, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.skill7_Effect[anime], TRUE);
+	}
+
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[g_select_Stage].hp);
 	DrawFormatString(0, 400, 0xFF0000, "%d", g_player.skillFlg);
 	DrawFormatString(0, 600, 0xFFFF00, "%f", g_player.skillCoolTime[g_player.skillNo]);
 	DrawFormatString(0, 700, 0x00FFFF, "%d", g_player.skillNo);
 	DrawFormatString(0, 750, 0x0000FF, "%d", g_player.powerUpTime);
-	DrawFormatString(100, 750, 0xFF00FF, "%d", skill5Anime);
+	DrawFormatString(100, 750, 0xFF00FF, "%d", g_noDamageCnt);
 	
 	if (g_player.skillFlg != 0) {
 		SkillDisp[g_player.skillFlg - 1](g_maxMotion, g_resetMotion);
@@ -97,6 +110,9 @@ void PlayerDisp() {
 		if (g_player.gauge > 0) g_player.gauge -= 0.1;
 	} else {
 		if (g_player.gauge < 265 && g_player.useSkillGage <= 0) g_player.gauge += 0.5;
+	}
+	if (g_player.cloneFlg == TRUE) {
+		if (g_player.gauge > 0) g_player.gauge -= 0.4;
 	}
 
 	//スキル使用時のゲージ減少
@@ -370,6 +386,9 @@ void EnemyCut() {
 	static int enemyNum = 0;	// 同時に倒した敵をカウントする変数
 	static int noDamageCnt = 61;// ボスの無敵時間
 
+	if (g_player.cloneFlg == FALSE) g_cloneDamage = 1;
+	else g_cloneDamage = 2;
+
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		// 歩く敵
 		if ((g_enemy[i].walk.flg == TRUE)
@@ -500,20 +519,20 @@ void EnemyCut() {
 			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE)) {
 			if (++noDamageCnt > 60 && g_boss[g_select_Stage].hp > 0) {
 				if (g_player.skillFlg == 2) {
-					g_boss[g_select_Stage].hp -= 1;
+					g_boss[g_select_Stage].hp -= 1 * g_cloneDamage;
 					noDamageCnt = 0;
 				}
 				//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 				if (g_player.attackFlg == TRUE) {
 					//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
-					if (g_player.skillFlg == 1) g_boss[g_select_Stage].hp -= 2;
-					if (g_player.skillFlg == 3) g_boss[g_select_Stage].hp -= 3;
-					if (g_player.powerUpFlg == TRUE) g_boss[g_select_Stage].hp -= 1;
+					if (g_player.skillFlg == 1) g_boss[g_select_Stage].hp -= 2 * g_cloneDamage;
+					if (g_player.skillFlg == 3) g_boss[g_select_Stage].hp -= 3 * g_cloneDamage;
+					if (g_player.powerUpFlg == TRUE) g_boss[g_select_Stage].hp -= 1 * g_cloneDamage;
 					noDamageCnt = 0;
 				}
 
 				if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
-					g_boss[g_select_Stage].hp -= 5;
+					g_boss[g_select_Stage].hp -= 5 * g_cloneDamage;
 					noDamageCnt = 0;
 				}
 			}
@@ -610,6 +629,7 @@ void playerInfo::Init() {
 	gauge = 265;
 	swordFlg = FALSE;
 	useSkillFlg = FALSE;
+	cloneFlg = FALSE;
 	barrierFlg = FALSE;
 	powerUpFlg = FALSE;
 	powerUpTime = SKILL5_TIME;

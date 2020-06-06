@@ -33,6 +33,8 @@ int LoadPicture() {
 	//if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
 	//スキルエフェクト
 	if (LoadDivGraph("image/Skill_effect.png", 30, 5, 6, 400, 400, g_pic.skillEffect, 0) == -1) return -1;
+	//スキル7の複製プレイヤー
+	if (LoadDivGraph("image/Skill_7_Effect.png", 56, 8, 7, 280, 200, g_pic.skill7_Effect, 0) == -1) return -1;
 
 	//スキルアイコン
 	if (LoadDivGraph("image/SkillAicon2.png", 8, 8, 1, 100, 100, g_pic.skillAicon, 0) == -1) return -1;

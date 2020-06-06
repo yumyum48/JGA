@@ -29,6 +29,7 @@ struct image {
     int title[2];                       // タイトル画像
     int titleText[4];                   // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
+    int skill7_Effect[56];              // スキル7の複製プレイヤーの画像
     int SkillMotion[15];                 //スキルモーション画像
     int enemy_walk[4];                  // 歩く雑魚敵のの画像
     int enemy_fly[4];                   // 飛ぶ雑魚敵の画像
@@ -76,6 +77,7 @@ struct playerInfo {
     bool swordFlg; //TRUE = 抜刀, FALSE = 納刀
     int timecount; //納刀抜刀の切り替えの時間
     bool useSkillFlg;   //スキルを使うときに納刀状態か抜刀状態か TRUE = 抜刀, FALSE = 納刀
+    bool cloneFlg;      //スキル7 分身のフラグ   TRUE = ON, FALSE = OFF
     bool barrierFlg;    //スキル6 バリアのフラグ TRUE = バリア有, FALSE = バリア無
     bool powerUpFlg;    //スキル5 火力上昇フラグ TRUE = ON, FALSE = OFF
     int powerUpTime;    //スキル5 火力上昇時間

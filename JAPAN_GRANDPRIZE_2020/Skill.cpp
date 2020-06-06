@@ -332,28 +332,58 @@ bool SkillMove_6(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
 
 }
 
-void SkillDisp_7(int aniMAX, int aniMIN) { //未定
-	static int skill_X = 100;
-	static int skill_Y = 490;
-	static int anime = 0;
+void SkillDisp_7(int aniMAX, int aniMIN) { //分身
+	//static int skill_X = 100;
+	//static int skill_Y = 490;
+	static float effect_Ani = 0;
 
-	// スキル中
-	EnemyLockOn();
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL7_GAUGE
+		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
+		if (g_player.swordFlg == FALSE) {
+			g_player.timecount = 10;
+			g_player.useSkillFlg = TRUE;
+		} else {
+			g_player.attackFlg = TRUE;
+		}
+		if (g_player.cloneFlg == FALSE) g_player.cloneFlg = TRUE;
+		else g_player.cloneFlg = FALSE;
+		g_player.useSkillGage = SKILL7_GAUGE;
+		g_player.skillCoolTime[g_player.skillNo] = SKILL7_COOLTIME;
+	}
+
+	if (g_player.attackFlg == TRUE) {
+		g_skillAniFlg = TRUE;
+	}
+
+	if (g_skillAniFlg == TRUE) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - g_skillAnime[6] * 5);
+		DrawRotaGraph((g_player.x - 70) - g_skillAnime[6], g_player.y - g_skillAnime[6], 1.5, 90.0, g_pic.skillEffect[17 + int(effect_Ani - 0.1F)], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		DrawFormatString(500, 500, 0xff0000, "%d", g_skillAnime[6]);
+
+		if (effect_Ani < 1.99) effect_Ani += 0.2F;
+		else effect_Ani = 0;
+		if (++g_skillAnime[6] >= 50) g_skillAniFlg = FALSE,g_skillAnime[6] = 0;
+	}
+	// スキル中.
+	//EnemyLockOn();
 
 }
 
 bool SkillMove_7(int ex, int ey, int ew, int eh) {		//スキルの当たり判定
+
+	//ここも必要ない
 	return FALSE;
 
 }
 
-void SkillDisp_8(int aniMAX, int aniMIN) { //未定
-	static int skill_X = 100;
-	static int skill_Y = 490;
-	static int anime = 0;
+void SkillDisp_8(int aniMAX, int aniMIN) { //もう必要ない
+	//static int skill_X = 100;
+	//static int skill_Y = 490;
+	//static int anime = 0;
 
 	// スキル中
-	EnemyLockOn();
+	//EnemyLockOn();
 
 }
 
