@@ -96,6 +96,9 @@ bool g_lastBoss_StartAnimeFlg;    // ラスボス前の出現アニメーションを行うフラグ 
 
 trapInfo g_wave;                 // 波の情報
 picInfo g_boss3_Ton;             // 舌の情報
+
+boss5_extension g_boss5_Ex;				// ボス５の変数拡張
+
 /*********************************************
 
 * 関数のプロトタイプ宣言

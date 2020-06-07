@@ -41,6 +41,7 @@ struct image {
     int boss_1_1[16];                   // ボス_１の画像
     int boss_2_1[9];                    // ボス_２の画像
     int boss_3_1[5];                    // ボス_３の画像
+    int boss_5_1[10];                   // ボス_５の画像
     //int skill2[4];                      //スキル2のモーション画像(仮)
     //int skill3[5];                      //スキル3のモーション画像(仮)
     int skillEffect[40];                //スキルエフェクト画像
@@ -55,7 +56,11 @@ struct image {
     int gameOverText;                   // ゲームオーバーの時の[討伐失敗]の文字
     int skillAicon[8];                  // skillのアイコン
     int skillRing[2];                   // skillの装飾
-    int skilChoiceBox;                  //skillcustomの選択箱
+    int skilChoiceBox;                  // skillcustomの選択箱
+    int customBackimage;                // skillcustomの背景
+    int spiderKids[4];                  // 子蜘蛛の画像
+    int spiderThread;                   // くもの糸の画像
+    int thundercloud;                   // 雷雲の画像
 };
 
 // プレイヤーの情報
@@ -163,6 +168,7 @@ struct bossInfo {     // ボスの情報
             y = 134;
             popflg = 0;
             attackFlg = 0;
+            coolTime = 0;
             break;
         case 5:         // ステージ６のボスを初期化
             hp = 10;
@@ -175,6 +181,7 @@ struct bossInfo {     // ボスの情報
             hp = 10;
             x = 872;
             y = 160;
+            popflg = FALSE;
             popflg = 0;
             attackFlg = 0;
             break;

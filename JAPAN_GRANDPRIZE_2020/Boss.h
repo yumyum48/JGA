@@ -22,6 +22,8 @@
 #define BOSS_STAGE3_HEIGHT (128 * 3.5)// ボスの縦幅
 #define BOSS_STAGE4_WIDTH  (314)
 #define BOSS_STAGE4_HEIGHT (286)
+#define	BOSS_THREAD_WIDTH	(6)			// 糸の横幅
+#define	BOSS_CLOUD_HEIGHT  (134)		// 雲の高さ
 #define BOSS_STAGE5_WIDTH  (324)
 #define BOSS_STAGE5_HEIGHT (415)
 
@@ -70,6 +72,7 @@ enum {	// ボスの攻撃判断
 	BOSSATTACK_POISON_TRAP,				// 毒のトラップを設置
 	BOSSATTACK_MINIKURAGE_AIR,			// 空中のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
 	BOSSATTACK_MINIKURAGE_GROUND,		// 地上のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
+	BOSSATTACK_TACKLE,					// ボスのタックル攻撃
 	BOSSATTACK_MAX,                     // ボスの攻撃の最大数
 };
 
@@ -91,6 +94,7 @@ enum { // ボスの動きパターン
 	BOSSMOVE_NOMOTION,		// ノーモーション
 	BOSSMOVE_ATTACK,		// ボスがSin波で攻めてくる
 	BOSSMOVE_SPEEDDOWN,		// ボスがプレイヤーに追いつかれる動き
+	BOSSMOVE_DOWN,			// 攻撃、移動ができない状態
 };
 
 enum {	// ボス３のジャンプフラグ操作
@@ -119,15 +123,30 @@ struct lasbossInfo : public bossInfo {    // ラスボス前の７体の蛇の情報
 };
 struct boss4_parts :public picInfo {	//ボス４の雲と糸の情報 
 	int hp;
+	bool dispFlg;
 	void ThreadInit() {
 		Boss4_ThreadInit();
 		hp = 5;
+		dispFlg = TRUE;
+	}
+	void ThreadReSet(int cloudX, int cloudY) {		// くもの糸を雷雲に合わせて再セット
+		x = cloudX - (BOSS_THREAD_WIDTH / 2) + 265 / 2;
+		y = cloudY + (BOSS_CLOUD_HEIGHT / 2);
+		w = cloudX + (BOSS_THREAD_WIDTH / 2) + 265 / 2;
 	}
 
 };
 struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
 	int x, y;
 
+};
+struct boss5_extension :public bossInfo {	// ボス５の変数拡張 
+	int anime;
+	bool attackFlg;
+	void AnimtionInit() {
+		anime = 0;
+		attackFlg == FALSE;
+	}
 };
 /***********************************************************
 
@@ -141,6 +160,7 @@ extern trapInfo g_wave;                 // 波の情報
 extern picInfo g_boss3_Ton;             // 舌の情報
 extern lasbossInfo g_boss_Yamatano[YAMATANO_NECK];    // ラスボス前の７体の蛇
 extern bool g_lastBoss_StartAnimeFlg;    // ラスボス前の出現アニメーションを行うフラグ TRUE:アニメーションを行う FALSE:行わない
+extern boss5_extension g_boss5_Ex;				// ボス５の変数拡張
 /***********************************************************
 
 // 関数の宣言
@@ -207,6 +227,11 @@ void Boss_MiniKurage_Drop_Disp();		// ボスエリアのミニクラゲの表示
 void Boss_MiniKurage_Drop_Move();		// ボスエリアのミニクラゲの動き
 void BossMiniKurage_Attack_Air(int attackKurageBuf_Air, bool* ataackFlg_AirKurage);		// ミニクラゲの空中突撃！
 void BossMiniKurage_Attack_Ground(int attackKurageBuf_Ground, bool* attackFlg_GroundKurage);	// ミニクラゲの地上攻撃！
+int Boss_Tackle_Disp();				// ボスがタックルする表示
+void Boss_Tackle_Move();				// ボスがタックルする動き
+void ThreadMove(int* moveFlg);          // くもの糸の内部処理
+void SpiderNoThreadMove(int* moveFlg);  // くもの糸が切れた時の動き
+
 void (* const BossDisp[5])() = {		// ボスの表示
 	BossDisp_Stage1,
 	BossDisp_Stage2,
