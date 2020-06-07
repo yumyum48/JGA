@@ -12,10 +12,8 @@
 #include "Init.h"
 #include "HP.h"
 
-#define BOSS_WAVE_WIDTH		200		// 津波の横幅
-#define BOSS_WAVE_HEIGHT	150		// 津波の縦幅
 
-trapInfo g_wave;
+
 /*********************************************
 
 * ステージ２のボス

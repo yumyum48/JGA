@@ -2,8 +2,11 @@
 #include "DxLib.h"
 #include "Struct.h"
 
-extern mapInfo g_map[SCROLL_MAX];
 
+#define SCROLL_MAX  (4)		// スクロール画像の最大数
+#define MAP_MAX		(8)		// マップの数
+
+extern mapInfo g_map[SCROLL_MAX];
 
 void MapDisp();				// マップの表示
 void MapMove();				// マップの動き

@@ -11,6 +11,7 @@
 #include "GameScene.h"
 #include "Init.h"
 #include "Trap.h"
+#include "Skill.h"
 
 struct rightningInfo {		// 雷撃の情報
 	int x = 419;				// X座標
@@ -62,12 +63,23 @@ void BossDisp_Stage4() {
 	
 	// 雲の表示
 	DrawBox(g_boss4_Cloud.x, g_boss4_Cloud.y, g_boss4_Cloud.w, g_boss4_Cloud.h, 0xFFFFFF, TRUE);
+	DrawRotaGraph(g_boss4_Cloud.x + ((g_boss4_Cloud.w - g_boss4_Cloud.x) / 2), g_boss4_Cloud.y + ((g_boss4_Cloud.h - g_boss4_Cloud.y) / 2), 1.5f, 0.0, g_pic.thundercloud, TRUE);
 	// 雷撃の充電
 	DrawRotaGraph(g_boss4_Cloud.x + ((g_boss4_Cloud.w - g_boss4_Cloud.x )/ 2), g_boss4_Cloud.y + ((g_boss4_Cloud.h - g_boss4_Cloud.y) / 2), g_rightning.exRate, 0.0, g_pic.enemy_walk[0], TRUE);
 	// 糸の表示
-	DrawBox(g_boss4_Thread.x, g_boss4_Thread.y, g_boss4_Thread.w, g_boss4_Thread.h, 0xFFFFFF, TRUE);
+	if (g_boss4_Thread.dispFlg == TRUE) {
+		DrawBox(g_boss4_Thread.x, g_boss4_Thread.y, g_boss4_Thread.w, g_boss4_Thread.h, 0xFFFFFF, TRUE);
+		DrawModiGraph(g_boss4_Thread.x, g_boss4_Thread.y,		// 左上の頂点
+					g_boss4_Thread.w, g_boss4_Thread.y,			// 右上の頂点
+					g_boss4_Thread.w, g_boss4_Thread.h + 50,	// 右下の頂点
+					g_boss4_Thread.x, g_boss4_Thread.h + 50,	// 左下の頂点
+					g_pic.spiderThread, TRUE);
+	}		
+DrawFormatString(400, 500, 0x0000FF, "%d\n%d",
+	/*g_boss4_Thread.hp*/g_boss4_Cloud.x, g_boss[BOSS_STAGE4].x);
 	// 蜘蛛の表示
 	DrawBox(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, g_boss[BOSS_STAGE4].x + BOSS_STAGE4_WIDTH, g_boss[BOSS_STAGE4].y + BOSS_STAGE4_HEIGHT, 0x00FF00, TRUE);
+	DrawRotaGraph2(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, 32, 32, 5.0f, DX_PI_F / 180 * 330, g_pic.spiderKids[0], TRUE, FALSE, FALSE);
 
 	//Poison_Trap_Disp();	// 毒のトラップの表示
 
@@ -152,6 +164,9 @@ void BossMove_Stage4() {
 		g_rightning.cnt = 1800;
 	}
 	Boss_Knock_Down();	// ボスが倒されてる処理
+
+	ThreadMove(&moveFlg);			// くもの糸 内部処理
+	SpiderNoThreadMove(&moveFlg);	// くもの糸が切れている際の処理
 }
 
 void Boss_Lightning_Disp() {
@@ -177,6 +192,105 @@ void Boss_Lightning_Move() {
 
 
 }
+
+// くもの糸の内部処理
+void ThreadMove(int *moveFlg) {
+	static int noDamegeCnt = 60;		// ダメージを受け付けない時間
+	const int threadHpHull = 5;			// 糸の最大ＨＰ
+
+	noDamegeCnt++;
+
+	// 蜘蛛の糸がプレイヤーの攻撃を受ける処理
+	if ((g_boss4_Thread.dispFlg == TRUE)){
+		if ( /*(g_player.attackFlg == TRUE)*/
+			/*&&*/ SkillMove[g_player.skillFlg - 1](g_boss4_Thread.x, g_boss4_Thread.y,
+				BOSS_THREAD_WIDTH, g_boss4_Thread.h - g_boss4_Thread.y + 50) == TRUE ) {
+
+			// ボスがダウン
+			if (g_boss4_Thread.hp <= 0) {
+				g_boss4_Thread.dispFlg = FALSE;
+				*moveFlg = BOSSMOVE_DOWN;
+			}
+			// ボスはまだ耐えている
+			else if (noDamegeCnt > 30) {
+				g_boss4_Thread.hp--;
+				noDamegeCnt = 0;
+			}
+			
+		}
+	}
+
+	// ボスのHP の初期化
+	if (g_boss4_Thread.dispFlg == FALSE) {
+		g_boss4_Thread.hp = threadHpHull;
+	}
+}
+
+// 糸が切られた時の蜘蛛の動き
+void SpiderNoThreadMove(int *moveFlg) {
+	static bool bossDownFlg = TRUE;		// TRUE:ボスがダウンしている状態	FALSE:蜘蛛が助けた状態
+	static int cloudCnt = 0;
+
+	//if (g_boss4_Thread.dispFlg == FALSE) {
+	//	//bossDownFlg = TRUE;
+	//}
+
+	// 糸が切れて蜘蛛が落ち、雷雲が蜘蛛を追いかける処理
+	if (g_boss4_Thread.dispFlg == FALSE
+		&& bossDownFlg == TRUE) {
+
+		cloudCnt++;
+
+		// 落下
+		if (g_boss[BOSS_STAGE4].y + BOSS_STAGE4_HEIGHT <= GROUND) {
+			g_boss[BOSS_STAGE4].y += 2;
+		}
+		// 蜘蛛が流れる処理と雷雲が追いかける処理
+		else {
+			g_boss[BOSS_STAGE4].x -= g_speedLevel - 6;
+			if (cloudCnt > 80) {
+				g_boss4_Cloud.x -= g_speedLevel + 2;
+				g_boss4_Cloud.w -= g_speedLevel + 2;
+				g_boss4_Cloud.y += 2;
+				g_boss4_Cloud.h += 2;
+			}
+			if (g_boss4_Cloud.x   < g_boss[BOSS_STAGE4].x + 28) {
+				//g_boss4_Cloud.x = g_boss[BOSS_STAGE4].x;
+				g_boss4_Thread.ThreadReSet(g_boss4_Cloud.x, g_boss4_Cloud.y);
+				//g_boss4_Thread.h = 0;
+				cloudCnt = 0;
+				bossDownFlg = FALSE;
+				g_boss4_Thread.dispFlg = TRUE;
+			}
+		}
+
+	}
+
+	// 蜘蛛と雷雲
+	if (bossDownFlg == FALSE) {
+		if (g_boss[BOSS_STAGE4].y  > 331) {
+			g_boss[BOSS_STAGE4].y -= 2;
+			if (g_boss4_Cloud.y > 36) {
+				g_boss4_Cloud.y -= 2;
+				g_boss4_Cloud.h -= 2;
+			}
+		}
+		else if (g_boss4_Cloud.x < 868) {
+				g_boss4_Cloud.x += 2;
+				g_boss4_Cloud.w += 2;
+				if(g_boss[BOSS_STAGE4].x < 843) {
+					g_boss[BOSS_STAGE4].x += 2;
+				}
+			g_boss4_Thread.ThreadReSet(g_boss4_Cloud.x, g_boss4_Cloud.y);
+		}
+		// ボスの復帰
+		else {
+			bossDownFlg = TRUE;
+			*moveFlg = BOSSMOVE_NOMOTION;
+		}
+	}
+}
+
 // ボス４の必要な情報の初期化
 void Boss_Stage4_Init() {
 	g_boss4_Cloud.Boss4_CloudInit();

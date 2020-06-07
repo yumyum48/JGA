@@ -35,6 +35,7 @@ void GamePlayDisp() {
 	TrapDisp();						// トラップの表示
 	HpDisp();						// HP表示処理
 	
+	LastBossRightNingAnime();		// ラスボス前の７体の蛇の出現アニメーション
 }
 
 // ゲームプレイの動き
@@ -45,7 +46,7 @@ void GamePlayMove() {
 	PlayerMove();					// プレイヤーの動き
 	RainMove();						// 雨の動き
 	TrapMove();						// トラップの動き
-	//HpMove();						// HPの計算処理
+	HpMove();						// HPの計算処理
 }
 
 

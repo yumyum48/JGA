@@ -17,14 +17,12 @@
 #include "Trap.h"
 #include "Skill.h"
 
-#define BOSS_TON_HEIGHT	70		// ボスの舌の高さ
 
 /*********************************************
 
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-picInfo g_boss3_Ton;	// ボス３の舌の情報
 
 /*********************************************
 
@@ -240,7 +238,7 @@ void BossAttackMove() {
 			break;
 
 		case BOSSATTACK_TACKLE:
-			Boss_Tackle_Move();
+			Boss_Tackle_Disp();
 			break;
 		default:
 			break;
@@ -253,38 +251,88 @@ void BossAttackMove() {
 * ボスのタックル
 
 */////////////////////////////////////////////
-void Boss_Tackle_Disp() {
-		
+int  Boss_Tackle_Disp() {
+	// 0,3:ボスのニュートラルモーションの最初と最後	4,7:ボスの攻撃モーションの最初と最後	8,9:ボスの攻撃予備動作の最初と最後
+	const int bossAnime[6] = { 0, 3, 4, 7, 8, 9 };
+	static int animationStart = bossAnime[4];	// アニメーション開始位置の初期化
+	static int animationLast = bossAnime[5];	// アニメーションループの初期化
+	static int animecnt = 0;					// アニメーションをする為のカウント
+
+	if (g_boss5_Ex.attackFlg == FALSE) {
+
+		if (g_boss5_Ex.anime <= bossAnime[2]) {
+			animationStart = bossAnime[4];
+			animationLast = bossAnime[5];
+			g_boss5_Ex.anime = animationStart;
+		}
+
+		if (animecnt++ % 15 == 0)g_boss5_Ex.anime++;		// アニメーションの進行
+
+		if (g_boss5_Ex.anime >= bossAnime[5]) {
+			animationStart = bossAnime[2];
+			animationLast = bossAnime[3];
+			return 1;
+		}
+
+		if (g_boss5_Ex.anime > animationLast) {				// アニメーションのループ
+			g_boss5_Ex.anime = animationStart;
+		}
+
+	}
+
+	if (g_boss5_Ex.attackFlg == TRUE) {
+		animationStart = bossAnime[0];
+		animationLast = bossAnime[1];
+
+		if (animecnt++ % 15 == 0)g_boss5_Ex.anime++;					// アニメーションの進行
+		if (g_boss5_Ex.anime > animationLast)g_boss5_Ex.anime = animationStart;	// アニメーションのループ
+	}
+
+	DrawFormatString(700, 400, 0x0000FF, "%d\n%d\n%d", animationStart, animationLast, g_boss5_Ex.anime);
+
+	return 0;
 }
 void Boss_Tackle_Move() {
 	int boss5fiestX = 808;
 	static int returnFlg = FALSE;	// ボスが元の位置へ戻るフラグ TRUE;戻る FALSE:戻らない
+	static int animeFlg = FALSE;	// 攻撃アニメーション野順義が整っているかのフラグ　TRUE:攻撃可能  FALSE:攻撃不可
 
+	// 攻撃開始のフラグ
+	if (Boss_Tackle_Disp() == 1)animeFlg = TRUE;
 
-	if (returnFlg == FALSE) {
-		g_boss[g_select_Stage].x -= 10;
-	}
-	else if( (g_boss[g_select_Stage].x < boss5fiestX)	// ボスが最初の位置より左側にいたら右方向へ移動
-		 &&	 (returnFlg == TRUE) ){
-		g_boss[g_select_Stage].x += 8;
-	}
-	else if ((g_boss[g_select_Stage].x >= boss5fiestX)
-		&& (returnFlg == TRUE)) {
-		returnFlg = FALSE;
-		g_boss[g_select_Stage].x = boss5fiestX;
-		g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
-		g_noDamageCnt = 0;
-	}
+	if (animeFlg == TRUE) {
 
-	// プレイヤーにヒットしたらもとのポジションへ移動して攻撃終了
-	if (PlayerHitCheck(g_boss[g_select_Stage].x + 5, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE) {	
-		if (g_player.barrierFlg == FALSE) --g_player.hp;
-		else g_player.barrierFlg = FALSE;
-		returnFlg = TRUE;
-	}
-	// ボスがダメージを受けたら強制的に元の位置に戻す
-	if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {
-		returnFlg = TRUE;
+		if (returnFlg == FALSE) {
+			g_boss[g_select_Stage].x -= 10;
+		}
+		else if ((g_boss[g_select_Stage].x < boss5fiestX)	// ボスが最初の位置より左側にいたら右方向へ移動
+			&& (returnFlg == TRUE)) {
+			g_boss[g_select_Stage].x += 8;
+		}
+		else if ((g_boss[g_select_Stage].x >= boss5fiestX)
+			&& (returnFlg == TRUE)) {
+			returnFlg = FALSE;
+			g_boss[g_select_Stage].x = boss5fiestX;
+			g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
+			g_noDamageCnt = 0;
+			g_boss5_Ex.attackFlg = FALSE;
+			animeFlg = FALSE;
+		}
+
+		// プレイヤーにヒットしたらもとのポジションへ移動して攻撃終了
+		if (PlayerHitCheck(g_boss[g_select_Stage].x + 5, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE) {
+			if (g_player.barrierFlg == FALSE) --g_player.hp;
+			else g_player.barrierFlg = FALSE;
+			returnFlg = TRUE;
+			g_boss5_Ex.anime = 0;
+			g_boss5_Ex.attackFlg = TRUE;
+		}
+		// ボスがダメージを受けたら強制的に元の位置に戻す
+		if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {
+			returnFlg = TRUE;
+			g_boss5_Ex.anime = 0;
+			g_boss5_Ex.attackFlg = TRUE;
+		}
 	}
 }
 /*********************************************
@@ -847,9 +895,11 @@ int InputRand(int rand1, int rand2, int rand3) {
 bool BossDamageCheck(int bossHp) {
 	static int bossHpBuf = bossHp;
 
-	if (bossHp < bossHpBuf) {
-		bossHpBuf = bossHp;
-		return TRUE;
+	if (bossHp <= bossHpBuf) {
+		if (bossHp < bossHpBuf) {
+			bossHpBuf = bossHp;
+			return TRUE;
+		}
 	}
 
 	bossHpBuf = bossHp;
@@ -899,5 +949,5 @@ void BossInit() {
 	}
 	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);// ステージ３のボスの舌の初期化
 	Boss_Stage4_Init();	// ボスステージ４の雲の初期化
-	Boss5_Init();		// ボス５の初期化
+	LastBossInit();        // ラスボス前の７体の蛇の初期化
 }

@@ -44,7 +44,7 @@
 
 //定数の宣言
 
-const int ENEMY_BEAT_MAX[MAP_MAX] = { 1,1,1,1,1,1,1,1 };	//各ステージの雑魚敵を倒す数です
+const int ENEMY_BEAT_MAX[MAP_MAX] = { 1,1,1,1,1,1,0,0 };	//各ステージの雑魚敵を倒す数です
 
 /*********************************************
 
@@ -86,10 +86,19 @@ enemyInfo g_enemyBuffer[ENEMY_MAX];	// 撃破した敵の情報を格納する変数
 
 ChoiceInfo g_choice;			//
 
-mapInfo g_map[SCROLL_MAX];		// マップの情報
-
 boss4_parts g_boss4_Thread;		// ボス４の糸の情報
 boss4_parts g_boss4_Cloud;		// ボス４の雲の情報
+
+mapInfo g_map[SCROLL_MAX];        // マップの情報
+
+lasbossInfo g_boss_Yamatano[YAMATANO_NECK];        // ラスボス前の７体の蛇の情報
+bool g_lastBoss_StartAnimeFlg;    // ラスボス前の出現アニメーションを行うフラグ TRUE:アニメーションを行う FALSE:行わない
+
+trapInfo g_wave;                 // 波の情報
+picInfo g_boss3_Ton;             // 舌の情報
+
+boss5_extension g_boss5_Ex;				// ボス５の変数拡張
+
 /*********************************************
 
 * 関数のプロトタイプ宣言

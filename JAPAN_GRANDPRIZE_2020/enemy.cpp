@@ -9,7 +9,7 @@
 
 // 弱い敵、ボスの表示
 void MonsterDisp() {
-	if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+	if (g_enemybeat < ENEMY_BEAT_MAX[g_select_Stage]) {
 		EnemyDisp[g_select_Stage]();				// 弱い敵の描画
 	}
 	else {
@@ -19,7 +19,7 @@ void MonsterDisp() {
 
 // 弱い敵、ボスの動き
 void MonsterMove() {
-	if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+	if (g_enemybeat < ENEMY_BEAT_MAX[g_select_Stage]) {
 		EnemyMove();								// 弱い敵の動き
 	}
 	else {
@@ -208,7 +208,6 @@ void EnemyInit() {
 
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		g_enemyBuffer[i].BufferInit();
-		g_enemy[i].kurage.BossArea_KurageInit(g_boss[g_select_Stage].y);
 	}
 	
 	//g_coolTime = 0;
