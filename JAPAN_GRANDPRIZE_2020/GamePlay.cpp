@@ -15,8 +15,9 @@
 // ゲームプレイのメイン関数
 void GamePlay() {
 	// デバッグ用で一旦入れ替えGamePlayMove();
-	GamePlayDisp();
 	GamePlayMove();
+	GamePlayDisp();
+
 	static int timecnt = 0;	// フレーム単位で加算する
 	if (timecnt++ >= 60) {
 		g_playTime++;	// プレイタイムを加算
@@ -34,6 +35,7 @@ void GamePlayDisp() {
 	TrapDisp();						// トラップの表示
 	HpDisp();						// HP表示処理
 	
+	LastBossRightNingAnime();		// ラスボス前の７体の蛇の出現アニメーション
 }
 
 // ゲームプレイの動き

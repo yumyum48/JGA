@@ -5,3 +5,6 @@
 #define PLAYER_REDUCTION (0.8)		  // プレイヤーの縮小率
 #define WINDOW_WIDTH     (1280)       // 画面の横幅
 #define WINDOW_HEIGHT    (768)        // 画面の縦幅
+
+#define SCROLL_MAX         (4)          // スクロール最大数
+#define MAP_MAX             (8)       // マップの最大数 

@@ -458,7 +458,7 @@ void EnemyCut() {
 		}
 	}
 	//boss
-	if (g_enemybeat > ENEMY_BEAT_MAX[g_select_Stage]) {
+	if (g_enemybeat >= ENEMY_BEAT_MAX[g_select_Stage]) {
 		if (PlayerInterval(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE
 			|| (SkillMove[g_player.skillFlg - 1](g_boss[g_select_Stage].x, g_boss[g_select_Stage].y, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE)) {
 			if (++noDamageCnt > 60 && g_boss[g_select_Stage].hp > 0) {
@@ -486,6 +486,19 @@ void EnemyCut() {
 			|| (SkillMove[g_player.skillFlg - 1](g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE)) {
 			if (++noDamageCnt > 60 && g_boss4_Thread.hp <= 0) {
 				DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFFFFFF, TRUE);
+			}
+		}
+		// ラスボス前の７体の蛇
+		for (int i = 0; i < YAMATANO_NECK; i++) {
+			if (g_select_Stage == BOSS_LASTBOSS) {
+				if (g_boss_Yamatano[i].popflg == LASTBOSS_ON) {
+					if (PlayerInterval(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h) == TRUE
+						|| (SkillMove[g_player.skillFlg - 1](g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h) == TRUE)) {
+
+						g_boss_Yamatano[i].hp -= 1;
+						g_boss_Yamatano[i].damageFlg = TRUE;
+					}
+				}
 			}
 		}
 	}

@@ -9,7 +9,7 @@
 
 // 弱い敵、ボスの表示
 void MonsterDisp() {
-	if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+	if (g_enemybeat < ENEMY_BEAT_MAX[g_select_Stage]) {
 		EnemyDisp[g_select_Stage]();				// 弱い敵の描画
 	}
 	else {
@@ -19,7 +19,7 @@ void MonsterDisp() {
 
 // 弱い敵、ボスの動き
 void MonsterMove() {
-	if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+	if (g_enemybeat < ENEMY_BEAT_MAX[g_select_Stage]) {
 		EnemyMove();								// 弱い敵の動き
 	}
 	else {

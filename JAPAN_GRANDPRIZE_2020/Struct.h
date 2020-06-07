@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DxLib.h"
-#include "Map.h"
+//#include "Map.h"
 #include "Macro.h"
 //#include "Player.h"
 
@@ -122,8 +122,9 @@ struct bossInfo {     // ボスの情報
     int hp;           // 体力
     int x, y;         // 座標
     int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
-    int attackFlg;   // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
-
+    int attackFlg;    // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
+    int coolTime;     // 硬直時間
+    bool damageFlg;    // ダメージを食らったかどうか : TRUE:ダメージを食らった FALSE: ダメージを食らっていない
     // 配列で初期化できるわこれ竹
     void Init_Stage(int num) {
 

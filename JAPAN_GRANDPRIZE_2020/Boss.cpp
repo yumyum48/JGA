@@ -17,14 +17,12 @@
 #include "Trap.h"
 #include "Skill.h"
 
-#define BOSS_TON_HEIGHT	70		// ボスの舌の高さ
 
 /*********************************************
 
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-picInfo g_boss3_Ton;	// ボス３の舌の情報
 
 /*********************************************
 
@@ -853,4 +851,5 @@ void BossInit() {
 	}
 	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);// ステージ３のボスの舌の初期化
 	Boss_Stage4_Init();	// ボスステージ４の雲の初期化
+	LastBossInit();        // ラスボス前の７体の蛇の初期化
 }
