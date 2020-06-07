@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DxLib.h"
-//#include "Map.h"
+#include "Map.h"
 #include "Macro.h"
 //#include "Player.h"
 
@@ -29,8 +29,7 @@ struct image {
     int title[2];                       // タイトル画像
     int titleText[4];                   // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
-    int skill7_Effect[56];              // スキル7の複製プレイヤーの画像
-    int SkillMotion[15];                 //スキルモーション画像
+    int SkillMotion[12];                 //スキルモーション画像
     int enemy_walk[4];                  // 歩く雑魚敵のの画像
     int enemy_fly[4];                   // 飛ぶ雑魚敵の画像
     int map[MAP_MAX * SCROLL_MAX];      // マップの画像
@@ -56,11 +55,7 @@ struct image {
     int gameOverText;                   // ゲームオーバーの時の[討伐失敗]の文字
     int skillAicon[8];                  // skillのアイコン
     int skillRing[2];                   // skillの装飾
-    int skilChoiceBox;                  // skillcustomの選択箱
-    int customBackimage;                // skillcustomの背景
-    int spiderKids[4];                  // 子蜘蛛の画像
-    int spiderThread;                   // くもの糸の画像
-    int thundercloud;                   // 雷雲の画像
+    int skilChoiceBox;                  //skillcustomの選択箱
 };
 
 // プレイヤーの情報
@@ -77,7 +72,6 @@ struct playerInfo {
     bool swordFlg; //TRUE = 抜刀, FALSE = 納刀
     int timecount; //納刀抜刀の切り替えの時間
     bool useSkillFlg;   //スキルを使うときに納刀状態か抜刀状態か TRUE = 抜刀, FALSE = 納刀
-    bool cloneFlg;      //スキル7 分身のフラグ   TRUE = ON, FALSE = OFF
     bool barrierFlg;    //スキル6 バリアのフラグ TRUE = バリア有, FALSE = バリア無
     bool powerUpFlg;    //スキル5 火力上昇フラグ TRUE = ON, FALSE = OFF
     int powerUpTime;    //スキル5 火力上昇時間
@@ -128,9 +122,9 @@ struct bossInfo {     // ボスの情報
     int hp;           // 体力
     int x, y;         // 座標
     int popflg;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
-    int attackFlg;    // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
-    int coolTime;     // 硬直時間
-    bool damageFlg;    // ダメージを食らっていたら被弾モーションを行う : TRUE:食らっている FALSE: 食らっていない
+    int attackFlg;   // 攻撃中かどうかのフラグ(複数個の技を分けるため、int型　例:== 1 ならば。。。 == 2 ならば。。。)
+
+    // 配列で初期化できるわこれ竹
     void Init_Stage(int num) {
 
         switch (num) {  // ボスの初期化
@@ -168,7 +162,6 @@ struct bossInfo {     // ボスの情報
             y = 134;
             popflg = 0;
             attackFlg = 0;
-            coolTime = 0;
             break;
         case 5:         // ステージ６のボスを初期化
             hp = 10;
@@ -176,15 +169,13 @@ struct bossInfo {     // ボスの情報
             y = 160;
             popflg = 0;
             attackFlg = 0;
-            coolTime = 0;
             break;
         case 6:         // ステージ７のボスを初期化
             hp = 10;
             x = 872;
             y = 160;
-            popflg = FALSE;
+            popflg = 0;
             attackFlg = 0;
-            coolTime = 0;
             break;
         case 7:         // ステージ８のボスを初期化
             hp = 10;
@@ -205,7 +196,7 @@ struct bossType {     // ボスの種類
 
 // マップの情報
 struct mapInfo {
-    int x, y; // マップのX,Y座標
+    float x, y; // マップのX,Y座標
     void MapInit1() {   // スクロール１の座標
         x = 0*2;
         y = 0;
@@ -295,7 +286,7 @@ struct picInfo {
         h = y + 134;    // 座標をY～にする
 
     }
-    void Boss4_ThreadInit() {   // ボス４の糸の初期化
+    void Boss4_ThreadInit() {
         x = 995;
         y = 170;
         w = x + 6;    // 座標をX～にする

@@ -28,7 +28,6 @@ void GameInit() {
 	ChangeScreen_Animation_Init();	// シーンチェンジアニメーションの初期化
 	StageClearInit();	// ステージクリア画面の初期化
 	GameOverInit();		// ゲームオーバー画面の初期化
-	g_lastBoss_StartAnimeFlg = TRUE;	// ラスボスアニメーションフラグの初期化
 	//g_gameScene = GAME_TITLE;	// タイトルへ戻る
 
 }
