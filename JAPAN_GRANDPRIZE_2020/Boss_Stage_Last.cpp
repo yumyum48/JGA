@@ -146,7 +146,11 @@ void BossMove_Stage_Last() {
 							g_enemy[j].walk.BossArea_WlakInit(g_boss_Yamatano[1].x, g_boss_Yamatano[1].y);
 						}
 					}
-
+					if (attackFlg[i] == LAST_BOSSATTACK_MINISPIDER_DROP) {
+						for (int j = 0; j < ENEMY_MAX; j++) {
+							g_enemy[j].spider.BossArea_SpiderInit(g_boss_Yamatano[3].x, g_boss_Yamatano[3].y);
+						}
+					}
 					g_boss_Yamatano[i].attackFlg = attackFlg[i];														// 攻撃する場合、フラグに対応した数字を入れる
 					g_boss_Yamatano[i].sevenAttackFlg = TRUE;															// 添え字で蛇の攻撃フラグをつないでいる攻撃フラグをオンに
 
@@ -739,9 +743,10 @@ void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, bool* boss_AttackFlg, int
 
 	if (BossDamageCheck(g_boss_Yamatano[2].hp) == TRUE) {		// ボスが攻撃されたら攻撃中断してジャンプして逃げる
 		*boss_AttackFlg = FALSE;		// attackフラグを初期化
+		*coolTime = 0;					// クールタイムの初期化
 		plas = 0;
 
-		//boss_JumpFlg = BOSS_3_JUMPON;
+		
 	}														   // ボスがプレイヤーに当たったら、ダメージを与えて逃げる
 	//else if (PlayerHitCheck(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, BOSS_STAGE3_WIDTH, BOSS_STAGE3_HEIGHT) == TRUE) {
 	//	if (g_player.barrierFlg == FALSE) --g_player.hp;
@@ -757,6 +762,7 @@ void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, bool* boss_AttackFlg, int
 		else g_player.barrierFlg = FALSE;
 		g_noDamageCnt = 0;
 		*boss_AttackFlg = FALSE;		// attackフラグを初期化
+		*coolTime = 0;					// クールタイムの初期化
 		plas = 0;
 	}
 }
@@ -770,3 +776,97 @@ void Last_Boss_Attack_BossLongTon_Move(int bx, int by, bool* boss_AttackFlg, int
 	//}
 }
 
+/*********************************************
+
+* ミニ蜘蛛を出す
+
+*/////////////////////////////////////////////
+// 表示
+void Last_Boss_Attack_MiniSpider_Drop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+	static int stayTime = 0;
+	static int enemyDropCnt = 0;
+	const int LAST_AREA_ENEMY_MAX = 1;		// 一回に出てくるエネミーの最大数
+	static bool enemy_dispFlg_Buf[LAST_AREA_ENEMY_MAX] = { FALSE };/*{ FALSE, FALSE, FALSE };*/ // 
+	static int enemy_cnt = 0;	// 出現したエネミーの要素番号
+	// クールタイム
+	if (++stayTime > 60) {
+		// エネミーの出現フラグをオンにする
+
+		if (g_enemy[enemy_cnt].spider.flg == FALSE && enemy_cnt < LAST_AREA_ENEMY_MAX) {
+			g_enemy[enemy_cnt].spider.flg = TRUE;
+			stayTime = 0;
+
+			enemy_dispFlg_Buf[enemy_cnt] = TRUE;
+			enemy_cnt++;
+		}
+
+	}
+
+	// 雑魚敵の描画
+	for (int i = 0; i < ENEMY_MAX; i++) {
+		const int animation_Max = 3;
+		static int time = 0;
+
+		// アニメーションのカウント
+		if (time++ % 8 == 0) {
+			g_enemy[i].spider.anime++;
+
+		}
+
+		// アニメーションの初期化
+		if (g_enemy[i].spider.anime > animation_Max)g_enemy[i].spider.anime = 0;
+
+
+		if (g_enemy[i].spider.flg == TRUE)        // 雑魚敵の描画
+			DrawRotaGraph2(g_enemy[i].spider.x, g_enemy[i].spider.y,
+				0, 0, 1.0, 0.0, g_pic.enemy_walk[g_enemy[i].spider.anime], TRUE);
+		//DrawRotaGraph(g_enemy[i].fly.x, g_enemy[i].fly.y, 1.0f, 0.0, g_pic.flyEnemy[0], TRUE, FALSE);
+	}
+
+	// 雑魚敵が倒されたかを確認
+	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {
+		if (enemy_dispFlg_Buf[i] == TRUE && g_enemy[i].spider.flg == FALSE) {
+			enemyDropCnt++;
+		}
+	}
+
+	// 出現した雑魚敵が全て倒されていたら攻撃終了
+	if (enemyDropCnt >= LAST_AREA_ENEMY_MAX) {
+		static int waitTime = 0;
+		if (waitTime++ >= 120) {
+			*boss_AttackFlg = FALSE;
+			*coolTime = 300;
+			enemyDropCnt = 0;                        // エネミーを出した回数を初期化
+			enemy_cnt = 0;							 // エネミーの出現した回数を初期化
+			enemy_dispFlg_Buf[0] = { FALSE };        // エネミーの出現フラグバッファーを初期化
+			//enemy_dispFlg_Buf[1] = { FALSE };
+			//enemy_dispFlg_Buf[2] = { FALSE };
+			waitTime = 0;
+		}
+	}
+
+	// 敵の蒸発アニメーション
+	EnemyEvaporation();
+}
+
+// 動き
+void Last_Boss_Attack_MiniSpider_Drop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+
+
+	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {        // ミニ蜘蛛の最大数回す
+
+
+		if (g_enemy[i].spider.flg == TRUE) {
+			g_enemy[i].spider.x -= (g_speedLevel - 3);		// ミニ蜘蛛の移動
+
+			//g_enemy[i].walk.x -= g_boss[g_select_Stage].x;
+
+		}
+
+		if (g_enemy[i].spider.x + ENEMY_WIDTH < 0) {		// 画面外にいくと初期化
+
+			g_enemy[i].spider.BossArea_SpiderInit(bx, by);
+			//g_enemy[i].walk.flg = TRUE;
+		}
+	}
+}
