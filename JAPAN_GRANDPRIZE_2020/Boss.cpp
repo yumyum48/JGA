@@ -17,14 +17,14 @@
 #include "Trap.h"
 #include "Skill.h"
 
-#define BOSS_TON_HEIGHT	70		// ボスの舌の高さ
+
 
 /*********************************************
 
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-picInfo g_boss3_Ton;	// ボス３の舌の情報
+
 
 /*********************************************
 
@@ -748,6 +748,7 @@ void BossWaterBulletDisp() {
 			startX + moveX + 40, startY + moveY - 20) == TRUE)) {
 		if (g_player.barrierFlg == FALSE) --g_player.hp;
 		else g_player.barrierFlg = FALSE;
+
 		noDamegeCnt = 0;
 		anime = 4;
 		animationMax++;

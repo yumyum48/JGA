@@ -25,7 +25,13 @@
 #define	BOSS_CLOUD_HEIGHT  (134)		// 雲の高さ
 #define BOSS_STAGE5_WIDTH   (324)		// ボスの横幅
 #define BOSS_STAGE5_HEIGHT  (415)		// ボスの縦幅
-#define YAMATANO_NECK	    (7)			 // ヤマタノオロチの蛇の数 - 本体　(このマクロは本体以外の首の配列に使うため)
+#define YAMATANO_NECK	    (7)			 // ヤマタノオロチの蛇の数 - 本体　(このマクロは本体以外の蛇の配列に使うため)
+
+#define BOSS_WAVE_WIDTH		200		// 津波の横幅
+#define BOSS_WAVE_HEIGHT	150		// 津波の縦幅
+
+#define BOSS_TON_HEIGHT	70		// ボスの舌の高さ
+
 /***********************************************************
 
 // 定数の宣言
@@ -63,8 +69,22 @@ enum {	// ボスの攻撃判断
 	BOSSATTACK_MINIKURAGE_AIR,			// 空中のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
 	BOSSATTACK_MINIKURAGE_GROUND,		// 地上のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
 	BOSSATTACK_TACKLE,					// ボスのタックル攻撃
+	BOSSATTACK_MAX,						// ボスの攻撃の最大数
 };
 
+enum {	// ラスボスの攻撃判断
+
+	LAST_BOSSATTACK_WATER_BULLET,			// 水弾での攻撃
+	LAST_BOSSATTACK_ENEMY_DROP,				// 雑魚敵の生成
+	LAST_BOSSATTACK_WAVE_ATTACK,			// 津波での攻撃
+	LAST_BOSSATTACK_LONGTON,				// 舌を伸ばす攻撃
+	LAST_BOSSATTACK_MINISPIDER_DROP,		// ミニスパイダーをドロップする
+	LAST_BOSSATTACK_MINICLOUD_DROP,			// ミニ雲をドロップする
+	LAST_BOSSATTACK_LIGHTNING,				// 雷撃による攻撃
+	LAST_BOSSATTACK_MINIKURAGE_AIR,			// 空中のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
+	LAST_BOSSATTACK_MINIKURAGE_GROUND,		// 地上のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
+	LAST_BOSSATTACK_MAX,					// ボスの攻撃の最大数
+};
 enum { // ボスの動きパターン
 	BOSSMOVE_NOMOTION,		// ノーモーション
 	BOSSMOVE_ATTACK,		// ボスがSin波で攻めてくる
@@ -80,10 +100,11 @@ enum {	// ボス３のジャンプフラグ操作
 
 
 enum {	// ラスボス前の７体の蛇
-	LASTBOOS_OFF,	// 出現させない
-	LASTBOSS_ON,	// 出現させる
-	LASTBOSS_KILL,	// 倒した
-	LASTBOSS_MINION,// 出現して、登場はしていない
+	LASTBOOS_OFF,		// 出現させない
+	LASTBOSS_ON,		// 出現させる
+	LASTBOSS_MINIKILL,	// 倒したけどまだ画面にいる
+	LASTBOSS_KILL,		// 倒した
+	LASTBOSS_MINION,	// 出現して、登場はしていない
 };
 
 enum {	// ラスボスの前の７体の蛇が右にいるか左にいるかのタグ
@@ -94,6 +115,7 @@ struct lasbossInfo : public bossInfo {	// ラスボスの７体の蛇の情報
 	int w;	// 幅
 	int h;	// 高さ
 	int tag;// ボスが右と左、どちらにいるかを格納する
+	bool sevenAttackFlg;	// 真か偽かで攻撃中かどうかを判断 TRUE;攻撃している FALSE: 攻撃していない
 	void lasbossInit(int num);// ラスボスの本体以外(7体の蛇の初期化)
 	
 };
@@ -127,6 +149,8 @@ extern boss4_parts g_boss4_Cloud;					// ボス４の雲の情報
 extern boss4_parts g_boss4_Thread;					// ボス４の糸の情報
 extern lasbossInfo g_boss_Yamatano[YAMATANO_NECK];	// ラスボスの７本の蛇
 extern bool g_lastBoss_StartAnimeFlg;	// 出現アニメーション用のフラグ　TRUE:出現アニメーションをする FALSE:出現アニメーションをしない
+extern trapInfo g_wave;								// 津波の情報
+extern picInfo g_boss3_Ton;							// ボス３の舌の情報
 /***********************************************************
 
 // 関数の宣言
@@ -141,6 +165,7 @@ void KurageHit();								// プレイヤーがクラゲに当たるとダメージを受ける
 
 void LastBossRightNingAnime();			// 最後のボスの出現アニメーション(終わったらラスボスの出現アニメーションをオンへ!)
 void Last_Boss_SnakeDispFlg_Managar();	// ラスボス前の蛇の出現フラグを管理
+void Snake_Add_To_Anime();				// 蛇追加シーン
 
 void BossDisp_Stage1();					// ステージ１のボスの表示
 void BossMove_Stage1();					// ステージ１のボスの動き
@@ -221,4 +246,23 @@ void (* const BossMove[MAP_MAX])() = {		// ボスの動き
 	BossMove_Stage5,
 	BossMove_Stage6,
 	BossMove_Stage_Last,
+};
+
+void Last_Boss_Attack_WaterBullet_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);	// ラスボス用の水弾表示
+void Last_Boss_Attack_WaterBullet_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);	// ラスボス用の水弾動き
+void Last_Boss_Attack_BossEnemyDrop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);  // ラスボスが弱い敵を出す表示
+void Last_Boss_Attack_BossEnemyDrop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);  // ラスボスが弱い敵を出す動き
+void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);	// ラスボス用の舌を伸ばす表示
+void Last_Boss_Attack_BossLongTon_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);	// ラスボス用の舌を伸ばす動き
+void (* const Last_Boss_Attack_Disp[LAST_BOSSATTACK_MAX])(int bx, int by, bool* boss_AttackFlg, int *coolTime) {	// ラスボスの攻撃
+
+	Last_Boss_Attack_WaterBullet_Disp, 
+	Last_Boss_Attack_BossEnemyDrop_Disp,
+	Last_Boss_Attack_BossLongTon_Disp,
+};
+void (* const Last_Boss_Attack_Move[LAST_BOSSATTACK_MAX])(int bx, int by, bool* boss_AttackFlg, int* coolTime) {	// ラスボスの攻撃
+
+	Last_Boss_Attack_WaterBullet_Move,
+	Last_Boss_Attack_BossEnemyDrop_Move,
+	Last_Boss_Attack_BossLongTon_Move,
 };
