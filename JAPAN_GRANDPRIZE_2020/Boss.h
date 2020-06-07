@@ -143,11 +143,25 @@ struct bossAttackInfo {	// ボスの攻撃の際に使う可能性あり
 struct boss5_extension :public bossInfo {	// ボス５の変数拡張 
 	int anime;
 	bool attackFlg;
+	bool animeFlg;
 	void AnimtionInit() {
 		anime = 0;
 		attackFlg == FALSE;
 	}
 };
+//struct barrier : public picInfo {
+//	bool flg;	// 出現フラグ
+//	int cnt;	// 出現カウント
+//
+//	// barriarを初期化するメソッド
+//	void barrierInit() {
+//		x = g_boss[g_select_Stage].x - 100;	// X座標の初期位置
+//		y = g_boss[g_select_Stage].y + 10;	// Y座標の初期位置
+//
+//		flg = FALSE;	// 出現フラグを初期化	
+//		cnt = 0;		// 出現カウントを初期化
+//	}
+//};
 /***********************************************************
 
 // グローバル変数の宣言
@@ -161,6 +175,7 @@ extern picInfo g_boss3_Ton;             // 舌の情報
 extern lasbossInfo g_boss_Yamatano[YAMATANO_NECK];    // ラスボス前の７体の蛇
 extern bool g_lastBoss_StartAnimeFlg;    // ラスボス前の出現アニメーションを行うフラグ TRUE:アニメーションを行う FALSE:行わない
 extern boss5_extension g_boss5_Ex;				// ボス５の変数拡張
+//extern barrier g_barrier;		// バリアの情報
 /***********************************************************
 
 // 関数の宣言
@@ -198,6 +213,7 @@ void Snake_Add_To_Anime();				// 蛇の追加アニメーション
 void BossInit();						// ボスの初期化
 void Boss_Stage4_Init();				// ボス４の雲の初期化
 void LastBossInit();                    // ラスボス前の７体の蛇の初期化
+void Boss5_Init();						// ボス５の初期化
 
 void BossAttackDisp();					// ボスの攻撃
 void BossAttackMove();					// ボスの攻撃
@@ -231,7 +247,7 @@ void Boss_MiniKurage_Drop_Disp();		// ボスエリアのミニクラゲの表示
 void Boss_MiniKurage_Drop_Move();		// ボスエリアのミニクラゲの動き
 void BossMiniKurage_Attack_Air(int attackKurageBuf_Air, bool* ataackFlg_AirKurage);		// ミニクラゲの空中突撃！
 void BossMiniKurage_Attack_Ground(int attackKurageBuf_Ground, bool* attackFlg_GroundKurage);	// ミニクラゲの地上攻撃！
-int Boss_Tackle_Disp();				// ボスがタックルする表示
+void Boss_Tackle_Disp();				// ボスがタックルする表示
 void Boss_Tackle_Move();				// ボスがタックルする動き
 void ThreadMove(int* moveFlg);          // くもの糸の内部処理
 void SpiderNoThreadMove(int* moveFlg);  // くもの糸が切れた時の動き

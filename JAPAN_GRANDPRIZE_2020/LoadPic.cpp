@@ -83,7 +83,7 @@ int LoadPicture() {
 	if (LoadDivGraph("image/BossFlog.png", 5, 5, 1, 128, 128, g_pic.boss_3_1, 0) == -1)return -1;
 
 	// ボス_５の画像読み込み
-	if (LoadDivGraph("image/JellyFishBossAll.png", 10, 10, 1, 555, 600, g_pic.boss_5_1, 0) == -1)return -1;
+	if (LoadDivGraph("image/JellyFishBossAll.png", 10, 10, 1, 550, 600, g_pic.boss_5_1, 0) == -1)return -1;
 
 	//// ボス_１の泡画像読み込み
 	//if (LoadDivGraph("image/Boss1_Water.png", 8, 8, 0, 280, 200, g_pic.boss_1_2, 0) == -1)

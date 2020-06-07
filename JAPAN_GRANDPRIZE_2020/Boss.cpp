@@ -238,7 +238,7 @@ void BossAttackMove() {
 			break;
 
 		case BOSSATTACK_TACKLE:
-			Boss_Tackle_Disp();
+			Boss_Tackle_Move();
 			break;
 		default:
 			break;
@@ -251,7 +251,7 @@ void BossAttackMove() {
 * ボスのタックル
 
 */////////////////////////////////////////////
-int  Boss_Tackle_Disp() {
+void  Boss_Tackle_Disp() {
 	// 0,3:ボスのニュートラルモーションの最初と最後	4,7:ボスの攻撃モーションの最初と最後	8,9:ボスの攻撃予備動作の最初と最後
 	const int bossAnime[6] = { 0, 3, 4, 7, 8, 9 };
 	static int animationStart = bossAnime[4];	// アニメーション開始位置の初期化
@@ -260,19 +260,20 @@ int  Boss_Tackle_Disp() {
 
 	if (g_boss5_Ex.attackFlg == FALSE) {
 
-		if (g_boss5_Ex.anime <= bossAnime[2]) {
+		if (g_boss5_Ex.anime < bossAnime[2]) {
 			animationStart = bossAnime[4];
 			animationLast = bossAnime[5];
 			g_boss5_Ex.anime = animationStart;
 		}
 
-		if (animecnt++ % 15 == 0)g_boss5_Ex.anime++;		// アニメーションの進行
+		if (animecnt++ % 15 == 0)g_boss5_Ex.anime++;	
 
-		if (g_boss5_Ex.anime >= bossAnime[5]) {
+		if (g_boss5_Ex.anime > bossAnime[5]) {
 			animationStart = bossAnime[2];
 			animationLast = bossAnime[3];
-			return 1;
-		}
+			g_boss5_Ex.anime = animationStart;
+			g_boss5_Ex.animeFlg = TRUE;
+		}	// アニメーションの進行
 
 		if (g_boss5_Ex.anime > animationLast) {				// アニメーションのループ
 			g_boss5_Ex.anime = animationStart;
@@ -290,17 +291,14 @@ int  Boss_Tackle_Disp() {
 
 	DrawFormatString(700, 400, 0x0000FF, "%d\n%d\n%d", animationStart, animationLast, g_boss5_Ex.anime);
 
-	return 0;
 }
 void Boss_Tackle_Move() {
 	int boss5fiestX = 808;
 	static int returnFlg = FALSE;	// ボスが元の位置へ戻るフラグ TRUE;戻る FALSE:戻らない
-	static int animeFlg = FALSE;	// 攻撃アニメーション野順義が整っているかのフラグ　TRUE:攻撃可能  FALSE:攻撃不可
+	//static int animeFlg = FALSE;	// 攻撃アニメーション野順義が整っているかのフラグ　TRUE:攻撃可能  FALSE:攻撃不可
 
 	// 攻撃開始のフラグ
-	if (Boss_Tackle_Disp() == 1)animeFlg = TRUE;
-
-	if (animeFlg == TRUE) {
+	if (g_boss5_Ex.animeFlg == TRUE) {
 
 		if (returnFlg == FALSE) {
 			g_boss[g_select_Stage].x -= 10;
@@ -316,7 +314,7 @@ void Boss_Tackle_Move() {
 			g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
 			g_noDamageCnt = 0;
 			g_boss5_Ex.attackFlg = FALSE;
-			animeFlg = FALSE;
+			g_boss5_Ex.animeFlg = FALSE;
 		}
 
 		// プレイヤーにヒットしたらもとのポジションへ移動して攻撃終了
@@ -949,5 +947,6 @@ void BossInit() {
 	}
 	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);// ステージ３のボスの舌の初期化
 	Boss_Stage4_Init();	// ボスステージ４の雲の初期化
+	Boss5_Init();		// ボス５の初期化
 	LastBossInit();        // ラスボス前の７体の蛇の初期化
 }
