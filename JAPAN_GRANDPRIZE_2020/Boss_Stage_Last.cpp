@@ -273,7 +273,7 @@ void Last_Boss_SnakeDispFlg_Managar() {
 */////////////////////////////////////////////
 void Boss_Snake_Knockdown() {
 	for (int i = 0; i < YAMATANO_NECK; i++) {
-		if (g_boss_Yamatano[i].popflg == LASTBOSS_ON || g_boss_Yamatano[i].popflg == LASTBOSS_MINIKILL) {
+		if (g_boss_Yamatano[i].popflg == LASTBOSS_ON /*|| g_boss_Yamatano[i].popflg == LASTBOSS_MINIKILL*/) {
 			if (g_boss_Yamatano[i].damageFlg == TRUE) {
 				// 被弾モーション終わったらフラグをFALSE
 				g_boss_Yamatano[i].damageFlg = FALSE;
@@ -281,7 +281,7 @@ void Boss_Snake_Knockdown() {
 			else if (g_boss_Yamatano[i].hp <= 0) {		// hpが０だった場合、ボスの首を落として次に入れ替える準備をする
 				
 				if (g_boss_Yamatano[i].y < GROUND) {
-					g_boss_Yamatano[i].popflg = LASTBOSS_MINIKILL;	// 倒したけど、まだ画面にいる状態
+					//g_boss_Yamatano[i].popflg = LASTBOSS_MINIKILL;	// 倒したけど、まだ画面にいる状態
 					static int cnt;					// 揺らしで使うフレーム用カウント
 					int moveX = 2;					// ボスのX軸揺らし用
 					int moveY = 5;					// ボスの首の落下速度
@@ -715,7 +715,7 @@ void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, bool* boss_AttackFlg, int
 	static int plas = 0;			// 長くしていく
 
 	// ボスの舌の座標の初期化
-	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);
+	g_boss3_Ton.Boss3_TonInit(bx, by + g_boss_Yamatano[2].h / 2);
 	// ボスの舌の幅と高さの初期化
 	int tonW = g_boss3_Ton.x + plas;
 	int tonH = g_boss3_Ton.y + BOSS_TON_HEIGHT;
@@ -737,33 +737,33 @@ void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, bool* boss_AttackFlg, int
 		tonW = 0;
 	}
 
-	if (BossDamageCheck(g_boss[g_select_Stage].hp) == TRUE) {		// ボスが攻撃されたら攻撃中断してジャンプして逃げる
-		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
+	if (BossDamageCheck(g_boss_Yamatano[2].hp) == TRUE) {		// ボスが攻撃されたら攻撃中断してジャンプして逃げる
+		*boss_AttackFlg = FALSE;		// attackフラグを初期化
 		plas = 0;
 
 		//boss_JumpFlg = BOSS_3_JUMPON;
 	}														   // ボスがプレイヤーに当たったら、ダメージを与えて逃げる
-	else if (PlayerHitCheck(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, BOSS_STAGE3_WIDTH, BOSS_STAGE3_HEIGHT) == TRUE) {
-		if (g_player.barrierFlg == FALSE) --g_player.hp;
-		else g_player.barrierFlg = FALSE;
-		g_noDamageCnt = 0;
-		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
-		plas = 0;
-	}
+	//else if (PlayerHitCheck(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, BOSS_STAGE3_WIDTH, BOSS_STAGE3_HEIGHT) == TRUE) {
+	//	if (g_player.barrierFlg == FALSE) --g_player.hp;
+	//	else g_player.barrierFlg = FALSE;
+	//	g_noDamageCnt = 0;
+	//	g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
+	//	plas = 0;
+	//}
 
 	// ボスの舌がプレイヤーに当たったら、ダメージを与えて逃げる		* 横幅で -10 しているのはプレイヤーに当たらない為の調整
 	if (PlayerHitCheck(g_boss3_Ton.x + plas, g_boss3_Ton.y, (plas * -1), BOSS_TON_HEIGHT - 10) == TRUE) {
 		if (g_player.barrierFlg == FALSE) --g_player.hp;
 		else g_player.barrierFlg = FALSE;
 		g_noDamageCnt = 0;
-		g_boss[BOSS_STAGE3].attackFlg = 0;		// attackフラグを初期化
+		*boss_AttackFlg = FALSE;		// attackフラグを初期化
 		plas = 0;
 	}
 }
 
 void Last_Boss_Attack_BossLongTon_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
 
-	g_boss[BOSS_STAGE3].x -= 2;
+	//g_boss[BOSS_STAGE3].x -= 2;
 
 	//if (Boss_3_Jump(&coolTime, &boss_JumpFlg, 1) == TRUE) {
 	//	g_boss[BOSS_STAGE3].attackFlg = 0;	// attackフラグをオフへ
