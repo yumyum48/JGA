@@ -28,6 +28,8 @@ picInfo g_saveBox;		// セーブウィンドウの情報
 int g_menuFlg;			// メニューウィンドウを出現させるフラグ  0:出現させない 1:メニュー画面を出現させる 2:セーブ画面を出現させる
 int g_menuSelect;		// 今選択しているメニューを取得する
 int g_saveSelect;		// 今選択しているセーブフォルダを取得する
+
+int g_cursorAnime = 0;	//メニューのカーソルアニメーション
 /******************************************************
 // 列挙体の宣言
 *******************************************************/
@@ -40,7 +42,7 @@ enum {
 // セレクト画面の管理
 *******************************************************/
 void StageSelect() {
-	
+
 	SpeedSelect();	// ゲームのスクロールスピードを変更
 	SelectMove();	// セレクト画面の操作や動き
 	SelectDisp();	// セレクト画面の表示
@@ -50,9 +52,10 @@ void StageSelect() {
 *******************************************************/
 void SelectDisp(void) {
 	picInfo stage[8];
-	
+
 	// セレクト画面の背景
-	DrawGraph(0, 0, g_pic.selectBack, TRUE);
+	//DrawGraph(0, 0, g_pic.selectBack, TRUE);
+	DrawRotaGraph2(0, 0, 0, 0, 8.0, 0.0, g_pic.selectBack, TRUE);		// タイトルの背景
 
 	// セレクト画面のマップ
 	for (int i = 0; i < MAP_MAX; i++) {
@@ -62,7 +65,7 @@ void SelectDisp(void) {
 			DrawBox(stage[i].x, stage[i].y, stage[i].x + 200, stage[i].y + 200, 0x00FF00, TRUE);
 		}
 	}
-	
+
 	// セレクト画面の選択中のウィンドウを表示
 	DrawBox(stage[g_select_Stage].x, stage[g_select_Stage].y, stage[g_select_Stage].x + 100, stage[g_select_Stage].y + 100, 0xFF0000, FALSE);
 	if (g_select_Stage == 7) {
@@ -74,14 +77,19 @@ void SelectDisp(void) {
 	int menuSelect_Y[3] = { g_menuBox.y + 57, g_menuBox.y + 57 + 250, g_menuBox.y + 57 + 500 };	// セレクトウィンドウのメニュー欄のY座標
 
 	// メニュー画面の表示
-	DrawBox(g_menuBox.x, g_menuBox.y, g_menuBox.x + 625, g_menuBox.y + 700, 0xFFFFFF, TRUE);
+	//DrawBox(g_menuBox.x, g_menuBox.y, g_menuBox.x + 625, g_menuBox.y + 700, 0xFFFFFF, TRUE);
+	DrawRotaGraph(g_menuBox.x + 200, g_menuBox.y + 350, 3.8, -3.14 / 2, g_pic.selectUI[4], TRUE);
 	// メニュー画面の項目
-	DrawBox(menuSelect_X, menuSelect_Y[0], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[0] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
-	DrawBox(menuSelect_X, menuSelect_Y[1], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[1] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
-	DrawBox(menuSelect_X, menuSelect_Y[2], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[2] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
-	
+	//DrawBox(menuSelect_X, menuSelect_Y[0], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[0] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
+	//DrawBox(menuSelect_X, menuSelect_Y[1], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[1] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
+	//DrawBox(menuSelect_X, menuSelect_Y[2], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[2] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
+	DrawGraph(menuSelect_X + 50, menuSelect_Y[0] + 10, g_pic.selectUI[1], TRUE);
+	DrawGraph(menuSelect_X + 50, menuSelect_Y[1] + 10, g_pic.selectUI[3], TRUE);
+	DrawGraph(menuSelect_X + 50, menuSelect_Y[2] + 10, g_pic.selectUI[2], TRUE);
+
 	// セーブ画面の表示
-	DrawBox(g_saveBox.x, g_saveBox.y, g_saveBox.x + 625, g_saveBox.y + 700, 0x808080, TRUE);
+	//DrawBox(g_saveBox.x, g_saveBox.y, g_saveBox.x + 625, g_saveBox.y + 700, 0x808080, TRUE);
+	DrawRotaGraph(g_saveBox.x + 200, g_saveBox.y + 350, 3.8, -3.14 / 2, g_pic.selectUI[4], TRUE);
 	int saveSelect_X = g_saveBox.x + 61;												// セレクトウィンドウのセーブ欄のX座標
 	int saveSelect_Y[3] = { g_saveBox.y + 57, g_saveBox.y + 57 + 250, g_saveBox.y + 57 + 500 };	// セレクトウィンドウのセーブ欄のY座標
 	DrawBox(saveSelect_X, saveSelect_Y[0], saveSelect_X + MENU_SELECT_WIDTH, saveSelect_Y[0] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
@@ -100,8 +108,15 @@ void SelectDisp(void) {
 		}
 		// メニュー画面が出ているとき
 		else if (g_menuFlg == MENU_ON) {
-			DrawBox(menuSelect_X, menuSelect_Y[g_menuSelect], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[g_menuSelect] + MENU_SELECT_HEIGHT, 0xFF0000, TRUE);
-			
+			if (g_cursorAnime < 200) g_cursorAnime += 10;
+			//DrawBox(menuSelect_X, menuSelect_Y[g_menuSelect], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[g_menuSelect] + MENU_SELECT_HEIGHT, 0xFF0000, FALSE);
+			//DrawGraph(menuSelect_X + 20, menuSelect_Y[g_menuSelect] + 60, g_pic.bossTongue, TRUE);
+			DrawExtendGraph(menuSelect_X + 20, menuSelect_Y[g_menuSelect] + 80,
+				menuSelect_X + 76 + g_cursorAnime, menuSelect_Y[g_menuSelect] + 100, g_pic.bossTongue, TRUE);
+			//DrawGraph(menuSelect_X + 50, menuSelect_Y[g_menuSelect] - 45, g_pic.gauge, TRUE);
+			DrawRotaGraph(menuSelect_X + 10 + g_cursorAnime, menuSelect_Y[g_menuSelect] + 50, 0.5, 0, g_pic.skillEffect[9], TRUE);
+			DrawGraph(menuSelect_X, menuSelect_Y[g_menuSelect], g_pic.Life[1], TRUE);
+
 		}
 		// メニュー画面で保存が押された場合
 		else if (g_menuFlg == MENU_SAVE) {
@@ -109,7 +124,7 @@ void SelectDisp(void) {
 				DrawBox(saveSelect_X, saveSelect_Y[g_saveSelect], saveSelect_X + MENU_SELECT_WIDTH, saveSelect_Y[g_saveSelect] + MENU_SELECT_HEIGHT, 0xFF0000, TRUE);
 				SaveModeDisp(saveSelect_X, saveSelect_Y);
 			}
-			
+
 		}
 	}
 
@@ -118,14 +133,14 @@ void SelectDisp(void) {
 // セレクト画面の動き
 *******************************************************/
 void SelectMove() {
-	
+
 
 	if (g_menuFlg == MENU_OFF) {				// メニュー画面が出てないときの処理(マップセレクト)
-		
+
 		MenuScrollOut();						// メニュー画面を横にスクロールアウト
 
 		StageSelectOper();						// ステージの決定のためのカーソルを操作させる
-		
+
 		if (g_keyInfo.keyFlg & PAD_INPUT_A) {	// 決定したステージに移動しながらシーンをゲームプレイに変える
 
 			//Get_NowDisp(GAME_PLAY, 2);
@@ -133,22 +148,22 @@ void SelectMove() {
 
 		}
 	}
-	else if(g_menuFlg == MENU_ON){	// メニュー画面を表示する時
-		
+	else if (g_menuFlg == MENU_ON) {	// メニュー画面を表示する時
+
 		MenuScrollIn();		// メニュー画面を見えるように画面中央付近まで移動させ、セーブ画面があれば、下げる
-	
+
 		MenuSelectOper();	// メニューカーソル制御処理
-	
+
 		MenuSelect();		// 決定ボタンを押すと対象のメニューへと接続
 	}
 	else if (g_menuFlg == MENU_SAVE) {	// セーブ画面が出るとき
 		bool saveflg = FALSE;			// セーブ画面を表示させるかどうか FALSE:表示させない TRUE:表示させる
-		
+
 		SaveSelectOper();				// セーブメニューカーソル制御処理
-		
+
 		saveflg = SaveMenu_MenuScrollOut(saveflg);			// メニュー画面を画面外までスクロールアウトさせ、させきったらセーブ画面を表示させるフラグをオンにする
-		if (saveflg == TRUE) {	
-			
+		if (saveflg == TRUE) {
+
 			SaveMenu_ScrollIn();							// セーブ画面を画面中央付近まで動かす
 			if (g_saveBox.x == MENU_SAVE_BOX_XPOINT_MAX) {	// セーブ画面が中央まで来たら操作可能
 				if (g_keyInfo.keyFlg & PAD_INPUT_A) {		// 決定ボタンを押すと
@@ -172,7 +187,7 @@ void SelectMove() {
 		g_menuFlg = MENU_OFF;
 	}
 
-	
+
 }
 /******************************************************
 // 選択されたファイルにセーブを実行する
@@ -274,10 +289,12 @@ void StageSelectOper() {
 void MenuSelectOper() {
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
+		g_cursorAnime = 0;
 		if (++g_menuSelect > 2) g_menuSelect = 0;
 	}
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
+		g_cursorAnime = 0;
 		if (--g_menuSelect < 0) g_menuSelect = 2;
 	}
 }

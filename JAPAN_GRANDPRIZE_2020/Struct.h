@@ -29,7 +29,8 @@ struct image {
     int title[2];                       // タイトル画像
     int titleText[4];                   // タイトルのテキスト画像
     int player[56];                     // プレイヤーの画像
-    int SkillMotion[12];                 //スキルモーション画像
+    int skill7_Effect[56];              // スキル7の複製プレイヤーの画像
+    int SkillMotion[15];                 //スキルモーション画像
     int enemy_walk[4];                  // 歩く雑魚敵のの画像
     int enemy_fly[4];                   // 飛ぶ雑魚敵の画像
     int map[MAP_MAX * SCROLL_MAX];      // マップの画像
@@ -46,6 +47,7 @@ struct image {
     //int skill3[5];                      //スキル3のモーション画像(仮)
     int skillEffect[40];                //スキルエフェクト画像
     int selectBack;                     // セレクト画面の背景画像
+    int selectUI[5];                    //セレクト画面のUI画像
     int waterBullet[5];                 // ボスの水弾の画像
     int bossTongue;                     // ボス３の舌の画像
     int trap;                           // トラップの画像
@@ -77,6 +79,7 @@ struct playerInfo {
     bool swordFlg; //TRUE = 抜刀, FALSE = 納刀
     int timecount; //納刀抜刀の切り替えの時間
     bool useSkillFlg;   //スキルを使うときに納刀状態か抜刀状態か TRUE = 抜刀, FALSE = 納刀
+    bool cloneFlg;      //スキル7 分身のフラグ   TRUE = ON, FALSE = OFF
     bool barrierFlg;    //スキル6 バリアのフラグ TRUE = バリア有, FALSE = バリア無
     bool powerUpFlg;    //スキル5 火力上昇フラグ TRUE = ON, FALSE = OFF
     int powerUpTime;    //スキル5 火力上昇時間
@@ -348,15 +351,15 @@ struct picInfo {
             y = 0;
             break;*/
 
-        case 0:  x = 217; y = 99;  break;
-        case 1:  x = 558; y = 129; break;
-        case 2:  x = 926; y = 178; break;
-        case 3:  x = 689; y = 310; break;
-        case 4:  x = 451; y = 381; break;
-        case 5:  x = 224; y = 506; break;
-        case 6:  x = 508; y = 563; break;
-        case 7:  x = 826; y = 499; break;
-        default: x = 0;   y = 0;   break;
+        case 0:  x = 445; y = 100;  break;
+        case 1:  x = 1000; y = 118; break;
+        case 2:  x = 690; y = 310;  break;
+        case 3:  x = 200; y = 380;  break;
+        case 4:  x = 350; y = 644;  break;
+        case 5:  x = 800; y = 600;  break;
+        case 6:  x = 1060; y = 430; break;
+        case 7:  x = 1300; y = 800; break;
+        default: x = 0;   y = 0;    break;
 
         }
     };
