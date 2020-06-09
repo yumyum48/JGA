@@ -8,7 +8,7 @@
 //#include "ScroolDown.h"
 #define SCROLL_SPEED (8.0F)	// マップのスクロールするスピード
 
-
+// グローバル変数
 rainInfo g_rain[2];
 
 void RainDisp(){

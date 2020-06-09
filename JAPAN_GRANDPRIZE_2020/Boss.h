@@ -7,6 +7,7 @@
 #include "enemy.h"
 #include "GamePlay.h"
 #include "Map.h"
+#include "Player.h"
 
 /***********************************************************
 
@@ -43,6 +44,7 @@
 ***********************************************************/
 const int BOSSFULL_WIDTH[MAP_MAX] = {BOSS_WIDTH, BOSS_STAGE2_WIDTH, BOSS_STAGE3_WIDTH, BOSS_STAGE4_WIDTH, BOSS_STAGE5_WIDTH };
 const int BOSSFULL_HEIGHT[MAP_MAX] = { BOSS_HEIGHT, BOSS_STAGE2_HEIGHT, BOSS_STAGE3_HEIGHT, BOSS_STAGE4_HEIGHT, BOSS_STAGE5_HEIGHT};
+const int KURAGE_MAX = 4;	// クラゲの最大数
 /***********************************************************
 
 // 列挙体の宣言
@@ -80,13 +82,12 @@ enum {    // ラスボスの攻撃判断
 
 	LAST_BOSSATTACK_WATER_BULLET,            // ラスボス用の水弾
 	LAST_BOSSATTACK_ENEMY_DROP,              // ラスボス用の歩く雑魚敵
-	LAST_BOSSATTACK_WAVE_ATTACK,             // ラスボス用の波
 	LAST_BOSSATTACK_LONGTON,                 // ラスボス用の舌
 	LAST_BOSSATTACK_MINISPIDER_DROP,         // ラスボス用のミニ蜘蛛
 	LAST_BOSSATTACK_MINICLOUD_DROP,          // ラスボス用のミニ雲
 	LAST_BOSSATTACK_LIGHTNING,               // ラスボス用の雷撃
-	LAST_BOSSATTACK_MINIKURAGE_AIR,          // ラスボス用のミニクラゲ空中
-	LAST_BOSSATTACK_MINIKURAGE_GROUND,       // ラスボス用のミニクラゲ地上
+	LAST_BOSSATTACK_MINIKURAGE,				 // ラスボス用のミニクラゲ攻撃
+	LAST_BOSSATTACK_SHADOW,					 // ラスボス用の影による攻撃
 	LAST_BOSSATTACK_MAX,                     // ラスボスの攻撃の最大数
 };
 
@@ -121,6 +122,24 @@ struct lasbossInfo : public bossInfo {    // ラスボス前の７体の蛇の情報
 	bool sevenAttackFlg;    // 攻撃しているかどうかを真か偽で判断する TRUE:攻撃する FALSE: 攻撃していない
 	void lasbossInit(int num);// 初期化
 };
+
+struct shadow : picInfo {				// ラスボス前の最後の敵の影の情報
+
+	void ShadowInit(int bx, int by = (GROUND - PLAYER_HEIGHT), bool randFlg = FALSE) {
+
+		x = bx;
+		y = by;
+		w = 490;
+		h = 230;
+		//if (randFlg == TRUE) {
+		//	y = by - 
+		//}
+
+
+
+	}
+};
+
 struct boss4_parts :public picInfo {	//ボス４の雲と糸の情報 
 	int hp;
 	bool dispFlg;
@@ -149,6 +168,14 @@ struct boss5_extension :public bossInfo {	// ボス５の変数拡張
 		attackFlg == FALSE;
 	}
 };
+
+struct rightningInfo {        // 雷撃の情報
+	int x = 419;                // X座標の初期化
+	int y = 180;                // Y座標の初期化
+	int cnt;					//
+	float exRate;				// 
+
+};
 //struct barrier : public picInfo {
 //	bool flg;	// 出現フラグ
 //	int cnt;	// 出現カウント
@@ -176,6 +203,9 @@ extern lasbossInfo g_boss_Yamatano[YAMATANO_NECK];    // ラスボス前の７体の蛇
 extern bool g_lastBoss_StartAnimeFlg;    // ラスボス前の出現アニメーションを行うフラグ TRUE:アニメーションを行う FALSE:行わない
 extern boss5_extension g_boss5_Ex;				// ボス５の変数拡張
 //extern barrier g_barrier;		// バリアの情報
+extern rightningInfo g_rightning;					  // 雷撃の情報
+extern shadow g_boss_shadow;					      // 影の攻撃の情報
+
 /***********************************************************
 
 // 関数の宣言

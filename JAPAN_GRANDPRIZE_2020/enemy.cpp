@@ -19,6 +19,7 @@ void MonsterDisp() {
 
 // ã‚¢“GAƒ{ƒX‚Ì“®‚«
 void MonsterMove() {
+	
 	if (g_enemybeat < ENEMY_BEAT_MAX[g_select_Stage]) {
 		EnemyMove();								// ã‚¢“G‚Ì“®‚«
 	}
@@ -31,10 +32,9 @@ void MonsterMove() {
 // ã‚¢“G‚Ì“®‚«
 void EnemyMove() {
 	
-
 	for (int i = 0; i < ENEMY_MAX; i++) {		//’nã‚Ì“G‚Ì“®‚«
 		if (g_enemy[i].walk.flg == TRUE) {
-			g_enemy[i].walk.x -= g_speedLevel+3;
+			g_enemy[i].walk.x -= g_speedLevel+3;	
 			//g_enemy[i].walk.y = GROUND;
 		}
 

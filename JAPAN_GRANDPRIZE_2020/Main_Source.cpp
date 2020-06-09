@@ -51,54 +51,57 @@ const int ENEMY_BEAT_MAX[MAP_MAX] = { 1,1,1,1,1,1,0,0 };	//ŠeƒXƒe[ƒW‚ÌG‹›“G‚ğ“
 * ƒOƒ[ƒoƒ‹•Ï”‚ÌéŒ¾
 
 */////////////////////////////////////////////
-mouse g_mouseInfo;				// ƒ}ƒEƒX‚Ìó‘ÔŠÇ—
-image g_pic;					// ‰æ‘œ‚ÌŠÇ—
-key g_keyInfo;					// ƒL[ƒ{[ƒh‚Ìó‘ÔŠÇ—
-int g_gameScene;				// ‰æ–Ê‚ÌƒV[ƒ“‚Ì§Œä	// 0:ƒQ[ƒ€ƒ^ƒCƒgƒ‹ 1:ƒXƒe[ƒWƒZƒŒƒNƒg 2:ƒQ[ƒ€ƒvƒŒƒC3:ƒQ[ƒ€ƒI[ƒo[4:ƒQ[ƒ€ƒNƒŠƒA
+mouse g_mouseInfo;								// ƒ}ƒEƒX‚Ìó‘ÔŠÇ—
+image g_pic;									// ‰æ‘œ‚ÌŠÇ—
+key g_keyInfo;									// ƒL[ƒ{[ƒh‚Ìó‘ÔŠÇ—
+int g_gameScene;								// ‰æ–Ê‚ÌƒV[ƒ“‚Ì§Œä	// 0:ƒQ[ƒ€ƒ^ƒCƒgƒ‹ 1:ƒXƒe[ƒWƒZƒŒƒNƒg 2:ƒQ[ƒ€ƒvƒŒƒC3:ƒQ[ƒ€ƒI[ƒo[4:ƒQ[ƒ€ƒNƒŠƒA
 
 DINPUT_JOYSTATE g_controler;
 controler g_button;
 
-int g_select_Stage;				//ƒXƒe[ƒW‚ğƒZƒŒƒNƒg
-enemyType g_enemy[ENEMY_MAX];	// “G‚Ìî•ñ
+int g_select_Stage;								//ƒXƒe[ƒW‚ğƒZƒŒƒNƒg
+enemyType g_enemy[ENEMY_MAX];					// “G‚Ìî•ñ
 
-int g_speedLevel;				// ƒXƒNƒ[ƒ‹ƒŒƒxƒ‹‚Ìİ’è‚ğ•Û‘¶
+int g_speedLevel;								// ƒXƒNƒ[ƒ‹ƒŒƒxƒ‹‚Ìİ’è‚ğ•Û‘¶
 
 bool g_skillswitch;
 
-bossInfo g_boss[MAP_MAX];		//ƒ{ƒX‚Ìî•ñ
+bossInfo g_boss[MAP_MAX];						//ƒ{ƒX‚Ìî•ñ
 
-int g_enemybeat;				// ƒGƒlƒ~[‚ğ“|‚µ‚½”‚ğƒJƒEƒ“ƒg‚·‚é
+int g_enemybeat;								// ƒGƒlƒ~[‚ğ“|‚µ‚½”‚ğƒJƒEƒ“ƒg‚·‚é
 
-playerInfo g_player;			// ƒvƒŒƒCƒ„[‚Ìî•ñ
+playerInfo g_player;							// ƒvƒŒƒCƒ„[‚Ìî•ñ
 
-int g_noDamageCnt;				// ƒvƒŒƒCƒ„[‚Ì–³“GŠÔ
+int g_noDamageCnt;								// ƒvƒŒƒCƒ„[‚Ì–³“GŠÔ
 
-trapInfo g_trap;				// ƒgƒ‰ƒbƒv‚Ìî•ñ
+trapInfo g_trap;								// ƒgƒ‰ƒbƒv‚Ìî•ñ
 
-int g_playTime;					// ƒvƒŒƒCŠÔ
+int g_playTime;									// ƒvƒŒƒCŠÔ
 
-int g_select_MAX;				// ¡ƒvƒŒƒCƒ„[‚ª‚¢‚¯‚éƒXƒe[ƒW‚ğ§Œä‚·‚é
+int g_select_MAX;								// ¡ƒvƒŒƒCƒ„[‚ª‚¢‚¯‚éƒXƒe[ƒW‚ğ§Œä‚·‚é
 
-int g_sound[BGM_MAX];			// BGM‚Ì•Ï”
+int g_sound[BGM_MAX];							// BGM‚Ì•Ï”
 
-enemyInfo g_enemyBuffer[ENEMY_MAX];	// Œ‚”j‚µ‚½“G‚Ìî•ñ‚ğŠi”[‚·‚é•Ï”
+enemyInfo g_enemyBuffer[ENEMY_MAX];				// Œ‚”j‚µ‚½“G‚Ìî•ñ‚ğŠi”[‚·‚é•Ï”
 
 ChoiceInfo g_choice;			//
 
-boss4_parts g_boss4_Thread;		// ƒ{ƒX‚S‚Ì…‚Ìî•ñ
-boss4_parts g_boss4_Cloud;		// ƒ{ƒX‚S‚Ì‰_‚Ìî•ñ
+boss4_parts g_boss4_Thread;						// ƒ{ƒX‚S‚Ì…‚Ìî•ñ
+boss4_parts g_boss4_Cloud;						// ƒ{ƒX‚S‚Ì‰_‚Ìî•ñ
 
-mapInfo g_map[SCROLL_MAX];        // ƒ}ƒbƒv‚Ìî•ñ
+mapInfo g_map[SCROLL_MAX];						// ƒ}ƒbƒv‚Ìî•ñ
 
-lasbossInfo g_boss_Yamatano[YAMATANO_NECK];        // ƒ‰ƒXƒ{ƒX‘O‚Ì‚V‘Ì‚ÌÖ‚Ìî•ñ
-bool g_lastBoss_StartAnimeFlg;    // ƒ‰ƒXƒ{ƒX‘O‚ÌoŒ»ƒAƒjƒ[ƒVƒ‡ƒ“‚ğs‚¤ƒtƒ‰ƒO TRUE:ƒAƒjƒ[ƒVƒ‡ƒ“‚ğs‚¤ FALSE:s‚í‚È‚¢
+lasbossInfo g_boss_Yamatano[YAMATANO_NECK];		// ƒ‰ƒXƒ{ƒX‘O‚Ì‚V‘Ì‚ÌÖ‚Ìî•ñ
+bool g_lastBoss_StartAnimeFlg;					// ƒ‰ƒXƒ{ƒX‘O‚ÌoŒ»ƒAƒjƒ[ƒVƒ‡ƒ“‚ğs‚¤ƒtƒ‰ƒO TRUE:ƒAƒjƒ[ƒVƒ‡ƒ“‚ğs‚¤ FALSE:s‚í‚È‚¢
 
-trapInfo g_wave;                 // ”g‚Ìî•ñ
-picInfo g_boss3_Ton;             // ã‚Ìî•ñ
+trapInfo g_wave;								// ”g‚Ìî•ñ
+picInfo g_boss3_Ton;							// ã‚Ìî•ñ
 
-boss5_extension g_boss5_Ex;				// ƒ{ƒX‚T‚Ì•Ï”Šg’£
+boss5_extension g_boss5_Ex;						// ƒ{ƒX‚T‚Ì•Ï”Šg’£
 
+rightningInfo g_rightning;						// —‹Œ‚‚Ìî•ñ
+
+shadow g_boss_shadow;							// ‰e‚ÌUŒ‚‚Ìî•ñ
 /*********************************************
 
 * ŠÖ”‚Ìƒvƒƒgƒ^ƒCƒvéŒ¾

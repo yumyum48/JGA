@@ -46,7 +46,7 @@ void GamePlayMove() {
 	PlayerMove();					// プレイヤーの動き
 	RainMove();						// 雨の動き
 	TrapMove();						// トラップの動き
-	HpMove();						// HPの計算処理
+	//HpMove();						// HPの計算処理
 }
 
 
