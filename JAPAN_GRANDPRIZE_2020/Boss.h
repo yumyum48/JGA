@@ -125,7 +125,7 @@ struct lasbossInfo : public bossInfo {    // ラスボス前の７体の蛇の情報
 
 struct shadow : picInfo {				// ラスボス前の最後の敵の影の情報
 
-	void ShadowInit(int bx, int by = (GROUND - PLAYER_HEIGHT), bool randFlg = FALSE) {
+	void ShadowInit(int bx, int by = (GROUND - PLAYER_HEIGHT), bool randFlg = FALSE) {	// 影の位置を初期化
 
 		x = bx;
 		y = by;
