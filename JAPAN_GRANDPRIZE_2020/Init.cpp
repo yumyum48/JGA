@@ -41,5 +41,8 @@ void Reset(){
 	g_player.skillcustom[0] = 1;
 	g_player.skillcustom[1] = 0;
 	g_player.skillcustom[2] = 0;
+	for (int i = 0; i < 8; i++) {
+		g_stageClearFlg[i] = FALSE;
+	}
 	GameInit();
 }

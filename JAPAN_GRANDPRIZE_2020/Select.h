@@ -17,6 +17,7 @@ void SaveMenu_Save();			// 選択されたファイルにセーブを実行する
 extern int g_select_Stage;		//ステージをセレクト
 extern int g_speedLevel;		//スクロール速度の選択
 extern int g_select_MAX;			// 今プレイヤーがいけるステージを制御する(中の数字が0なら1ステージを指しています。(添え字ずれしてます。))
+extern bool g_stageClearFlg[MAP_MAX];		// クリアしたステージでg_select_MAXを加算しないように制御するフラグ
 
 enum { // スクロール速度
 	SPEED_EASY = 10,
