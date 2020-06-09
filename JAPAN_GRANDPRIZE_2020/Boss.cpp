@@ -143,7 +143,10 @@ void Boss_Knock_Down() {
 	
 	if (g_boss[g_select_Stage].hp <= 0) {
 		g_gameScene = GAME_STAGE_CLEAR;
-		g_select_MAX++;	// セレクトできるマップを増やす
+		if (g_stageClearFlg[g_select_Stage] == FALSE) {
+			g_select_MAX++;	// セレクトできるマップを増やす
+			g_stageClearFlg[g_select_Stage] = TRUE;
+		}
 	}
 	
 }

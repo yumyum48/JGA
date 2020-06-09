@@ -80,6 +80,8 @@ int g_playTime;									// プレイ時間
 
 int g_select_MAX;								// 今プレイヤーがいけるステージを制御する
 
+bool g_stageClearFlg[MAP_MAX];	//ステージのクリア情報保存
+
 int g_sound[BGM_MAX];							// BGMの変数
 
 enemyInfo g_enemyBuffer[ENEMY_MAX];				// 撃破した敵の情報を格納する変数
