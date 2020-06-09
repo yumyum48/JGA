@@ -19,7 +19,6 @@
 * 定数の宣言
 
 */////////////////////////////////////////////
-const int KURAGE_MAX = 4;	// 出現するクラゲの最大数
 struct barrier : public picInfo {
 	bool flg;	// 出現フラグ
 	int cnt;	// 出現カウント
