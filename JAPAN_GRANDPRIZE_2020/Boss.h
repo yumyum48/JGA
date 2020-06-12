@@ -25,8 +25,12 @@
 #define BOSS_STAGE4_HEIGHT (286)
 #define	BOSS_THREAD_WIDTH	(6)			// 糸の横幅
 #define	BOSS_CLOUD_HEIGHT  (134)		// 雲の高さ
-#define BOSS_STAGE5_WIDTH  (324)
-#define BOSS_STAGE5_HEIGHT (415)
+#define BOSS_STAGE5_WIDTH  (324)		// ボス５の幅
+#define BOSS_STAGE5_HEIGHT (415)		// ボス５の縦
+#define BOSS_STAGE6_WIDTH  (324)		// ボス６の幅
+#define BOSS_STAGE6_HEIGHT (415)		// ボス６の縦
+#define BOSS_STAGELAST_WIDTH  (537)		// ラスボスの幅
+#define BOSS_STAGELAST_HEIGHT (657)		// ラスボスの縦
 
 #define YAMATANO_NECK        (7)        // ラスボス前の７体の蛇
 
@@ -42,8 +46,8 @@
 // 定数の宣言
 
 ***********************************************************/
-const int BOSSFULL_WIDTH[MAP_MAX] = {BOSS_WIDTH, BOSS_STAGE2_WIDTH, BOSS_STAGE3_WIDTH, BOSS_STAGE4_WIDTH, BOSS_STAGE5_WIDTH };
-const int BOSSFULL_HEIGHT[MAP_MAX] = { BOSS_HEIGHT, BOSS_STAGE2_HEIGHT, BOSS_STAGE3_HEIGHT, BOSS_STAGE4_HEIGHT, BOSS_STAGE5_HEIGHT};
+const int BOSSFULL_WIDTH[MAP_MAX] = {BOSS_WIDTH, BOSS_STAGE2_WIDTH, BOSS_STAGE3_WIDTH, BOSS_STAGE4_WIDTH, BOSS_STAGE5_WIDTH, BOSS_STAGE6_WIDTH, BOSS_STAGELAST_WIDTH };
+const int BOSSFULL_HEIGHT[MAP_MAX] = { BOSS_HEIGHT, BOSS_STAGE2_HEIGHT, BOSS_STAGE3_HEIGHT, BOSS_STAGE4_HEIGHT, BOSS_STAGE5_HEIGHT, BOSS_STAGE6_HEIGHT, BOSS_STAGELAST_HEIGHT };
 const int KURAGE_MAX = 4;	// クラゲの最大数
 /***********************************************************
 
@@ -119,7 +123,7 @@ struct lasbossInfo : public bossInfo {    // ラスボス前の７体の蛇の情報
 	int w;		// X座標
 	int h;		// Y座標
 	int tag;	// 右にいるか左にいるかのタグ
-	bool sevenAttackFlg;    // 攻撃しているかどうかを真か偽で判断する TRUE:攻撃する FALSE: 攻撃していない
+	int sevenAttackFlg;    // 攻撃しているかどうかを真か偽で判断する TRUE:攻撃する FALSE: 攻撃していない
 	void lasbossInit(int num);// 初期化
 };
 
@@ -209,6 +213,7 @@ extern shadow g_boss_shadow;					      // 影の攻撃の情報
 
 ***********************************************************/
 int InputRand(int rand1, int rand2, int rand3);	// 数字を引数として三つ取り、その中の一つをランダムで返す
+int InputHyperRand(int rand1, int rand2, int rand3 = 0, int rand4 = 0, int rand5 = 0, int rand6 = 0, int rand7 = 0, int rand8 = 0);
 bool BossDamageCheck(int bossHp);				// ボスがダメージを受けたかどうかを調べる関数 TRUE: ボスがダメージを受けた FALSE: ボスはダメージを受けていない
 bool BossNoAttackCheck(int bossAttackFlg);		// ボスが攻撃を終えたかを調べる関数TRUE: ボスの攻撃終了 FALSE: ボスは攻撃中、または終了してしばらくたっている
 bool BossDropAttackCheck(int bossAttackFlg);	// ボスがエネミーをドロップするかを調べる関数TRUE: ボスの攻撃開始 FALSE: ボスは攻撃中、または終了してしばらくたっている
@@ -299,29 +304,43 @@ void (* const BossMove[MAP_MAX])() = {		// ボスの動き
 	BossMove_Stage_Last,
 };
 
+
+void YmatanoSeven_Disp();	// ラスボス前の７体の蛇の描画(攻撃系のみ)
+void YmatanoSeven_Move();	// ラスボス前の７体の蛇の動き
+void LastBoss_Disp();		// ラスボス
+void LastBoss_Move();
+
 // ミニクラゲの空中攻撃
 void Last_BossMiniKurage_Attack_Air(int attackKurageBuf_Air, bool* ataackFlg_AirKurage);
 // ミニクラゲの地上攻撃
 void Last_BossMiniKurage_Attack_Ground(int attackKurageBuf_Ground, bool* attackFlg_GroundKurage);
 
-void Last_Boss_Attack_WaterBullet_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);    // ラスボス用の水弾表示
-void Last_Boss_Attack_WaterBullet_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);    // ラスボス用の水弾動き
-void Last_Boss_Attack_BossEnemyDrop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);  // ラスボス用の歩く雑魚敵の表示
-void Last_Boss_Attack_BossEnemyDrop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);  // ラスボス用の歩く雑魚敵の動き
-void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);    // ラスボス用の舌表示
-void Last_Boss_Attack_BossLongTon_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);    // ラスボス用の舌動き
-void Last_Boss_Attack_MiniSpider_Drop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);// ラスボス用のミニ蜘蛛表示
-void Last_Boss_Attack_MiniSpider_Drop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);// ラスボス用のミニ蜘蛛動き
-void Last_Boss_Attack_MiniCloud_Drop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);	// ラスボス用のミニ雲の表示
-void Last_Boss_Attack_MiniCloud_Drop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);	// ラスボス用のミニ雲の動き
-void Last_Boss_Attack_Lightning_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);		// ラスボス用の雷撃の表示
-void Last_Boss_Attack_Lightning_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);		// ラスボス用の雷撃の表示
-void Last_Boss_MiniKurage_Drop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);		// ラスボス用のミニクラゲのの表示
-void Last_Boss_MiniKurage_Drop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);		// ラスボス用のミニクラゲのの表示
-void Last_Boss_Shadow_Attack_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime);			// ラスボス用の影の表示
-void Last_Boss_Shadow_Attack_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime);			// ラスボス用の影の表示
+void Last_Boss_Attack_WaterBullet_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime);    // ラスボス用の水弾表示
+void Last_Boss_Attack_WaterBullet_Move(int bx, int by, int* boss_AttackFlg, int* coolTime);    // ラスボス用の水弾動き
+void Last_Boss_Attack_BossEnemyDrop_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime);  // ラスボス用の歩く雑魚敵の表示
+void Last_Boss_Attack_BossEnemyDrop_Move(int bx, int by, int* boss_AttackFlg, int* coolTime);  // ラスボス用の歩く雑魚敵の動き
+void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime);    // ラスボス用の舌表示
+void Last_Boss_Attack_BossLongTon_Move(int bx, int by, int* boss_AttackFlg, int* coolTime);    // ラスボス用の舌動き
+void Last_Boss_Attack_MiniSpider_Drop_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime);// ラスボス用のミニ蜘蛛表示
+void Last_Boss_Attack_MiniSpider_Drop_Move(int bx, int by, int* boss_AttackFlg, int* coolTime);// ラスボス用のミニ蜘蛛動き
+void Last_Boss_Attack_MiniCloud_Drop_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime);	// ラスボス用のミニ雲の表示
+void Last_Boss_Attack_MiniCloud_Drop_Move(int bx, int by, int* boss_AttackFlg, int* coolTime);	// ラスボス用のミニ雲の動き
+void Last_Boss_Attack_Lightning_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime);		// ラスボス用の雷撃の表示
+void Last_Boss_Attack_Lightning_Move(int bx, int by, int* boss_AttackFlg, int* coolTime);		// ラスボス用の雷撃の表示
+void Last_Boss_MiniKurage_Drop_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime);		// ラスボス用のミニクラゲのの表示
+void Last_Boss_MiniKurage_Drop_Move(int bx, int by, int* boss_AttackFlg, int* coolTime);		// ラスボス用のミニクラゲのの表示
+void Last_Boss_Shadow_Attack_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime);			// ラスボス用の影の表示
+void Last_Boss_Shadow_Attack_Move(int bx, int by, int* boss_AttackFlg, int* coolTime);			// ラスボス用の影の表示
 
-void (* const Last_Boss_Attack_Disp[LAST_BOSSATTACK_MAX])(int bx, int by, bool* boss_AttackFlg, int* coolTime) {    // ラスボス用の攻撃表示管理
+
+
+/***********************************************************
+
+// ラスボス前の７体の蛇の攻撃
+
+***********************************************************/
+// 表示
+void (* const Last_Yamatano_Boss_Attack_Disp[LAST_BOSSATTACK_MAX])(int bx, int by, int* boss_AttackFlg, int* coolTime) {    // ラスボス用の攻撃表示管理
 
 		Last_Boss_Attack_WaterBullet_Disp,
 		Last_Boss_Attack_BossEnemyDrop_Disp,
@@ -332,7 +351,8 @@ void (* const Last_Boss_Attack_Disp[LAST_BOSSATTACK_MAX])(int bx, int by, bool* 
 		Last_Boss_MiniKurage_Drop_Disp,
 		Last_Boss_Shadow_Attack_Disp,
 };
-void (* const Last_Boss_Attack_Move[LAST_BOSSATTACK_MAX])(int bx, int by, bool* boss_AttackFlg, int* coolTime) {    // ラスボス用の攻撃動き管理
+// 動き
+void (* const Last_Yamatano_Boss_Attack_Move[LAST_BOSSATTACK_MAX])(int bx, int by, int* boss_AttackFlg, int* coolTime) {    // ラスボス用の攻撃動き管理
 
 		Last_Boss_Attack_WaterBullet_Move,
 		Last_Boss_Attack_BossEnemyDrop_Move,
@@ -343,3 +363,36 @@ void (* const Last_Boss_Attack_Move[LAST_BOSSATTACK_MAX])(int bx, int by, bool* 
 		Last_Boss_MiniKurage_Drop_Move,
 		Last_Boss_Shadow_Attack_Move,
 };
+
+/***********************************************************
+
+// ラスボスの本体の攻撃
+
+***********************************************************/
+void Last_Boss_Attack_Null_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime);	// 攻撃をしない
+void Last_Boss_Attack_Null_Move(int bx, int by, int* boss_AttackFlg, int* coolTime);	// 攻撃をしない
+void (* const Last_Boss_Attack_Disp[LAST_BOSSATTACK_MAX + 1])(int bx, int by, int* boss_AttackFlg, int* coolTime) {    // ラスボス用の攻撃表示管理
+		Last_Boss_Attack_Null_Disp,
+		Last_Boss_Attack_WaterBullet_Disp,
+		Last_Boss_Attack_BossEnemyDrop_Disp,
+		Last_Boss_Attack_BossLongTon_Disp,
+		Last_Boss_Attack_MiniSpider_Drop_Disp,
+		Last_Boss_Attack_MiniCloud_Drop_Disp,
+		Last_Boss_Attack_Lightning_Disp,
+		Last_Boss_MiniKurage_Drop_Disp,
+		Last_Boss_Shadow_Attack_Disp,
+};
+// 動き
+void (* const Last_Boss_Attack_Move[LAST_BOSSATTACK_MAX + 1])(int bx, int by, int* boss_AttackFlg, int* coolTime) {    // ラスボス用の攻撃動き管理
+		Last_Boss_Attack_Null_Move,
+		Last_Boss_Attack_WaterBullet_Move,
+		Last_Boss_Attack_BossEnemyDrop_Move,
+		Last_Boss_Attack_BossLongTon_Move,
+		Last_Boss_Attack_MiniSpider_Drop_Move,
+		Last_Boss_Attack_MiniCloud_Drop_Move,
+		Last_Boss_Attack_Lightning_Move,
+		Last_Boss_MiniKurage_Drop_Move,
+		Last_Boss_Shadow_Attack_Move,
+};
+
+

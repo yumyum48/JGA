@@ -26,6 +26,21 @@ struct animationInfo {		// ƒAƒjƒ[ƒVƒ‡ƒ“‚É•K—v‚È“®‚«‚È‚Ç‚ğÄŒ»‚·‚éê‡‚Ég‚¤î•
 		}
 		
 	}
+
+	void ShoujiInit(int num) {
+		switch (num) {
+		case 0:
+			x = 0 - WINDOW_WIDTH / 2;
+			y = 0;
+			break;
+		case 1:
+			x = WINDOW_WIDTH;
+			y = 0;
+		default:
+			break;
+		
+		}
+	}
 };
 void ChangeScreen_Animation();								// ƒAƒjƒ[ƒVƒ‡ƒ“‚ğs‚¤ŠÖ”
 void ChangeScreen_Animation_Init();							// ƒAƒjƒ[ƒVƒ‡ƒ“—p‚Ì‰Šú‰»ŠÖ”

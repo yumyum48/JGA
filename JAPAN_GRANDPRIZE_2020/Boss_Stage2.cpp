@@ -42,7 +42,7 @@ void BossDisp_Stage2() {
 	//DrawRotaGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, 0.9f, 0.0, g_pic.enemy_walk[0], FALSE, TRUE);
 
 	DrawBox(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, g_boss[BOSS_STAGE2].x + BOSS_STAGE2_WIDTH, g_boss[BOSS_STAGE2].y + BOSS_STAGE2_HEIGHT, 0x00FF00, TRUE);
-	
+	DrawRotaGraph2(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, 0, 0, )
 	if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// É{ÉXÇ™çUåÇÇµÇƒÇ¢ÇÍÇŒ
 		//g_boss[BOSS_STAGE2].x = 700;
 		//g_boss[BOSS_STAGE2].y = 160;

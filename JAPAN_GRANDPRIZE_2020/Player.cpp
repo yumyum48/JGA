@@ -508,6 +508,35 @@ void EnemyCut() {
 				//g_player.attackFlg = TRUE;
 			}
 		}
+		// ミニクラゲ
+		if ((g_enemy[i].kurage.flg == TRUE)
+			&& ((PlayerInterval(g_enemy[i].kurage.x, g_enemy[i].kurage.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
+				|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].kurage.x, g_enemy[i].kurage.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
+			// レティクル表示
+			DrawRotaGraph2(g_enemy[i].kurage.x + (ENEMY_WIDTH / 3), g_enemy[i].kurage.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
+			// 敵を倒す処理
+			if (g_player.skillFlg == 2) {
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemy[i].kurage.FlyInit();
+			}
+			if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemy[i].kurage.WalkInit();
+			}
+			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			if (g_player.attackFlg == TRUE) {
+				//if(g_skillFlg == TRUE) g_player.x = g_enemy[i].walk.x - PLAYER_WIDTH;
+				g_enemybeat++;			// エネミーを倒した数をカウント
+				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].kurage.x, g_enemy[i].kurage.y);
+				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
+					g_enemy[i].kurage.BossArea_KurageInit(g_boss[g_select_Stage].y);							// 倒されたら初期化
+				}
+				else {
+					g_enemy[i].kurage.BossArea_KurageInit(g_boss[g_select_Stage].y);	// ボスエリアで倒された場合初期化方法を変える
+				}
+				//g_player.attackFlg = TRUE;
+			}
+		}
 	}
 	//boss
 	if (g_enemybeat >= ENEMY_BEAT_MAX[g_select_Stage]) {
@@ -540,6 +569,7 @@ void EnemyCut() {
 				DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFFFFFF, TRUE);
 			}
 		}
+
 		// ラスボス前の７体の蛇
 		for (int i = 0; i < YAMATANO_NECK; i++) {
 			if (g_select_Stage == BOSS_LASTBOSS) {

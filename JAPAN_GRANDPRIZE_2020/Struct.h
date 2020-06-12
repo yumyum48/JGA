@@ -63,6 +63,7 @@ struct image {
     int spiderKids[4];                  // 子蜘蛛の画像
     int spiderThread;                   // くもの糸の画像
     int thundercloud;                   // 雷雲の画像
+    int sield;                          // ボス６シールド
 };
 
 // プレイヤーの情報
@@ -180,19 +181,19 @@ struct bossInfo {     // ボスの情報
             popflg = 0;
             attackFlg = 0;
             break;
-        case 6:         // ステージ７のボスを初期化
+        case 6:         // ステージ７のボスを初期化(ラスボス)
             hp = 10;
-            x = 872;
-            y = 160;
+            x = 696;
+            y = 130;
             popflg = FALSE;
             popflg = 0;
             attackFlg = 0;
             break;
         case 7:         // ステージ８のボスを初期化
             hp = 10;
-            x = 872;
+            x = 696;
             y = 160;
-            popflg = 0;
+            popflg = FALSE;
             attackFlg = 0;
             break;
         }
