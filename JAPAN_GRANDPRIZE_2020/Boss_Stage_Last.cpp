@@ -56,25 +56,25 @@
 */////////////////////////////////////////////
 // 描画
 void BossDisp_Stage_Last() {
-	// ボスの大きさ測るメーター
-	static int bw = 0;
-	static int bh = 0;
-	if (g_keyInfo.nowKey & PAD_INPUT_UP) {
-		bh--;
-	}
-	else if (g_keyInfo.nowKey & PAD_INPUT_RIGHT) {
-		bw++;
-	}
-	else if (g_keyInfo.nowKey & PAD_INPUT_DOWN) {
-		bh++;
-	}
-	else if (g_keyInfo.nowKey & PAD_INPUT_LEFT) {
-		bw--;
-	}
+	//// ボスの大きさ測るメーター
+	//static int bw = 0;
+	//static int bh = 0;
+	//if (g_keyInfo.nowKey & PAD_INPUT_UP) {
+	//	bh--;
+	//}
+	//else if (g_keyInfo.nowKey & PAD_INPUT_RIGHT) {
+	//	bw++;
+	//}
+	//else if (g_keyInfo.nowKey & PAD_INPUT_DOWN) {
+	//	bh++;
+	//}
+	//else if (g_keyInfo.nowKey & PAD_INPUT_LEFT) {
+	//	bw--;
+	//}
 
-	DrawFormatString(300, 300, 0xFF0000, "bw = %d \n bh = %d", bw, bh);
-	
-	DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + bw, g_mouseInfo.mouseY + bh, 0x00FF00, TRUE);
+	//DrawFormatString(300, 300, 0xFF0000, "bw = %d \n bh = %d", bw, bh);
+	//
+	//DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + bw, g_mouseInfo.mouseY + bh, 0x00FF00, TRUE);
 
 	// ボス本体の表示
 	//DrawBox(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_boss[BOSS_LASTBOSS].x + BOSS_STAGE5_WIDTH, g_boss[BOSS_LASTBOSS].y + BOSS_STAGE5_HEIGHT, 0x00FFFF, TRUE);
@@ -87,34 +87,120 @@ void BossDisp_Stage_Last() {
 		}
 	}
 
+	// ラスボス本体の描画
+	if (g_boss[BOSS_LASTBOSS].popflg == TRUE) {
+		DrawBox(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_boss[BOSS_LASTBOSS].x + BOSS_STAGELAST_WIDTH, g_boss[BOSS_LASTBOSS].y + BOSS_STAGELAST_HEIGHT, 0x00FFFF, TRUE);
+	}
 	// レイヤー的な意味合いでマップを再描画
 	for (int i = 0; i < SCROLL_MAX; i++) {
 		DrawRotaGraph2(g_map[i].x, g_map[i].y, 0, 0, 2.0, 0.0, g_pic.map[(SCROLL_MAX * g_select_Stage) + i], TRUE);
 	}
 
-	// ラスボス前蛇の攻撃の表示
-	for (int i = 0; i < YAMATANO_NECK; i++) {
-		if (g_boss_Yamatano[i].sevenAttackFlg == TRUE) {
-			Last_Boss_Attack_Disp[g_boss_Yamatano[i].attackFlg](g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, &g_boss_Yamatano[i].sevenAttackFlg, &g_boss_Yamatano[i].coolTime);	// ラスボス前蛇の攻撃
-		}
+	// ラスボスの本体がいなかったら
+	if (g_boss[BOSS_LASTBOSS].popflg == FALSE) {
+		YmatanoSeven_Disp();
 	}
-																											//DrawFormatString(300, 500, 0xFF00000, "flg = %d", g_boss_Yamatano[2].popflg);
-	DrawFormatString(300, 500, 0xFF00000, "coolTime = %d", g_boss_Yamatano[0].coolTime);
+	// ラスボスの本体がいたら
+	else if (g_boss[BOSS_LASTBOSS].popflg == TRUE) {
+		LastBoss_Disp();
+	}
+																											
+	DrawFormatString(300, 500, 0xFF00000, "coolTime = %d\nattackFlg = %d", g_boss[BOSS_LASTBOSS].coolTime, g_boss[BOSS_LASTBOSS].attackFlg);
 }
 
 // 動き
-void BossMove_Stage_Last() {
+void BossMove_Stage_Last() {	
 
+	// ボスがいなかったら
+	if (g_boss[BOSS_LASTBOSS].popflg == FALSE) {
+		YmatanoSeven_Move();
+	}
+	// ボスがいたら
+	else if (g_boss[BOSS_LASTBOSS].popflg == TRUE) {
+		LastBoss_Move();
+	}
+
+}
+/*********************************************
+
+* ヤマタノオロチ本体
+
+*/////////////////////////////////////////////
+// 表示 // レイヤーの関係で攻撃のみ
+void LastBoss_Disp() {
+	if (g_boss[BOSS_LASTBOSS].attackFlg != 0) {
+		Last_Boss_Attack_Disp[g_boss[BOSS_LASTBOSS].attackFlg](g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, &g_boss[BOSS_LASTBOSS].attackFlg, &g_boss[BOSS_LASTBOSS].coolTime);	// ラスボス前蛇の攻撃}
+	}
+}
+
+// 動き
+void LastBoss_Move() {
+
+	if ((g_boss[BOSS_LASTBOSS].coolTime++ > 120)									// 硬直時間
+		&& (g_boss[BOSS_LASTBOSS].attackFlg == 0)) {								// ボスが攻撃していない
+
+		g_boss[BOSS_LASTBOSS].attackFlg = 1 + InputHyperRand(LAST_BOSSATTACK_WATER_BULLET, LAST_BOSSATTACK_ENEMY_DROP, LAST_BOSSATTACK_LONGTON, LAST_BOSSATTACK_MINISPIDER_DROP, LAST_BOSSATTACK_MINICLOUD_DROP, LAST_BOSSATTACK_MINIKURAGE, LAST_BOSSATTACK_SHADOW);							//乱数で攻撃するか移動をするかを決定　+ １は０を使わないため
+	
+
+		if (g_boss[BOSS_LASTBOSS].attackFlg != 0) {	// ボスの攻撃 添え字のー１は添え字合わせ
+			if (g_boss[BOSS_LASTBOSS].attackFlg == LAST_BOSSATTACK_ENEMY_DROP + 1) {		// 歩く雑魚敵を召喚する時、情報を初期化
+				for (int j = 0; j < ENEMY_MAX; j++) {
+					g_enemy[j].walk.BossArea_WlakInit(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y);
+				}
+			}
+
+			if (g_boss[BOSS_LASTBOSS].attackFlg == LAST_BOSSATTACK_MINISPIDER_DROP + 1) {	// ミニスパイダーを召喚する際、情報を初期化
+				for (int j = 0; j < ENEMY_MAX; j++) {
+					g_enemy[j].spider.BossArea_SpiderInit(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y);
+				}
+			}
+			if (g_boss[BOSS_LASTBOSS].attackFlg == LAST_BOSSATTACK_MINICLOUD_DROP + 1) {	// ミニスパイダーを召喚する際、情報を初期化
+				for (int j = 0; j < ENEMY_MAX; j++) {
+					g_enemy[j].cloud.BossArea_CloudInit(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y);
+				}
+			}
+			if (g_boss[BOSS_LASTBOSS].attackFlg == LAST_BOSSATTACK_MINIKURAGE + 1) {	// ミニクラゲを召喚する際、情報を初期化
+				for (int i = 0; i < KURAGE_MAX; i++) {
+					g_enemy[i].kurage.BossArea_KurageInit(g_boss[BOSS_LASTBOSS].y);
+					g_enemy[i].kurage.flg = TRUE;
+				}
+			}
+		}
+		
+	}
+	// 攻撃
+	if (g_boss[BOSS_LASTBOSS].attackFlg != 0) {
+		Last_Boss_Attack_Move[g_boss[BOSS_LASTBOSS].attackFlg](g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, &g_boss[BOSS_LASTBOSS].attackFlg, &g_boss[BOSS_LASTBOSS].coolTime);	// ラスボス前蛇の攻撃}
+
+	}
+
+}
+/*********************************************
+
+* ヤマタノオロチ本体以外の7体
+
+*/////////////////////////////////////////////
+// 表示 // レイヤーの関係で攻撃の表示のみ
+void YmatanoSeven_Disp() {
+	// ラスボス前蛇の攻撃の表示
+	for (int i = 0; i < YAMATANO_NECK; i++) {
+		if (g_boss_Yamatano[i].sevenAttackFlg == TRUE) {
+			Last_Yamatano_Boss_Attack_Disp[g_boss_Yamatano[i].attackFlg](g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, &g_boss_Yamatano[i].sevenAttackFlg, &g_boss_Yamatano[i].coolTime);	// ラスボス前蛇の攻撃
+		}
+	}
+}
+// 動き
+void YmatanoSeven_Move() {
 	//	0 リュウグウ
-	//	1 雑魚変異
-	//	3 カエル
-	//	4 蜘蛛
-	//	5 雲
-	//	6 クラゲ
-	//	7 分身
-	//	8 黒い水
+		//	1 雑魚変異
+		//	3 カエル
+		//	4 蜘蛛
+		//	5 雲
+		//	6 クラゲ
+		//	7 分身
+		//	8 黒い水
 
-	// 7体の蛇出現フラグを管理
+		// 7体の蛇出現フラグを管理
 	Last_Boss_SnakeDispFlg_Managar();
 
 	// 蛇が倒される処理
@@ -122,8 +208,8 @@ void BossMove_Stage_Last() {
 
 	// ７体の蛇の攻撃抽選
 	{
-		
-		static int attackFlg[YAMATANO_NECK] = {0, 0, 0, 0, 0, 0, 0};							// attackフラグを初期化
+
+		static int attackFlg[YAMATANO_NECK] = { 0, 0, 0, 0, 0, 0, 0 };							// attackフラグを初期化
 		int bossAttackSet[][3] = { {LAST_BOSSATTACK_WATER_BULLET, LAST_BOSSATTACK_WATER_BULLET, LAST_BOSSATTACK_WATER_BULLET},	// 一体目の蛇
 								   {LAST_BOSSATTACK_ENEMY_DROP, LAST_BOSSATTACK_ENEMY_DROP, LAST_BOSSATTACK_ENEMY_DROP},		// ２体目の蛇
 								   {LAST_BOSSATTACK_LONGTON, LAST_BOSSATTACK_LONGTON, LAST_BOSSATTACK_LONGTON},					// ３体目の蛇
@@ -132,13 +218,13 @@ void BossMove_Stage_Last() {
 								   {LAST_BOSSATTACK_MINIKURAGE, LAST_BOSSATTACK_MINIKURAGE, LAST_BOSSATTACK_MINIKURAGE},				// ６体目の蛇
 								   {LAST_BOSSATTACK_SHADOW, LAST_BOSSATTACK_SHADOW, LAST_BOSSATTACK_SHADOW} };							// ７体目の蛇
 		for (int i = 0; i < YAMATANO_NECK; i++) {
-			if( (g_boss_Yamatano[i].popflg == LASTBOSS_ON) 
-			&&  (g_boss_Yamatano[i].sevenAttackFlg == FALSE) ){
+			if ((g_boss_Yamatano[i].popflg == LASTBOSS_ON)
+				&& (g_boss_Yamatano[i].sevenAttackFlg == FALSE)) {
 				if (g_boss_Yamatano[i].coolTime++ > 360) {	// 硬直時間一定以上
 
 
 					attackFlg[i] = InputRand(bossAttackSet[i][0], bossAttackSet[i][1], bossAttackSet[i][2]);			//乱数でどの攻撃をするかを決定
-				
+
 
 					if (attackFlg[i] == LAST_BOSSATTACK_ENEMY_DROP) {		// 歩く雑魚敵を召喚する時、情報を初期化
 						for (int j = 0; j < ENEMY_MAX; j++) {
@@ -162,7 +248,7 @@ void BossMove_Stage_Last() {
 						}
 					}
 					if (attackFlg[i] == LAST_BOSSATTACK_SHADOW) {	// 影を召喚する際、情報を初期化
-						g_boss_shadow.ShadowInit(g_boss_Yamatano[i].x);
+						g_boss_shadow.ShadowInit(g_boss_Yamatano[i].x, (GROUND - g_boss_Yamatano[i].h), TRUE);
 					}
 
 					g_boss_Yamatano[i].attackFlg = attackFlg[i];														// 攻撃する場合、フラグに対応した数字を入れる
@@ -176,13 +262,13 @@ void BossMove_Stage_Last() {
 	// ラスボス前の７体の蛇の攻撃
 	for (int i = 0; i < YAMATANO_NECK; i++) {
 		if (g_boss_Yamatano[i].sevenAttackFlg == TRUE) {
-			Last_Boss_Attack_Move[g_boss_Yamatano[i].attackFlg](g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, &g_boss_Yamatano[i].sevenAttackFlg, &g_boss_Yamatano[i].coolTime);	// ラスボス前蛇の攻撃
+			Last_Yamatano_Boss_Attack_Move[g_boss_Yamatano[i].attackFlg](g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, &g_boss_Yamatano[i].sevenAttackFlg, &g_boss_Yamatano[i].coolTime);	// ラスボス前蛇の攻撃
 		}
 	}
 	// 蛇追加シーン
 	Snake_Add_To_Anime();
-
-
+	// ボスが倒される
+	Boss_Knock_Down();
 }
 /*********************************************
 
@@ -279,7 +365,8 @@ void Last_Boss_SnakeDispFlg_Managar() {
 
 			// ７体の蛇が倒されていたらラスボスを召喚
 			if (killCnt >= YAMATANO_NECK) {
-				g_boss[BOSS_LASTBOSS].popflg = 1;
+				g_boss[BOSS_LASTBOSS].popflg = TRUE;
+
 			}
 		}
 	}
@@ -440,6 +527,35 @@ void LastBossInit() {
 **********************************************														   ********************************************
 ***************************************************************************************************************************************************
 ***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
 **************************************************************************************************************************************************/
 
 
@@ -450,7 +566,7 @@ void LastBossInit() {
 */////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 水弾の描画
-void Last_Boss_Attack_WaterBullet_Disp(int bx, int by, bool *boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_WaterBullet_Disp(int bx, int by, int*boss_AttackFlg, int* coolTime) {
 	static int animationMax = 3;				// アニメーション
 	static int anime = 0;						// アニメ推移
 	static int time = 0;						// 経過時間
@@ -463,7 +579,7 @@ void Last_Boss_Attack_WaterBullet_Disp(int bx, int by, bool *boss_AttackFlg, int
 	// フレーム単位の被弾数の調整
 	noDamegeCnt++;
 
-	// プレイヤーに水弾が当たった時の処理
+	// プレイヤーに水弾が当たった時の処理 
 	if (noDamegeCnt >= 60
 		&& (PlayerHitCheck(startX + moveX - 40, startY + moveY + 0,
 			startX + moveX + 40, startY + moveY - 20) == TRUE)) {
@@ -543,7 +659,7 @@ void Last_Boss_Attack_WaterBullet_Disp(int bx, int by, bool *boss_AttackFlg, int
 }
 
 // 水弾の内部的な動き
-void Last_Boss_Attack_WaterBullet_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_WaterBullet_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 
 }
 /****************************************************************************************************************************************************
@@ -553,7 +669,7 @@ void Last_Boss_Attack_WaterBullet_Move(int bx, int by, bool* boss_AttackFlg, int
 *////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 歩く弱い敵を出す(表示)
 
-void Last_Boss_Attack_BossEnemyDrop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_BossEnemyDrop_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 	static int stayTime = 0;
 	static int enemyDropCnt = 0;
 	const int LAST_AREA_ENEMY_MAX = 1;		// 一回に出てくるエネミーの最大数
@@ -622,7 +738,7 @@ void Last_Boss_Attack_BossEnemyDrop_Disp(int bx, int by, bool* boss_AttackFlg, i
 	EnemyEvaporation();
 }
 // 弱い敵を出す(動き(当たり判定など))
-void Last_Boss_Attack_BossEnemyDrop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_BossEnemyDrop_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {        // 歩く雑魚敵の最大数回す
 
 
@@ -647,7 +763,7 @@ void Last_Boss_Attack_BossEnemyDrop_Move(int bx, int by, bool* boss_AttackFlg, i
 * ボスが津波を出す
 
 *////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//void Last_Boss_Attack_GenerateWave_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+//void Last_Boss_Attack_GenerateWave_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 //	const float gravity = 1;				// ジャンプに掛かる重力
 //	const int rise = 3;						// ジャンプ時の上昇力
 //	static int animationMax[2] = { 0, 0 };	// アニメーション最後尾	0:ボスジャンプ	1:津波
@@ -716,7 +832,7 @@ void Last_Boss_Attack_BossEnemyDrop_Move(int bx, int by, bool* boss_AttackFlg, i
 //	}
 //
 //}
-//void Last_Boss_Attack_GenerateWave_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+//void Last_Boss_Attack_GenerateWave_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 //	
 //}
 /*********************************************
@@ -724,7 +840,7 @@ void Last_Boss_Attack_BossEnemyDrop_Move(int bx, int by, bool* boss_AttackFlg, i
 * カエルのボスが舌を伸ばす攻撃
 
 */////////////////////////////////////////////
-void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 	static int plas = 0;			// 長くしていく
 
 	// ボスの舌の座標の初期化
@@ -742,18 +858,32 @@ void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, bool* boss_AttackFlg, int
 		g_pic.bossTongue, TRUE);
 	//DrawBox(g_boss3_Ton.x, g_boss3_Ton.y, tonW, tonH, 0xFFFF00, TRUE);
 
+	static bool tonFlg = TRUE;	// 舌を伸ばすフラグ
+
 	// 舌の画像を引き延ばす処理
-	if (tonW > -100) {
-		plas -= 5;
+	if (tonW > -100 && tonFlg == TRUE) {
+		plas -= 5;							// 舌を伸ばす
 	}
-	else {
-		tonW = 0;
+	else if(tonFlg == TRUE){
+
+		tonW = 0;							// 舌を固定
+		tonFlg = FALSE;
+	}
+	if (plas < 0 && tonFlg == FALSE) {
+		plas += 10;							// 舌を戻す
+	}
+	else if(tonFlg == FALSE){
+		*boss_AttackFlg = FALSE;		// attackフラグを初期化
+		*coolTime = 0;					// クールタイムの初期化
+		plas = 0;
+		tonFlg = TRUE;
 	}
 
 	if (BossDamageCheck(g_boss_Yamatano[2].hp) == TRUE) {		// ボスが攻撃されたら攻撃中断してジャンプして逃げる
 		*boss_AttackFlg = FALSE;		// attackフラグを初期化
 		*coolTime = 0;					// クールタイムの初期化
 		plas = 0;
+		tonFlg = TRUE;
 
 		
 	}														   // ボスがプレイヤーに当たったら、ダメージを与えて逃げる
@@ -776,7 +906,7 @@ void Last_Boss_Attack_BossLongTon_Disp(int bx, int by, bool* boss_AttackFlg, int
 	}
 }
 
-void Last_Boss_Attack_BossLongTon_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_BossLongTon_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 
 	//g_boss[BOSS_STAGE3].x -= 2;
 
@@ -791,7 +921,7 @@ void Last_Boss_Attack_BossLongTon_Move(int bx, int by, bool* boss_AttackFlg, int
 
 */////////////////////////////////////////////
 // 表示
-void Last_Boss_Attack_MiniSpider_Drop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_MiniSpider_Drop_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 	static int stayTime = 0;
 	static int enemyDropCnt = 0;
 	const int LAST_AREA_ENEMY_MAX = 1;		// 一回に出てくるエネミーの最大数
@@ -859,7 +989,7 @@ void Last_Boss_Attack_MiniSpider_Drop_Disp(int bx, int by, bool* boss_AttackFlg,
 }
 
 // 動き
-void Last_Boss_Attack_MiniSpider_Drop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_MiniSpider_Drop_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 
 
 	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {        // ミニ蜘蛛の最大数回す
@@ -884,7 +1014,7 @@ void Last_Boss_Attack_MiniSpider_Drop_Move(int bx, int by, bool* boss_AttackFlg,
 * ミニ雲を出す
 
 */////////////////////////////////////////////
-void Last_Boss_Attack_MiniCloud_Drop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_MiniCloud_Drop_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 	static int stayTime = 0;
 	static int enemyDropCnt = 0;
 	const int LAST_AREA_ENEMY_MAX = 1;		// 一回に出てくるエネミーの最大数
@@ -951,7 +1081,7 @@ void Last_Boss_Attack_MiniCloud_Drop_Disp(int bx, int by, bool* boss_AttackFlg, 
 	EnemyEvaporation();
 }
 // 動き
-void Last_Boss_Attack_MiniCloud_Drop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_MiniCloud_Drop_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 
 	for (int i = 0; i < BOSS_AREA_ENEMY_MAX; i++) {        // ミニ雲の最大数回す
 
@@ -976,7 +1106,7 @@ void Last_Boss_Attack_MiniCloud_Drop_Move(int bx, int by, bool* boss_AttackFlg, 
 * 雷撃による攻撃
 
 */////////////////////////////////////////////
-void Last_Boss_Attack_Lightning_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_Lightning_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 
 	//static int stopCnt = 0;	// 雷撃を表示させる時間
 
@@ -994,7 +1124,7 @@ void Last_Boss_Attack_Lightning_Disp(int bx, int by, bool* boss_AttackFlg, int* 
 	//}
 }
 
-void Last_Boss_Attack_Lightning_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Attack_Lightning_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 
 	/*g_rightning.cnt -= 50;*/
 }
@@ -1004,7 +1134,7 @@ void Last_Boss_Attack_Lightning_Move(int bx, int by, bool* boss_AttackFlg, int* 
 * ミニクラゲによる攻撃
 
 */////////////////////////////////////////////
-void Last_Boss_MiniKurage_Drop_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_MiniKurage_Drop_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 
 	// 雑魚敵の描画
 	for (int i = 0; i < ENEMY_MAX; i++) {
@@ -1031,19 +1161,22 @@ void Last_Boss_MiniKurage_Drop_Disp(int bx, int by, bool* boss_AttackFlg, int* c
 	EnemyEvaporation();
 }
 
-void Last_Boss_MiniKurage_Drop_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_MiniKurage_Drop_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 
 	bossAttackInfo position[KURAGE_MAX] = { {787, 55}, {1059, 28}, {1130, 191}, {1095, 380} };	// ミニクラゲの配置される位置
+	int cnt = 0;						// 雑魚敵が倒された数をカウント
 	for (int i = 0; i < KURAGE_MAX; i++) {
-		int cnt = 0;
+		
 		if (g_enemy[i].kurage.flg == FALSE) {
-			if (cnt >= KURAGE_MAX) {
-				*boss_AttackFlg = FALSE;
-				*coolTime = 120;
-			}
+			cnt++;						// 倒された数をカウント
+			
 		}
-	
+		if (cnt >= KURAGE_MAX) {		// カウントが一定数以上なら攻撃終了
+			*boss_AttackFlg = FALSE;
+			*coolTime = 120;
+		}
 	}
+	
 	// 表示されていて、初期ポジションにいない雑魚敵を初期ポジに移動させる
 	for (int i = 0; i < KURAGE_MAX; i++) {
 		if (g_enemy[i].kurage.flg == TRUE) {
@@ -1125,6 +1258,7 @@ void Last_BossMiniKurage_Attack_Air(int attackKurageBuf_Air, bool* ataackFlg_Air
 
 	if (g_enemy[attackKurageBuf_Air].kurage.x <= 0) {
 		g_enemy[attackKurageBuf_Air].kurage.BossArea_KurageInit(g_boss_Yamatano[5].y);
+
 		//g_boss_Yamatano[5].attackFlg = 0;
 		*ataackFlg_AirKurage = 0;
 	}
@@ -1154,26 +1288,17 @@ void Last_BossMiniKurage_Attack_Ground(int attackKurageBuf_Ground, bool* attackF
 			g_enemy[attackKurageBuf_Ground].kurage.y = GROUND - ENEMY_HEIGHT;
 			g_enemy[attackKurageBuf_Ground].kurage.x -= 10;
 		}
-
-
-
 	}
 }
-
-///////////////////////////////////////////////////////仮グローバル変数//////////////////////////////////////////////////////////////////////
-//int g_shadowMotionReset = 0;	//アニメーション始点
-//int g_shadowMaxMotion = 7;	//終点
-
 
 /*********************************************
 
 * 影分身による攻撃
 
 */////////////////////////////////////////////
-void Last_Boss_Shadow_Attack_Disp(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Shadow_Attack_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 
-	int bossX = g_mouseInfo.mouseX;
-	int bossY = GROUND - PLAYER_HEIGHT;
+
 	//static int anime = 0;							// プレイヤーの画像を変える
 	//static int time = 0;							// 画像を切り替えるタイミング調整
 
@@ -1188,7 +1313,7 @@ void Last_Boss_Shadow_Attack_Disp(int bx, int by, bool* boss_AttackFlg, int* coo
 
 // 
 
-void Last_Boss_Shadow_Attack_Move(int bx, int by, bool* boss_AttackFlg, int* coolTime) {
+void Last_Boss_Shadow_Attack_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 	if (g_boss_shadow.x + g_boss_shadow.w <= 0) {
 		*boss_AttackFlg = FALSE;
 		*coolTime = 300;
@@ -1196,4 +1321,43 @@ void Last_Boss_Shadow_Attack_Move(int bx, int by, bool* boss_AttackFlg, int* coo
 	else {
 		g_boss_shadow.x -= 3;
 	}
+}
+
+/*********************************************
+
+* 黒い炎の攻撃
+
+*/////////////////////////////////////////////
+struct flame : picInfo {
+	void flameInit(int bx, int by) {
+		x = bx;
+		y = by;
+		w = 100;
+		h = 100;
+		
+	}
+};
+
+void Last_Boss_BrackFire_Disp() {
+	
+}
+
+void Last_Boss_BrackFire_Move() {
+
+}
+
+/*********************************************
+
+* 関数ポインタ合わせ(仮)
+
+*/////////////////////////////////////////////
+// 攻撃をしない
+void Last_Boss_Attack_Null_Disp(int bx, int by, int* boss_AttackFlg, int* coolTime) {
+	*boss_AttackFlg = 0;
+	*coolTime = 300;
+}
+// 攻撃をしない
+void Last_Boss_Attack_Null_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
+	*boss_AttackFlg = 0;
+	*coolTime = 300;
 }

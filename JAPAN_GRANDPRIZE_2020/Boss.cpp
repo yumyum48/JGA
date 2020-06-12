@@ -887,7 +887,27 @@ int InputRand(int rand1, int rand2, int rand3) {
 	default: return 0;	  break;
 	}
 
+}/***********************************************************
+
+// 数字を引数として八つ取り、その中の一つをランダムで返す
+
+***********************************************************/
+int InputHyperRand(int rand1, int rand2, int rand3, int rand4, int rand5, int rand6, int rand7, int rand8) {
+	int num = GetRand(8);
+	switch (num)
+	{
+	case 0: return rand1; break;
+	case 1: return rand2; break;
+	case 2: return rand3; break;
+	case 3: return rand4; break;
+	case 4: return rand5; break;
+	case 5: return rand6; break;
+	case 6: return rand7; break;
+	case 7: return rand8; break;
+	default: return 0;	  break;
+	}
 }
+
 /***********************************************************
 
 // ボスがダメージを受けたかどうかを調べる関数 TRUE: ボスがダメージを受けた FALSE: ボスはダメージを受けていない

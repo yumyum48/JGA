@@ -44,8 +44,8 @@ void BossMove_Stage1() {
 
 
 	if (g_boss[0].attackFlg != 0) {						// ボスが攻撃していれば
-		g_boss[0].x = 700;
-		g_boss[0].y = 160;
+		//g_boss[0].x = 700;
+		//g_boss[0].y = 160;
 		BossAttackMove();	// ボスの攻撃
 	}
 
