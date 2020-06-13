@@ -170,7 +170,7 @@ struct bossInfo {     // ボスの情報
             break;
         case 3:         // ステージ４のボスを初期化
             hp = 10;
-            x = 843;
+            x = 803;
             y = 45 + 286;
             popflg = 0;
             attackFlg = 0;
