@@ -51,6 +51,7 @@ struct image {
     //int skill2[4];                    //スキル2のモーション画像(仮)
     //int skill3[5];                    //スキル3のモーション画像(仮)
     int skillEffect[40];                //スキルエフェクト画像
+    int skill5Effect[4];                //スキル5のエフェクト画像
     int selectBack;                     // セレクト画面の背景画像
     int selectUI[5];                    //セレクト画面のUI画像
     int waterBullet[5];                 // ボスの水弾の画像
@@ -74,7 +75,7 @@ struct image {
     int button[3];                      // ボタンUI
     int finishMotion[16];               // ステージクリア時のplayerMotion画像
     int husuma[2];                      //ふすま画像
-
+    int bossIcon[8];                    //bossのアイコン
 };
 
 // プレイヤーの情報

@@ -33,7 +33,9 @@ int LoadPicture() {
 	//スキル3モーション(仮)
 	//if (LoadDivGraph("image/skill3.png", 5, 5, 1, 1443/5, 289, g_pic.skill3, 0) == -1) return -1;
 	//スキルエフェクト
-	if (LoadDivGraph("image/Skill_effect.png", 30, 5, 6, 400, 400, g_pic.skillEffect, 0) == -1) return -1;
+	if (LoadDivGraph("image/Skill_effect.png", 35, 5, 7, 400, 400, g_pic.skillEffect, 0) == -1) return -1;
+	//スキル5エフェクト
+	if (LoadDivGraph("image/Skill_5_Electric_ALL.png", 4, 4, 1, 280, 200, g_pic.skill5Effect, 0) == -1) return -1;
 	//スキル7の複製プレイヤー
 	if (LoadDivGraph("image/Skill_7_Effect.png", 56, 8, 7, 280, 200, g_pic.skill7_Effect, 0) == -1) return -1;
 	//finishMotion
@@ -52,6 +54,9 @@ int LoadPicture() {
 	if ((g_pic.skilChoiceBox = LoadGraph("image/SkillChoiceBox.png")) == -1) return -1;
 	//スキル選択画面の背景
 	if ((g_pic.customBackimage = LoadGraph("image/skillcustom_back.png")) == -1) return -1;
+
+	//bossアイコン
+	if (LoadDivGraph("image/IconAll.png", 7, 7, 1, 64, 64, g_pic.bossIcon, 0) == -1) return -1;
 
 	// 歩く雑魚敵画像の読み込み
 	if (LoadDivGraph("image/EnemyZako1.png", 4, 4, 1, 100, 100, g_pic.enemy_walk, 0) == -1)return -1;
