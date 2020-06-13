@@ -63,7 +63,7 @@ struct image {
     int spiderKids[4];                  // 子蜘蛛の画像
     int spiderThread;                   // くもの糸の画像
     int thundercloud;                   // 雷雲の画像
-    int sield;                          // ボス６シールド
+    int boss6_sield;                          // ボス６シールド
 };
 
 // プレイヤーの情報

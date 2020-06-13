@@ -25,7 +25,7 @@ struct barrier : public picInfo {
 
 	// barriarを初期化するメソッド
 	void barrierInit() {
-		x = g_boss[g_select_Stage].x - 100;	// X座標の初期位置
+		x = 654;	// X座標の初期位置
 		y = g_boss[g_select_Stage].y + 10;	// Y座標の初期位置
 
 		flg = FALSE;	// 出現フラグを初期化	
@@ -84,7 +84,8 @@ void BossDisp_Stage5() {
 
 	if (g_barrier.cnt++ >= 300 && g_barrier.flg == TRUE) {
 		// シールド
-		DrawBox(g_barrier.x, g_barrier.y, g_barrier.x + 30, g_barrier.y + BOSS_STAGE5_HEIGHT, 0x000000, TRUE);
+		DrawGraph(g_barrier.x, g_barrier.y, g_pic.boss6_sield, TRUE);
+		//DrawBox(g_barrier.x, g_barrier.y, g_barrier.x + 30, g_barrier.y + BOSS_STAGE5_HEIGHT, 0x000000, TRUE);
 	}
 
 	// ミニクラゲの表示
