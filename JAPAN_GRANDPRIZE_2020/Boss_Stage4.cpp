@@ -69,11 +69,23 @@ void BossDisp_Stage4() {
 					g_boss4_Thread.x, g_boss4_Thread.h + 50,	// 左下の頂点
 					g_pic.spiderThread, TRUE);
 	}		
-DrawFormatString(400, 500, 0x0000FF, "%d\n%d",
+	DrawFormatString(400, 500, 0x0000FF, "%d\n%d",
 	/*g_boss4_Thread.hp*/g_boss4_Cloud.x, g_boss[BOSS_STAGE4].x);
 	// 蜘蛛の表示
-	DrawBox(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, g_boss[BOSS_STAGE4].x + BOSS_STAGE4_WIDTH, g_boss[BOSS_STAGE4].y + BOSS_STAGE4_HEIGHT, 0x00FF00, TRUE);
-	DrawRotaGraph2(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, 32, 32, 5.0f, DX_PI_F / 180 * 330, g_pic.spiderKids[0], TRUE, FALSE, FALSE);
+	//DrawBox(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, g_boss[BOSS_STAGE4].x + BOSS_STAGE4_WIDTH, g_boss[BOSS_STAGE4].y + BOSS_STAGE4_HEIGHT, 0x00FF00, TRUE);
+	//DrawRotaGraph2(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, 32, 32, 5.0f, DX_PI_F / 180 * 330, g_pic.spiderKids[0], TRUE, FALSE, FALSE);
+	const int bossAnime[3] = { 0, 3, 5};
+	static int animationStart = bossAnime[0];	// アニメーション開始位置の初期化
+	static int animationLast = bossAnime[1];	// アニメーションループの初期化
+	static int animecnt = 0;					// アニメーションをする為のカウント
+	static int animationCnt = 0;				// アニメーションのカウント
+
+	if (animecnt++ % 10 == 0)animationCnt++;					// アニメーションの進行
+	if (animationCnt > animationLast)animationCnt = animationStart;	// アニメーションのループ
+	if (g_boss4_Thread.dispFlg == FALSE) {						// ボスがダウンしていたら倒れた画像に差し替え
+		animationCnt = 5;
+	}
+	DrawRotaGraph2(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, 0, 0, 0.6f, 0.0, g_pic.boss_4_1[animationCnt], TRUE, FALSE, FALSE);
 
 	//Poison_Trap_Disp();	// 毒のトラップの表示
 
@@ -277,7 +289,7 @@ void SpiderNoThreadMove(int *moveFlg) {
 		else if (g_boss4_Cloud.x < 868) {
 				g_boss4_Cloud.x += 2;
 				g_boss4_Cloud.w += 2;
-				if(g_boss[BOSS_STAGE4].x < 843) {
+				if(g_boss[BOSS_STAGE4].x < 803) {
 					g_boss[BOSS_STAGE4].x += 2;
 				}
 			g_boss4_Thread.ThreadReSet(g_boss4_Cloud.x, g_boss4_Cloud.y);
