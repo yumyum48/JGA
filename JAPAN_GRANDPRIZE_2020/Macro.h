@@ -10,7 +10,7 @@
 #define MAP_MAX             (8)       // マップの最大数 
 
 #define DEBUG_MODE_OFF				  // デバッグモード		ON:	起動	OFF:停止
-#define DEBUG_LEVEL_ON				  // 難易度の低下		ON:	起動	OFF:停止
+#define DEBUG_LEVEL_OFF				  // 難易度の低下		ON:	起動	OFF:停止
 #define DEBUG_BOSS_OFF				  // ボスのデバッグ		ON:	起動	OFF:停止
 #define DEBUG_SKILL_OFF				  // スキルのデバッグ	ON:	起動	OFF:停止
 #define DEBUG_TRAP_OFF				  // トラップのデバッグ	ON:	起動	OFF:停止
