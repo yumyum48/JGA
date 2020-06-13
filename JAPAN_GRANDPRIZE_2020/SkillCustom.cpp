@@ -143,6 +143,7 @@ void SkillCustom_Move() {
 
 		comparation = g_Skill_Num;
 
+		PlaySoundMem(g_sound[SE_KETTEI], DX_PLAYTYPE_BACK, TRUE);			//決定SE再生
 
 		/*if ((comparation != g_player.skillcustom[0])
 			&& (comparation != g_player.skillcustom[1])
@@ -180,6 +181,7 @@ void SkillCustom_Move() {
 
 	//セレクト画面に戻る
 	if (costomEndFlg == TRUE && (g_keyInfo.keyFlg & PAD_INPUT_A)) {
+		PlaySoundMem(g_sound[SE_KETTEI], DX_PLAYTYPE_BACK, TRUE);			//決定SE再生
 		if (g_player.skillcustom[0] == 0) g_player.skillcustom[0] = 1; //何も装備しなかった場合スキル１を入れる
 		if (g_set == 1) g_player.skillcustom[1] = 0, g_player.skillcustom[2] = 0;
 		if (g_set == 2)g_player.skillcustom[2] = 0;
@@ -193,6 +195,7 @@ void SkillCustom_Move() {
 	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && costomEndFlg == TRUE) costomEndFlg = FALSE;
 	//決定確認
 	if (g_set == 3 || g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
+		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生
 		costomEndFlg = TRUE;
 	}
 }
@@ -223,8 +226,14 @@ void SkillChoice_Dis()
 	animering += 0.1F;
 	DrawRotaGraph(633, 500, 2.6, animering, g_pic.skillRing[1], TRUE, FALSE);
 
-	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) SkillAni_Plus();
-	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) SkillAni_Min();
+	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
+		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生
+		SkillAni_Plus();
+	}
+	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
+		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生
+		SkillAni_Min();
+	}
 
 }
 

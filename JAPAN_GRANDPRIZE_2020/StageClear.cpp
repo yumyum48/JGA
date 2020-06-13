@@ -15,6 +15,7 @@
 #include "Picture.h"
 #include "Boss.h"
 #include "Select.h"
+#include "Sounds.h"
 
 bool g_animationScene = FALSE;	// アニメーションを終了させてテキストを表示させるフラグ	TRUE:テキストの表示ON	FALSE:ボスを撃破するアニメーション
 
@@ -204,6 +205,7 @@ void BossDefeatAnimationMove() {
 			if (g_player.y < g_boss[g_select_Stage].y - 100) AnimeFlg[1] = FALSE, AnimeFlg[2] = TRUE;
 		}
 		if (AnimeFlg[2] == TRUE) {/*少し下がる*/
+			PlaySoundMem(g_sound[VOICE_SPECIAL], DX_PLAYTYPE_BACK, FALSE);			//SE再生
 			g_player.x += 2;
 			if (g_select_Stage != 2) g_player.y += 5;
 			else g_player.y += 10;
@@ -243,7 +245,8 @@ void BossDefeatAnimationMove() {
 		}
 		if (AnimeFlg[7] == TRUE) {/*納刀*/
 			if (playerAnimation < 15.0F) playerAnimation += 0.2F;
-			else bossBlend -= 5, g_boss[g_select_Stage].y--;
+			else bossBlend -= 5, g_boss[g_select_Stage].y--,
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//SE再生
 			if (bossBlend <= 0) AnimeFlg[7] = FALSE, AnimeFlg[8] = TRUE;
 		}
 	}

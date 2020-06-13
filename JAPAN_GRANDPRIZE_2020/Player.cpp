@@ -39,6 +39,7 @@ void PlayerDisp() {
 	if (anime < g_resetMotion || anime > g_maxMotion) anime = g_resetMotion;
 
 	if (g_player.hp != lifeBox) {//ダメージを受けたらスキル7解除
+		PlaySoundMem(g_sound[VOICE_DAMAGE], DX_PLAYTYPE_BACK, TRUE);			//ダメージSE再生
 		if (g_player.cloneFlg == TRUE)g_player.cloneFlg = FALSE;
 		lifeBox = g_player.hp;
 	}
@@ -64,6 +65,7 @@ void PlayerDisp() {
 		if (g_player.powerUpTime > 0) g_player.powerUpTime--;
 		else {
 			if (g_player.jumpFlg == FALSE) {
+				PlaySoundMem(g_sound[SKILL5_SE], DX_PLAYTYPE_BACK, FALSE);			//スキル5SE再生
 				g_noDamageCnt = 0;
 				if (g_player.x < 900) g_player.x += 50, g_player.jumpFlg == FALSE, EnemyCut();
 				else g_player.powerUpTime = SKILL5_TIME, g_player.powerUpFlg = FALSE, skill5Anime = 0;
@@ -279,6 +281,7 @@ void PlayerAnimation() {
 void PlayerJump() {
 	//ジャンプ処理(×ボタン)
 	if (g_player.jumpFlg == FALSE && g_keyInfo.keyFlg & PAD_INPUT_A && g_player.powerUpTime > 0) {
+		PlaySoundMem(g_sound[SE_JUMP], DX_PLAYTYPE_BACK, FALSE);			//ジャンプSE再生
 		g_speed = -JUMP_POWER;
 		g_player.jumpFlg = TRUE;
 	}
@@ -287,9 +290,13 @@ void PlayerJump() {
 	g_speed += G;
 
 	if (g_player.y >= GROUND - PLAYER_HEIGHT) {
+		if (g_player.jumpFlg == TRUE) {
+			PlaySoundMem(g_sound[SE_TYAKUTI], DX_PLAYTYPE_BACK, FALSE);			//着地SE再生
+		}
 		g_player.jumpFlg = FALSE;
 		g_speed = 0.0F;
 		g_player.y = GROUND - PLAYER_HEIGHT;
+		PlaySoundMem(g_sound[SE_STEP], DX_PLAYTYPE_BACK, FALSE);			//歩くSE再生
 	}
 }
 // ボタンを押した時の処理
@@ -407,10 +414,12 @@ void EnemyCut() {
 			if (g_player.skillFlg == 2) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].walk.WalkInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].walk.WalkInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 			if (g_player.attackFlg == TRUE) {
@@ -419,6 +428,7 @@ void EnemyCut() {
 				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].walk.x, g_enemy[i].walk.y);
 				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
 					g_enemy[i].walk.WalkInit();
+					PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 				}
 				else {
 					g_enemy[i].walk.BossArea_WlakInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);
@@ -436,10 +446,12 @@ void EnemyCut() {
 			if (g_player.skillFlg == 2) {
 				//g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].fly.WalkInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].fly.WalkInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 			if (g_player.attackFlg == TRUE) {
@@ -448,6 +460,7 @@ void EnemyCut() {
 				//g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].fly.x, g_enemy[i].fly.y);
 				g_enemy[i].fly.WalkInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 				//g_player.attackFlg = TRUE;
 			}
 		}
@@ -461,10 +474,12 @@ void EnemyCut() {
 			if (g_player.skillFlg == 2) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].spider.WalkInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].spider.WalkInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 			if (g_player.attackFlg == TRUE) {
@@ -472,7 +487,8 @@ void EnemyCut() {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].spider.x, g_enemy[i].spider.y);
 				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
-					g_enemy[i].spider.WalkInit();																// 倒されたら初期化
+					g_enemy[i].spider.WalkInit();
+					PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生																// 倒されたら初期化
 				}
 				else {
 					g_enemy[i].spider.BossArea_SpiderInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);	// ボスエリアで倒された場合初期化方法を変える
@@ -490,10 +506,12 @@ void EnemyCut() {
 			if (g_player.skillFlg == 2) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].cloud.FlyInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].cloud.WalkInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 			if (g_player.attackFlg == TRUE) {
@@ -501,7 +519,8 @@ void EnemyCut() {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].cloud.x, g_enemy[i].cloud.y);
 				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
-					g_enemy[i].cloud.WalkInit();																// 倒されたら初期化
+					g_enemy[i].cloud.WalkInit();
+					PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生															// 倒されたら初期化
 				}
 				else {	
 					g_enemy[i].cloud.BossArea_CloudInit(g_boss[g_select_Stage].x, g_boss[g_select_Stage].y);	// ボスエリアで倒された場合初期化方法を変える
@@ -519,10 +538,12 @@ void EnemyCut() {
 			if (g_player.skillFlg == 2) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].kurage.FlyInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemy[i].kurage.WalkInit();
+				PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生
 			}
 			//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 			if (g_player.attackFlg == TRUE) {
@@ -530,7 +551,8 @@ void EnemyCut() {
 				g_enemybeat++;			// エネミーを倒した数をカウント
 				g_enemyBuffer[enemyNum++].BufferAssignment(g_enemy[i].kurage.x, g_enemy[i].kurage.y);
 				if (g_enemybeat <= ENEMY_BEAT_MAX[g_select_Stage]) {
-					g_enemy[i].kurage.BossArea_KurageInit(g_boss[g_select_Stage].y);							// 倒されたら初期化
+					g_enemy[i].kurage.BossArea_KurageInit(g_boss[g_select_Stage].y);
+					PlaySoundMem(g_sound[SE_ENEMY_DOWN], DX_PLAYTYPE_BACK, TRUE);			//killSE再生						// 倒されたら初期化
 				}
 				else {
 					g_enemy[i].kurage.BossArea_KurageInit(g_boss[g_select_Stage].y);	// ボスエリアで倒された場合初期化方法を変える

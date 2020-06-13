@@ -271,6 +271,7 @@ bool SaveMenu_MenuScrollOut(bool saveFlg) {
 *******************************************************/
 void MenuSelect() {
 	if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+		PlaySoundMem(g_sound[SE_KETTEI], DX_PLAYTYPE_BACK, TRUE);			//決定SE再生
 		switch (g_menuSelect) {
 		case 0: g_menuFlg = MENU_SAVE;		g_menuSelect = 0;		   break;	// データのセーブ
 		case 1: g_gameScene = GAME_SKILLCUSTOM;   g_menuSelect = 0;     break;	// スキルカスタマイズ
@@ -317,10 +318,12 @@ void StageSelectOper() {
 	//メニューカーソル移動処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_RIGHT) {
 		if (++g_select_Stage > g_select_MAX) g_select_Stage = 0;
+		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生
 	}
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
 		if (--g_select_Stage < 0) g_select_Stage = g_select_MAX;
+		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生
 	}
 }
 /******************************************************
@@ -330,11 +333,13 @@ void MenuSelectOper() {
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
 		g_cursorAnime = 0;
+		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生
 		if (++g_menuSelect > 2) g_menuSelect = 0;
 	}
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
 		g_cursorAnime = 0;
+		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生
 		if (--g_menuSelect < 0) g_menuSelect = 2;
 	}
 }
@@ -345,11 +350,13 @@ void SaveSelectOper() {
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
 		g_cursorAnime = 0;
+		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生
 		if (++g_saveSelect > 2) g_saveSelect = 0;
 	}
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
 		g_cursorAnime = 0;
+		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生
 		if (--g_saveSelect < 0) g_saveSelect = 2;
 	}
 }
