@@ -53,8 +53,9 @@ void GamePlayMove() {
 #ifndef EBUG_TRAP_ON
 	TrapMove();						// トラップの動き
 #endif // EBUG_TRAP_ON
-
-	//HpMove();						// HPの計算処理
+#ifdef DEBUG_LEVEL_OFF
+	HpMove();						// HPの計算処理
+#endif // DEBUG_LEVEL_OFF
 }
 
 
