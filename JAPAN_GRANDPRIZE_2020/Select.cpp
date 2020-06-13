@@ -64,12 +64,24 @@ void SelectDisp(void) {
 		//DrawBox(stage[i].x, stage[i].y, stage[i].x + 100, stage[i].y + 100, 0x00FF00, TRUE);
 		DrawRotaGraph2(stage[i].x, stage[i].y, 0, 0, 1.55, 0.0, g_pic.bossIcon[i], TRUE);		// bossのアイコン
 
-		if (g_select_Stage != i) {
+		if (g_select_MAX < i) {
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 			SetDrawBright(0, 0, 0);
 			DrawRotaGraph2(stage[i].x, stage[i].y, 0, 0, 1.55, 0.0, g_pic.bossIcon[i], TRUE);		// bossのアイコン
 			SetDrawBright(255, 255, 255);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		}
+		if (g_select_MAX > i) {
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+			SetDrawBright(0, 0, 0);
+			DrawRotaGraph2(stage[i].x, stage[i].y, 0, 0, 1.55, 0.0, g_pic.bossIcon[i], TRUE);		// bossのアイコン
+			SetDrawBright(255, 255, 255);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			DrawRotaGraph2(stage[i].x + 50, stage[i].y - 40, 0, 0, 0.5, 3.14/4, g_pic.gauge, TRUE);
+			DrawRotaGraph2(stage[i].x - 40, stage[i].y + 50, 0, 0, 0.5, -3.14 / 4, g_pic.gauge, TRUE);
+			SetDrawBright(0, 0, 0);
+			DrawRotaGraph2(stage[i].x, stage[i].y + 95, 0, 0, 0.08, 0.1, g_pic.stageClearText, TRUE);
+			SetDrawBright(255, 255, 255);
 		}
 		if (i == 7) {
 			DrawBox(stage[i].x, stage[i].y, stage[i].x + 200, stage[i].y + 200, 0x00FF00, TRUE);
