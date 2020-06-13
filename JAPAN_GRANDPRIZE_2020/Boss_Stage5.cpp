@@ -81,7 +81,9 @@ void BossDisp_Stage5() {
 	// ボスの表示
 	//DrawBox(g_boss[BOSS_STAGE5].x, g_boss[BOSS_STAGE5].y, g_boss[BOSS_STAGE5].x + BOSS_STAGE5_WIDTH, g_boss[BOSS_STAGE5].y + BOSS_STAGE5_HEIGHT, 0x00FFFF, TRUE);
 	DrawRotaGraph2(g_boss[BOSS_STAGE5].x, g_boss[BOSS_STAGE5].y, 0, 0, 1.0f, 0, g_pic.boss_5_1[g_boss5_Ex.anime], TRUE, FALSE);
-
+	if (g_boss[BOSS_STAGE5].damageFlg == TRUE) {
+		Boss_Damage_Disp(&g_boss[BOSS_STAGE5].damageFlg, g_boss[BOSS_STAGE5].x, g_boss[BOSS_STAGE5].y, g_pic.boss_5_1[g_boss5_Ex.anime], 1.0F);	// ダメージを食らったときのモーション
+	}
 	if (g_barrier.cnt++ >= 300 && g_barrier.flg == TRUE) {
 		// シールド
 		DrawGraph(g_barrier.x, g_barrier.y, g_pic.boss6_sield, TRUE);

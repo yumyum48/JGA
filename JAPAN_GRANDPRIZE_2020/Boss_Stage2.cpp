@@ -53,7 +53,9 @@ void BossDisp_Stage2() {
 
 	// ボスの表示
 	DrawGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, g_pic.boss_2_1[animationCnt], TRUE);
-
+	if (g_boss[BOSS_STAGE2].damageFlg == TRUE) {
+		Boss_Damage_Disp(&g_boss[BOSS_STAGE2].damageFlg, g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, g_pic.boss_2_1[animationCnt], 1.0F);	// ダメージを食らったときのモーション
+	}
 	if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// ボスが攻撃していれば
 		//g_boss[BOSS_STAGE2].x = 700;
 		//g_boss[BOSS_STAGE2].y = 160;

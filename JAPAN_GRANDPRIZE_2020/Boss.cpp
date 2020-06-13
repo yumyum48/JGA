@@ -17,12 +17,12 @@
 #include "Trap.h"
 #include "Skill.h"
 
-
 /*********************************************
 
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
+int g_boss4_JumpAnime;			// カエルのジャンプするアニメーション
 
 /*********************************************
 
@@ -46,10 +46,15 @@ void BossDisp_Stage1() {
 			anime[i] = bossAnime_Start[i];
 		}
 	}
-		
+	
 	DrawRotaGraph2(g_boss[0].x, g_boss[0].y, 0, 0, 2.0, 0.0, g_pic.boss_1_1[anime[1]], TRUE);
 	DrawRotaGraph2(g_boss[0].x, g_boss[0].y, 0, 0, 2.0, 0.0, g_pic.boss_1_1[anime[0]], TRUE);
+	if (g_boss[BOSS_STAGE1].damageFlg == TRUE) {
+		Boss_Damage_Disp2(&g_boss[BOSS_STAGE1].damageFlg, g_boss[BOSS_STAGE1].x, g_boss[BOSS_STAGE1].y, g_pic.boss_1_1[anime[1]], 2.0F);
+		Boss_Damage_Disp(&g_boss[BOSS_STAGE1].damageFlg, g_boss[BOSS_STAGE1].x, g_boss[BOSS_STAGE1].y, g_pic.boss_1_1[anime[0]], 2.0F);
+		
 
+	}
 	if (g_boss[0].attackFlg != 0) {
 		BossAttackDisp();	// ボスの攻撃
 	}
@@ -605,6 +610,7 @@ void Boss_MiniCloud_Drop_Move() {
 		}
 	}
 }
+
 /*********************************************
 
 * ミニ蜘蛛を出す
@@ -614,7 +620,7 @@ void Boss_MiniCloud_Drop_Move() {
 void Boss_MiniSpider_Drop_Disp() {
 	static int coolTime = 0;
 	static int enemyDropCnt = 0;
-	static bool enemy_dispFlg_Buf[BOSS_AREA_ENEMY_MAX] = { FALSE, FALSE, FALSE }; // 
+	static bool enemy_dispFlg_Buf[BOSS_AREA_ENEMY_MAX] = { FALSE, FALSE, FALSE };
 	static int enemy_cnt = 0;	// 出現したエネミーの要素番号
 	// クールタイム
 	if (++coolTime > 60) {
@@ -704,7 +710,7 @@ void Boss_MiniSpider_Drop_Move() {
 
 void BossLongTon_Disp() {
 	static int plas = 0;			// 長くしていく
-
+	g_boss4_JumpAnime = 4;
 	// ボスの舌の座標の初期化
 	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);
 	// ボスの舌の幅と高さの初期化
@@ -772,37 +778,40 @@ bool Boss_3_Jump(int *coolTime, int *boss_JumpFlg, int jumpType) {
 	int boss_startX = 822;									// ボス３のX座標の初期値
 
 
-	if (*boss_JumpFlg == BOSS_3_JUMPON) {	// 上昇
-		if (g_boss[BOSS_STAGE3].y >= boss_MaxUp) {		// ボスを特定地点まで上に上げる
+
+	if (*boss_JumpFlg == BOSS_3_JUMPON) {					// 上昇
+		if (g_boss[BOSS_STAGE3].y >= boss_MaxUp) {			// ボスを特定地点まで上に上げる
 			
-			if (jumpType == 1) {	// 受けたジャンプフラグが攻撃中なのかどうかを確認して１なら横に飛ばす
+			if (jumpType == 1) {							// 受けたジャンプフラグが攻撃中なのかどうかを確認して１なら横に飛ばす
 				if (g_boss[BOSS_STAGE3].x < boss_startX) {
-					g_boss[BOSS_STAGE3].x += 6;	// ボスが横に吹っ飛ぶ
-					g_boss[BOSS_STAGE3].y -= 2;	// 若干上に上がりながら
+					g_boss[BOSS_STAGE3].x += 6;				// ボスが横に吹っ飛ぶ
+					g_boss[BOSS_STAGE3].y -= 2;				// 若干上に上がりながら
 				}
 				else {
-					*boss_JumpFlg = BOSS_3_DOWN;	// 下降させる
+					*boss_JumpFlg = BOSS_3_DOWN;			// 下降させる
 				}
 			}
 			else {
-
-				g_boss[BOSS_STAGE3].y -= 2;	// 真上にジャンプする
+				g_boss4_JumpAnime = 1;
+				g_boss[BOSS_STAGE3].y -= 2;					// 真上にジャンプする
 			}
 		}
-		else if (g_boss[BOSS_STAGE3].y < boss_MaxUp) {	// 特定地点まで来たら座標を固定
-			g_boss[BOSS_STAGE3].y = boss_MaxUp;			
-			*boss_JumpFlg = BOSS_3_DOWN;	// 下降させる
+		else if (g_boss[BOSS_STAGE3].y < boss_MaxUp) {		// 特定地点まで来たら座標を固定
+			//g_boss4_JumpAnime = 2;
+			g_boss[BOSS_STAGE3].y = boss_MaxUp;
+			*boss_JumpFlg = BOSS_3_DOWN;					// 下降させる
 
 		}
 	}
-	else if (*boss_JumpFlg == BOSS_3_DOWN) {	// 下降
-		if (g_boss[BOSS_STAGE3].y < boss_MaxDown) {		// ボスを特定地点まで上に上げる
+	else if (*boss_JumpFlg == BOSS_3_DOWN) {				// 下降
+		if (g_boss[BOSS_STAGE3].y < boss_MaxDown) {			// ボスを特定地点まで上に上げる
+			g_boss4_JumpAnime = 3;
 			g_boss[BOSS_STAGE3].y += 2;
 		}
 		else if (g_boss[BOSS_STAGE3].y >= boss_MaxDown) {	// 特定地点まで来たら座標を固定
 			//g_boss[BOSS_STAGE3].x = boss_startX;
 			g_boss[BOSS_STAGE3].y = boss_MaxDown;
-			
+			g_boss4_JumpAnime = 0;
 			*boss_JumpFlg = BOSS_3_JUMPOFF;	// ジャンプフラグをオフへ
 			*coolTime = 0;		// クールタイムを初期化
 			return TRUE;
@@ -1032,7 +1041,59 @@ void BossWaterBulletMove() {
 
 }
 
+/***********************************************************
 
+// ボスがダメージを食らったときのアニメーション
+
+***********************************************************/
+void Boss_Damage_Disp(bool *boss_damage, int bx, int by, int GrHandle, double magnification){
+
+	bx += InputRand(50, -50, 30);
+	by += InputRand(50, -50, -30);
+	// ボスの残像
+	SetDrawBright(255, 99, 71);
+	DrawRotaGraph2(bx, by, 0, 0, magnification, 0.0, GrHandle, TRUE);
+	SetDrawBright(255, 255, 255);
+	static int cnt = 0;
+
+	if (cnt++ > 30) {
+		*boss_damage = FALSE;
+		cnt = 0;
+	}
+
+}
+void Boss_Damage_Disp2(bool* boss_damage, int bx, int by, int GrHandle, double magnification) {
+
+	bx += InputRand(50, -50, 30);
+	by += InputRand(50, -50, -30);
+	// ボスの残像
+	SetDrawBright(255, 99, 71);
+	DrawRotaGraph2(bx, by, 0, 0, magnification, 0.0, GrHandle, TRUE);
+	SetDrawBright(255, 255, 255);
+	static int cnt = 0;
+
+	if (cnt++ > 30) {
+		*boss_damage = FALSE;
+		cnt = 0;
+	}
+
+}
+void Boss_Damage_Disp3(bool* boss_damage, int bx, int by, int GrHandle, double magnification) {
+
+	bx += InputRand(50, -50, 30);
+	by += InputRand(50, -50, -30);
+	// ボスの残像
+	SetDrawBright(255, 99, 71);
+	DrawRotaGraph2(bx, by, 0, 0, magnification, 0.0, GrHandle, TRUE);
+	SetDrawBright(255, 255, 255);
+	static int cnt = 0;
+
+	if (cnt++ > 30) {
+		*boss_damage = FALSE;
+		cnt = 0;
+	}
+
+}
 /***********************************************************
 
 // 数字を引数として三つ取り、その中の一つをランダムで返す
@@ -1129,6 +1190,7 @@ void BossInit() {
 	for (int i = BOSS_STAGE1; i < BOSS_MAX; i++) {
 		g_boss[i].Init_Stage(i);		// 全ステージのボスの初期化
 	}
+	g_boss4_JumpAnime = 0;	// アニメーションの初期化
 	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);// ステージ３のボスの舌の初期化
 	Boss_Stage4_Init();	// ボスステージ４の雲の初期化
 	Boss5_Init();		// ボス５の初期化

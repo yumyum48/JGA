@@ -227,11 +227,11 @@ extern trapInfo g_wave;                 // 波の情報
 extern picInfo g_boss3_Ton;             // 舌の情報
 extern lasbossInfo g_boss_Yamatano[YAMATANO_NECK];    // ラスボス前の７体の蛇
 extern bool g_lastBoss_StartAnimeFlg;    // ラスボス前の出現アニメーションを行うフラグ TRUE:アニメーションを行う FALSE:行わない
-extern boss5_extension g_boss5_Ex;				// ボス５の変数拡張
-//extern barrier g_barrier;		// バリアの情報
-extern rightningInfo g_rightning;					  // 雷撃の情報
-extern shadow g_boss_shadow;					      // 影の攻撃の情報
-
+extern boss5_extension g_boss5_Ex;		// ボス５の変数拡張
+//extern barrier g_barrier;				// バリアの情報
+extern rightningInfo g_rightning;		// 雷撃の情報
+extern shadow g_boss_shadow;			// 影の攻撃の情報
+extern int g_boss4_JumpAnime;			// カエルのジャンプするアニメーション
 /***********************************************************
 
 // 関数の宣言
@@ -240,6 +240,9 @@ extern shadow g_boss_shadow;					      // 影の攻撃の情報
 int InputRand(int rand1, int rand2, int rand3);	// 数字を引数として三つ取り、その中の一つをランダムで返す
 int InputHyperRand(int rand1, int rand2, int rand3 = 0, int rand4 = 0, int rand5 = 0, int rand6 = 0, int rand7 = 0, int rand8 = 0);
 bool BossDamageCheck(int bossHp);				// ボスがダメージを受けたかどうかを調べる関数 TRUE: ボスがダメージを受けた FALSE: ボスはダメージを受けていない
+void Boss_Damage_Disp(bool* boss_damage, int bx, int by, int GrHandle, double magnification);	// ボスがダメージを食らったモーションをする
+void Boss_Damage_Disp2(bool* boss_damage, int bx, int by, int GrHandle, double magnification);	// ボスがダメージを食らったモーションをする2
+void Boss_Damage_Disp3(bool* boss_damage, int bx, int by, int GrHandle, double magnification);	// ボスがダメージを食らったモーションをする3
 bool BossNoAttackCheck(int bossAttackFlg);		// ボスが攻撃を終えたかを調べる関数TRUE: ボスの攻撃終了 FALSE: ボスは攻撃中、または終了してしばらくたっている
 bool BossDropAttackCheck(int bossAttackFlg);	// ボスがエネミーをドロップするかを調べる関数TRUE: ボスの攻撃開始 FALSE: ボスは攻撃中、または終了してしばらくたっている
 void Boss_MiniKurage_DropFlg();					// ミニクラゲを出すフラグ管理

@@ -39,8 +39,11 @@ void BossDisp_Stage3() {
 	DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + bw, g_mouseInfo.mouseY + bh, 0x00FF00, TRUE);*/
 
 	// ボスの画像
-	DrawRotaGraph2(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, 0, 0,  3.5f, 0.0, g_pic.boss_3_1[4], TRUE, FALSE);
-	/*DrawBox(g_boss[BOSS_STAGE3].x , g_boss[BOSS_STAGE3].y,
+	DrawRotaGraph2(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, 0, 0,  3.5f, 0.0, g_pic.boss_3_1[g_boss4_JumpAnime], TRUE, FALSE);
+	if (g_boss[BOSS_STAGE3].damageFlg) {
+		Boss_Damage_Disp(&g_boss[BOSS_STAGE3].damageFlg, g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y, g_pic.boss_3_1[g_boss4_JumpAnime], 3.5f);	// ダメージを食らったときのモーション
+	}
+		/*DrawBox(g_boss[BOSS_STAGE3].x , g_boss[BOSS_STAGE3].y,
 		g_boss[BOSS_STAGE3].x + BOSS_STAGE3_WIDTH, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT,
 		0xFF0000, FALSE);*/
 
@@ -56,7 +59,6 @@ void BossMove_Stage3() {
 	int boss_MaxDown = GROUND - BOSS_STAGE3_HEIGHT;	// ボス３の落下した際のY地点
 	static int boss_JumpFlg = BOSS_3_JUMPOFF;		// ボスのジャンプをするフラグ0: 下降する地面なら座標変わらずそのまま　1:ジャンプする 2: 下降する
 	int boss_startX = 822;							// ボス３のX座標の初期値
-
 
 	int num = GetRand(2);
 	if (BossNoAttackCheck(g_boss[BOSS_STAGE3].attackFlg) == TRUE)	// ボスが前フレームで攻撃をしていたかを確認

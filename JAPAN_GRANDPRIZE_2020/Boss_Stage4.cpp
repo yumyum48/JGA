@@ -58,6 +58,7 @@ void BossDisp_Stage4() {
 	// 雲の表示
 	//DrawBox(g_boss4_Cloud.x, g_boss4_Cloud.y, g_boss4_Cloud.w, g_boss4_Cloud.h, 0xFFFFFF, TRUE);
 	DrawRotaGraph(g_boss4_Cloud.x + ((g_boss4_Cloud.w - g_boss4_Cloud.x) / 2), g_boss4_Cloud.y + ((g_boss4_Cloud.h - g_boss4_Cloud.y) / 2), 1.5f, 0.0, g_pic.thundercloud, TRUE);
+	
 	// 雷撃の充電
 	int animeMax = 3;
 	static int animeRightning = 0;
@@ -67,12 +68,13 @@ void BossDisp_Stage4() {
 	DrawRotaGraph(g_boss4_Cloud.x + ((g_boss4_Cloud.w - g_boss4_Cloud.x )/ 2) + 10, g_boss4_Cloud.y + ((g_boss4_Cloud.h - g_boss4_Cloud.y) / 2) - 10, g_rightning.exRate, 0.0, g_pic.boss4_Cloud_Rightning[animeRightning], TRUE);
 	// 糸の表示
 	if (g_boss4_Thread.dispFlg == TRUE) {
-		DrawBox(g_boss4_Thread.x, g_boss4_Thread.y, g_boss4_Thread.w, g_boss4_Thread.h, 0xFFFFFF, TRUE);
+		//DrawBox(g_boss4_Thread.x, g_boss4_Thread.y, g_boss4_Thread.w, g_boss4_Thread.h, 0xFFFFFF, TRUE);
 		DrawModiGraph(g_boss4_Thread.x, g_boss4_Thread.y,		// 左上の頂点
 					g_boss4_Thread.w, g_boss4_Thread.y,			// 右上の頂点
 					g_boss4_Thread.w, g_boss4_Thread.h + 50,	// 右下の頂点
 					g_boss4_Thread.x, g_boss4_Thread.h + 50,	// 左下の頂点
 					g_pic.spiderThread, TRUE);
+		
 	}		
 	DrawFormatString(400, 500, 0x0000FF, "%d\n%d",
 	/*g_boss4_Thread.hp*/g_boss4_Cloud.x, g_boss[BOSS_STAGE4].x);
@@ -91,9 +93,10 @@ void BossDisp_Stage4() {
 		animationCnt = 5;
 	}
 	DrawRotaGraph2(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, 0, 0, 0.6f, 0.0, g_pic.boss_4_1[animationCnt], TRUE, FALSE, FALSE);
-
+	if (g_boss[BOSS_STAGE2].damageFlg == TRUE) {
+		Boss_Damage_Disp2(&g_boss[BOSS_STAGE4].damageFlg, g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, g_pic.boss_4_1[animationCnt], 0.6f);	// ダメージを食らったときのモーション
+	}
 	//Poison_Trap_Disp();	// 毒のトラップの表示
-
 	if (g_boss[BOSS_STAGE4].attackFlg != 0) {						// ボスが攻撃していれば
 		BossAttackDisp();	// ボスの攻撃
 	}

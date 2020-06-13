@@ -84,7 +84,9 @@ void BossDisp_Stage_Last() {
 		if (g_boss_Yamatano[i].popflg != LASTBOOS_OFF && g_boss_Yamatano[i].popflg != LASTBOSS_KILL) {
 			//(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h, 0x00FFFF, TRUE);
 			DrawRotaGraph2(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, 0, 0, 1.0, 0.0, g_pic.boss_Yamatano[0], TRUE);
-
+			if (g_boss_Yamatano[i].damageFlg == TRUE) {
+				Boss_Damage_Disp(&g_boss_Yamatano[i].damageFlg, g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_pic.boss_Yamatano[0], 1.0F);	// ダメージを食らったときのモーション
+			}
 
 		}
 	}
@@ -93,7 +95,9 @@ void BossDisp_Stage_Last() {
 	if (g_boss[BOSS_LASTBOSS].popflg == TRUE) {
 		DrawBox(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_boss[BOSS_LASTBOSS].x + BOSS_STAGELAST_WIDTH, g_boss[BOSS_LASTBOSS].y + BOSS_STAGELAST_HEIGHT, 0x00FFFF, TRUE);
 	}
-	// レイヤー的な意味合いでマップを再描画
+	//if (g_boss[BOSS_LASTBOSS].damageFlg == TRUE) {
+	//	Boss_Damage_Disp(&g_boss[BOSS_LASTBOSS].damageFlg, g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_pic.boss_2_1[animationCnt], 1.0F);	// ダメージを食らったときのモーション
+	//}// レイヤー的な意味合いでマップを再描画
 	for (int i = 0; i < SCROLL_MAX; i++) {
 		DrawRotaGraph2(g_map[i].x, g_map[i].y, 0, 0, 2.0, 0.0, g_pic.map[(SCROLL_MAX * g_select_Stage) + i], TRUE);
 	}
