@@ -11,6 +11,7 @@
 #include "HP.h"
 #include "Skill.h"
 #include "Select.h"
+#include "Sounds.h"
 
 #define G                (0.5F)		// 重力
 #define JUMP_POWER       (15.0F)	// ジャンプ力
@@ -131,7 +132,7 @@ void PlayerDisp() {
 
 	//スキルの再使用までのクールタイム
 	for (int i = 0; i < 3; i++) {
-		if ((g_keyInfo.keyFlg & PAD_INPUT_A) && skillTime[i] <= 0) {
+		if ((g_keyInfo.keyFlg & PAD_INPUT_B) && skillTime[i] <= 0) {
 			if (g_player.swordFlg == FALSE) {
 				skillTime[i] = g_player.skillCoolTime[i];
 			}
@@ -277,7 +278,7 @@ void PlayerAnimation() {
 // ジャンプ処理
 void PlayerJump() {
 	//ジャンプ処理(×ボタン)
-	if (g_player.jumpFlg == FALSE && g_keyInfo.keyFlg & PAD_INPUT_2 && g_player.powerUpTime > 0) {
+	if (g_player.jumpFlg == FALSE && g_keyInfo.keyFlg & PAD_INPUT_A && g_player.powerUpTime > 0) {
 		g_speed = -JUMP_POWER;
 		g_player.jumpFlg = TRUE;
 	}
