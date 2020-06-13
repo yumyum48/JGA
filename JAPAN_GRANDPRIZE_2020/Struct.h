@@ -65,6 +65,10 @@ struct image {
     int spiderThread;                   // くもの糸の画像
     int thundercloud;                   // 雷雲の画像
     int boss6_sield;                    // ボス６シールド
+
+    int finishMotion[16];               // ステージクリア時のplayerMotion画像
+    int husuma[2];                      //ふすま画像
+
 };
 
 // プレイヤーの情報
