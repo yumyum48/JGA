@@ -46,6 +46,8 @@ struct image {
     int boss_4_1[6];                    // ボス４の画像
     int boss_5_1[10];                   // ボス_５の画像
     int boss_6_1[16];                   // ボス_６の画像
+    int boss_6_2[6];                    // ボス_６の　影の攻撃モーション　画像
+    int boss_6_3[10];                   // ボス_６の　影の攻撃のエフェクト　画像
     int boss_Yamatano[4];               // ラスボスの前のヤマタノ                  
     int boss_Last[2];                   // ラスボス
     //int skill2[4];                    //スキル2のモーション画像(仮)
