@@ -116,8 +116,11 @@ int LoadPicture() {
 	if ((g_pic.boss6_sield = LoadGraph("image/JellyShield.png")) == -1) return -1;
 
 	// ボス_６の画像読み込み
-	//if (LoadDivGraph("image/player.png", 16, 8, 2, 280, 400, g_pic.boss_6_1, 0) == -1)return -1;
-	if (LoadDivGraph("image/Boss_1.png", 16, 8, 2, 280, 200, g_pic.boss_6_1, 0) == -1)return -1;
+	if (LoadDivGraph("image/playerReverse.png", 16, 8, 2, 280, 200, g_pic.boss_6_1, 0) == -1)return -1;
+	// ボス_６の　影の攻撃モーション　画像読み込み
+	if (LoadDivGraph("image/skill_playerReverse.png", 6, 3, 2, 280, 200, g_pic.boss_6_2, 0) == -1)return -1;
+	// ボス_６の　影の攻撃のエフェクト　画像読み込み
+	if (LoadDivGraph("image/Skill_effectReverce.png", 10, 5, 2, 400, 160, g_pic.boss_6_3, 0) == -1)return -1;
 
 	// ボス_ヤマタノの画像読み込み
 	if (LoadDivGraph("image/YamaSann01.png", 4, 4, 1, 300, 500, g_pic.boss_Yamatano, 0) == -1)return -1;

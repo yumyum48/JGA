@@ -160,7 +160,7 @@ struct shadow : picInfo {				// ラスボス前の最後の敵の影の情報
 		attackDispFlg = FALSE;
 		preparationCnt = 0;
 		attackx = bx - PLAYER_WIDTH / 2;
-		attacky = by;
+		attacky = GROUND - 280 * PLAYER_REDUCTION * PLAYER_REDUCTION;
 		attackw = PLAYER_WIDTH * PLAYER_REDUCTION * PLAYER_REDUCTION;
 		attackh = PLAYER_HEIGHT;
 	}
