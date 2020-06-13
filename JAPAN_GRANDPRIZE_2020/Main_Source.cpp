@@ -42,11 +42,11 @@
 
 */////////////////////////////////////////////
 
-#ifdef DEBUG_MODE_OFF
+#ifdef DEBUG_LEVEL_OFF
 const int ENEMY_BEAT_MAX[MAP_MAX] = { 10,10,15,15,15,15,0,0 };    //　デバッグモードがオフの時、雑魚敵を一定数たおさなければ、ボスが出てこない
 #endif // DEBUG
 
-#ifdef DEBUG_MODE_ON
+#ifdef DEBUG_LEVEL_ON
 
 const int ENEMY_BEAT_MAX[MAP_MAX] = { 1,1,1,1,1,1,0,0 };    //デバッグモードがオンの時雑魚敵を一体倒すと。ボスが出現
 #endif // DEBUG_TEXT_ON

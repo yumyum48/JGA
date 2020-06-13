@@ -32,7 +32,11 @@ void GamePlayDisp() {
 	
 	PlayerDisp();					// プレイヤーの描画
 	RainDisp();						// 雨の描画
+
+#ifndef DEBUG_TRAP_ON
 	TrapDisp();						// トラップの表示
+#endif // DEBUG_TRAP_ON
+
 	HpDisp();						// HP表示処理
 	
 	LastBossRightNingAnime();		// ラスボス前の７体の蛇の出現アニメーション
@@ -45,7 +49,11 @@ void GamePlayMove() {
 	
 	PlayerMove();					// プレイヤーの動き
 	RainMove();						// 雨の動き
+
+#ifndef EBUG_TRAP_ON
 	TrapMove();						// トラップの動き
+#endif // EBUG_TRAP_ON
+
 	//HpMove();						// HPの計算処理
 }
 
