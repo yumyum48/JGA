@@ -45,6 +45,7 @@ struct image {
     int boss_3_1[5];                    // ボス_３の画像
     int boss_4_1[6];                    // ボス４の画像
     int boss_5_1[10];                   // ボス_５の画像
+    int boss_6_1[16];                   // ボス_６の画像
     int boss_Yamatano[4];               // ラスボスの前のヤマタノ                  
     int boss_Last[2];                   // ラスボス
     //int skill2[4];                    //スキル2のモーション画像(仮)
@@ -184,8 +185,8 @@ struct bossInfo {     // ボスの情報
             break;
         case 5:         // ステージ６のボスを初期化
             hp = 10;
-            x = 872;
-            y = 160;
+            x = 1000;
+            y = GROUND - 280 * PLAYER_REDUCTION;
             popflg = 0;
             attackFlg = 0;
             break;

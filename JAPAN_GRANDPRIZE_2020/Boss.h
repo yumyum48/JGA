@@ -27,8 +27,8 @@
 #define	BOSS_CLOUD_HEIGHT  (134)		// 雲の高さ
 #define BOSS_STAGE5_WIDTH  (324)		// ボス５の幅
 #define BOSS_STAGE5_HEIGHT (415)		// ボス５の縦
-#define BOSS_STAGE6_WIDTH  (324)		// ボス６の幅
-#define BOSS_STAGE6_HEIGHT (415)		// ボス６の縦
+#define BOSS_STAGE6_WIDTH  (89.6 + 179.2)		//ボス６の横 (PLAYER_WIDTH * PLAYER_REDUCTION) + (PLAYER_WIDTH * PLAYER_REDUCTION)
+#define BOSS_STAGE6_HEIGHT (PLAYER_HEIGHT + 70)	// ボス６の縦
 #define BOSS_STAGELAST_WIDTH  (537)		// ラスボスの幅
 #define BOSS_STAGELAST_HEIGHT (657)		// ラスボスの縦
 
@@ -79,6 +79,8 @@ enum {	// ボスの攻撃判断
 	BOSSATTACK_MINIKURAGE_AIR,			// 空中のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
 	BOSSATTACK_MINIKURAGE_GROUND,		// 地上のミニクラゲの攻撃(Boss_MiniKurage_Drop関数をボスに入れないと使えない)
 	BOSSATTACK_TACKLE,					// ボスのタックル攻撃
+	BOSSATTACK_RUSH,					// ボスの突進攻撃
+	BOSSATTACK_LONG_RANGE,				// ボスの遠距離攻撃
 	BOSSATTACK_MAX,                     // ボスの攻撃の最大数
 };
 
@@ -129,24 +131,47 @@ struct lasbossInfo : public bossInfo {    // ラスボス前の７体の蛇の情報
 
 struct shadow : picInfo {				// ラスボス前の最後の敵の影の情報
 
+	bool shadowDispFlg;		// 影の表示に使用するフラグ	TRUE:表示	FALSE:非表示
+	bool attackDispFlg;		// 影の遠距離攻撃表示に使用するフラグ	TRUE:表示	FALSE:非表示
+	int preparationCnt;		// 予備動作時間
+	int attackx;
+	int attacky;
+	int attackw;
+	int attackh;
+
 	void ShadowInit(int bx, int by = (GROUND - PLAYER_HEIGHT), bool randFlg = FALSE) {	// 影の位置を初期化
 
-		x = bx;
-		y = by;
-		w = 490;
-		h = 230;
+		shadowDispFlg = FALSE;
+		attackDispFlg = FALSE;
+		preparationCnt = 0;
+		x = bx - PLAYER_WIDTH / 2;
+		y = GROUND - 280 * PLAYER_REDUCTION;
+		w = PLAYER_WIDTH * PLAYER_REDUCTION;
+		h = PLAYER_HEIGHT;
+		/*w = 490;
+		h = 230;*/
 		//if (randFlg == TRUE) {
 		//	y = by - 
 		//}
 	}
+	void LongRangeInit(int bx, int by = (GROUND - PLAYER_HEIGHT), bool randFlg = FALSE) {
+
+		shadowDispFlg = FALSE;
+		attackDispFlg = FALSE;
+		preparationCnt = 0;
+		attackx = bx - PLAYER_WIDTH / 2;
+		attacky = by;
+		attackw = PLAYER_WIDTH * PLAYER_REDUCTION * PLAYER_REDUCTION;
+		attackh = PLAYER_HEIGHT;
+	}
 };
 
 struct boss4_parts :public picInfo {	//ボス４の雲と糸の情報 
-	int hp;
-	bool dispFlg;
+	int hp;					// 糸のｈｐ
+	bool dispFlg;			// 糸を表示判断するフラグ
 	void ThreadInit() {
-		Boss4_ThreadInit();
-		hp = 5;
+		Boss4_ThreadInit();	// 糸の初期化
+		hp = 2;
 		dispFlg = TRUE;
 	}
 	void ThreadReSet(int cloudX, int cloudY) {		// くもの糸を雷雲に合わせて再セット
@@ -246,6 +271,7 @@ void BossInit();						// ボスの初期化
 void Boss_Stage4_Init();				// ボス４の雲の初期化
 void LastBossInit();                    // ラスボス前の７体の蛇の初期化
 void Boss5_Init();						// ボス５の初期化
+void Boss6_Init();						// ボス６の初期化
 
 void BossAttackDisp();					// ボスの攻撃
 void BossAttackMove();					// ボスの攻撃
@@ -283,6 +309,10 @@ void Boss_Tackle_Disp();				// ボスがタックルする表示
 void Boss_Tackle_Move();				// ボスがタックルする動き
 void ThreadMove(int* moveFlg);          // くもの糸の内部処理
 void SpiderNoThreadMove(int* moveFlg);  // くもの糸が切れた時の動き
+void Boss_Rush_Disp();					// 影の突進攻撃
+void Boss_Rush_Move();					// 影の突進攻撃
+void Boss_LongRange_Disp();				// 影の遠距離攻撃
+void Boss_LongRange_Move();				// 影の遠距離攻撃
 
 void (* const BossDisp[MAP_MAX])() = {		// ボスの表示
 	BossDisp_Stage1,
