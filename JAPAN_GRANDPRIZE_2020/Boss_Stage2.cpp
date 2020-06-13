@@ -12,8 +12,6 @@
 #include "Init.h"
 #include "HP.h"
 
-
-
 /*********************************************
 
 * ステージ２のボス
@@ -42,11 +40,17 @@ void BossDisp_Stage2() {
 	//DrawRotaGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, 0.9f, 0.0, g_pic.enemy_walk[0], FALSE, TRUE);
 
 	//DrawBox(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, g_boss[BOSS_STAGE2].x + BOSS_STAGE2_WIDTH, g_boss[BOSS_STAGE2].y + BOSS_STAGE2_HEIGHT, 0x00FF00, TRUE);
+	const int bossAnime[6] = { 0, 3, 4, 7, 8, 9 };
+	static int animationStart = bossAnime[0];	// アニメーション開始位置の初期化
+	static int animationLast = bossAnime[1];	// アニメーションループの初期化
+	static int animecnt = 0;					// アニメーションをする為のカウント
+	static int animationCnt = 0;				// アニメーションのカウント
 
-
+	if (animecnt++ % 10 == 0)animationCnt++;					// アニメーションの進行
+	if (animationCnt > animationLast)animationCnt = animationStart;	// アニメーションのループ
 
 	// ボスの表示
-	DrawGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, g_pic.boss_2_1[0], TRUE);
+	DrawGraph(g_boss[BOSS_STAGE2].x, g_boss[BOSS_STAGE2].y, g_pic.boss_2_1[animationCnt], TRUE);
 
 	if (g_boss[BOSS_STAGE2].attackFlg != 0) {						// ボスが攻撃していれば
 		//g_boss[BOSS_STAGE2].x = 700;
