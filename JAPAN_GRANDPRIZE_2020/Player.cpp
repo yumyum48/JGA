@@ -572,6 +572,7 @@ void EnemyCut() {
 			if (++noDamageCnt > 60 && g_boss[g_select_Stage].hp > 0) {
 				if (g_player.skillFlg == 2) {
 					g_boss[g_select_Stage].hp -= 1 * g_cloneDamage;
+					g_boss[g_select_Stage].damageFlg = TRUE;
 					noDamageCnt = 0;
 				}
 				//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
@@ -580,11 +581,13 @@ void EnemyCut() {
 					if (g_player.skillFlg == 1) g_boss[g_select_Stage].hp -= 2 * g_cloneDamage;
 					if (g_player.skillFlg == 3) g_boss[g_select_Stage].hp -= 3 * g_cloneDamage;
 					if (g_player.powerUpFlg == TRUE) g_boss[g_select_Stage].hp -= 1 * g_cloneDamage;
+					g_boss[g_select_Stage].damageFlg = TRUE;
 					noDamageCnt = 0;
 				}
 
 				if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
 					g_boss[g_select_Stage].hp -= 5 * g_cloneDamage;
+					g_boss[g_select_Stage].damageFlg = TRUE;
 					noDamageCnt = 0;
 				}
 			}
@@ -604,14 +607,33 @@ void EnemyCut() {
 					if (PlayerInterval(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h) == TRUE
 						|| (SkillMove[g_player.skillFlg - 1](g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h) == TRUE)) {
 
-						g_boss_Yamatano[i].hp -= 1;
-						g_boss_Yamatano[i].damageFlg = TRUE;
+						if (++noDamageCnt > 60 && g_boss_Yamatano[i].hp > 0) {
+							if (g_player.skillFlg == 2) {
+								g_boss_Yamatano[i].hp -= 1 * g_cloneDamage;
+								g_boss_Yamatano[i].damageFlg = TRUE;
+								noDamageCnt = 0;
+							}
+							//if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+							if (g_player.attackFlg == TRUE) {
+								//if (g_skillFlg == TRUE) g_player.x = g_boss[0].x - PLAYER_WIDTH;
+								if (g_player.skillFlg == 1) g_boss_Yamatano[i].hp -= 2 * g_cloneDamage;
+								if (g_player.skillFlg == 3) g_boss_Yamatano[i].hp -= 3 * g_cloneDamage;
+								if (g_player.powerUpFlg == TRUE) g_boss_Yamatano[i].hp -= 1 * g_cloneDamage;
+								g_boss_Yamatano[i].damageFlg = TRUE;
+								noDamageCnt = 0;
+							}
+
+							if (g_player.powerUpFlg == TRUE && g_player.powerUpTime <= 0 && g_player.jumpFlg == FALSE) {
+								g_boss_Yamatano[i].hp -= 5 * g_cloneDamage;
+								g_boss_Yamatano[i].damageFlg = TRUE;
+								noDamageCnt = 0;
+							}
+						}
 					}
 				}
 			}
 		}
 	}
-
 	enemyNum = 0;
 }
 // ƒvƒŒƒCƒ„[‚Ì‰æ‘œ‚Æ“G‚Ì‰æ‘œ‚Ì“–‚½‚è”»’è (TRUE: “–‚½‚Á‚½ | FALSE: “–‚½‚ç‚È‚©‚Á‚½)
