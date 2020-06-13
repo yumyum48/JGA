@@ -8,6 +8,7 @@
 #include "Macro.h"
 #include "Rain.h"
 #include "Init.h"
+#include "Sounds.h"
 
 enum {	// タイトルのテキストの情報
 	TITLE_NEW_START,	// 新しくゲームを始める
@@ -23,6 +24,8 @@ int g_selectCheck;	// 今プレイヤーが選択しているものを確認する(0:初めから 1:続き
 
 // ゲームタイトルのメイン関数
 void GameTitle() {
+	PlaySoundMem(g_sound[BGM_TITLE], DX_PLAYTYPE_LOOP,FALSE);			//タイトルサウンド再生
+	PlaySoundMem(g_sound[BGM_RAIN], DX_PLAYTYPE_LOOP, FALSE);			//ラインサウンド再生
 	TitleMove();
 	TitleDisp();	
 }
@@ -32,9 +35,9 @@ void TitleDisp() {
 	picInfo backImage;		// タイトルの背景画像の座標
 	picInfo titleRogo;		// タイトルロゴの画像の座標
 	
-	RainDisp();
 
 	DrawRotaGraph2(backImage.x, backImage.y, 0, 0, 8.0, 0.0, g_pic.title[0], TRUE);		// タイトルの背景
+	RainDisp();
 	DrawGraph(107, 118, g_pic.titleText[0], TRUE);										// タイトルのロゴ
 	DrawGraph(TITLETEXT_X[TITLE_NEW_START], TITLETEXT_Y[TITLE_NEW_START], g_pic.titleText[1], TRUE);										// [初めから]の文字
 	DrawGraph(TITLETEXT_X[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD], g_pic.titleText[2], TRUE);										// [続きから]の文字
@@ -47,6 +50,8 @@ void TitleDisp() {
 		// 何を選択しているかわかるように四角を視覚化
 		DrawBox(TITLETEXT_X[TITLE_NEW_START], TITLETEXT_Y[TITLE_NEW_START], TITLETEXT_X[TITLE_NEW_START] + titleTextW[TITLE_NEW_START], TITLETEXT_Y[TITLE_NEW_START] + titleTextH[TITLE_NEW_START], 0xFF0000, FALSE);
 		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			HyperStop(g_sound[BGM_TITLE]);			//タイトルサウンド停止
+			HyperStop(g_sound[BGM_RAIN]);			//ラインサウンド停止
 			g_gameScene = GAME_SELECT;	// ゲームセレクトへ移動
 			Reset();					// ゲーム内容をリセットにする
 		}
@@ -55,6 +60,8 @@ void TitleDisp() {
 		// 何を選択しているかわかるように四角を視覚化
 		DrawBox(TITLETEXT_X[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD], TITLETEXT_X[TITLE_ROAD] + titleTextW[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD] + titleTextH[TITLE_ROAD], 0xFF0000, FALSE);
 		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			HyperStop(g_sound[BGM_TITLE]);			//タイトルサウンド停止
+			HyperStop(g_sound[BGM_RAIN]);			//ラインサウンド停止
 			g_gameScene = GAME_LOAD;	// ゲームセレクトへ移動
 			// ↑本当はロードするデータを選択してロードし終えてゲームセレクトへ移動
 		}
@@ -63,6 +70,8 @@ void TitleDisp() {
 		// 何を選択しているかわかるように四角を視覚化
 		DrawBox(TITLETEXT_X[TITLE_END], TITLETEXT_Y[TITLE_END], TITLETEXT_X[TITLE_END] + titleTextW[TITLE_END], TITLETEXT_Y[TITLE_END] + titleTextH[TITLE_END], 0xFF0000, FALSE);
 		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			HyperStop(g_sound[BGM_TITLE]);			//タイトルサウンド停止
+			HyperStop(g_sound[BGM_RAIN]);			//ラインサウンド停止
 			g_gameScene = GAME_END;		// ゲーム終了
 		}
 		break;

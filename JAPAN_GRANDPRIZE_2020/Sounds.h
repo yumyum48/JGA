@@ -1,6 +1,7 @@
 #pragma once
 #include "DxLib.h"
 int LoadSounds(void);				//ÉTÉEÉìÉhì«Ç›çûÇ›
+void HyperStop(int sound);
 
 enum {
 	BGM_TITLE,
@@ -27,6 +28,9 @@ enum {
 	SKILL1_SE,
 	SKILL2_SE,
 	SKILL3_SE,
+	SKILL5_SE,
+	SKILL6_SE,
+	SKILL7_SE,
 
 	BOSS1_ATTACK,
 	BOSS3_ATTACK1,
