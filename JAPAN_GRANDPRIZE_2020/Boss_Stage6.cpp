@@ -107,7 +107,7 @@ void BossMove_Stage6() {
 	if ((coolTime++ > 60)												// 硬直時間
 		&& (g_boss[BOSS_STAGE6].attackFlg == 0)							// ボスが攻撃していなければ
 		&& (moveFlg == BOSSMOVE_NOMOTION)) {							// ボスが移動していなけれ
-		attackSelect = InputRand(0, 0, BOSSATTACK_LONG_RANGE);//乱数で攻撃するか移動をするかを決定
+		attackSelect = InputRand(0, BOSSATTACK_RUSH, BOSSATTACK_LONG_RANGE);//乱数で攻撃するか移動をするかを決定
 
 
 		if (attackSelect != 0) {
