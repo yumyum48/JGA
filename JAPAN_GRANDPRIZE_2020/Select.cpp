@@ -11,6 +11,7 @@
 #include "Change_ScReen_Animation.h"
 #include "Init.h"
 #include "Save.h"
+#include "Sounds.h"
 
 /******************************************************
 // マクロの定義
@@ -42,7 +43,7 @@ enum {
 // セレクト画面の管理
 *******************************************************/
 void StageSelect() {
-
+	PlaySoundMem(g_sound[BGM_SELECT], DX_PLAYTYPE_LOOP, FALSE);            //セレクトBGM再生
 	SpeedSelect();	// ゲームのスクロールスピードを変更
 	SelectMove();	// セレクト画面の操作や動き
 	SelectDisp();	// セレクト画面の表示
@@ -179,6 +180,7 @@ void SelectMove() {
 		if (g_keyInfo.keyFlg & PAD_INPUT_A) {	// 決定したステージに移動しながらシーンをゲームプレイに変える
 
 			//Get_NowDisp(GAME_PLAY, 2);
+			HyperStop(g_sound[BGM_SELECT]);		//すべて止める最強関数
 			g_gameScene = GAME_CHANGE_SCREEN_ANIMATION;
 
 		}
@@ -272,7 +274,7 @@ void MenuSelect() {
 		switch (g_menuSelect) {
 		case 0: g_menuFlg = MENU_SAVE;		g_menuSelect = 0;		   break;	// データのセーブ
 		case 1: g_gameScene = GAME_SKILLCUSTOM;   g_menuSelect = 0;     break;	// スキルカスタマイズ
-		case 2: GameInit(); g_menuFlg = MENU_OFF; g_gameScene = GAME_TITLE; break;	// タイトルへ移動
+		case 2: GameInit(); g_menuFlg = MENU_OFF; g_gameScene = GAME_TITLE; HyperStop(g_sound[BGM_SELECT]); break;    // タイトルへ移動
 		default:
 			break;
 		}

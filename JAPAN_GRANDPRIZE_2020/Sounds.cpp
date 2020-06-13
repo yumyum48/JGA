@@ -1,6 +1,10 @@
 #include "DxLib.h"
 #include "Sounds.h"
 
+void HyperStop(int sound) {		//ハイパーストップ関数
+	StopSoundMem(sound);
+	SetCurrentPositionSoundMem(0,sound);//0が再生位置、soundがハンドル名
+}
 
 int LoadSounds(void) {				//サウンド読み込み
 
@@ -27,6 +31,9 @@ int LoadSounds(void) {				//サウンド読み込み
 	if ((g_sound[SKILL1_SE] = LoadSoundMem("sounds/se_maoudamashii_element_fire08.mp3")) == -1) return -1;	//スキル１SE
 	if ((g_sound[SKILL2_SE] = LoadSoundMem("sounds/se_maoudamashii_element_fire10.mp3")) == -1) return -1;	//スキル２SE
 	if ((g_sound[SKILL3_SE] = LoadSoundMem("sounds/se_maoudamashii_element_fire01.mp3")) == -1) return -1;	//スキル３SE
+	if ((g_sound[SKILL5_SE] = LoadSoundMem("sounds/export_ofoct.com.mp3")) == -1) return -1;	//スキル5SE
+	if ((g_sound[SKILL6_SE] = LoadSoundMem("sounds/点火・火をつける.mp3")) == -1) return -1;	//スキル6SE
+	if ((g_sound[SKILL7_SE] = LoadSoundMem("sounds/disappearance2.mp3")) == -1) return -1;	//スキル7SE
 
 
 	if ((g_sound[BOSS1_ATTACK] = LoadSoundMem("sounds/se_maoudamashii_element_water06.mp3")) == -1) return -1;	//ボス１攻撃音

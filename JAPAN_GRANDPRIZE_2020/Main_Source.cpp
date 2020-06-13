@@ -131,6 +131,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_
 	// DXライブラリの初期化
 	if (DxLib_Init() == -1) return  -1;
 	if (LoadPicture() == -1)return  -1;
+	if (LoadSounds() == -1)return  -1;
 
 	// フォントを変える
 	ChangeFont("HG行書体");

@@ -12,6 +12,7 @@
 #include "Boss.h"
 #include "Select.h"
 #include "HP.h"
+#include "Sounds.h"
 
 int g_skillAnime[8] = { 0 };
 bool g_skillAniFlg[8] = { FALSE };
@@ -27,13 +28,18 @@ void SkillDisp_1(int aniMAX, int aniMIN) {		//間合い伸びるやつ（player.cppのPlay
 	//static int skill_X = 100;
 	//static int skill_Y = 490;
 
+
 	bool g_skillFlg = false;
 	/*for (int i = 0; i < 8; i++) {
 		g_skillAnime[i] = 0;
 	}*/
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL1_GAUGE
+	if ((g_keyInfo.keyFlg & PAD_INPUT_B) && g_player.gauge > SKILL1_GAUGE
 		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
+		if (CheckSoundMem(g_sound[SKILL1_SE]) == 1) {		//スキル１を連打したときになるような処理
+			StopSoundMem(g_sound[SKILL1_SE]);
+		}
+		PlaySoundMem(g_sound[SKILL1_SE], DX_PLAYTYPE_BACK, TRUE);			//スキル１SE再生
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -84,8 +90,9 @@ void SkillDisp_2(int aniMAX, int aniMIN) { //飛ばすやつ
 	// スキル中
 	//EnemyLockOn();
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_skillAniFlg[1] == FALSE && g_player.gauge > SKILL2_GAUGE
+	if ((g_keyInfo.keyFlg & PAD_INPUT_B) && g_skillAniFlg[1] == FALSE && g_player.gauge > SKILL2_GAUGE
 		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
+		PlaySoundMem(g_sound[SKILL2_SE], DX_PLAYTYPE_BACK, FALSE);			//スキル２SE再生
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -143,10 +150,12 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //上方向に延びるやつ
 	//static int skill_Y = 490;
 	//static int ANIME = 0;
 
+
 	bool g_skillFlg = false;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL3_GAUGE
+	if ((g_keyInfo.keyFlg & PAD_INPUT_B) && g_player.gauge > SKILL3_GAUGE
 		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
+		PlaySoundMem(g_sound[SKILL3_SE], DX_PLAYTYPE_BACK, FALSE);			//スキル３SE再生
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -201,8 +210,10 @@ void SkillDisp_4(int aniMAX, int aniMIN) { //エレクトロニックスーパージャンプ
 	static int effect_Y = 0;
 	static float effect_Ani = 0;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL4_GAUGE && g_player.y >= GROUND - PLAYER_HEIGHT
+	if ((g_keyInfo.keyFlg & PAD_INPUT_B) && g_player.gauge > SKILL4_GAUGE && g_player.y >= GROUND - PLAYER_HEIGHT
 		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
+		PlaySoundMem(g_sound[SE_JUMP], DX_PLAYTYPE_BACK, FALSE);			//スキル5SE再生
+		PlaySoundMem(g_sound[SKILL1_SE], DX_PLAYTYPE_BACK, FALSE);			//スキル5SE再生
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -264,11 +275,12 @@ void SkillDisp_5(int aniMAX, int aniMIN) { //強化技
 	//static int skill_Y = 490;
 	//static int anime = 0;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL5_GAUGE
+	if ((g_keyInfo.keyFlg & PAD_INPUT_B) && g_player.gauge > SKILL5_GAUGE
 		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
+			PlaySoundMem(g_sound[SKILL5_SE], DX_PLAYTYPE_BACK, FALSE);			//スキル5SE再生
 		}
 		else {
 			g_player.attackFlg = TRUE;
@@ -301,8 +313,9 @@ void SkillDisp_6(int aniMAX, int aniMIN) { //ヴぁリア
 	//static int skill_Y = 490;
 	//static int anime = 0;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL6_GAUGE && g_player.barrierFlg == FALSE
+	if ((g_keyInfo.keyFlg & PAD_INPUT_B) && g_player.gauge > SKILL6_GAUGE && g_player.barrierFlg == FALSE
 		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
+		PlaySoundMem(g_sound[SKILL6_SE], DX_PLAYTYPE_BACK, FALSE);			//スキル6SE再生
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
@@ -338,8 +351,9 @@ void SkillDisp_7(int aniMAX, int aniMIN) { //分身
 	//static int skill_Y = 490;
 	static float effect_Ani = 0;
 
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_player.gauge > SKILL7_GAUGE
+	if ((g_keyInfo.keyFlg & PAD_INPUT_B) && g_player.gauge > SKILL7_GAUGE
 		&& g_player.skillCoolTime[g_player.skillNo] <= 0) {
+		PlaySoundMem(g_sound[SKILL7_SE], DX_PLAYTYPE_BACK, FALSE);			//スキル6SE再生
 		if (g_player.swordFlg == FALSE) {
 			g_player.timecount = 10;
 			g_player.useSkillFlg = TRUE;
