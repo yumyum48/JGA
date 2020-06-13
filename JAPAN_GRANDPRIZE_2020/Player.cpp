@@ -58,21 +58,6 @@ void PlayerDisp() {
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	if (g_player.powerUpFlg == TRUE) {//スキル5　仮
-		//DrawBox(g_player.x, g_player.y, g_player.x + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, 0x00ffff, TRUE);
-		DrawRotaGraph(g_player.x + 100, g_player.y + 70, 2, 0.0, g_pic.Life[1], TRUE);
-
-		if (g_player.powerUpTime > 0) g_player.powerUpTime--;
-		else {
-			if (g_player.jumpFlg == FALSE) {
-				PlaySoundMem(g_sound[SKILL5_SE], DX_PLAYTYPE_BACK, FALSE);			//スキル5SE再生
-				g_noDamageCnt = 0;
-				if (g_player.x < 900) g_player.x += 50, g_player.jumpFlg == FALSE, EnemyCut();
-				else g_player.powerUpTime = SKILL5_TIME, g_player.powerUpFlg = FALSE, skill5Anime = 0;
-			}
-		}
-	}
-
 	// 残像
 	PlayerAfterimage(anime);
 	//プレイヤーの描画
@@ -91,6 +76,22 @@ void PlayerDisp() {
 			DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[48], TRUE);
 	}
 
+	if (g_player.powerUpFlg == TRUE) {//スキル5　仮
+		//DrawBox(g_player.x, g_player.y, g_player.x + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, 0x00ffff, TRUE);
+		//DrawRotaGraph(g_player.x + 100, g_player.y + 70, 2, 0.0, g_pic.Life[1], TRUE);
+		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.skill5Effect[(skill5Anime / 5) % 4], TRUE);
+		skill5Anime++;
+
+		if (g_player.powerUpTime > 0) g_player.powerUpTime--;
+		else {
+			if (g_player.jumpFlg == FALSE) {
+				PlaySoundMem(g_sound[SKILL5_SE], DX_PLAYTYPE_BACK, FALSE);			//スキル5SE再生
+				g_noDamageCnt = 0;
+				if (g_player.x < 900) g_player.x += 50, g_player.jumpFlg == FALSE, EnemyCut();
+				else g_player.powerUpTime = SKILL5_TIME, g_player.powerUpFlg = FALSE, skill5Anime = 0;
+			}
+		}
+	}
 	//スキル7の分身
 	if (g_player.cloneFlg == TRUE) {
 		DrawRotaGraph2(g_player.x - 40, g_player.y + 2, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.skill7_Effect[anime], TRUE);
