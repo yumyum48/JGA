@@ -84,8 +84,7 @@ void BossDisp_Stage5() {
 
 	if (g_barrier.cnt++ >= 300 && g_barrier.flg == TRUE) {
 		// ÉVÅ[ÉãÉh
-		g_barrier.x = g_mouseInfo.mouseX;
-		DrawGraph(g_barrier.x, g_barrier.y, g_pic.sield, TRUE);
+		DrawGraph(g_barrier.x, g_barrier.y, g_pic.boss6_sield, TRUE);
 		//DrawBox(g_barrier.x, g_barrier.y, g_barrier.x + 30, g_barrier.y + BOSS_STAGE5_HEIGHT, 0x000000, TRUE);
 	}
 
