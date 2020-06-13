@@ -154,15 +154,15 @@ struct shadow : picInfo {				// ラスボス前の最後の敵の影の情報
 		//	y = by - 
 		//}
 	}
-	void LongRangeInit(int bx, int by = (GROUND - PLAYER_HEIGHT), bool randFlg = FALSE) {
+	void LongRangeInit(int bx, int by = (GROUND - 40/*PLAYER_HEIGHT*/), bool randFlg = FALSE) {
 
 		shadowDispFlg = FALSE;
 		attackDispFlg = FALSE;
 		preparationCnt = 0;
-		attackx = bx - PLAYER_WIDTH / 2;
-		attacky = GROUND - 280 * PLAYER_REDUCTION * PLAYER_REDUCTION;
-		attackw = PLAYER_WIDTH * PLAYER_REDUCTION * PLAYER_REDUCTION;
-		attackh = PLAYER_HEIGHT;
+		attackx = bx - 200;
+		attacky = GROUND - 80;
+		attackw = 150;
+		attackh = PLAYER_HEIGHT / 2;
 	}
 };
 
