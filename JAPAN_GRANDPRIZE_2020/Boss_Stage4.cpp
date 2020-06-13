@@ -56,10 +56,15 @@ void BossDisp_Stage4() {
 	g_rightning.exRate = (float)g_rightning.cnt / 500.0F;
 	
 	// 雲の表示
-	DrawBox(g_boss4_Cloud.x, g_boss4_Cloud.y, g_boss4_Cloud.w, g_boss4_Cloud.h, 0xFFFFFF, TRUE);
+	//DrawBox(g_boss4_Cloud.x, g_boss4_Cloud.y, g_boss4_Cloud.w, g_boss4_Cloud.h, 0xFFFFFF, TRUE);
 	DrawRotaGraph(g_boss4_Cloud.x + ((g_boss4_Cloud.w - g_boss4_Cloud.x) / 2), g_boss4_Cloud.y + ((g_boss4_Cloud.h - g_boss4_Cloud.y) / 2), 1.5f, 0.0, g_pic.thundercloud, TRUE);
 	// 雷撃の充電
-	DrawRotaGraph(g_boss4_Cloud.x + ((g_boss4_Cloud.w - g_boss4_Cloud.x )/ 2), g_boss4_Cloud.y + ((g_boss4_Cloud.h - g_boss4_Cloud.y) / 2), g_rightning.exRate, 0.0, g_pic.enemy_walk[0], TRUE);
+	int animeMax = 3;
+	static int animeRightning = 0;
+	static int animeFrameCnt = 0;
+	if (animeFrameCnt++ % 10 == 0)animeRightning++;					// アニメーションの進行
+	if (animeRightning > animeMax)animeRightning = 0;				// アニメーションのループ
+	DrawRotaGraph(g_boss4_Cloud.x + ((g_boss4_Cloud.w - g_boss4_Cloud.x )/ 2) + 10, g_boss4_Cloud.y + ((g_boss4_Cloud.h - g_boss4_Cloud.y) / 2) - 10, g_rightning.exRate, 0.0, g_pic.boss4_Cloud_Rightning[animeRightning], TRUE);
 	// 糸の表示
 	if (g_boss4_Thread.dispFlg == TRUE) {
 		DrawBox(g_boss4_Thread.x, g_boss4_Thread.y, g_boss4_Thread.w, g_boss4_Thread.h, 0xFFFFFF, TRUE);
@@ -184,9 +189,9 @@ void Boss_Lightning_Disp() {
 	
 	static int stopCnt = 0;	// 雷撃を表示させる時間
 
-
+	// g_rightning.x + 526, g_rightning.y + 488
 	if (g_rightning.cnt <= 0) {
-		DrawBox(g_rightning.x, g_rightning.y, g_rightning.x + 526, g_rightning.y + 488, 0x00FFFF, TRUE);
+		DrawRotaGraph2(g_rightning.x, g_rightning.y, 0, 0, 1.0, 0.0, g_pic.boss4_RightningSmash, TRUE);
 		g_rightning.cnt = 0;
 		stopCnt++;
 	}

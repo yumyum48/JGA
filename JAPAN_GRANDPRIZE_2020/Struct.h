@@ -68,6 +68,8 @@ struct image {
     int spiderKids[4];                  // 子蜘蛛の画像
     int spiderThread;                   // くもの糸の画像
     int thundercloud;                   // 雷雲の画像
+    int boss4_Cloud_Rightning[4];       // 雲から雷が漏れ出ている画像
+    int boss4_RightningSmash;           // 雲から雷が出ている
     int boss6_sield;                    // ボス６シールド
     int button[3];                      // ボタンUI
     int finishMotion[16];               // ステージクリア時のplayerMotion画像

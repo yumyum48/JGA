@@ -9,3 +9,5 @@
 #define SCROLL_MAX         (4)        // スクロール最大数
 #define MAP_MAX             (8)       // マップの最大数 
 #define DEBUG_MODE_OFF				  // デバッグモード		ON:	起動	OFF:停止
+
+#define DEBUG_TEXT_ON

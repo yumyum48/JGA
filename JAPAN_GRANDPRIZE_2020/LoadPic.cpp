@@ -98,6 +98,11 @@ int LoadPicture() {
 	// ボス_４の画像読み込み
 	if (LoadDivGraph("image/SpiderBossAll.png", 6, 6, 1, 550, 500, g_pic.boss_4_1, 0) == -1)return -1;
 
+	// ボス_４の雲から漏れ出ている雷の画像読み込み
+	if (LoadDivGraph("image/Boss_5_Electric_ALL.png", 4, 4, 1, 280, 200, g_pic.boss4_Cloud_Rightning, 0) == -1)return -1;
+
+	// ボス_４の雷の画像読み込み
+	if ((g_pic.boss4_RightningSmash = LoadGraph("image/Boss_4_Electric.png")) == -1) return -1;
 
 	// ボス_５の画像読み込み
 	if (LoadDivGraph("image/JellyFishBossAll.png", 10, 10, 1, 550, 600, g_pic.boss_5_1, 0) == -1)return -1;
