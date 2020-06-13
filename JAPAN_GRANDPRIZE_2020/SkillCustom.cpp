@@ -29,6 +29,7 @@ void SkillCustom_Disp() {
 
 	DrawRotaGraph2(0, 0, 0, 0, 8.0, 0.0, g_pic.customBackimage, TRUE);		// 背景表示
 	//デバッグ用
+#ifdef DEBUG_SKILL_ON
 	DrawFormatString(0, 60, 0xFFFFFF, "%d", g_player.skillcustom[0]);
 	DrawFormatString(10, 60, 0xFFFFFF, "%d", g_player.skillcustom[1]);
 	DrawFormatString(20, 60, 0xFFFFFF, "%d", g_player.skillcustom[2]);
@@ -36,8 +37,10 @@ void SkillCustom_Disp() {
 	DrawFormatString(10, 80, 0xFFFFFF, "%d", debug);
 
 
-
 	DrawFormatString(0, 100, 0xFF0000, "%d", skill_ReleaseFlg[g_Skill_Num - 1]);
+
+#endif //DEBUG_SKILL_ON
+
 
 	//お知らせ用
 	//DrawString(800, 800, "↑ボタンでスキル決定", 0xFFFFFF);

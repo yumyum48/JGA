@@ -63,7 +63,11 @@ void SkillDisp_1(int aniMAX, int aniMIN) {		//間合い伸びるやつ（player.cppのPlay
 
 	}
 	if (g_skillAniFlg[0] == TRUE) {
+
+#ifdef DEBUG_SKILL_ON
 		DrawFormatString(500, 500, 0xff0000, "%d", g_skillAnime[0] / 10);
+#endif // DEBUG_SKILL_ON
+
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, g_skillAnime[0] * 15);
 		DrawGraph((g_player.x - 80) + g_skillAnime[0] * 3, g_player.y - 250, g_pic.skillEffect[g_skillAnime[0] / 10], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -180,7 +184,11 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //上方向に延びるやつ
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, g_skillAnime[2] * 15);
 		DrawGraph((g_skill_X - 80) + g_skillAnime[2] * 3, g_skill_Y - 200, g_pic.skillEffect[(g_skillAnime[2] / 10) + 10], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+#ifdef DEBUG_SKILL_ON
 		DrawFormatString(500, 500, 0xff0000, "%d", g_skillAnime[2] / 10 + 10);
+#endif // DEBUG
+
 		if (++g_skillAnime[2] >= 50) g_skillAniFlg[2] = FALSE, g_skillAnime[2] = 0;
 	}
 
@@ -236,8 +244,12 @@ void SkillDisp_4(int aniMAX, int aniMIN) { //エレクトロニックスーパージャンプ
 		DrawRotaGraph2(g_player.x, g_player.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.SkillMotion[9], TRUE);
 	}
 	if (g_skillAniFlg[3] == TRUE) {
+
+#ifdef DEBUG_SKILL_ON
 		DrawFormatString(500, 500, 0xff0000, "%d", g_skill_X);
 		DrawFormatString(500, 600, 0xff0000, "%d", g_boss[g_select_Stage].popflg);
+#endif // DEBUG
+
 		g_player.y += g_skill_Y;
 		g_skill_Y += 2.0F;
 		g_noDamageCnt = 0;
@@ -254,8 +266,12 @@ void SkillDisp_4(int aniMAX, int aniMIN) { //エレクトロニックスーパージャンプ
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		if (effect_Ani < 1.99) effect_Ani += 0.2F;
 		else effect_Ani = 0;
-		DrawFormatString(500, 500, 0xff0000, "%d", g_skillAnime[3] / 10 + 10);
+
+#ifdef DEBUG_SKILL_ON
+DrawFormatString(500, 500, 0xff0000, "%d", g_skillAnime[3] / 10 + 10);
 		if (++g_skillAnime[3] >= 50) g_skillAnime[3] = 0, g_skillAniFlg[3] = FALSE;
+#endif // DEBUG_SKILL_ON
+		
 	}
 
 	// スキル中
@@ -375,7 +391,9 @@ void SkillDisp_7(int aniMAX, int aniMIN) { //分身
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - g_skillAnime[6] * 5);
 		DrawRotaGraph((g_player.x - 70) - g_skillAnime[6], g_player.y - g_skillAnime[6], 1.5, 90.0, g_pic.skillEffect[17 + int(effect_Ani - 0.1F)], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+#ifdef DEBUG_SKILL_ON
 		DrawFormatString(500, 500, 0xff0000, "%d", g_skillAnime[6]);
+#endif
 
 		if (effect_Ani < 1.99) effect_Ani += 0.2F;
 		else effect_Ani = 0;
