@@ -149,13 +149,14 @@ void SelectDisp(void) {
 		}
 		// メニュー画面で保存が押された場合
 		else if (g_menuFlg == MENU_SAVE) {
+			if (g_cursorAnime < 400) g_cursorAnime += 20;
 			if (g_saveBox.x == MENU_SAVE_BOX_XPOINT_MAX) {	// 座標が固定されたら操作可能
 				//DrawBox(saveSelect_X, saveSelect_Y[g_saveSelect], saveSelect_X + MENU_SELECT_WIDTH - 100, saveSelect_Y[g_saveSelect] + MENU_SELECT_HEIGHT, 0xFF0000, TRUE);
 				SaveModeDisp(saveSelect_X, saveSelect_Y);	// セーブデータ表示
 
 				// セレクトしているものを視覚化
-				DrawExtendGraph(saveSelect_X + 20, menuSelect_Y[g_saveSelect] + 80,
-					saveSelect_X + 76 + g_cursorAnime, menuSelect_Y[g_saveSelect] + 100, g_pic.bossTongue, TRUE);
+				DrawExtendGraph(saveSelect_X + 20, saveSelect_Y[g_saveSelect] + 80,
+					saveSelect_X + 76 + g_cursorAnime, saveSelect_Y[g_saveSelect] + 100, g_pic.bossTongue, TRUE);
 				DrawRotaGraph(saveSelect_X + 10 + g_cursorAnime, saveSelect_Y[g_saveSelect] + 50, 0.5, 0, g_pic.skillEffect[9], TRUE);
 				DrawGraph(saveSelect_X, saveSelect_Y[g_saveSelect], g_pic.Life[1], TRUE);
 			}
@@ -202,10 +203,12 @@ void SelectMove() {
 			SaveMenu_ScrollIn();							// セーブ画面を画面中央付近まで動かす
 			if (g_saveBox.x == MENU_SAVE_BOX_XPOINT_MAX) {	// セーブ画面が中央まで来たら操作可能
 				if (g_keyInfo.keyFlg & PAD_INPUT_A) {		// 決定ボタンを押すと
-					SaveMenu_Save();						// 選択されたファイルにセーブを実行する
+					SaveMenu_Save();
+					g_cursorAnime = 0;						// 選択されたファイルにセーブを実行する
 				}
 				if (g_keyInfo.keyFlg & PAD_INPUT_B) {		// Bボタンを押すと、メニュー選択画面に戻す
 					g_menuFlg = MENU_ON;
+					g_cursorAnime = 0;
 					//g_menuSelect = 0;
 				}
 			}
@@ -315,7 +318,7 @@ void StageSelectOper() {
 	}
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_LEFT) {
-		if (--g_select_Stage < g_select_MAX) g_select_Stage = g_select_MAX;
+		if (--g_select_Stage < 0) g_select_Stage = g_select_MAX;
 	}
 }
 /******************************************************
@@ -339,10 +342,12 @@ void MenuSelectOper() {
 void SaveSelectOper() {
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
+		g_cursorAnime = 0;
 		if (++g_saveSelect > 2) g_saveSelect = 0;
 	}
 	// メニューカーソル制御処理
 	if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
+		g_cursorAnime = 0;
 		if (--g_saveSelect < 0) g_saveSelect = 2;
 	}
 }
