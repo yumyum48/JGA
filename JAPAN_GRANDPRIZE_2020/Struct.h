@@ -73,7 +73,7 @@ struct image {
     int button[3];                      // ボタンUI
     int finishMotion[16];               // ステージクリア時のplayerMotion画像
     int husuma[2];                      //ふすま画像
-
+    int bossIcon[8];                    //bossのアイコン
 };
 
 // プレイヤーの情報

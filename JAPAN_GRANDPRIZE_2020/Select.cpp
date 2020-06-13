@@ -59,9 +59,18 @@ void SelectDisp(void) {
 	DrawRotaGraph2(0, 0, 0, 0, 8.0, 0.0, g_pic.selectBack, TRUE);		// タイトルの背景
 
 	// セレクト画面のマップ
-	for (int i = 0; i < MAP_MAX; i++) {
+	for (int i = 0; i < MAP_MAX - 1; i++) {
 		stage[i].SelectStageInit(i);
-		DrawBox(stage[i].x, stage[i].y, stage[i].x + 100, stage[i].y + 100, 0x00FF00, TRUE);
+		//DrawBox(stage[i].x, stage[i].y, stage[i].x + 100, stage[i].y + 100, 0x00FF00, TRUE);
+		DrawRotaGraph2(stage[i].x, stage[i].y, 0, 0, 1.55, 0.0, g_pic.bossIcon[i], TRUE);		// bossのアイコン
+
+		if (g_select_Stage != i) {
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+			SetDrawBright(0, 0, 0);
+			DrawRotaGraph2(stage[i].x, stage[i].y, 0, 0, 1.55, 0.0, g_pic.bossIcon[i], TRUE);		// bossのアイコン
+			SetDrawBright(255, 255, 255);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		}
 		if (i == 7) {
 			DrawBox(stage[i].x, stage[i].y, stage[i].x + 200, stage[i].y + 200, 0x00FF00, TRUE);
 		}

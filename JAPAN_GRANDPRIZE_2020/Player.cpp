@@ -31,6 +31,7 @@ void PlayerDisp() {
 	static int anime = 0;							// プレイヤーの画像を変える
 	static int time = 0;							// 画像を切り替えるタイミング調整
 	static float skillTime[3] = { 0 };				// スキルクールタイム
+	static int skill7Anime = 0;						//スキル7アニメーション
 	static int skill6Anime[2] = { 0 };				//スキル6アニメーション
 	static int skill5Anime = 0;					//スキル5アニメーション
 	static int lifeBox = 3;						//ライフを一時的に保存
@@ -95,6 +96,8 @@ void PlayerDisp() {
 	//スキル7の分身
 	if (g_player.cloneFlg == TRUE) {
 		DrawRotaGraph2(g_player.x - 40, g_player.y + 2, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.skill7_Effect[anime], TRUE);
+		DrawGraph(g_player.x - 200, g_player.y - 220, g_pic.skillEffect[30 + (skill7Anime / 10) % 2], TRUE);
+		skill7Anime++;
 	}
 
 	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
