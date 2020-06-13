@@ -53,6 +53,9 @@ int LoadPicture() {
 	// 飛ぶ雑魚敵
 	if (LoadDivGraph("image/zkfry.png", 4, 4, 1, 574, 545, g_pic.enemy_fly, 0) == -1)return -1;
 
+	// ミニクラゲ雑魚敵
+	if (LoadDivGraph("image/MiniJelly.png", 4, 4, 1, 64, 64, g_pic.enemy_kurage, 0) == -1)return -1;
+
 	/*//マップの読み込み
 	if (LoadDivGraph("image/mori8sute.png", 24, 3, 8, 1024, 768, g_pic.map, 0) == -1)
 		return -1;*/
@@ -81,7 +84,7 @@ int LoadPicture() {
 	if (LoadDivGraph("image/Boss_1.png", 16, 8, 2, 280, 200, g_pic.boss_1_1, 0) == -1)return -1;
 
 	// ボス_２の画像読み込み
-	if (LoadDivGraph("image/ZakoOPAll.png", 9, 9, 1, 44.4, 44, g_pic.boss_2_1, 0) == -1)return -1;
+	if (LoadDivGraph("image/ZakoOPAll.png", 9, 9, 1, 256, 256, g_pic.boss_2_1, 0) == -1)return -1;
 
 	// ボス_３の画像読み込み
 	if (LoadDivGraph("image/BossFlog.png", 5, 5, 1, 128, 128, g_pic.boss_3_1, 0) == -1)return -1;

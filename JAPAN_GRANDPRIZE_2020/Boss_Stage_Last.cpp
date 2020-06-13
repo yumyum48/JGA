@@ -1154,7 +1154,7 @@ void Last_Boss_MiniKurage_Drop_Disp(int bx, int by, int* boss_AttackFlg, int* co
 		if (g_enemy[i].kurage.flg == TRUE) {
 			// G‹›“G‚Ì•`‰æ
 			DrawRotaGraph2(g_enemy[i].kurage.x, g_enemy[i].kurage.y,
-				0, 0, 1.0, 0.0, g_pic.enemy_walk[g_enemy[i].kurage.anime], TRUE);
+				0, 0, 1.0, 0.0, g_pic.enemy_kurage[g_enemy[i].kurage.anime], TRUE);
 		}
 	}
 	// “G‚Ìö”­ƒAƒjƒ[ƒVƒ‡ƒ“
@@ -1310,8 +1310,6 @@ void Last_Boss_Shadow_Attack_Disp(int bx, int by, int* boss_AttackFlg, int* cool
 	//DrawRotaGraph2(g_boss_shadow.x, g_boss_shadow.y, 0, 0, PLAYER_REDUCTION, 0.0, g_pic.player[anime], TRUE, TRUE);
 	DrawBox(g_boss_shadow.x, g_boss_shadow.y, g_boss_shadow.x + g_boss_shadow.w, g_boss_shadow.y + g_boss_shadow.h, 0x00F0F0, TRUE);
 }
-
-// 
 
 void Last_Boss_Shadow_Attack_Move(int bx, int by, int* boss_AttackFlg, int* coolTime) {
 	if (g_boss_shadow.x + g_boss_shadow.w <= 0) {

@@ -33,6 +33,7 @@ struct image {
     int SkillMotion[15];                 //スキルモーション画像
     int enemy_walk[4];                  // 歩く雑魚敵のの画像
     int enemy_fly[4];                   // 飛ぶ雑魚敵の画像
+    int enemy_kurage[4];                // クラゲの雑魚敵画像
     int map[MAP_MAX * SCROLL_MAX];      // マップの画像
     int backMap[MAP_MAX * SCROLL_MAX];  // マップの背景
     int rain;                           // 雨の画像
@@ -63,7 +64,7 @@ struct image {
     int spiderKids[4];                  // 子蜘蛛の画像
     int spiderThread;                   // くもの糸の画像
     int thundercloud;                   // 雷雲の画像
-    int boss6_sield;                          // ボス６シールド
+    int boss6_sield;                    // ボス６シールド
 };
 
 // プレイヤーの情報
