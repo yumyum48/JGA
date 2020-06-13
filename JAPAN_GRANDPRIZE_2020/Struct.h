@@ -43,9 +43,12 @@ struct image {
     int boss_1_1[16];                   // ボス_１の画像
     int boss_2_1[9];                    // ボス_２の画像
     int boss_3_1[5];                    // ボス_３の画像
+    int boss_4_1[6];                    // ボス４の画像
     int boss_5_1[10];                   // ボス_５の画像
-    //int skill2[4];                      //スキル2のモーション画像(仮)
-    //int skill3[5];                      //スキル3のモーション画像(仮)
+    int boss_Yamatano[4];               // ラスボスの前のヤマタノ                  
+    int boss_Last[2];                   // ラスボス
+    //int skill2[4];                    //スキル2のモーション画像(仮)
+    //int skill3[5];                    //スキル3のモーション画像(仮)
     int skillEffect[40];                //スキルエフェクト画像
     int selectBack;                     // セレクト画面の背景画像
     int selectUI[5];                    //セレクト画面のUI画像
