@@ -95,11 +95,23 @@ int LoadPicture() {
 	// ボス_３の画像読み込み
 	if (LoadDivGraph("image/BossFlog.png", 5, 5, 1, 128, 128, g_pic.boss_3_1, 0) == -1)return -1;
 
+	// ボス_４の画像読み込み
+	if (LoadDivGraph("image/SpiderBossAll.png", 6, 6, 1, 550, 500, g_pic.boss_4_1, 0) == -1)return -1;
+
+
 	// ボス_５の画像読み込み
 	if (LoadDivGraph("image/JellyFishBossAll.png", 10, 10, 1, 550, 600, g_pic.boss_5_1, 0) == -1)return -1;
 
 	// ボス_５のシールド画像読み込み
 	if ((g_pic.boss6_sield = LoadGraph("image/JellyShield.png")) == -1) return -1;
+
+	// ボス_６の画像読み込み
+	//if (LoadDivGraph("image/player.png", 16, 8, 2, 280, 400, g_pic.boss_6_1, 0) == -1)return -1;
+	if (LoadDivGraph("image/Boss_1.png", 16, 8, 2, 280, 200, g_pic.boss_6_1, 0) == -1)return -1;
+
+	// ボス_ヤマタノの画像読み込み
+	if (LoadDivGraph("image/YamaSann01.png", 4, 4, 1, 300, 500, g_pic.boss_Yamatano, 0) == -1)return -1;
+
 	//// ボス_１の泡画像読み込み
 	//if (LoadDivGraph("image/Boss1_Water.png", 8, 8, 0, 280, 200, g_pic.boss_1_2, 0) == -1)
 	//	return -1;

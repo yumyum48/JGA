@@ -82,7 +82,9 @@ void BossDisp_Stage_Last() {
 	// ボスの本体を除いた7体の表示
 	for (int i = 0; i < YAMATANO_NECK; i++) {
 		if (g_boss_Yamatano[i].popflg != LASTBOOS_OFF && g_boss_Yamatano[i].popflg != LASTBOSS_KILL) {
-			DrawBox(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h, 0x00FFFF, TRUE);
+			//(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h, 0x00FFFF, TRUE);
+			DrawRotaGraph2(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, 0, 0, 1.0, 0.0, g_pic.boss_Yamatano[0], TRUE);
+
 
 		}
 	}
@@ -958,7 +960,7 @@ void Last_Boss_Attack_MiniSpider_Drop_Disp(int bx, int by, int* boss_AttackFlg, 
 
 		if (g_enemy[i].spider.flg == TRUE)        // 雑魚敵の描画
 			DrawRotaGraph2(g_enemy[i].spider.x, g_enemy[i].spider.y,
-				0, 0, 1.0, 0.0, g_pic.enemy_walk[g_enemy[i].spider.anime], TRUE);
+				0, 0, 1.0, 0.0, g_pic.spiderKids[g_enemy[i].spider.anime], TRUE);
 		//DrawRotaGraph(g_enemy[i].fly.x, g_enemy[i].fly.y, 1.0f, 0.0, g_pic.flyEnemy[0], TRUE, FALSE);
 	}
 
@@ -1154,7 +1156,7 @@ void Last_Boss_MiniKurage_Drop_Disp(int bx, int by, int* boss_AttackFlg, int* co
 		if (g_enemy[i].kurage.flg == TRUE) {
 			// 雑魚敵の描画
 			DrawRotaGraph2(g_enemy[i].kurage.x, g_enemy[i].kurage.y,
-				0, 0, 1.0, 0.0, g_pic.enemy_kurage[g_enemy[i].kurage.anime], TRUE);
+				0, 0, 2.0, 0.0, g_pic.enemy_kurage[g_enemy[i].kurage.anime], TRUE);
 		}
 	}
 	// 敵の蒸発アニメーション

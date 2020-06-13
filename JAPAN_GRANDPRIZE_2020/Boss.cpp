@@ -196,6 +196,14 @@ void BossAttackDisp() {
 		case BOSSATTACK_TACKLE:
 			Boss_Tackle_Disp();
 			break;
+
+		case BOSSATTACK_RUSH:
+			Boss_Rush_Disp();		// ボスの突進攻撃
+			break;
+
+		case BOSSATTACK_LONG_RANGE:	// 遠距離攻撃
+			Boss_LongRange_Disp();
+			break;
 		default:
 			break;
 	}
@@ -243,10 +251,163 @@ void BossAttackMove() {
 		case BOSSATTACK_TACKLE:
 			Boss_Tackle_Move();
 			break;
+
+		case BOSSATTACK_RUSH:
+			Boss_Rush_Move();		// ボスの突進攻撃
+			break;
+
+		case BOSSATTACK_LONG_RANGE:	// 遠距離攻撃
+			Boss_LongRange_Move();
+			break;
 		default:
 			break;
 	}
 	
+}
+
+/*********************************************
+
+* ボス６遠距離攻撃
+
+*/////////////////////////////////////////////
+void Boss_LongRange_Disp() {
+	if (g_boss_shadow.shadowDispFlg == TRUE
+		&& ++g_boss_shadow.preparationCnt > 60) {
+
+	}
+
+	DrawBox(g_boss_shadow.attackx, g_boss_shadow.attacky,
+		g_boss_shadow.attackx + g_boss_shadow.attackw, g_boss_shadow.attacky + g_boss_shadow.attackh,
+		0xFF0000, TRUE);
+}
+
+void Boss_LongRange_Move() {
+	static int noDamageTime = 30;		// ダメージを受け付けない時間
+
+	if ((g_boss_shadow.preparationCnt > 60))g_boss_shadow.attackx -= g_speedLevel + 1;
+
+	if (++noDamageTime < 30);
+
+	// プレイヤーにヒットしたら攻撃終了
+	if (noDamageTime >= 40
+		&& PlayerHitCheck(g_boss_shadow.attackx, g_boss_shadow.attacky, g_boss_shadow.attackw, g_boss_shadow.attackh) == TRUE) {
+		if (g_player.barrierFlg == FALSE) --g_player.hp;
+		else g_player.barrierFlg = FALSE;
+
+		g_boss_shadow.LongRangeInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		g_boss_shadow.ShadowInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
+	}
+
+	// 遠距離攻撃が画面外に出たときの処理
+	if (g_boss_shadow.attackx + g_boss_shadow.attackw < 0) {
+		g_boss_shadow.LongRangeInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		g_boss_shadow.ShadowInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
+	}
+
+
+
+	//g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
+}
+
+/*********************************************
+
+* ボス６の突進
+
+*/////////////////////////////////////////////
+void Boss_Rush_Disp() {
+	const int animePoint[3] = { 0, 8, 15 };		// 影のアニメーションの最後尾	0:ニュートラルモーション	1:攻撃モーション
+	const int attackAnimeMax = 4;			// 攻撃のアニメーションの最後尾
+	static int animationStart = animePoint[1];
+	static int animationLast = animePoint[2];
+	const int animeSpeedRate[2] = { 4, 8 };	// アニメーション速度	0:影本体	1:攻撃
+	static int anime[2] = { animationStart, 0 };			// アニメーション変数	0:影本体	1:攻撃
+	//static bool animeStartFlag = FALSE;
+	//static bool attackFlg = FALSE;
+
+	if (g_boss_shadow.shadowDispFlg == TRUE
+		&& ++g_boss_shadow.preparationCnt > 60) {
+		/*if (anime[0] % animeSpeedRate[0] == 0)anime[0]++;
+		if (anime[0] > animationLast)anime[0] = animationStart;*/
+		if (++anime[0] > animationLast * animeSpeedRate[0])anime[0] = animationStart;
+	}
+
+	if (g_boss_shadow.shadowDispFlg == TRUE
+		&& (PlayerHitCheck(g_boss_shadow.x - g_boss_shadow.w / 2, g_boss_shadow.y + 70 + 40, g_boss_shadow.x, g_boss_shadow.h + 70) == FALSE)) {
+		// 影本体の表示
+		DrawRotaGraph2(g_boss_shadow.x, g_boss_shadow.y + 70, 0, 0, PLAYER_REDUCTION, 0, g_pic.boss_6_1[anime[0] % animeSpeedRate[0] + animationStart], TRUE, TRUE, FALSE);
+	}
+
+	// プレイヤーに当たったら攻撃アニメーション開始
+	if (PlayerHitCheck(g_boss_shadow.x - g_boss_shadow.w / 2, g_boss_shadow.y + 70 + 40, g_boss_shadow.x, g_boss_shadow.h + 70) == TRUE) {
+		//DrawBox(g_boss_shadow.x, g_boss_shadow.y + 70 + 40, g_boss_shadow.x + g_boss_shadow.w, g_boss_shadow.y + g_boss_shadow.h + 0, 0xF0000, TRUE);
+			//animeStartFlag = TRUE;
+		g_boss_shadow.attackDispFlg = TRUE;
+	}
+	if (g_boss_shadow.attackDispFlg == TRUE) {
+		if (++anime[1] > anime[1] * attackAnimeMax)anime[1] = animePoint[0];
+
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, anime[1] * 15);
+		DrawRotaGraph2(g_boss_shadow.x, g_boss[g_select_Stage].y + 70 + 40, 80, 300, 1.0f, 0, g_pic.skillEffect[anime[1] / animeSpeedRate[1]], TRUE, TRUE, FALSE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+
+	// ボスが画面外に出たときの処理
+	if (/*g_boss_shadow.shadowDispFlg == FALSE*/
+		g_boss_shadow.x + g_boss_shadow.w < 0) {
+		anime[1] = animePoint[0];
+		g_boss_shadow.ShadowInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
+	}
+}
+
+void Boss_Rush_Move() {
+	static int noDamageTime = 30;		// ダメージを受け付けない時間
+
+
+	if ((g_boss_shadow.preparationCnt > 60))g_boss_shadow.x -= g_speedLevel + 2;
+
+	if (++noDamageTime < 30);
+
+	// プレイヤーに切られた時
+	if ((noDamageTime >= 40)
+		&& (g_player.attackFlg == TRUE)
+		&& SkillMove[g_player.skillFlg - 1](g_boss_shadow.x, g_boss_shadow.y,
+			BOSS_THREAD_WIDTH, g_boss_shadow.h + 50) == TRUE) {
+		g_boss_shadow.preparationCnt = 0;
+		g_boss_shadow.ShadowInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
+	}
+
+	// プレイヤーにヒットしたらもとのポジションへ移動して攻撃終了
+	if ((noDamageTime >= 40)
+		&& PlayerHitCheck(g_boss_shadow.x, g_boss[g_select_Stage].y + 70 + 40, BOSSFULL_WIDTH[g_select_Stage], BOSSFULL_HEIGHT[g_select_Stage]) == TRUE) {
+		if (g_player.barrierFlg == FALSE) --g_player.hp;
+		else g_player.barrierFlg = FALSE;
+
+		//preparationCnt = 0;
+		//g_boss_shadow.shadowDispFlg = FALSE;
+		//g_boss_shadow.ShadowInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		//g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
+	}
+	if (g_boss_shadow.shadowDispFlg == FALSE
+		&& g_boss_shadow.attackDispFlg == FALSE) {
+		noDamageTime = 0;
+		//g_boss_shadow.shadowDispFlg = FALSE;
+		//g_boss_shadow.ShadowInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		//g_boss_shadow.attackDispFlg = TRUE;
+		//g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
+	}
+
+	// ボスが画面外に出たときの処理
+	if (g_boss_shadow.x + g_boss_shadow.w < 0
+		/*&& g_boss_shadow.shadowDispFlg == FALSE*/
+		/*&& g_boss_shadow.attackDispFlg == FALSE*/) {
+		g_boss_shadow.preparationCnt = 0;
+		//g_boss_shadow.ShadowInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		//g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
+	}
 }
 
 /*********************************************
@@ -971,5 +1132,6 @@ void BossInit() {
 	g_boss3_Ton.Boss3_TonInit(g_boss[BOSS_STAGE3].x, g_boss[BOSS_STAGE3].y + BOSS_STAGE3_HEIGHT / 2);// ステージ３のボスの舌の初期化
 	Boss_Stage4_Init();	// ボスステージ４の雲の初期化
 	Boss5_Init();		// ボス５の初期化
-	LastBossInit();        // ラスボス前の７体の蛇の初期化
+	Boss6_Init();		// ボス６の初期化
+	LastBossInit();     // ラスボス前の７体の蛇の初期化
 }
