@@ -295,12 +295,14 @@ void Boss_LongRange_Move() {
 		else g_player.barrierFlg = FALSE;
 
 		g_boss_shadow.LongRangeInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		g_boss_shadow.ShadowInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
 		g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
 	}
 
 	// 遠距離攻撃が画面外に出たときの処理
-	if (g_boss_shadow.x + g_boss_shadow.attackw < 0) {
+	if (g_boss_shadow.attackx + g_boss_shadow.attackw < 0) {
 		g_boss_shadow.LongRangeInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
+		g_boss_shadow.ShadowInit(g_boss[BOSS_STAGE6].x, g_boss[BOSS_STAGE6].y, FALSE);
 		g_boss[g_select_Stage].attackFlg = 0;		// attackフラグを初期化
 	}
 
