@@ -78,7 +78,19 @@ void SelectDisp(void) {
 
 	// メニュー画面の表示
 	//DrawBox(g_menuBox.x, g_menuBox.y, g_menuBox.x + 625, g_menuBox.y + 700, 0xFFFFFF, TRUE);
-	DrawRotaGraph(g_menuBox.x + 200, g_menuBox.y + 350, 3.8, -3.14 / 2, g_pic.selectUI[4], TRUE);
+	//DrawRotaGraph(g_menuBox.x + 200, g_menuBox.y + 350, 3.8, -3.14 / 2, g_pic.selectUI[4], TRUE);
+	//DrawModiGraph(g_menuBox.x + 200, g_menuBox.y + 350,		// 左上
+	//	g_menuBox.x + 625, g_menuBox.y + 350,				// 右上
+	//	g_menuBox.x + 200, g_menuBox.y + 700,				// 左下
+	//	g_menuBox.x + 625, g_menuBox.y + 700,				// 右下
+	//	g_pic.selectUI[4], TRUE
+	//);
+	DrawModiGraph(g_menuBox.x, g_menuBox.y,			// 左上
+		g_menuBox.x + 625, g_menuBox.y,				// 右上
+		g_menuBox.x + 625, g_menuBox.y + 700,		// 右下
+		g_menuBox.x, g_menuBox.y + 700,				// 左下
+		g_pic.selectUI[4], TRUE
+	);
 	// メニュー画面の項目
 	//DrawBox(menuSelect_X, menuSelect_Y[0], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[0] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
 	//DrawBox(menuSelect_X, menuSelect_Y[1], menuSelect_X + MENU_SELECT_WIDTH, menuSelect_Y[1] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
@@ -87,14 +99,32 @@ void SelectDisp(void) {
 	DrawGraph(menuSelect_X + 50, menuSelect_Y[1] + 10, g_pic.selectUI[3], TRUE);
 	DrawGraph(menuSelect_X + 50, menuSelect_Y[2] + 10, g_pic.selectUI[2], TRUE);
 
+
+	// Yボタンの表示
+	int yButtonX = menuSelect_X - 64;
+	int yButtonY = 75;
+	DrawGraph(yButtonX, yButtonY, g_pic.button[0], TRUE);
+
+
 	// セーブ画面の表示
 	//DrawBox(g_saveBox.x, g_saveBox.y, g_saveBox.x + 625, g_saveBox.y + 700, 0x808080, TRUE);
-	DrawRotaGraph(g_saveBox.x + 200, g_saveBox.y + 350, 3.8, -3.14 / 2, g_pic.selectUI[4], TRUE);
+	//DrawRotaGraph(g_saveBox.x + 200, g_saveBox.y + 350, 3.8, -3.14 / 2, g_pic.selectUI[4], TRUE);
+	DrawModiGraph(g_saveBox.x, g_saveBox.y,		// 左上
+		g_saveBox.x + 625, g_saveBox.y,				// 右上
+		g_saveBox.x + 625, g_saveBox.y + 700,		// 右下
+		g_saveBox.x, g_saveBox.y + 700,				// 左下
+		g_pic.selectUI[4], TRUE
+	);
 	int saveSelect_X = g_saveBox.x + 61;												// セレクトウィンドウのセーブ欄のX座標
-	int saveSelect_Y[3] = { g_saveBox.y + 57, g_saveBox.y + 57 + 250, g_saveBox.y + 57 + 500 };	// セレクトウィンドウのセーブ欄のY座標
-	DrawBox(saveSelect_X, saveSelect_Y[0], saveSelect_X + MENU_SELECT_WIDTH, saveSelect_Y[0] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
+	int saveSelect_Y[3] = { g_saveBox.y + 65, g_saveBox.y + 55 + 250, g_saveBox.y + 55 + 500 };	// セレクトウィンドウのセーブ欄のY座標
+	/*DrawBox(saveSelect_X, saveSelect_Y[0], saveSelect_X + MENU_SELECT_WIDTH, saveSelect_Y[0] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
 	DrawBox(saveSelect_X, saveSelect_Y[1], saveSelect_X + MENU_SELECT_WIDTH, saveSelect_Y[1] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
-	DrawBox(saveSelect_X, saveSelect_Y[2], saveSelect_X + MENU_SELECT_WIDTH, saveSelect_Y[2] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);
+	DrawBox(saveSelect_X, saveSelect_Y[2], saveSelect_X + MENU_SELECT_WIDTH, saveSelect_Y[2] + MENU_SELECT_HEIGHT, 0x00FFFF, TRUE);*/
+
+	// Yボタンの表示
+	int yButtonX2 = saveSelect_X - 64;
+	int yButtonY2 = 75;
+	DrawGraph(yButtonX2, yButtonY2, g_pic.button[0], TRUE);
 
 	// メニュー画面の機能
 	{
@@ -116,15 +146,19 @@ void SelectDisp(void) {
 			//DrawGraph(menuSelect_X + 50, menuSelect_Y[g_menuSelect] - 45, g_pic.gauge, TRUE);
 			DrawRotaGraph(menuSelect_X + 10 + g_cursorAnime, menuSelect_Y[g_menuSelect] + 50, 0.5, 0, g_pic.skillEffect[9], TRUE);
 			DrawGraph(menuSelect_X, menuSelect_Y[g_menuSelect], g_pic.Life[1], TRUE);
-
 		}
 		// メニュー画面で保存が押された場合
 		else if (g_menuFlg == MENU_SAVE) {
 			if (g_saveBox.x == MENU_SAVE_BOX_XPOINT_MAX) {	// 座標が固定されたら操作可能
-				DrawBox(saveSelect_X, saveSelect_Y[g_saveSelect], saveSelect_X + MENU_SELECT_WIDTH, saveSelect_Y[g_saveSelect] + MENU_SELECT_HEIGHT, 0xFF0000, TRUE);
-				SaveModeDisp(saveSelect_X, saveSelect_Y);
-			}
+				//DrawBox(saveSelect_X, saveSelect_Y[g_saveSelect], saveSelect_X + MENU_SELECT_WIDTH - 100, saveSelect_Y[g_saveSelect] + MENU_SELECT_HEIGHT, 0xFF0000, TRUE);
+				SaveModeDisp(saveSelect_X, saveSelect_Y);	// セーブデータ表示
 
+				// セレクトしているものを視覚化
+				DrawExtendGraph(saveSelect_X + 20, menuSelect_Y[g_saveSelect] + 80,
+					saveSelect_X + 76 + g_cursorAnime, menuSelect_Y[g_saveSelect] + 100, g_pic.bossTongue, TRUE);
+				DrawRotaGraph(saveSelect_X + 10 + g_cursorAnime, saveSelect_Y[g_saveSelect] + 50, 0.5, 0, g_pic.skillEffect[9], TRUE);
+				DrawGraph(saveSelect_X, saveSelect_Y[g_saveSelect], g_pic.Life[1], TRUE);
+			}
 		}
 	}
 
@@ -157,6 +191,7 @@ void SelectMove() {
 		MenuSelect();		// 決定ボタンを押すと対象のメニューへと接続
 	}
 	else if (g_menuFlg == MENU_SAVE) {	// セーブ画面が出るとき
+
 		bool saveflg = FALSE;			// セーブ画面を表示させるかどうか FALSE:表示させない TRUE:表示させる
 
 		SaveSelectOper();				// セーブメニューカーソル制御処理

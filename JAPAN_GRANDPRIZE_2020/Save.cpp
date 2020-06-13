@@ -50,7 +50,9 @@ void SaveModeDisp(int saveX, int saveY[]) {
 		else second[i] = buf[i][1] - 60 * minute[i] , i++;
 	}
 
-
+	if (g_gameScene == GAME_SELECT) {
+		saveX += 100;
+	}
 	for (int i = 0; i < SAVE_MAX; i++) {
 		SetFontSize(30);
 		if (no_FileFlg[i] == 0) {

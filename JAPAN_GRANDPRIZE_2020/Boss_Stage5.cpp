@@ -239,7 +239,7 @@ void Boss_MiniKurage_Drop_Disp() {
 		if (g_enemy[i].kurage.flg == TRUE) {
 			// 雑魚敵の描画
 			DrawRotaGraph2(g_enemy[i].kurage.x, g_enemy[i].kurage.y,
-				0, 0, 1.0, 0.0, g_pic.enemy_walk[g_enemy[i].kurage.anime], TRUE);
+				0, 0, 2.0, 0.0, g_pic.enemy_kurage[g_enemy[i].kurage.anime], TRUE);
 		}
 	}
 	// 敵の蒸発アニメーション
@@ -270,25 +270,27 @@ void Boss_MiniKurage_Drop_Move() {
 	}
 
 
-	int cnt = 0;			// クラゲの配列を制御する用のカウント(攻撃したあとのクラゲは初期化するのでその次のクラゲをセットする処理をするため)
+	int cnt = 0;				// クラゲの配列を制御する用のカウント(攻撃したあとのクラゲは初期化するのでその次のクラゲをセットする処理をするため)
 	static int cntBuf_Air;		// 空中クラゲに決定された要素番号を格納する
 	static int cntBuf_Ground;	// 地上クラゲに決定された要素番号を格納する
 
-
 	for (cnt = 0; cnt < KURAGE_MAX; cnt++) {	// 出現している配列番号が小さい順で添え字をbreakして渡す
-		if (g_enemy[cnt].kurage.flg == TRUE)
+		if (g_enemy[cnt].kurage.flg == TRUE) {
 			break;
+
+		}
 	}
+
 	if ((g_boss[g_select_Stage].attackFlg == BOSSATTACK_MINIKURAGE_AIR)	// ミニクラゲが空中攻撃をする時
 		&& (ataackFlg_AirKurage != TRUE)) {	// 空中での攻撃をしてない時
-		ataackFlg_AirKurage = TRUE;		// 空中クラゲの攻撃フラグをオンに
-		cntBuf_Air = cnt;				// 配列の要素番号を格納してカウントにプラス１をする
+		ataackFlg_AirKurage = TRUE;			// 空中クラゲの攻撃フラグをオンに
+		cntBuf_Air = cnt;					// 配列の要素番号を格納してカウントにプラス１をする
 	}
 
-	for (cnt = 0; cnt < KURAGE_MAX; cnt++) {	// 出現している配列番号が小さい順で添え字をbreakして渡す
-		if (g_enemy[cnt].kurage.flg == TRUE)
-			break;
-	}
+	//for (cnt = 0; cnt < KURAGE_MAX; cnt++) {	// 出現している配列番号が小さい順で添え字をbreakして渡す
+	//	if (g_enemy[cnt].kurage.flg == TRUE)
+	//		break;
+	//}
 	if ((g_boss[g_select_Stage].attackFlg == BOSSATTACK_MINIKURAGE_GROUND)	// ミニクラゲが地上で攻撃をする時
 		&& (attackFlg_GroundKurage != TRUE)) {	// 地上での攻撃をしてない時
 		attackFlg_GroundKurage = TRUE;			// 地上クラゲの攻撃フラグをオンに
@@ -316,6 +318,7 @@ void Boss_MiniKurage_Drop_Move() {
 		g_boss[g_select_Stage].attackFlg = BOSSATTACK_TACKLE;	// ４体のクラゲがいなくなっていたらボス本体がタックル実行
 	}
 	if (g_boss[g_select_Stage].attackFlg == BOSSATTACK_TACKLE) {
+
 		flgcnt = 0;
 	}
 

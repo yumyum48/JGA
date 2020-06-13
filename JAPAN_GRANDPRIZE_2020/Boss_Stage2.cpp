@@ -17,6 +17,7 @@
 * ステージ２のボス
 
 */////////////////////////////////////////////
+
 // 描画
 void BossDisp_Stage2() {
 	// ボスの大きさ測るメーター
@@ -34,6 +35,7 @@ void BossDisp_Stage2() {
 	else if (g_keyInfo.nowKey & PAD_INPUT_LEFT) {
 		bw--;
 	}*/
+	
 	//DrawFormatString(300, 300, 0xFF0000, "bw = %d \n bh = %d", bw, bh);
 	//DrawBox(g_mouseInfo.mouseX, g_mouseInfo.monseY, g_mouseInfo.mouseX + bw, g_mouseInfo.monseY + bh, 0x00FF00, TRUE);
 
@@ -80,7 +82,6 @@ void BossMove_Stage2() {
 		}
 		else {	// 攻撃をしないとき
 			moveFlg = BOSSMOVE_SPEEDDOWN;
-
 		}
 	}
 
@@ -116,7 +117,7 @@ void BossGenerateWave() {
 	//static int g_noDamegeCnt = 60;			// ダメージを受け付けない時間
 	static int time = 0;					// アニメーション用時間変数
 	static float moveY = 0;					// 重力の加算用変数
-	static bool jumpFlg = FALSE;			// ボスがジャンプ済みかの判断用変数	TRUE:ジャンプ済み 
+	static bool jumpFlg = FALSE;			// ボスがジャンプ済みかの判断用変数	TRUE:ジャンプ済み
 
 	// ボスがジャンプするアニメーション
 	if (g_wave.dispFlg == FALSE) {
