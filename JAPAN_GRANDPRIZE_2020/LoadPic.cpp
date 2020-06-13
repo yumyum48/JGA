@@ -35,9 +35,14 @@ int LoadPicture() {
 	if (LoadDivGraph("image/Skill_effect.png", 30, 5, 6, 400, 400, g_pic.skillEffect, 0) == -1) return -1;
 	//スキル7の複製プレイヤー
 	if (LoadDivGraph("image/Skill_7_Effect.png", 56, 8, 7, 280, 200, g_pic.skill7_Effect, 0) == -1) return -1;
+	//finishMotion
+	if (LoadDivGraph("image/Enemy_Finish_player3.png", 16, 4, 4, 280, 200, g_pic.finishMotion, 0) == -1) return -1;
+
+	//ふすま
+	if (LoadDivGraph("image/ふすま.png", 2, 2, 1, 80, 96, g_pic.husuma, 0) == -1) return -1;
 
 	//スキルアイコン
-	if (LoadDivGraph("image/SkillAicon2.png", 8, 8, 1, 100, 100, g_pic.skillAicon, 0) == -1) return -1;
+	if (LoadDivGraph("image/SkillAicon.png", 8, 8, 1, 100, 100, g_pic.skillAicon, 0) == -1) return -1;
 	//スキルアイコン装飾(仮)
 	if ((g_pic.skillRing[0] = LoadGraph("image/ring.png")) == -1) return -1;
 	if ((g_pic.skillRing[1] = LoadGraph("image/magatama.png")) == -1) return -1;

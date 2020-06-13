@@ -169,7 +169,7 @@ void SkillCustom_Move() {
 	else if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set == 0) {//B連打でセレクト画面に戻る
 		for (int i = 0; i < 3; i++) g_player.skillcustom[i] = past_Skill[i];
 		//スキル解放情報更新
-		for (int i = 0; i < 8; i++) skill_ReleaseFlg[i] = FALSE;
+		for (int i = 0; i < 7; i++) skill_ReleaseFlg[i] = FALSE;
 		g_gameScene = GAME_SELECT;
 		Storage = TRUE;
 		costomEndFlg = FALSE;
