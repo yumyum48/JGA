@@ -86,7 +86,7 @@ void BossDisp_Stage5() {
 	// ボスの表示
 	//DrawBox(g_boss[BOSS_STAGE5].x, g_boss[BOSS_STAGE5].y, g_boss[BOSS_STAGE5].x + BOSS_STAGE5_WIDTH, g_boss[BOSS_STAGE5].y + BOSS_STAGE5_HEIGHT, 0x00FFFF, TRUE);
 	DrawRotaGraph2(g_boss[BOSS_STAGE5].x, g_boss[BOSS_STAGE5].y, 0, 0, 1.0f, 0, g_pic.boss_5_1[g_boss5_Ex.anime], TRUE, FALSE);
-	if (g_boss[BOSS_STAGE5].damageFlg == TRUE 
+	if (g_boss[BOSS_STAGE5].damageFlg == TRUE
 		&& g_barrier.breakFlg == FALSE
 		&& g_barrier.cnt < 300) {
 		Boss_Damage_Disp(&g_boss[BOSS_STAGE5].damageFlg, g_boss[BOSS_STAGE5].x, g_boss[BOSS_STAGE5].y, g_pic.boss_5_1[g_boss5_Ex.anime], 1.0F);	// ダメージを食らったときのモーション
@@ -105,7 +105,7 @@ void BossDisp_Stage5() {
 		BossAttackDisp();	// ボスの攻撃
 	}
 
-#ifdef DEBUG_BOSS_OFF
+#ifdef DEBUG_BOSS_ON
 	DrawFormatString(500, 300, 0x000000,
 		"g_barrier.cnt = %d\ng_barrier.breakAnime = %d\ng_barrier.breakFlg = %d\ng_barrier.flg = %d\n",
 		g_barrier.cnt, g_barrier.breakAnime, g_barrier.breakFlg, g_barrier.flg);
