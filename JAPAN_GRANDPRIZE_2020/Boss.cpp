@@ -148,8 +148,8 @@ void BossMoveMotion_Pattern2(int* coolTime, int* moveFlg) {
 void Boss_Knock_Down() {
 	
 	if (g_boss[g_select_Stage].hp <= 0) {
-		StopSoundMem(g_sound[BGM_BATTLE]);
-		SetCurrentPositionSoundMem(0, g_sound[BGM_BATTLE]);
+		StopSoundMem(g_sound[BGM_BATTLE]);						// ƒ{ƒXí‚Ì‚a‚f‚l‚ð’âŽ~
+		SetCurrentPositionSoundMem(0, g_sound[BGM_BATTLE]);		// ƒ{ƒXí‚Ì‚a‚f‚l‚Ì¶¬ŠJŽnˆÊ’u‚ðÅ‰‚É–ß‚·
 		g_gameScene = GAME_STAGE_CLEAR;
 		if (g_stageClearFlg[g_select_Stage] == FALSE) {
 			g_select_MAX++;	// ƒZƒŒƒNƒg‚Å‚«‚éƒ}ƒbƒv‚ð‘‚â‚·

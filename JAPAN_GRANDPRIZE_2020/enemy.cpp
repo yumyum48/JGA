@@ -23,12 +23,12 @@ void MonsterMove() {
 	
 	if (g_enemybeat < ENEMY_BEAT_MAX[g_select_Stage]) {
 		EnemyMove();								// Žã‚¢“G‚Ì“®‚«
-		PlaySoundMem(g_sound[BGM_BOSS], DX_PLAYTYPE_LOOP, FALSE);
+		PlaySoundMem(g_sound[BGM_BOSS], DX_PLAYTYPE_LOOP, FALSE);		// ŽG‹›í‚Ì‚a‚f‚lÄ¶
 	}
 	else {
 		BossMove[g_select_Stage]();					// ƒ{ƒX‚Ì“®‚«
-		StopSoundMem(g_sound[BGM_BOSS]);
-		SetCurrentPositionSoundMem(0, g_sound[BGM_BOSS]);
+		StopSoundMem(g_sound[BGM_BOSS]);								// ŽG‹›í‚Ì‚a‚f‚l‚ð’âŽ~
+		SetCurrentPositionSoundMem(0, g_sound[BGM_BOSS]);				// ŽG‹›í‚Ì‚a‚f‚l‚ÌÄ¶ŠJŽnˆÊ’u‚ðÅ‰‚É–ß‚·
 		PlaySoundMem(g_sound[BGM_BATTLE], DX_PLAYTYPE_LOOP, FALSE);
 	}
 }
