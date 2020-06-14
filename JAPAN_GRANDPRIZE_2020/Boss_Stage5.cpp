@@ -12,6 +12,7 @@
 #include "Init.h"
 #include "Trap.h"
 #include "HP.h"
+#include "Macro.h"
 
 #include <math.h>
 /*********************************************
@@ -20,16 +21,20 @@
 
 */////////////////////////////////////////////
 struct barrier : public picInfo {
-	bool flg;	// 出現フラグ
-	int cnt;	// 出現カウント
+	bool flg;			// 出現フラグ
+	bool breakFlg;		// 盾を破壊		TRUE:起動	FALSE:停止
+	int cnt;			// 出現カウント				// アニメーションをする為のカウント
+	int breakAnime = 0;	// 盾破壊のアニメ変数
 
 	// barriarを初期化するメソッド
 	void barrierInit() {
 		x = 654;	// X座標の初期位置
 		y = g_boss[g_select_Stage].y + 10;	// Y座標の初期位置
 
-		flg = FALSE;	// 出現フラグを初期化	
-		cnt = 0;		// 出現カウントを初期化
+		flg = FALSE;		// 出現フラグを初期化
+		breakFlg = FALSE;	// 縦破壊フラグを初期化
+		cnt = 0;			// 出現カウントを初期化
+		breakAnime = 0;		// 盾破壊のアニメ変数初期化
 	}
 };
 //
@@ -48,9 +53,10 @@ barrier g_barrier;		// バリアの情報
 void BossDisp_Stage5() {
 	// 0,3:ボスのニュートラルモーションの最初と最後	4,7:ボスの攻撃モーションの最初と最後	8,9:ボスの攻撃予備動作の最初と最後
 	const int bossAnime[6] = { 0, 3, 4, 7, 8, 9 };
+	const int breakSpeed = 5;
 	static int animationStart = bossAnime[0];	// アニメーション開始位置の初期化
 	static int animationLast = bossAnime[1];	// アニメーションループの初期化
-	static int animecnt = 0;					// アニメーションをする為のカウント
+	static int animecnt = 0;					// 
 
 	//// ボスの大きさ測るメーター
 	//static int bw = 0;
@@ -77,16 +83,17 @@ void BossDisp_Stage5() {
 		if (g_boss5_Ex.anime > animationLast)g_boss5_Ex.anime = animationStart;	// アニメーションのループ
 	}
 
-
 	// ボスの表示
 	//DrawBox(g_boss[BOSS_STAGE5].x, g_boss[BOSS_STAGE5].y, g_boss[BOSS_STAGE5].x + BOSS_STAGE5_WIDTH, g_boss[BOSS_STAGE5].y + BOSS_STAGE5_HEIGHT, 0x00FFFF, TRUE);
 	DrawRotaGraph2(g_boss[BOSS_STAGE5].x, g_boss[BOSS_STAGE5].y, 0, 0, 1.0f, 0, g_pic.boss_5_1[g_boss5_Ex.anime], TRUE, FALSE);
-	if (g_boss[BOSS_STAGE5].damageFlg == TRUE) {
+	if (g_boss[BOSS_STAGE5].damageFlg == TRUE 
+		&& g_barrier.breakFlg == FALSE
+		&& g_barrier.cnt < 300) {
 		Boss_Damage_Disp(&g_boss[BOSS_STAGE5].damageFlg, g_boss[BOSS_STAGE5].x, g_boss[BOSS_STAGE5].y, g_pic.boss_5_1[g_boss5_Ex.anime], 1.0F);	// ダメージを食らったときのモーション
 	}
 	if (g_barrier.cnt++ >= 300 && g_barrier.flg == TRUE) {
 		// シールド
-		DrawGraph(g_barrier.x, g_barrier.y, g_pic.boss6_sield, TRUE);
+		DrawGraph(g_barrier.x, g_barrier.y, g_pic.boss5_sield[g_barrier.breakAnime / breakSpeed], TRUE);
 		//DrawBox(g_barrier.x, g_barrier.y, g_barrier.x + 30, g_barrier.y + BOSS_STAGE5_HEIGHT, 0x000000, TRUE);
 	}
 
@@ -97,6 +104,13 @@ void BossDisp_Stage5() {
 	if (g_boss[BOSS_STAGE5].attackFlg == BOSSATTACK_TACKLE) {						// ボスが攻撃していれば
 		BossAttackDisp();	// ボスの攻撃
 	}
+
+#ifdef DEBUG_BOSS_OFF
+	DrawFormatString(500, 300, 0x000000,
+		"g_barrier.cnt = %d\ng_barrier.breakAnime = %d\ng_barrier.breakFlg = %d\ng_barrier.flg = %d\n",
+		g_barrier.cnt, g_barrier.breakAnime, g_barrier.breakFlg, g_barrier.flg);
+#endif // DEBUG_BOSS_OFF
+
 }
 
 // 動き
@@ -104,6 +118,10 @@ void BossMove_Stage5() {
 	//static int moveFlg = BOSSMOVE_NOMOTION;					// 敵が移動するだけのフラグ　0:移動しない 1:上下に移動しながらプレイヤーに寄ってくる
 	//static int attackSelect = 0;							// ボスの攻撃選択
 	//static int attackFlgBuf = g_boss[BOSS_STAGE5].attackFlg;// １フレーム前のボスのattackフラグを記憶する
+	const int breakAnimeMax = 2;	
+	const int breakSpeed = 5;
+	static bool noDamageFlg = TRUE;	
+	static int noDamageCnt = 0;
 
 
 	Boss_MiniKurage_DropFlg();		// ミニクラゲを出すフラグ管理
@@ -125,15 +143,35 @@ void BossMove_Stage5() {
 
 	if (g_boss[BOSS_STAGE5].attackFlg != BOSSATTACK_TACKLE) {
 		g_barrier.flg = TRUE;
-		if (BossDamageCheck(g_boss[BOSS_STAGE5].hp) == TRUE && g_barrier.cnt >= 300) {
+		if (BossDamageCheck(g_boss[BOSS_STAGE5].hp) == TRUE 
+			&& g_barrier.cnt >= 300
+			&& noDamageCnt > 40) {
+
 			g_boss[BOSS_STAGE5].hp++;
-			g_barrier.cnt = 0;
+			g_barrier.breakFlg = TRUE;
+			//g_barrier.cnt = 0;
 		}
 	}
 	else {
 		g_barrier.flg = FALSE;
 	}
 
+	// ボスがシールドを展開している状態でダメージを受けたときシールドが壊れるアニメーションを開始
+	if (g_barrier.breakFlg == TRUE
+		&& g_barrier.flg == TRUE) {
+		if (++g_barrier.breakAnime > breakAnimeMax * breakSpeed) {
+			if (noDamageFlg == TRUE){
+				g_barrier.cnt = 300;
+				noDamageFlg = FALSE;
+				g_barrier.flg = FALSE;
+				}
+			else {
+				g_barrier.cnt = 0;
+				g_barrier.breakFlg = FALSE;
+			}
+				g_barrier.breakAnime = 0;
+		}
+	}
 
 	//	&& (g_boss[BOSS_STAGE5].attackFlg == 0)							// ボスが攻撃していなければ
 	//	&& (moveFlg == BOSSMOVE_NOMOTION)) {							// ボスが移動していなければ

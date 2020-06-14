@@ -73,7 +73,7 @@ struct image {
     int thundercloud;                   // 雷雲の画像
     int boss4_Cloud_Rightning[4];       // 雲から雷が漏れ出ている画像
     int boss4_RightningSmash;           // 雲から雷が出ている
-    int boss5_sield[3];                    // ボス６シールド
+    int boss5_sield[3];                 // ボス5シールド
     int button[3];                      // ボタンUI
     int finishMotion[16];               // ステージクリア時のplayerMotion画像
     int husuma[2];                      //ふすま画像
