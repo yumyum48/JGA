@@ -11,6 +11,7 @@
 #include "Init.h"
 #include "HP.h"
 #include "Trap.h"
+#include "Macro.h"
 
 // ゲームプレイのメイン関数
 void GamePlay() {
@@ -33,7 +34,7 @@ void GamePlayDisp() {
 	PlayerDisp();					// プレイヤーの描画
 	RainDisp();						// 雨の描画
 
-#ifndef DEBUG_TRAP_ON
+#ifdef DEBUG_TRAP_ON
 	TrapDisp();						// トラップの表示
 #endif // DEBUG_TRAP_ON
 
@@ -50,7 +51,7 @@ void GamePlayMove() {
 	PlayerMove();					// プレイヤーの動き
 	RainMove();						// 雨の動き
 
-#ifndef EBUG_TRAP_ON
+#ifdef DEBUG_TRAP_ON
 	TrapMove();						// トラップの動き
 #endif // EBUG_TRAP_ON
 #ifdef DEBUG_LEVEL_OFF

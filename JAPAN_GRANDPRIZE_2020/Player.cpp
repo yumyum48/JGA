@@ -100,13 +100,16 @@ void PlayerDisp() {
 		skill7Anime++;
 	}
 
-	DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
+#ifdef DEBUG_SKILL_ON
+DrawFormatString(500, 0, 0xff0000, "%d", g_attackTime);
 	DrawFormatString(600, 0, 0xffffff, "%d", g_boss[g_select_Stage].hp);
 	DrawFormatString(0, 400, 0xFF0000, "%d", g_player.skillFlg);
 	DrawFormatString(0, 600, 0xFFFF00, "%f", g_player.skillCoolTime[g_player.skillNo]);
 	DrawFormatString(0, 700, 0x00FFFF, "%d", g_player.skillNo);
 	DrawFormatString(0, 750, 0x0000FF, "%d", g_player.powerUpTime);
 	DrawFormatString(100, 750, 0xFF00FF, "%d", g_noDamageCnt);
+#endif // DEBUG_SKILL_OFF
+	
 
 	if (g_player.skillFlg != 0) {
 		SkillDisp[g_player.skillFlg - 1](g_maxMotion, g_resetMotion);
@@ -382,8 +385,10 @@ int SkillChange() {
 	if (skillNum == 1) g_SkillSelectAicon = -100;
 	if (skillNum == 2) g_SkillSelectAicon = 100;
 
+#ifdef DEBUG_SKILL_ON
 	// skillNumの中身
 	DrawFormatString(0, 500, 0xFEFFFF, "%d", skillNum);
+#endif // DEBUG_SKILL_ON
 	
 	g_player.skillNo = skillNum;
 
@@ -395,7 +400,11 @@ int SkillChange() {
 
 // 敵を間合いに入ったらロックオンをする処理
 void EnemyLockOn() {
+
+#ifdef DEBUG_SKILL_ON
 	DrawBox(g_player.x + PLAYER_WIDTH, g_player.y, g_player.x + PLAYER_WIDTH + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, 0xFF0000, 0);
+#endif // DEBUG
+
 	EnemyCut();		// エネミーを倒す処理
 }
 
@@ -445,7 +454,11 @@ void EnemyCut() {
 			&& ((PlayerInterval(g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE)
 			|| (SkillMove[g_player.skillFlg - 1](g_enemy[i].fly.x, g_enemy[i].fly.y, ENEMY_WIDTH, ENEMY_HEIGHT) == TRUE))) {
 			// レティクル表示
+
+#ifdef DEBUG_SKILL_ON
 			DrawRotaGraph2(g_enemy[i].fly.x + (ENEMY_WIDTH / 3), g_enemy[i].fly.y + (ENEMY_HEIGHT / 3), 0, 0, 0.2, 0.0, g_pic.reticle, TRUE);
+#endif // DEBUG_SKILL_ON
+
 			// 敵を倒す処理
 			if (g_player.skillFlg == 2) {
 				//g_enemybeat++;			// エネミーを倒した数をカウント
@@ -596,7 +609,10 @@ void EnemyCut() {
 		if (PlayerInterval(g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE
 			|| (SkillMove[g_player.skillFlg - 1](g_boss4_Thread.x, g_boss4_Thread.y, (g_boss4_Thread.w - g_boss4_Thread.x), (g_boss4_Thread.h - g_boss4_Thread.y)) == TRUE)) {
 			if (++noDamageCnt > 60 && g_boss4_Thread.hp <= 0) {
+#ifdef DEBUG_MODE_ON
 				DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFFFFFF, TRUE);
+#endif // DEBUG
+
 			}
 		}
 
