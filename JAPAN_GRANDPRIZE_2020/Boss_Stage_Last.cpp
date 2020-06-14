@@ -56,40 +56,24 @@
 */////////////////////////////////////////////
 // 描画
 void BossDisp_Stage_Last() {
-	//// ボスの大きさ測るメーター
-	//static int bw = 0;
-	//static int bh = 0;
-	//if (g_keyInfo.nowKey & PAD_INPUT_UP) {
-	//	bh--;
-	//}
-	//else if (g_keyInfo.nowKey & PAD_INPUT_RIGHT) {
-	//	bw++;
-	//}
-	//else if (g_keyInfo.nowKey & PAD_INPUT_DOWN) {
-	//	bh++;
-	//}
-	//else if (g_keyInfo.nowKey & PAD_INPUT_LEFT) {
-	//	bw--;
-	//}
-
-	//DrawFormatString(300, 300, 0xFF0000, "bw = %d \n bh = %d", bw, bh);
-	//
-	//DrawBox(g_mouseInfo.mouseX, g_mouseInfo.mouseY, g_mouseInfo.mouseX + bw, g_mouseInfo.mouseY + bh, 0x00FF00, TRUE);
-
-	// ボス本体の表示
-	//DrawBox(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_boss[BOSS_LASTBOSS].x + BOSS_STAGE5_WIDTH, g_boss[BOSS_LASTBOSS].y + BOSS_STAGE5_HEIGHT, 0x00FFFF, TRUE);
-
+	for (int i = 0; i < YAMATANO_NECK; i++) {
+		if (g_boss_Yamatano[i].popflg == TRUE) {
+			static int cnt[YAMATANO_NECK] = { 0, 0, 0, 0, 0, 0, 0 };
+			if (cnt[i]++ % 10 == 0)g_boss_Yamatano[i].anima++;
+			if (g_boss_Yamatano[i].anima >= g_boss_Yamatano[i].animaMax)g_boss_Yamatano[i].anima = g_boss_Yamatano[i].animaMin;	// アニメーションのループ
+		}
+	}
 	// ボスの本体を除いた7体の表示
 	for (int i = 0; i < YAMATANO_NECK; i++) {
 		if (g_boss_Yamatano[i].popflg != LASTBOOS_OFF && g_boss_Yamatano[i].popflg != LASTBOSS_KILL) {
 			//(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h, 0x00FFFF, TRUE);
-			DrawRotaGraph2(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, 0, 0, 1.0, 0.0, g_pic.boss_Yamatano[0], TRUE);
+			DrawRotaGraph2(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, 0, 0, 1.0, 0.0, g_pic.boss_Yamatano[g_boss_Yamatano[i].anima], TRUE);
 			if (g_boss_Yamatano[i].damageFlg == TRUE) {
-				Boss_Damage_Disp(&g_boss_Yamatano[i].damageFlg, g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_pic.boss_Yamatano[0], 1.0F);	// ダメージを食らったときのモーション
+				Boss_Damage_Disp(&g_boss_Yamatano[i].damageFlg, g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_pic.boss_Yamatano[g_boss_Yamatano[i].anima], 1.0F);	// ダメージを食らったときのモーション
 			}
-
 		}
 	}
+
 
 	// ラスボス本体の描画
 	if (g_boss[BOSS_LASTBOSS].popflg == TRUE) {
@@ -120,6 +104,7 @@ void BossMove_Stage_Last() {
 	// ボスがいなかったら
 	if (g_boss[BOSS_LASTBOSS].popflg == FALSE) {
 		YmatanoSeven_Move();
+		
 	}
 	// ボスがいたら
 	else if (g_boss[BOSS_LASTBOSS].popflg == TRUE) {
@@ -172,7 +157,6 @@ void LastBoss_Move() {
 				}
 			}
 		}
-		
 	}
 	// 攻撃
 	if (g_boss[BOSS_LASTBOSS].attackFlg != 0) {
@@ -197,6 +181,7 @@ void YmatanoSeven_Disp() {
 }
 // 動き
 void YmatanoSeven_Move() {
+	
 	//	0 リュウグウ
 		//	1 雑魚変異
 		//	3 カエル
@@ -205,6 +190,8 @@ void YmatanoSeven_Move() {
 		//	6 クラゲ
 		//	7 分身
 		//	8 黒い水
+
+
 
 		// 7体の蛇出現フラグを管理
 	Last_Boss_SnakeDispFlg_Managar();
@@ -468,6 +455,9 @@ void lasbossInfo::lasbossInit(int num) {					// ラスボスの本体以外(7体の初期化)
 		sevenAttackFlg = FALSE;
 		w = 230;					// 幅の初期位置
 		h = 490;					// 高さの初期位置
+		anima = 0;
+		animaMax = 4;
+		animaMin = 0;
 		switch (num)
 		{
 		case 0:

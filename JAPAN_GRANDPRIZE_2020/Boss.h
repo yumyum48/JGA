@@ -126,6 +126,9 @@ struct lasbossInfo : public bossInfo {    // ラスボス前の７体の蛇の情報
 	int h;		// Y座標
 	int tag;	// 右にいるか左にいるかのタグ
 	int sevenAttackFlg;    // 攻撃しているかどうかを真か偽で判断する TRUE:攻撃する FALSE: 攻撃していない
+	int anima;	// アニメーション用のメンバ
+	int animaMax;	// アニメーション用最大数
+	int animaMin;	// アニメーション用最小数
 	void lasbossInit(int num);// 初期化
 };
 

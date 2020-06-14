@@ -123,7 +123,7 @@ int LoadPicture() {
 	if (LoadDivGraph("image/Skill_effectReverce.png", 10, 5, 2, 400, 400, g_pic.boss_6_3, 0) == -1)return -1;
 
 	// ボス_ヤマタノの画像読み込み
-	if (LoadDivGraph("image/YamaSann01.png", 4, 4, 1, 300, 500, g_pic.boss_Yamatano, 0) == -1)return -1;
+	if (LoadDivGraph("image/YamasannAll.png", 12, 4, 3, 300, 500, g_pic.boss_Yamatano, 0) == -1)return -1;
 
 	//// ボス_１の泡画像読み込み
 	//if (LoadDivGraph("image/Boss1_Water.png", 8, 8, 0, 280, 200, g_pic.boss_1_2, 0) == -1)
