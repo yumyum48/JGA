@@ -86,6 +86,7 @@ void BossDisp_Stage_Last() {
 	if (g_boss[BOSS_LASTBOSS].popflg == TRUE) {
 		//DrawBox(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_boss[BOSS_LASTBOSS].x + BOSS_STAGELAST_WIDTH, g_boss[BOSS_LASTBOSS].y + BOSS_STAGELAST_HEIGHT, 0x00FFFF, TRUE);
 		DrawRotaGraph2(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, 0, 0, 1.0, 0.0, g_pic.boss_Last[g_lastBoss_anima], TRUE);
+		Boss_Damage_Disp2(&g_boss[BOSS_LASTBOSS].damageFlg, g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_pic.boss_Last[g_lastBoss_anima], 1.0F);	// ダメージを食らったときのモーション
 	}
 	//if (g_boss[BOSS_LASTBOSS].damageFlg == TRUE) {
 	//	Boss_Damage_Disp(&g_boss[BOSS_LASTBOSS].damageFlg, g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_pic.boss_2_1[animationCnt], 1.0F);	// ダメージを食らったときのモーション
