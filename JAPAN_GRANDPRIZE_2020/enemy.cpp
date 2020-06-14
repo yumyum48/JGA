@@ -26,10 +26,10 @@ void MonsterMove() {
 		PlaySoundMem(g_sound[BGM_BOSS], DX_PLAYTYPE_LOOP, FALSE);		// G‹›í‚Ì‚a‚f‚lÄ¶
 	}
 	else {
-		BossMove[g_select_Stage]();					// ƒ{ƒX‚Ì“®‚«
 		StopSoundMem(g_sound[BGM_BOSS]);								// G‹›í‚Ì‚a‚f‚l‚ğ’â~
 		SetCurrentPositionSoundMem(0, g_sound[BGM_BOSS]);				// G‹›í‚Ì‚a‚f‚l‚ÌÄ¶ŠJnˆÊ’u‚ğÅ‰‚É–ß‚·
-		PlaySoundMem(g_sound[BGM_BATTLE], DX_PLAYTYPE_LOOP, FALSE);
+		PlaySoundMem(g_sound[BGM_BATTLE], DX_PLAYTYPE_LOOP, FALSE);		// ƒ{ƒXí‚Ì‚a‚f‚l‚ÌÄ¶
+		BossMove[g_select_Stage]();					// ƒ{ƒX‚Ì“®‚«
 	}
 }
 
