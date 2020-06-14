@@ -30,7 +30,7 @@
 #define BOSS_STAGE6_WIDTH  (89.6 + 179.2)		//ボス６の横 (PLAYER_WIDTH * PLAYER_REDUCTION) + (PLAYER_WIDTH * PLAYER_REDUCTION)
 #define BOSS_STAGE6_HEIGHT (PLAYER_HEIGHT + 70)	// ボス６の縦
 #define BOSS_STAGELAST_WIDTH  (537)		// ラスボスの幅
-#define BOSS_STAGELAST_HEIGHT (657)		// ラスボスの縦
+#define BOSS_STAGELAST_HEIGHT (660)		// ラスボスの縦
 
 #define YAMATANO_NECK        (7)        // ラスボス前の７体の蛇
 
