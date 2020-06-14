@@ -47,7 +47,9 @@
 * グローバル変数の宣言
 
 */////////////////////////////////////////////
-
+int g_lastBoss_anima;
+int g_lastBoss_animaMax;
+int g_lastBoss_animaMin;
 //bool g_lastBoss_SevenSnakeAttackFlg[YAMATANO_NECK];	// ラスボス前の７体の蛇の攻撃フラグ TRUE: 攻撃中 FALSE:攻撃していない
 /*********************************************
 
@@ -75,9 +77,14 @@ void BossDisp_Stage_Last() {
 	}
 
 
+	static int cnt = 0;	// アニメーション用のカウント
+	if (cnt++ % 10 == 0) g_lastBoss_anima++;
+	if (g_lastBoss_anima >= g_lastBoss_animaMax) g_lastBoss_anima = g_lastBoss_animaMin;
+	
 	// ラスボス本体の描画
 	if (g_boss[BOSS_LASTBOSS].popflg == TRUE) {
-		DrawBox(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_boss[BOSS_LASTBOSS].x + BOSS_STAGELAST_WIDTH, g_boss[BOSS_LASTBOSS].y + BOSS_STAGELAST_HEIGHT, 0x00FFFF, TRUE);
+		//DrawBox(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_boss[BOSS_LASTBOSS].x + BOSS_STAGELAST_WIDTH, g_boss[BOSS_LASTBOSS].y + BOSS_STAGELAST_HEIGHT, 0x00FFFF, TRUE);
+		DrawRotaGraph2(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, 0, 0, 1.0, 0.0, g_pic.boss_Last[g_lastBoss_anima], TRUE);
 	}
 	//if (g_boss[BOSS_LASTBOSS].damageFlg == TRUE) {
 	//	Boss_Damage_Disp(&g_boss[BOSS_LASTBOSS].damageFlg, g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_pic.boss_2_1[animationCnt], 1.0F);	// ダメージを食らったときのモーション
@@ -163,7 +170,7 @@ void LastBoss_Move() {
 		Last_Boss_Attack_Move[g_boss[BOSS_LASTBOSS].attackFlg](g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, &g_boss[BOSS_LASTBOSS].attackFlg, &g_boss[BOSS_LASTBOSS].coolTime);	// ラスボス前蛇の攻撃}
 
 	}
-
+	Boss_Knock_Down();
 }
 /*********************************************
 
@@ -209,7 +216,7 @@ void YmatanoSeven_Move() {
 								   {LAST_BOSSATTACK_MINISPIDER_DROP, LAST_BOSSATTACK_MINISPIDER_DROP, LAST_BOSSATTACK_MINISPIDER_DROP},	// ４体目の蛇
 								   {LAST_BOSSATTACK_MINICLOUD_DROP, LAST_BOSSATTACK_MINICLOUD_DROP, LAST_BOSSATTACK_MINICLOUD_DROP},	// ５体目の蛇
 								   {LAST_BOSSATTACK_MINIKURAGE, LAST_BOSSATTACK_MINIKURAGE, LAST_BOSSATTACK_MINIKURAGE},				// ６体目の蛇
-								   {LAST_BOSSATTACK_SHADOW, LAST_BOSSATTACK_SHADOW, LAST_BOSSATTACK_SHADOW} };							// ７体目の蛇
+								   {LAST_BOSSATTACK_WATER_BULLET, LAST_BOSSATTACK_WATER_BULLET, LAST_BOSSATTACK_WATER_BULLET} };		// ７体目の蛇
 		for (int i = 0; i < YAMATANO_NECK; i++) {
 			if ((g_boss_Yamatano[i].popflg == LASTBOSS_ON)
 				&& (g_boss_Yamatano[i].sevenAttackFlg == FALSE)) {
@@ -447,7 +454,7 @@ void LastBossRightNingAnime() {
 
 */////////////////////////////////////////////
 void lasbossInfo::lasbossInit(int num) {					// ラスボスの本体以外(7体の初期化)
-		hp = 1;						 // Hpの初期化
+		hp = 5;						 // Hpの初期化
 		attackFlg = 0;				 // なんの攻撃をしているかのフラグ
 		popflg = LASTBOOS_OFF;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
 		coolTime = 0;				 // 硬直時間
@@ -504,7 +511,7 @@ void lasbossInfo::lasbossInit(int num) {					// ラスボスの本体以外(7体の初期化)
 		}
 	
 }
-
+	
 /*********************************************
 
 * ラスボスの初期化
@@ -514,6 +521,10 @@ void LastBossInit() {
 	for (int i = 0; i < YAMATANO_NECK; i++) {
 		g_boss_Yamatano[i].lasbossInit(i);
 	}
+
+	g_lastBoss_anima = 0;		// ラスボス用のアニメーションを初期化
+	g_lastBoss_animaMax = 4;	// ラスボス用のアニメーションを初期化
+	g_lastBoss_animaMin = 0;	// ラスボス用のアニメーションを初期化
 }
 /**************************************************************************************************************************************************
 ***************************************************************************************************************************************************

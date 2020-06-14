@@ -122,8 +122,11 @@ int LoadPicture() {
 	// ボス_６の　影の攻撃のエフェクト　画像読み込み
 	if (LoadDivGraph("image/Skill_effectReverce.png", 10, 5, 2, 400, 400, g_pic.boss_6_3, 0) == -1)return -1;
 
-	// ボス_ヤマタノの画像読み込み
+	// ボス_ヤマタノの前の7体の蛇の画像読み込み
 	if (LoadDivGraph("image/YamasannAll.png", 12, 4, 3, 300, 500, g_pic.boss_Yamatano, 0) == -1)return -1;
+		
+	// ボス_ヤマタノ画像読み込み
+	if (LoadDivGraph("image/LastYamasann.png", 12, 4, 3, 537, 660, g_pic.boss_Last, 0) == -1)return -1;
 
 	//// ボス_１の泡画像読み込み
 	//if (LoadDivGraph("image/Boss1_Water.png", 8, 8, 0, 280, 200, g_pic.boss_1_2, 0) == -1)
@@ -160,6 +163,8 @@ int LoadPicture() {
 	// くもの糸の画像
 	if ((g_pic.spiderThread = LoadGraph("image/String.png")) == -1) return -1;
 
+	// 剣技を獲得しましたテキストの画像
+	if ((g_pic.kengiText = LoadGraph("image/Skill_Get_UI.png")) == -1) return -1;
 
 
 	return 0;

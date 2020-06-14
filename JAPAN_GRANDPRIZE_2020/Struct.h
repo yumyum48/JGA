@@ -49,7 +49,7 @@ struct image {
     int boss_6_2[6];                    // ボス_６の　影の攻撃モーション　画像
     int boss_6_3[10];                   // ボス_６の　影の攻撃のエフェクト　画像
     int boss_Yamatano[12];               // ラスボスの前のヤマタノ                  
-    int boss_Last[2];                   // ラスボス
+    int boss_Last[12];                   // ラスボス
     //int skill2[4];                    //スキル2のモーション画像(仮)
     //int skill3[5];                    //スキル3のモーション画像(仮)
     int skillEffect[40];                //スキルエフェクト画像
@@ -78,6 +78,7 @@ struct image {
     int finishMotion[16];               // ステージクリア時のplayerMotion画像
     int husuma[2];                      //ふすま画像
     int bossIcon[8];                    //bossのアイコン
+    int kengiText;                      // 剣技を獲得しましたの文字
 };
 
 // プレイヤーの情報
@@ -196,7 +197,7 @@ struct bossInfo {     // ボスの情報
             attackFlg = 0;
             break;
         case 6:         // ステージ７のボスを初期化(ラスボス)
-            hp = 10;
+            hp = 36;
             x = 696;
             y = 130;
             popflg = FALSE;
