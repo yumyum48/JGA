@@ -113,7 +113,7 @@ int LoadPicture() {
 	if (LoadDivGraph("image/JellyFishBossAll.png", 10, 10, 1, 550, 600, g_pic.boss_5_1, 0) == -1)return -1;
 
 	// ボス_５のシールド画像読み込み
-	if ((g_pic.boss6_sield = LoadGraph("image/JellyShield.png")) == -1) return -1;
+	if (LoadDivGraph("image/JellyShieldAll.png", 3, 3, 1, 300, 500, g_pic.boss5_sield, 0) == -1)return -1;
 
 	// ボス_６の画像読み込み
 	if (LoadDivGraph("image/playerReverse.png", 16, 8, 2, 280, 200, g_pic.boss_6_1, 0) == -1)return -1;
