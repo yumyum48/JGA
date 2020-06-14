@@ -16,6 +16,7 @@
 #include <math.h>
 #include "Trap.h"
 #include "Skill.h"
+#include "Sounds.h"
 
 /*********************************************
 
@@ -147,6 +148,8 @@ void BossMoveMotion_Pattern2(int* coolTime, int* moveFlg) {
 void Boss_Knock_Down() {
 	
 	if (g_boss[g_select_Stage].hp <= 0) {
+		StopSoundMem(g_sound[BGM_BATTLE]);
+		SetCurrentPositionSoundMem(0, g_sound[BGM_BATTLE]);
 		g_gameScene = GAME_STAGE_CLEAR;
 		if (g_stageClearFlg[g_select_Stage] == FALSE) {
 			g_select_MAX++;	// セレクトできるマップを増やす
