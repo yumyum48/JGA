@@ -395,7 +395,10 @@ void SpeedSelect() {
 	static int speedSelect = 0;
 	static bool StickFlg = FALSE;
 
+#ifdef DEBUG_MODE_ON
 	DrawFormatString(100, 10, 0xffff00, "%d", speedSelect);
+#endif // DEBUG
+
 
 	// ÉvÉåÉCÉÑÅ[ÇÃëÄçÏ
 	if (g_keyInfo.keyFlg & PAD_INPUT_UP) {
