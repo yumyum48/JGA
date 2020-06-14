@@ -175,7 +175,11 @@ void SkillDisp_3(int aniMAX, int aniMIN) { //è„ï˚å¸Ç…âÑÇ—ÇÈÇ‚Ç¬
 	EnemyLockOn();
 
 	if (g_player.attackFlg == TRUE) {
+
+#ifdef DEBUG_SKILL_ON
 		DrawBox(g_skill_X + PLAYER_WIDTH, g_player.y - PLAYER_HEIGHT, g_skill_X + PLAYER_WIDTH + PLAYER_WIDTH, g_player.y + PLAYER_HEIGHT, 0x0000ff, false);
+#endif // DEBUG
+
 		g_skillAniFlg[2] = TRUE;
 		g_skill_Y = g_player.y;
 		g_skill_X = g_player.x;

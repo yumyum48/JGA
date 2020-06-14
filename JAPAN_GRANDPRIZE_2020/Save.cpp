@@ -277,7 +277,11 @@ int SaveData_CL() {
 	// デバッグ用で保存しているデータを表示
 	for (int i = 0; i < SAVE_MAX; i++) {
 		for (int j = 0; j < DETA_MAX; j++) {
+
+#ifdef DEBUG_MODE_ON
 			DrawFormatString(200 * (j + 1), 200 * (i + 1), 0x00FF00, "%d", buf[i][j]);
+#endif // DEBUG
+
 		}
 	}
 	for (int i = 0; i < SAVE_MAX; i++) {
