@@ -93,7 +93,7 @@ void BossDisp_Stage4() {
 		animationCnt = 5;
 	}
 	DrawRotaGraph2(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, 0, 0, 0.6f, 0.0, g_pic.boss_4_1[animationCnt], TRUE, FALSE, FALSE);
-	if (g_boss[BOSS_STAGE2].damageFlg == TRUE) {
+	if (g_boss[BOSS_STAGE4].damageFlg == TRUE) {
 		Boss_Damage_Disp2(&g_boss[BOSS_STAGE4].damageFlg, g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, g_pic.boss_4_1[animationCnt], 0.6f);	// ダメージを食らったときのモーション
 	}
 	//Poison_Trap_Disp();	// 毒のトラップの表示
