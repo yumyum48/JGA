@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Select.h"
 #include "Boss.h"
+#include "StageClear.h"
 
 #define SCREEN_WIDTH (250 * 2.0F)	// 画面の横幅
 #define SCROLL_SPEED (8.0F)	// マップのスクロールするスピード
@@ -35,7 +36,7 @@ void MapDisp() {
 
 	//ボタンのUI
 
-	if (g_boss[g_select_Stage].hp > 0) {			//ボスのHPってなんですかねぇ？
+	if (g_animationScene) {			//ボスのHPってなんですかねぇ？
 		// 描画ブレンドモードをアルファブレンド（５０％）にする
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 90);
 

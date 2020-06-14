@@ -1,6 +1,8 @@
 #pragma once
 #include "DxLib.h"
 
+extern bool g_animationScene;	// アニメーションを終了させてテキストを表示させるフラグ	TRUE:テキストの表示ON	FALSE:ボスを撃破するアニメーション
+
 void StageClear();				// ステージクリア関数の管理
 void StageClearDisp();			// ステージクリアの表示
 void StageClearMove();			// ステージクリアの動き
