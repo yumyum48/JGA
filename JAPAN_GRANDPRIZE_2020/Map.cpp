@@ -36,7 +36,7 @@ void MapDisp() {
 
 	//ボタンのUI
 
-	if (g_animationScene) {			//ボスのHPってなんですかねぇ？
+	if (!g_animationScene) {			//ボスのHPってなんですかねぇ？
 		// 描画ブレンドモードをアルファブレンド（５０％）にする
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 90);
 
