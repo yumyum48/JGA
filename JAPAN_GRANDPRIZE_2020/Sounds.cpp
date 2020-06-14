@@ -51,6 +51,6 @@ int LoadSounds(void) {				//ƒTƒEƒ“ƒh“Ç‚İ‚İ
 void SoundsInit() {
 
 	for (int i = 0; i < BGM_MAX; i++) {
-		ChangeVolumeSoundMem(255 * 50 / 100, g_sound[i]);
+		ChangeVolumeSoundMem(255 * 25 / 100, g_sound[i]);
 	}
 }
