@@ -2,6 +2,7 @@
 #include "DxLib.h"
 int LoadSounds(void);				//ƒTƒEƒ“ƒh“Ç‚İ‚İ
 void HyperStop(int sound);
+void SoundsInit();
 
 enum {
 	BGM_TITLE,

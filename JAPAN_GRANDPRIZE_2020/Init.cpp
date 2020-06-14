@@ -14,6 +14,7 @@
 #include "StageClear.h"
 #include "GameOver.h"
 #include "HP.h"
+#include "Sounds.h"
 // それぞれの初期化処理
 void GameInit() {
 	MapInit();			// マップデータの初期化処理
@@ -30,7 +31,7 @@ void GameInit() {
 	GameOverInit();		// ゲームオーバー画面の初期化
 	g_lastBoss_StartAnimeFlg = TRUE;    // ラスボスの前にアニメーションをするかどうかのフラグ
 	//g_gameScene = GAME_TITLE;	// タイトルへ戻る
-
+	SoundsInit();		// 全体の音量の初期化
 }
 
 // 保存すべきデータを削除
