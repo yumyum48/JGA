@@ -9,6 +9,10 @@
 #define SCREEN_WIDTH (250 * 2.0F)	// 画面の横幅
 #define SCROLL_SPEED (8.0F)	// マップのスクロールするスピード
 
+#define UI_Gl_X	45   //ボタンのｘ座標の起点
+#define UI_Gl_Y	160   //ボタンのY座標の起点
+
+
 mapInfo g_backmap[SCROLL_MAX];
 
 // マップの表示
@@ -28,6 +32,27 @@ void MapDisp() {
 		DrawRotaGraph2(g_map[i].x, g_map[i].y, 0, 0, 2.0, 0.0, g_pic.map[(SCROLL_MAX * g_select_Stage) + i], TRUE);
 	}
 
+
+	//ボタンのUI
+
+	if (g_boss[g_select_Stage].hp > 0) {			//ボスのHPってなんですかねぇ？
+		// 描画ブレンドモードをアルファブレンド（５０％）にする
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 90);
+
+		DrawBox(UI_Gl_X - 10, UI_Gl_Y - 10, UI_Gl_X + 320, UI_Gl_Y + 130, 0xffffff, TRUE);
+
+		//描画ブレンドモードを元に戻す
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		DrawRotaGraph2(UI_Gl_X, UI_Gl_Y, 0, 0, 0.65, 0.0, g_pic.button[1], TRUE);		//ボタンの描画（B）
+		DrawRotaGraph2(UI_Gl_X, UI_Gl_Y + 60, 0, 0, 0.65, 0.0, g_pic.button[2], TRUE);		//ボタンの描画（A）
+		//DrawFormatString(100, 100, 0x000000, "X : %d  Y : %d", g_mouseInfo.mouseX, g_mouseInfo.mouseY);
+
+		SetFontSize(55);
+		DrawFormatString(UI_Gl_X + 60, UI_Gl_Y, 0x000000, "剣技発動");		//UIの文字(↓同)
+		DrawFormatString(UI_Gl_X + 60, UI_Gl_Y + 60, 0x000000, "ジャンプ");
+	}
+	
 	
 }
 
@@ -44,6 +69,7 @@ void MapMove() {
 			MapReset2(i);								// リセット
 		}
 	}
+
 }
 
 void MapReset(int i) {
