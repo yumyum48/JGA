@@ -90,9 +90,10 @@ void SelectDisp(void) {
 
 	// セレクト画面の選択中のウィンドウを表示
 	DrawBox(stage[g_select_Stage].x, stage[g_select_Stage].y, stage[g_select_Stage].x + 100, stage[g_select_Stage].y + 100, 0xFF0000, FALSE);
-	if (g_select_Stage == 7) {
+	DrawRectGraph(stage[g_select_Stage].x, stage[g_select_Stage].y, 0, 0, 100, 100, g_pic.gauge, TRUE, FALSE);
+	/*if (g_select_Stage == 7) {
 		DrawBox(stage[g_select_Stage].x, stage[g_select_Stage].y, stage[g_select_Stage].x + 200, stage[g_select_Stage].y + 200, 0xFF0000, FALSE);
-	}
+	}*/
 
 
 	int menuSelect_X = g_menuBox.x + 61;												// セレクトウィンドウのメニュー欄のX座標
@@ -191,6 +192,11 @@ void SelectDisp(void) {
 *******************************************************/
 void SelectMove() {
 
+	//ステージのクリア情報更新
+	if (g_select_MAX > 7) g_select_MAX = 7;
+	for (int i = 0; i < g_select_MAX; i++) {
+		g_stageClearFlg[i] = TRUE;
+	}
 
 	if (g_menuFlg == MENU_OFF) {				// メニュー画面が出てないときの処理(マップセレクト)
 
@@ -435,4 +441,5 @@ void SelectInit() {
 	g_menuBox.MenuWindowInit();
 	g_saveBox.MenuSaveWindowInit();
 	//g_menuFlg = FALSE;
+	g_select_Stage = 0;
 }
