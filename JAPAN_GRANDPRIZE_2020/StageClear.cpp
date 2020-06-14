@@ -48,9 +48,21 @@ void StageClearDisp() {
 		}
 		if (g_husumaAnime >= WINDOW_WIDTH / 2) {
 			g_husumaAnime = WINDOW_WIDTH / 2;
-			DrawRotaGraph2(g_clearText.x, g_clearText.y, 0, 0, 0.6, 0.0, g_pic.stageClearText, TRUE);
 
-			DrawString(g_mouseInfo.mouseX, g_mouseInfo.mouseY, "Aボタンを押すとメニュー画面へ戻ります", 0xFF0000); // Aボタンを押すとセレクト画面に戻ります
+			DrawRotaGraph2(g_clearText.x, g_clearText.y, 0, 0, 0.6, 0.0, g_pic.stageClearText, TRUE);
+			int textX = 112;	// テキスト画像のX座標
+			int textY = 689;	// テキスト画像のY座標
+			int textX2 = 374;	// 剣技を獲得しましたのX座標
+			int textY2 = 412;	// 剣技を獲得しましたのY座標
+			int textX3 = 591;	// スキルアイコンのX座標
+			int textY3 = 326;	// スキルアイコンのY座標
+
+			DrawGraph(textX3, textY3, g_pic.skillAicon[g_select_Stage + 2], TRUE);
+			DrawGraph(textX2, textY2, g_pic.kengiText, TRUE);
+			SetFontSize(28);
+			DrawString(textX, textY, "Bボタンを押すとメニュー画面へ戻ります", 0xFF0000); // Aボタンを押すとセレクト画面に戻ります
+			
+			DrawFormatString(0, 0, 0x00FF00, "%d\n%d", g_mouseInfo.mouseX, g_mouseInfo.mouseY);
 		}
 		//DrawModiGraph
 		//DrawBox(clearText.x, clearText.y)
@@ -69,7 +81,7 @@ void StageClearMove() {
 			if (ClearTextMove() == 1) {
 				SetFontSize(39);
 
-				if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+				if (g_keyInfo.keyFlg & PAD_INPUT_B) {
 
 					g_animationScene = FALSE;
 					g_husumaFlg = FALSE;
@@ -83,11 +95,11 @@ void StageClearMove() {
 }
 
 int ClearTextMove() {
-	if (g_clearText.y < 298) {
+	if (g_clearText.y < 51) {
 		g_clearText.y += 25;
 	}
 	else {
-		g_clearText.y = 298;
+		g_clearText.y = 51;
 		return 1;
 	}
 
@@ -265,7 +277,7 @@ void BossDefeatAnimationMove() {
 }
 
 void StageClearInit() {
-	g_clearText.x = 279;
+	g_clearText.x = 311;
 	g_clearText.y = -237;
 
 }

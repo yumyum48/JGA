@@ -142,7 +142,7 @@ void SkillCustom_Move() {
 
 	//スキル決定（仮）
 	//if ((g_keyInfo.keyFlg & PAD_INPUT_UP) && g_set < 3) {
-	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_set < 3 && costomEndFlg == FALSE) {
+	if ((g_keyInfo.keyFlg & PAD_INPUT_B) && g_set < 3 && costomEndFlg == FALSE) {
 
 		comparation = g_Skill_Num;
 
@@ -169,8 +169,8 @@ void SkillCustom_Move() {
 
 	//スキル解除(仮)
 	//if ((g_keyInfo.keyFlg & PAD_INPUT_DOWN) && g_set > 0) g_player.skillcustom[--g_set] = 0;
-	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set > 0) g_player.skillcustom[--g_set] = 0;
-	else if ((g_keyInfo.keyFlg & PAD_INPUT_2) && g_set == 0) {//B連打でセレクト画面に戻る
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_set > 0) g_player.skillcustom[--g_set] = 0;
+	else if ((g_keyInfo.keyFlg & PAD_INPUT_A) && g_set == 0) {//B連打でセレクト画面に戻る
 		for (int i = 0; i < 3; i++) g_player.skillcustom[i] = past_Skill[i];
 		//スキル解放情報更新
 		for (int i = 0; i < 7; i++) skill_ReleaseFlg[i] = FALSE;
@@ -183,7 +183,7 @@ void SkillCustom_Move() {
 	//if (g_keyInfo.keyFlg & PAD_INPUT_A) g_gameScene = GAME_SELECT,Storage = TRUE;
 
 	//セレクト画面に戻る
-	if (costomEndFlg == TRUE && (g_keyInfo.keyFlg & PAD_INPUT_A)) {
+	if (costomEndFlg == TRUE && (g_keyInfo.keyFlg & PAD_INPUT_B)) {
 		PlaySoundMem(g_sound[SE_KETTEI], DX_PLAYTYPE_BACK, TRUE);			//決定SE再生
 		if (g_player.skillcustom[0] == 0) g_player.skillcustom[0] = 1; //何も装備しなかった場合スキル１を入れる
 		if (g_set == 1) g_player.skillcustom[1] = 0, g_player.skillcustom[2] = 0;
@@ -195,7 +195,7 @@ void SkillCustom_Move() {
 		costomEndFlg = FALSE;
 	}
 	//決定キャンセル
-	if ((g_keyInfo.keyFlg & PAD_INPUT_2) && costomEndFlg == TRUE) costomEndFlg = FALSE;
+	if ((g_keyInfo.keyFlg & PAD_INPUT_A) && costomEndFlg == TRUE) costomEndFlg = FALSE;
 	//決定確認
 	if (g_set == 3 || g_keyInfo.keyFlg & PAD_INPUT_DOWN) {
 		PlaySoundMem(g_sound[SE_DECISION], DX_PLAYTYPE_BACK, TRUE);			//選択SE再生

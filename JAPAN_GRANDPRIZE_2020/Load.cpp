@@ -40,7 +40,7 @@ void GameLoadMove(int *select) {
 		if (-- *select < 0) *select = 2;
 	}
 
-	if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+	if (g_keyInfo.keyFlg & PAD_INPUT_B) {
 		if (Read(*select) == 1) {
 			DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFF0000, TRUE);
 		}
@@ -50,7 +50,7 @@ void GameLoadMove(int *select) {
 		}
 	}
 
-	if (g_keyInfo.keyFlg & PAD_INPUT_B) {
+	if (g_keyInfo.keyFlg & PAD_INPUT_A) {
 		g_gameScene = GAME_TITLE;
 		*select = 0;
 		GameInit();

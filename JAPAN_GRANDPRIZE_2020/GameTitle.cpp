@@ -49,7 +49,7 @@ void TitleDisp() {
 	case 0:
 		// 何を選択しているかわかるように四角を視覚化
 		DrawBox(TITLETEXT_X[TITLE_NEW_START], TITLETEXT_Y[TITLE_NEW_START], TITLETEXT_X[TITLE_NEW_START] + titleTextW[TITLE_NEW_START], TITLETEXT_Y[TITLE_NEW_START] + titleTextH[TITLE_NEW_START], 0xFF0000, FALSE);
-		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+		if (g_keyInfo.keyFlg & PAD_INPUT_B) {
 			HyperStop(g_sound[BGM_TITLE]);			//タイトルサウンド停止
 			HyperStop(g_sound[BGM_RAIN]);			//ラインサウンド停止
 			g_gameScene = GAME_SELECT;	// ゲームセレクトへ移動
@@ -59,7 +59,7 @@ void TitleDisp() {
 	case 1:
 		// 何を選択しているかわかるように四角を視覚化
 		DrawBox(TITLETEXT_X[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD], TITLETEXT_X[TITLE_ROAD] + titleTextW[TITLE_ROAD], TITLETEXT_Y[TITLE_ROAD] + titleTextH[TITLE_ROAD], 0xFF0000, FALSE);
-		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+		if (g_keyInfo.keyFlg & PAD_INPUT_B) {
 			HyperStop(g_sound[BGM_TITLE]);			//タイトルサウンド停止
 			HyperStop(g_sound[BGM_RAIN]);			//ラインサウンド停止
 			g_gameScene = GAME_LOAD;	// ゲームセレクトへ移動
@@ -69,7 +69,7 @@ void TitleDisp() {
 	case 2:
 		// 何を選択しているかわかるように四角を視覚化
 		DrawBox(TITLETEXT_X[TITLE_END], TITLETEXT_Y[TITLE_END], TITLETEXT_X[TITLE_END] + titleTextW[TITLE_END], TITLETEXT_Y[TITLE_END] + titleTextH[TITLE_END], 0xFF0000, FALSE);
-		if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+		if (g_keyInfo.keyFlg & PAD_INPUT_B) {
 			HyperStop(g_sound[BGM_TITLE]);			//タイトルサウンド停止
 			HyperStop(g_sound[BGM_RAIN]);			//ラインサウンド停止
 			g_gameScene = GAME_END;		// ゲーム終了

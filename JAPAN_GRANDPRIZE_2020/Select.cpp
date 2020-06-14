@@ -153,7 +153,7 @@ void SelectDisp(void) {
 	{
 		// メニュー画面が出てないとき
 		if (g_menuFlg == MENU_OFF) {
-			if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+			if (g_keyInfo.keyFlg & PAD_INPUT_B) {
 
 				Get_NowDisp(GAME_PLAY, 2);
 				//g_gameScene = GAME_CHANGE_SCREEN_ANIMATION;
@@ -185,7 +185,6 @@ void SelectDisp(void) {
 			}
 		}
 	}
-
 }
 /******************************************************
 // セレクト画面の動き
@@ -204,7 +203,7 @@ void SelectMove() {
 
 		StageSelectOper();						// ステージの決定のためのカーソルを操作させる
 
-		if (g_keyInfo.keyFlg & PAD_INPUT_A) {	// 決定したステージに移動しながらシーンをゲームプレイに変える
+		if (g_keyInfo.keyFlg & PAD_INPUT_B) {	// 決定したステージに移動しながらシーンをゲームプレイに変える
 
 			//Get_NowDisp(GAME_PLAY, 2);
 			HyperStop(g_sound[BGM_SELECT]);		//すべて止める最強関数
@@ -231,11 +230,11 @@ void SelectMove() {
 
 			SaveMenu_ScrollIn();							// セーブ画面を画面中央付近まで動かす
 			if (g_saveBox.x == MENU_SAVE_BOX_XPOINT_MAX) {	// セーブ画面が中央まで来たら操作可能
-				if (g_keyInfo.keyFlg & PAD_INPUT_A) {		// 決定ボタンを押すと
+				if (g_keyInfo.keyFlg & PAD_INPUT_B) {		// 決定ボタンを押すと
 					SaveMenu_Save();
 					g_cursorAnime = 0;						// 選択されたファイルにセーブを実行する
 				}
-				if (g_keyInfo.keyFlg & PAD_INPUT_B) {		// Bボタンを押すと、メニュー選択画面に戻す
+				if (g_keyInfo.keyFlg & PAD_INPUT_A || g_keyInfo.keyFlg & PAD_INPUT_4) {		// Bボタンを押すと、メニュー選択画面に戻す
 					g_menuFlg = MENU_ON;
 					g_cursorAnime = 0;
 					//g_menuSelect = 0;
@@ -297,7 +296,7 @@ bool SaveMenu_MenuScrollOut(bool saveFlg) {
 // 決定ボタンを押すと対象のメニューへと接続
 *******************************************************/
 void MenuSelect() {
-	if (g_keyInfo.keyFlg & PAD_INPUT_A) {
+	if (g_keyInfo.keyFlg & PAD_INPUT_B) {
 		PlaySoundMem(g_sound[SE_KETTEI], DX_PLAYTYPE_BACK, TRUE);			//決定SE再生
 		switch (g_menuSelect) {
 		case 0: g_menuFlg = MENU_SAVE;		g_menuSelect = 0;		   break;	// データのセーブ
