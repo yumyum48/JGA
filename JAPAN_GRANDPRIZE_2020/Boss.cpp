@@ -16,6 +16,7 @@
 #include <math.h>
 #include "Trap.h"
 #include "Skill.h"
+#include "Sounds.h"
 
 /*********************************************
 
@@ -898,6 +899,8 @@ void BossJumpOrPoison_Move() {
 void BossEnemyDropDisp() {
 	
 	BossAreaEnemyDisp();
+
+	PlaySoundMem(g_sound[BOSS3_ATTACK2], DX_PLAYTYPE_BACK, TRUE);			//G‹›“G‚Ì¢Š«‚ÌSE
 }
 // ã‚¢“G‚ğo‚·(“®‚«(“–‚½‚è”»’è‚È‚Ç))
 void BossEnemyDropMove() {
