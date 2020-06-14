@@ -15,6 +15,7 @@
 #include "Rain.h"
 #include <math.h>
 #include "Skill.h"
+#include "Sounds.h"
 
 /*********************************************
 
@@ -434,6 +435,7 @@ void LastBossRightNingAnime() {
 			else if (cnt != 99) {			// でっかい雷撃が落ちていなかったら処理
 				trans = 255;			// でっかい雷撃を落とす
 				cnt = 99;				// カウントを９９固定に
+				PlaySoundMem(g_sound[SKILL5_SE], DX_PLAYTYPE_NORMAL, TRUE);			//これでいいんもん...きっと
 			}
 			if (cnt == 99) {			// カウントが９９固定の時(雷撃を打ち終えた時)
 				trans -= 1;				// 透明度を上げていく
