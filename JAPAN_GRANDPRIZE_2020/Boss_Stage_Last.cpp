@@ -71,13 +71,15 @@ void BossDisp_Stage_Last() {
 		if (g_boss_Yamatano[i].popflg != LASTBOOS_OFF && g_boss_Yamatano[i].popflg != LASTBOSS_KILL) {
 			//(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_boss_Yamatano[i].x + g_boss_Yamatano[i].w, g_boss_Yamatano[i].y + g_boss_Yamatano[i].h, 0x00FFFF, TRUE);
 			DrawRotaGraph2(g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, 0, 0, 1.0, 0.0, g_pic.boss_Yamatano[g_boss_Yamatano[i].anima], TRUE);
-			if (g_boss_Yamatano[i].damageFlg == TRUE) {
-				Boss_Damage_Disp(&g_boss_Yamatano[i].damageFlg, g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_pic.boss_Yamatano[g_boss_Yamatano[i].anima], 1.0F);	// ダメージを食らったときのモーション
-			}
+			
 		}
 	}
 
-
+	for (int i = 0; i < YAMATANO_NECK; i++) {
+		if (g_boss_Yamatano[i].damageFlg == TRUE) {
+			Boss_Damage_Disp(&g_boss_Yamatano[i].damageFlg, g_boss_Yamatano[i].x, g_boss_Yamatano[i].y, g_pic.boss_Yamatano[g_boss_Yamatano[i].anima], 1.0F);	// ダメージを食らったときのモーション
+		}
+	}
 	static int cnt = 0;	// アニメーション用のカウント
 	if (cnt++ % 10 == 0) g_lastBoss_anima++;
 	if (g_lastBoss_anima >= g_lastBoss_animaMax) g_lastBoss_anima = g_lastBoss_animaMin;
@@ -86,7 +88,9 @@ void BossDisp_Stage_Last() {
 	if (g_boss[BOSS_LASTBOSS].popflg == TRUE) {
 		//DrawBox(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_boss[BOSS_LASTBOSS].x + BOSS_STAGELAST_WIDTH, g_boss[BOSS_LASTBOSS].y + BOSS_STAGELAST_HEIGHT, 0x00FFFF, TRUE);
 		DrawRotaGraph2(g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, 0, 0, 1.0, 0.0, g_pic.boss_Last[g_lastBoss_anima], TRUE);
-		Boss_Damage_Disp2(&g_boss[BOSS_LASTBOSS].damageFlg, g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_pic.boss_Last[g_lastBoss_anima], 1.0F);	// ダメージを食らったときのモーション
+		if (g_boss[BOSS_LASTBOSS].damageFlg == TRUE) {
+			Boss_Damage_Disp2(&g_boss[BOSS_LASTBOSS].damageFlg, g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_pic.boss_Last[g_lastBoss_anima], 1.0F);	// ダメージを食らったときのモーション
+		}
 	}
 	//if (g_boss[BOSS_LASTBOSS].damageFlg == TRUE) {
 	//	Boss_Damage_Disp(&g_boss[BOSS_LASTBOSS].damageFlg, g_boss[BOSS_LASTBOSS].x, g_boss[BOSS_LASTBOSS].y, g_pic.boss_2_1[animationCnt], 1.0F);	// ダメージを食らったときのモーション
@@ -457,7 +461,7 @@ void LastBossRightNingAnime() {
 
 */////////////////////////////////////////////
 void lasbossInfo::lasbossInit(int num) {					// ラスボスの本体以外(7体の初期化)
-		hp = 5;						 // Hpの初期化
+		hp = 3;						 // Hpの初期化
 		attackFlg = 0;				 // なんの攻撃をしているかのフラグ
 		popflg = LASTBOOS_OFF;       // 画面にいるかいないか、とどめを刺せるかどうかのフラグ
 		coolTime = 0;				 // 硬直時間

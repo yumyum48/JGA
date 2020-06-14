@@ -6,6 +6,7 @@
 #include "enemy.h"
 #include "Boss.h"
 #include "Select.h"
+#include "Sounds.h"
 
 // 弱い敵、ボスの表示
 void MonsterDisp() {
@@ -22,9 +23,13 @@ void MonsterMove() {
 	
 	if (g_enemybeat < ENEMY_BEAT_MAX[g_select_Stage]) {
 		EnemyMove();								// 弱い敵の動き
+		PlaySoundMem(g_sound[BGM_BOSS], DX_PLAYTYPE_LOOP, FALSE);
 	}
 	else {
 		BossMove[g_select_Stage]();					// ボスの動き
+		StopSoundMem(g_sound[BGM_BOSS]);
+		SetCurrentPositionSoundMem(0, g_sound[BGM_BOSS]);
+		PlaySoundMem(g_sound[BGM_BATTLE], DX_PLAYTYPE_LOOP, FALSE);
 	}
 }
 

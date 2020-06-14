@@ -76,8 +76,11 @@ void BossDisp_Stage4() {
 					g_pic.spiderThread, TRUE);
 		
 	}		
+#ifdef DEBUG_BOSS_ON
 	DrawFormatString(400, 500, 0x0000FF, "%d\n%d",
 	/*g_boss4_Thread.hp*/g_boss4_Cloud.x, g_boss[BOSS_STAGE4].x);
+#endif // DEBUG_BOSS_ON
+
 	// 蜘蛛の表示
 	//DrawBox(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, g_boss[BOSS_STAGE4].x + BOSS_STAGE4_WIDTH, g_boss[BOSS_STAGE4].y + BOSS_STAGE4_HEIGHT, 0x00FF00, TRUE);
 	//DrawRotaGraph2(g_boss[BOSS_STAGE4].x, g_boss[BOSS_STAGE4].y, 32, 32, 5.0f, DX_PI_F / 180 * 330, g_pic.spiderKids[0], TRUE, FALSE, FALSE);
@@ -100,7 +103,10 @@ void BossDisp_Stage4() {
 	if (g_boss[BOSS_STAGE4].attackFlg != 0) {						// ボスが攻撃していれば
 		BossAttackDisp();	// ボスの攻撃
 	}
+#ifdef DEBUG_BOSS_ON
 	DrawFormatString(600, 200, 0xFFFFFF, "cnt = %d", g_rightning.cnt);
+#endif // DEBUG_BOSS_ON
+
 }
 
 
