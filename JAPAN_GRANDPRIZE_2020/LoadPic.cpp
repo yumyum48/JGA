@@ -14,7 +14,7 @@ int LoadPicture() {
 	if ((g_pic.titleText[3] = LoadGraph("image/fin1.png")) == -1) return -1;		// タイトルロゴ
 	
 	// ボタンUIの画像
-	if (LoadDivGraph("image/Button_UI2.png", 2, 3, 1, 100, 100, g_pic.button, 0) == -1) return -1;
+	if (LoadDivGraph("image/Button_UI2.png", 3, 3, 1, 100, 100, g_pic.button, 0) == -1) return -1;
 
 	// プレイヤー画像の読み込み
 	if (LoadDivGraph("image/player3.png", 56, 8, 7, 280, 200, g_pic.player, 0) == -1) return -1;
